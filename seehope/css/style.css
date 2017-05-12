@@ -1,0 +1,2142 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.trans{
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+}
+hr{border: none;outline: none;}
+h1,h2,h3,h3,h4,h5,h6{font-weight: normal;}
+img{
+	max-width: 100%;
+}
+
+
+body{
+	font-family:"微软雅黑","Microsoft Yahei";
+}
+.wp{
+	width: 100%;
+	max-width: 1170px;
+	margin: 0 auto;
+}
+a{
+	color: #333;	
+}
+a:hover{
+	color: #e4392a;
+}
+
+/*头部*/
+#bd{
+	padding-top: 90px;
+}
+#hd{
+	/*height: 101px;*/
+	height: 90px;
+	background: #fff;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, .3);
+	position: fixed;
+	width: 100%;
+	left: 0;
+	top: 0;
+	z-index:9999;
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+}
+.fixed{
+    top: -101px !important;
+}
+
+#hd .logo{
+	float: left;
+	margin-right: 65px;
+	/*height: 101px;*/
+	height: 90px;
+}
+#hd .logo a{
+	display: block;
+	height: 100%;
+	/*line-height: 101px;*/
+	line-height: 90px;
+}
+#hd .logo a img{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#nav ul li{
+	float: left;
+	line-height: 90px;
+	width: 100px;
+	margin-right: 10px;
+}
+#nav ul li a{
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	font-size: 16px;
+	border-bottom: 3px solid #fff;
+	height: 90px;
+}
+#nav ul li a:hover{
+	border-bottom: 3px solid #e4392a;
+}
+#hd .tel{
+	background: url("../images/tel_bg.png")/*tpa=http://www.seehope.net/seehope/images/tel_bg.png*/ left center no-repeat;
+	line-height: 90px;
+	float: right;
+	padding-left: 37px;
+	color: #e4392a;
+	font-size: 18px;
+}
+
+/*手机头部*/
+#m-hd {display: none;}
+#m-hd {
+	height: 50px;
+	line-height: 50px;
+	background-color: #fff;
+	padding: 0;
+	position: fixed;
+	width: 100%;
+	z-index: 999999;
+}
+#m-hd img{height: 40px;padding: 10px 0 0 10px;}
+.m-trigger {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	width: 50px;
+	color: #fff;
+	text-align: center;
+	font-size: 30px;
+	line-height: 45px;
+	cursor: pointer;
+	background: url("../images/menu_add.png")/*tpa=http://www.seehope.net/seehope/images/menu_add.png*/ center center no-repeat;
+	-webkit-background-size: 50px;
+	background-size: 25px;
+	height: 50px;
+}
+.m-nav {
+	z-index: 60;
+	position: absolute;
+	top: 50px;
+	width: 100%;
+	left: 0;
+	background: url("../images/alpha_black_70.png")/*tpa=http://www.seehope.net/seehope/images/alpha_black_70.png*/ repeat;
+	text-align: center;
+	display: none;
+}
+.m-nav li{
+	border-bottom: 1px solid #565656;
+}
+.m-nav a {
+	display: block;
+	font-size: 12px;
+	height: 40px;
+	line-height: 40px;
+	text-align:center;
+	color: #fff;
+	font-size: 14px;
+}
+.m-nav a:hover,.m-nav a:active{
+	color: #e4392a;
+}
+.m-sub {
+	text-align: left;
+	display: none;
+	width:100%;
+}
+.m-sub a {
+	border-bottom: none;
+	font-size: 13px;
+}
+
+
+/*底部*/
+#fd{
+	background: url("../images/fd_bg.png")/*tpa=http://www.seehope.net/seehope/images/fd_bg.png*/ center top no-repeat;
+	padding-top: 35px;
+}
+.index-fd{
+	margin-top: -31px;
+}
+#fd .fd-top{
+	overflow: hidden;
+	color: #fff;
+	padding-bottom: 45px;
+}
+#fd dl{
+	float: left;
+	width: 20%;
+}
+#fd dl dt{
+	font-size: 16px;
+	padding-bottom: 20px;
+}
+#fd .ul-fd li{
+	line-height: 26px;
+}
+#fd .ul-fd li a{
+	color: #a8a8af;
+}
+#fd .ul-fd li a:hover{
+	text-decoration: underline;
+}
+#fd .weixin,#fd .sina{
+	background: url("../images/fd_icon1.png")/*tpa=http://www.seehope.net/seehope/images/fd_icon1.png*/ no-repeat;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 25px;
+}
+#fd .weixin-pic{
+	position: absolute;
+	left: -150px;
+	top: 0;
+	display: none;
+}
+#fd .tel{
+	font-weight: normal;
+	font-size: 24px;
+	padding-bottom: 15px;
+}
+#fd h5{
+	font-size: 16px;
+	color: #a8a8af;
+}
+#fd .sina{
+	background-image: url("../images/fd_icon2.png")/*tpa=http://www.seehope.net/seehope/images/fd_icon2.png*/;
+}
+#fd .fd-copy{
+	height: 40px;
+	line-height: 40px;
+	color: #a3a3a9;
+	background-color: #000022;
+}
+/* side */
+.side{position:fixed;width:50px;height:275px;right:0;top:250px;z-index:100;}
+.side ul li{width:50px;height:50px;float:left;position:relative;margin-bottom: 2px;}
+.side ul li .sidebox{position:absolute;width:50px;height:50px;border-radius:5px 0 0 5px;top:0;right:0;transition:all 0.3s;background:#000022;color:#fff;font:16px/50px "微软雅黑";overflow:hidden;}
+.side ul li a:hover .sidebox{width: 175px;}
+.side ul li .sidetop{width:50px;height:50px;line-height:50px;display:inline-block;background:#000;opacity:0.8;filter:Alpha(opacity=80);transition:all 0.3s;}
+.side ul li .sidetop:hover{background:#e4392a;}
+.side ul li img{float:right;}
+
+.side2{
+	position: fixed;
+	width: 40px;
+	right: 10px;
+	z-index: 100;
+	top: 500px;
+	height: 80px;
+}
+.side2 ul li{
+	width: 40px;
+	height: 40px;
+}
+.side2 ul li a{
+	display: block;
+	background-color: #e4392a;
+	height: 40px;
+	width: 40px;
+	text-align: center;
+	line-height: 40px;
+}
+.side2 ul li a img{
+	vertical-align: middle;
+	display: inline-block;
+}
+.side2 ul li a:hover{
+	background-color: #000022;
+}
+.side2 ul li .weixin{
+	position: absolute;
+	left: -154px;
+	bottom: 0;
+	display: none;
+}
+.side2 ul li .weixin em{
+	background: url("../images/arr3.png")/*tpa=http://www.seehope.net/seehope/images/arr3.png*/ no-repeat;
+	width: 5px;
+	height: 17px;
+	display: block;
+	position: absolute;
+	right: -5px;
+	top: 50%;
+	margin-top: 3px;
+}
+.side2 ul li .weixin img{
+	display: block;
+}
+
+
+
+/*banner*/
+#banner .flexslider{
+	background: none;
+}
+#banner .slides li .pic{
+	display: block;
+	padding-top: 36.4%;
+    /* -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; */
+    background-position: center bottom;
+    position: relative;
+}
+#banner .slides li  .ban-txt{
+	width: 760px;
+	position: absolute;
+	left: 50%;
+	margin-left: -380px;
+	top: 50%;
+	height: 205px;
+	margin-top: -102px;
+	text-align: center;
+}
+#banner .slides li.s1 .ban-txt{
+	background:url("../images/ban_k.png")/*tpa=http://www.seehope.net/seehope/images/ban_k.png*/ no-repeat;
+}
+#banner .flexslider .slides img{
+	max-width: 100%;
+	width: auto;
+	display: inline-block;
+	vertical-align: middle;
+}
+#banner .slides li .ban-txt h5{
+	font-size: 22px;
+	color: #fff;
+	margin-top: -5px;
+}
+#banner .slides li .ban-txt h2{
+	height: 118px;
+	line-height: 118px;
+	margin-top: 5px;
+	font-size: 71px;
+	color: #fff;
+}
+
+#banner .slides li .ban-txt h4{
+	height: 118px;
+	line-height: 118px;
+	margin-top: 5px;
+	font-size: 40px;
+	color: #fff;
+}
+#banner .slides li  .ban-txt h3{
+	padding-top: 25px;
+	font-size: 24px;
+	color: #e4392a;
+}
+#banner .flex-control-paging li a{
+	width: 40px;
+	height: 3px;
+	border-radius: 0;
+	background-color: rgba(255,255,255,0.7);
+}
+#banner .flex-control-paging li a.flex-active{
+	background-color: #e4392a;
+}
+#banner .flex-control-nav{
+	bottom: 80px;
+}
+#banner .flex-direction-nav a{
+	background: url("../images/ban_prev.png")/*tpa=http://www.seehope.net/seehope/images/ban_prev.png*/ no-repeat;
+	width: 24px;
+	height: 44px;
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+#banner .flex-direction-nav .flex-prev{
+	left: 50%;
+	margin-left: -570px;
+}
+#banner .flex-direction-nav .flex-next{
+	background-image: url("../images/ban_next.png")/*tpa=http://www.seehope.net/seehope/images/ban_next.png*/;
+	right: 50%;
+	margin-right: -570px;
+}
+#banner .slides li.s2 .ban-txt{
+	width: 840px;
+	margin-left: -420px;
+}
+#banner .slides li.s2 .ban-txt h2{
+	font-size: 58px;	
+	line-height: 56px;
+	height: 56px;
+	margin-bottom: 10px;
+}
+#banner .slides li.s2 .ban-txt h3{
+	font-size: 50px;
+	text-transform: uppercase;	
+	padding-top: 0;
+}
+#banner .slides li.s2 .ban-txt h4{
+	font-size: 16px;
+	color: #fff;
+}
+#banner .slides li.s2 .ban-txt h6{
+	font-size: 14px;
+	border-top: 1px solid #d3d3d7;
+	width: 149px;
+	margin: 0 auto;
+	color: #fff;
+	line-height: 35px;
+	margin-top: 15px;
+}
+#banner .slides li.s3 .ban-txt h2{
+	font-size: 45px;
+	height: 45px;
+	line-height: 45px;
+}
+#banner .slides li.s3 .ban-txt h3{
+	font-size: 41px;
+	text-transform: uppercase;
+	padding-top: 0;
+	border-bottom: 1px solid #e4392a;
+}
+#banner .slides li.s3 .ban-txt h4{
+	font-size: 16px;
+	line-height: 30px;
+	color: #fff;
+	margin-top: 20px;
+}
+#banner{position: relative;}
+.banner-bg{
+	background: url("../images/ban_bg.png")/*tpa=http://www.seehope.net/seehope/images/ban_bg.png*/ center top no-repeat;
+    height: 54px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -30px;
+    z-index: 60;
+}
+
+
+/*首页*/
+.tit-i{
+	text-align: center;
+	padding: 50px 0;
+	line-height: 36px;
+	overflow: hidden;
+}
+.tit-i h3{
+	font-size: 30px;
+	color: #002;
+	margin-bottom: 10px;
+}
+.tit-i h5{
+	font-size: 20px;
+	color: #cacace;
+	text-transform: uppercase;
+	font-family: Arial;
+}
+.tit-i h5 span{
+	color: #e4392a;
+}
+.tit-i em{
+	width: 45px;
+	border-bottom: 1px solid #7f7f90;
+	display: inline-block;
+}
+
+.ul-icon-i li{
+	float: left;
+	width: 25%;
+	text-align: center;
+	padding-bottom: 70px;
+	overflow: hidden;
+}
+.ul-icon-i li .pad{
+	padding: 0 40px;
+	position: relative;
+}
+.ul-icon-i li a{
+	display: block;
+}
+.ul-icon-i li a span{
+	background: url("../images/i_icon1.png")/*tpa=http://www.seehope.net/seehope/images/i_icon1.png*/ no-repeat;
+	width: 134px;
+	height: 134px;
+	display: inline-block;
+	margin-bottom: 55px;
+}
+.ul-icon-i li h3{
+	font-size: 16px;
+	margin-bottom: 18px;
+}
+.ul-icon-i li em{
+	width: 25px;
+	border-bottom: 2px solid #707070;
+	display: inline-block;
+	margin-bottom: 30px;
+}
+.ul-icon-i li p{
+	text-align: left;
+	line-height: 24px;
+	font-size: 14px;
+}
+.ul-icon-i li.li1 a span{
+	background-position: 0 0;
+}
+.ul-icon-i li.li2 a span{
+	background-position: -305px 0;
+}
+.ul-icon-i li.li3 a span{
+	background-position: -615px 0;
+}
+.ul-icon-i li.li4 a span{
+	background-position: -930px 0;
+}
+/*.ul-icon-i li a:hover span{
+	background-image: url(../images/i_icon1_h.png);
+}*/
+.ul-icon-i li .pad .pic{
+	position: absolute;
+	left: 50%;
+	top: 0;
+	width: 134px;
+	margin-left: -67px;
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+}
+.ul-icon-i li .pad .pic img{
+	display: none;
+}
+.ul-icon-i li .pad .pic .pic-icon{
+	position: absolute;
+	left: 0;
+	top: -134px;
+	display: block;
+}
+.ul-icon-i li a:hover p{
+	text-decoration: underline;
+	color: #333;
+}
+
+.row2{
+	background: url("../images/bg_1.png")/*tpa=http://www.seehope.net/seehope/images/bg_1.png*/ center top no-repeat;
+	padding-top: 20px;
+}
+.case-i-l,.case-i-r{
+	width: 50%;
+}
+.case-i-l{
+	float: left;
+	padding-right: 15px;
+}
+.case-i-r{
+	float: right;
+	padding-left: 15px;
+}
+.case-img,.case-img a img{
+	width: 100%;
+}
+.case-img{
+	position: relative;
+	overflow: hidden;
+}
+.case-img .hover{
+	position: absolute;
+	left: 0;
+	top: -434px;/*top: -433px;*/
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background: url("../images/alpha_red_80.png")/*tpa=http://www.seehope.net/seehope/images/alpha_red_80.png*/ repeat;
+	color: #fff;
+}
+.case-img.on .hover{
+	top: 0;
+}
+.ul-case-i{
+	margin: 0 -15px;
+}
+.ul-case-i li{
+	float: left;
+	width: 25%;
+	padding: 0 15px;
+	margin-bottom: 30px;
+	overflow: hidden;
+}
+.ul-case-i li a{
+	display: block;
+	position: relative;
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+}
+.ul-case-i li .pic img{
+	width: 100%;
+	display: block;
+}
+.ul-case-i li a .hover{
+	position: absolute;
+	left: 0;
+	top: -100%;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background: url("../images/alpha_red_80.png")/*tpa=http://www.seehope.net/seehope/images/alpha_red_80.png*/ repeat;
+	color: #fff;
+	/*display: none;*/
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+}
+.ul-case-i li .hover b,.ul-case-i li .hover .txt,.case-img .hover b,.case-img .hover .txt{
+	display: inline-block;
+	vertical-align: middle;
+}
+.ul-case-i li .hover b,.case-img .hover b{
+	width: 0;
+	height: 100%;
+}
+.ul-case-i li a:hover .hover{
+	/*display: block;*/
+	top: 0;
+}
+.ul-case-i-1 li{
+	width: 25%;
+}
+
+.more-i{
+	text-align: center;
+	padding-bottom: 35px;
+}
+.more-i a{
+	display: inline-block;
+	width: 65px;
+	height: 65px;
+	background: url("../images/arr2.png")/*tpa=http://www.seehope.net/seehope/images/arr2.png*/ center center no-repeat #000014;
+	border-radius: 100%;
+}
+.more-i a:hover{
+	background-color: #e4392a;
+}
+
+.news-bg{
+	background: url("../images/bg_2.png")/*tpa=http://www.seehope.net/seehope/images/bg_2.png*/ center top no-repeat;
+	overflow: hidden;
+}
+.tit-i-1 h3{
+	color: #fff;
+}
+.tit-i-1 em{
+	border-bottom-color: #dddde1;
+}
+.ul-news-i{
+	/*margin-right: -10px;*/
+	margin-left: -30px;
+	width: 110%;
+}
+.ul-news-i li{
+	float: left;
+	width: 24.5%;
+	color: #fff;
+	position: relative;
+	min-height: 295px;
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+	overflow: hidden;
+} 
+.ul-news-i li:last-child{
+	/*width: 21%;*/
+}
+.ul-news-i li .txt{
+	padding-left: 30px;
+	padding-right: 58px;
+}
+.ul-news-i li .txt span{
+	padding: 15px 8px;
+	display: inline-block;
+	border: 1px solid #fff;
+	border-radius: 5px;
+	font-size: 14px;
+}
+.ul-news-i li .txt span em{
+	display: block;
+	font-size: 20px;
+}
+ .ul-news-i li:last-child .txt{
+	/*padding-right: 0;*/
+}  
+.ul-news-i li h3 a{
+	color: #fff;
+	display: inline-block;
+	padding: 20px 0;
+}
+.ul-news-i li  p{
+	color: #bbbbbe;
+	line-height: 20px;
+}
+.ul-news-i li .more{
+	background: url("../images/more1.png")/*tpa=http://www.seehope.net/seehope/images/more1.png*/ no-repeat;
+	width: 36px;
+	height: 36px;
+	display: inline-block;
+	margin-top: 50px;
+}
+.ul-news-i li .hover{
+		
+}
+.ul-news-i li .hover .img{
+	width: 100%;
+	position: absolute;
+	top: -165px;
+	left: 7px;
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+}
+.ul-news-i li .hover .pad{
+	padding: 0 27px 20px 27px;
+	position: absolute;
+	left: 7px;
+	bottom: -148px;
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+	background-color: #000022;
+	width: 92%;
+}
+.ul-news-i li .hover .img{
+	height: 165px;
+	width: 92%;
+}
+
+.ul-news-i li.on .hover .img{
+	/*display: block;*/
+	top: 0;
+}
+.ul-news-i li.on .hover .pad{
+	bottom: 0;
+}
+
+
+.news-more{
+	text-align: center;
+	padding-bottom: 100px;
+	padding-top: 50px;
+}
+.news-more a{
+	display: inline-block;
+	width: 178px;
+	height: 48px;
+	border: 1px solid #fff;
+	border-radius: 5px;
+	line-height: 48px;
+	text-align: center;
+	font-size: 18px;
+	color: #fff;
+	text-transform: uppercase;
+}
+.news-more a:hover{
+	background-color: #e4392a;
+}
+
+
+.contact-l{
+	width: 38%;
+	float: left;
+}
+.contact-r{
+	width: 62%;
+	float: right;
+}
+.ul-contact li{
+	background: url("../images/i_icon2.png")/*tpa=http://www.seehope.net/seehope/images/i_icon2.png*/ no-repeat;
+	padding-left: 60px;
+	font-size: 14px;
+	margin-bottom: 20px;
+	line-height: 35px;
+}
+.ul-contact li.li1{
+	background-position: 0 0;
+}
+.ul-contact li.li2{
+	background-position: 0 -74px;
+}
+.ul-contact li.li3{
+	background-position: 0 -184px;
+}
+
+
+.contact-form .inp{
+	width: 49%;
+	border: 1px solid #6d6d88;
+	height: 33px;
+	padding: 0 10px;
+	margin-bottom: 15px;
+}
+.contact-form textarea{
+	width: 100%;
+	border: 1px solid #6d6d88;
+	height: 98px;
+	margin-bottom: 24px;
+}
+.contact-form .sub{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	color: #fff;
+	background-color: #63637f;
+	border: 0;
+	cursor: pointer;	
+	font-family:"微软雅黑","Microsoft Yahei";
+	font-size: 16px;
+}
+
+.map{
+	margin-top: 100px;
+	position: relative;
+}
+.map em{
+	background: url("../images/arr1.jpg")/*tpa=http://www.seehope.net/seehope/images/arr1.jpg*/ center top no-repeat;
+	width: 100%;
+	height: 15px;
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.map-s{
+	background: url("../images/map_s.png")/*tpa=http://www.seehope.net/seehope/images/map_s.png*/ center top;
+	height: 107px;
+	text-align: center;
+	overflow: hidden;
+}
+.map .btn{
+	text-align: center;
+	color: #fff;
+	font-size: 18px;
+	line-height: 132px;
+	display: inline-block;
+}
+.map .btn-down{
+	background: url("../images/map_down.png")/*tpa=http://www.seehope.net/seehope/images/map_down.png*/ no-repeat;
+	width: 112px;
+	height: 48px;
+	display: inline-block;
+	position: absolute;
+	left: 50%;
+	top: 52px;
+	margin-left: -50px;
+	z-index: 99;
+}
+#map{
+}
+.map-pop{
+	display: none;
+	height: 540px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+.map .map-bg1,.map .map-bg2{
+	background: url("../images/ban_bg_top.png")/*tpa=http://www.seehope.net/seehope/images/ban_bg_top.png*/ no-repeat center 0;
+	height: 54px;
+	position: absolute;
+	left: 0;
+	top: 0;	
+	width: 100%;
+	z-index: 66;
+}
+.map .map-bg2{
+	background-image: url("../images/map_bg2.png")/*tpa=http://www.seehope.net/seehope/images/map_bg2.png*/;
+	height: 41px;
+	bottom: 0px;
+	top: auto;
+}
+.map-pop-big{
+	height: 600px;
+	bottom:auto;
+	top: 0;
+}
+.map-big{
+    height: 600px;
+    margin-top: 0;
+}
+
+
+/*内页*/
+#ban-in{
+	position: relative;
+	background-position: center 0;
+	background-repeat: no-repeat;
+	/*padding-top: 16%;*/
+	height: 300px;
+}
+#ban-in .ban-bg{
+	background: url("../images/ban_bg.png")/*tpa=http://www.seehope.net/seehope/images/ban_bg.png*/ center top no-repeat;
+	height: 54px;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	bottom: -30px;
+	z-index: 60;
+}
+.pages{
+	text-align: center;
+	margin-bottom: 105px;
+	margin-top: 20px;
+}
+.pages a{
+	display: inline-block;
+	width: 41px;
+	height: 41px;
+	background-color: #edecec;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 41px;
+	font-family: Arial;
+	font-size: 18px;
+	color: #666;
+	margin: 0 4px;
+}
+.pages a:hover,.pages .page-on{
+	background-color: #e4392a;
+	color: #fff;
+}
+
+
+
+/*网思动态*/
+.ul-list{
+	margin: 0 -15px;
+}
+.ul-list li{
+	float: left;
+	width: 25%;
+	margin-bottom: 30px;
+}
+.ul-list li .pic img{
+	width: 100%;
+	display: block;
+	transform: perspective(800px) rotateY(0deg);
+	transition: all 1s ease 0s;
+	-moz-transform: perspective(800px) rotateY(0deg);
+	-moz-transition: all 1s ease 0s;
+	-webkit-transform: perspective(800px) rotateY(0deg);
+	-webkit-transition: all 1s ease 0s;
+	-o-transform: perspective(800px) rotateY(0deg);
+	-o-transition: all 1s ease 0s;
+	-ms-transform: perspective(800px) rotateY(0deg);
+	-ms-transition: all 1s ease 0s;
+	zoom:1;
+}
+.ul-list li:hover img{
+	transform: perspective(800px) rotateY(-179.9deg);
+	-moz-transform: perspective(800px) rotateY(-179.9deg);
+	-webkit-transform: perspective(800px) rotateY(-179.9deg);
+	-o-transform: perspective(800px) rotateY(-179.9deg);
+	-ms-transform: perspective(800px) rotateY(-179.9deg);
+}
+.ul-list li .pad{
+	padding: 0 15px;
+}
+.ul-list li .bor{
+	border: 1px solid #e2e3e8;
+}
+.ul-list li:hover .bor{
+	border-color: #e4392a;
+}
+.ul-list li .txt{
+	padding: 20px 14px;
+	line-height: 20px;
+	color: #666;
+}
+.ul-list li .more{
+	height: 42px;
+	line-height: 42px;
+	border-top: 1px dotted #e2e3e8;
+	background-color: #f0f2f5;
+	padding: 0 14px;
+	display: none;
+}
+.ul-list li .more a{
+	color: #e4392a;
+}
+.ul-list li .more a:hover{
+	text-decoration: underline;
+}
+.ul-list li .title{
+	height: 55px;
+	margin-bottom: 20px;
+}
+.ul-list li .title span{
+	float: left;
+	border: 1px solid #e2e3e8;
+	background-color: #f0f2f5;
+	display: inline-block;
+	text-align: center;
+	padding: 6px 5px;
+	margin-right: 15px;
+}
+.ul-list li .title span em{
+	display: block;
+	font-size: 16px;
+}
+.ul-list li .title h3{
+	border-bottom: 1px solid #e2e3e8;
+	overflow: hidden;
+	height: 54px;
+}
+
+
+/*网思案例*/
+.sub-nav{
+	text-align: center;
+	margin-bottom: 50px;
+	margin-top: -18px;
+}
+.sub-nav ul li{
+	display: inline-block;
+	margin: 0 18px;
+	font-size: 16px;
+}
+.sub-nav ul li a{
+	padding-left: 14px;
+	display: inline-block;
+}
+.sub-nav ul li a:hover,.sub-nav ul li.on a{
+	background: url("../images/disc.jpg")/*tpa=http://www.seehope.net/seehope/images/disc.jpg*/ left center no-repeat;
+	color: #e4392a;	
+}
+
+.ul-case{
+	margin: 0 -15px;
+}
+.ul-case li{
+	float: left;
+	width: 33.3333%;
+	padding: 0 15px;
+	margin-bottom: 30px;
+	overflow: hidden;
+	position: relative;
+}
+.ul-case li .block{
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+.ul-case li .pic img{
+	display: block;
+	width: 100%;
+}
+.ul-case li .txt{
+	position: absolute;
+	left: 0;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background: url("../images/alpha_blue_60.png")/*tpa=http://www.seehope.net/seehope/images/alpha_blue_60.png*/ repeat;
+	text-align: center;
+	color: #fff;
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+	opacity:0;
+}
+.ul-case li .txt h5,.ul-case li .txt h3{color: #fff;}
+.ul-case li .txt:hover{opacity:1;}
+.ul-case li .txt b,.ul-case li .txt .pad{
+	display: inline-block;
+	vertical-align: middle;
+}
+.ul-case li .txt b{
+	width: 0;
+	height: 100%;
+}
+.ul-case li .txt h5{
+	font-size: 16px;
+}
+.ul-case li .txt em{
+	width: 45px;
+	height: 0;
+	border-bottom: 1px solid #fff;
+	display: inline-block;
+	margin: 20px 0 40px 0;
+}
+.ul-case li .txt h3{
+	font-size: 18px;
+	margin-bottom: 40px;
+}
+.ul-case li .txt .more{
+	width: 122px;
+	height: 45px;
+	display: inline-block;
+	text-align: center;
+	line-height: 45px;
+	background-color: #e4392a;
+	color: #fff;
+	border-radius: 5px;
+	font-size: 14px;
+}
+.ul-case li .txt .more:hover{
+	opacity: .8;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 80)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+}
+.ul-case li.on .txt{
+	top: 0;
+}
+
+
+
+/*关于网思*/
+.about-info{
+	text-align: center;
+	font-size: 14px;
+	line-height: 34px;
+	color: #666;
+	padding-bottom: 50px;
+}
+
+.customer{
+	background: url("../images/bg_3.jpg")/*tpa=http://www.seehope.net/seehope/images/bg_3.jpg*/ center top no-repeat;
+	padding-top: 25px;
+	padding-bottom: 54px;
+	margin-top: 50px;
+}
+.ul-customer li{
+	float: left;
+	width: 20%;
+}
+.ul-customer li a{
+	display: block;
+	width: 100%;
+	height: 87px;
+	border: 1px solid #fff;
+	text-align: center;
+	border: 0;
+}
+.ul-customer li a b,.ul-customer li a img{
+	display: inline-block;
+	vertical-align: middle;
+}
+.ul-customer li a b{
+	width: 0;
+	height: 100%;
+}
+.ul-customer li a img{
+	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+	filter: gray; /* IE6-9 */
+	-webkit-filter: grayscale(0%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+}
+.ul-customer li a:hover{
+	border: 1px solid #fff;
+}
+
+.team{
+	padding-bottom: 95px;
+}
+.team .flexslider{
+	position: relative;
+}
+.team .flexslider em{
+	width: 10px;
+	height: 30px;
+	display: inline-block;
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	background-color: #fff;
+}
+.team .flexslider .slides li{
+	/*background-position: 89% 0;*/
+	height: 468px;
+	/*background-repeat: no-repeat;*/
+}
+.team .flexslider li .txt{
+	padding-top: 85px;
+	font-size: 14px;
+	line-height: 36px;
+	width: 30%;
+	float: left;
+}
+.team .flexslider li .txt h3{
+	font-size: 30px;
+	color: #63637f;
+	padding-bottom: 25px;
+}
+.team .flexslider li .txt .more{
+	width: 123px;
+	height: 37px;
+	border-radius: 5px;
+	display: inline-block;
+	line-height: 37px;
+	text-align: center;
+	margin-top: 40px;
+	font-size: 16px;
+	border: 1px solid #63637f;
+	color: #63637f;
+}
+.team .flexslider li .txt .more:hover{
+	
+	border: 1px solid #e85346;
+	color: #e4392a;
+}
+.team .flexslider li .pic{
+	float: right;
+	position: relative;
+	width: 70%;
+	margin-right: -308px;
+}
+.team .flexslider li .pic img{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: auto;
+	opacity: 0;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 0)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+	opacity: 1\0;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 100)'\9;
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100)\9;
+}
+.team .flex-direction-nav{
+	max-width: 1170px;
+	margin: 0 auto;
+	background: url("../images/line.jpg")/*tpa=http://www.seehope.net/seehope/images/line.jpg*/ repeat-x center center;
+	height: 30px;
+	text-align: center;
+}
+.team .flex-direction-nav li{
+	display: inline-block;
+
+}
+.team .flex-direction-nav a{
+	position: relative;
+	width: 216px;
+	height: 30px;
+	text-align: center;
+	background: url("../images/arr_t.png")/*tpa=http://www.seehope.net/seehope/images/arr_t.png*/ center center no-repeat #63637f;
+	border-radius: 10px;
+	display: inline-block;
+	opacity: 1 !important;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 100)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	top: 13px;
+}
+.team .flex-direction-nav .flex-prev{
+	
+}
+.team .flex-direction-nav .flex-next{
+	background-image: url("../images/arr_b.png")/*tpa=http://www.seehope.net/seehope/images/arr_b.png*/;
+	left: 10px;
+}
+.team .flex-direction-nav a:hover{
+	background-color: #e4392a;
+}
+.flexslider .animated{
+	opacity: 0;
+	filter: alpha(opacity=0);
+	opacity: 100\9;
+	filter: alpha(opacity=100)\9;
+}
+
+/* .team .s1{
+	-webkit-animation-delay: .5s;
+	-o-animation-delay: .5s;
+	-moz-animation-delay: .5s;
+	animation-delay: .5s;
+}
+
+.team .s2{
+	-webkit-animation-delay: .8s;
+	-o-animation-delay: .8s;
+	-moz-animation-delay: .8s;
+	animation-delay: .8s;
+}
+.team .s3{
+	-webkit-animation-delay: 1.2s;
+	-o-animation-delay: 1.2s;
+	-moz-animation-delay: 1.2s;
+	animation-delay: 1.2s;
+}
+.team .s4{
+	-webkit-animation-delay: 1.5s;
+	-o-animation-delay: 1.5s;
+	-moz-animation-delay: 1.5s;
+	animation-delay: 1.5s;
+} */
+
+.ul-about li{
+	float: left;
+	width: 33.333%;
+	text-align: center;
+	font-size: 14px;
+	line-height: 24px;
+	color: #666;
+}
+.ul-about li h3{
+	font-size: 24px;
+	color: #002;
+	line-height: 36px;
+}
+.ul-about li em{
+	display: inline-block;
+	width: 45px;
+	height: 0;
+	border-bottom: 1px solid #7f7f90;
+	margin-bottom: 20px;
+	margin-top: 25px;
+}
+.ul-about li .block{
+	position: relative;
+	height: 235px;
+	margin: 0 auto;
+}
+.ul-about li .block img{
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 0)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+.ul-about li.li1 .block{
+	width: 150px;
+}
+.ul-about li.li2 .block{
+	width: 215px;
+}
+.ul-about li.li3 .block{
+	width: 252px;
+}
+.ul-about li.li1 .block,.ul-about li.li2 .block{
+	padding-top: 30px;
+}
+
+
+/*动态详情页*/
+.cur{
+	line-height: 76px;
+	font-family: "宋体";
+	color: #666;
+	background-color: #f8f9fa;
+}
+.cur1{
+	border-bottom: 1px solid #e5e5e5;
+	margin-bottom: 31px;
+}
+.cur a{
+	color: #666;
+}
+.article{
+	color: #666;
+	line-height: 30px;
+}
+.article h1{
+	font-size: 26px;
+	color: #333;
+	text-align: center;
+	padding-top: 45px;
+}
+.article .time{
+	line-height: 72px;
+	border-bottom: 1px solid #999;
+	text-align: center;
+	margin-bottom: 25px;
+}
+.article .share{
+	margin-bottom: 70px;
+}
+.article .share span{
+	font-size: 14px;
+	float: left;
+	display: inline-block;
+	line-height: 37px;
+}
+
+
+/*案例详情*/
+.case-article{
+	line-height: 30px;
+	color: #666;
+}
+.case-article-bg{
+	margin-bottom: 13%;
+	margin-bottom: 5%\0 !important;
+	background-position: top center\0 !important;
+}
+.case-article .case-logo{
+	text-align: center;
+	padding-top: 38px;
+}
+
+.case-article h1{
+	line-height: 40px;
+	font-size: 18px;
+	text-align: center;
+}
+.case-article .btn{
+	text-align: center;
+	padding: 10px 0;
+	margin-bottom: 30px;
+}
+.case-article .btn a{
+	display: inline-block;
+	width: 120px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background-color: #e4392a;
+	color: #fff;
+	font-size: 14px;
+	margin: 0 12px;
+	border-radius: 5px;
+}
+
+.case-article .computer-bg{
+	position: relative;
+	text-align: center;
+	background: url("../images/computer.png")/*tpa=http://www.seehope.net/seehope/images/computer.png*/ center top no-repeat;
+	transform: translateY(45.9%);
+	-webkit-transform: translateY(45.9%);
+	-moz-transform: translateY(45.9%);
+	width: 70%;
+	margin: 0 auto;
+	margin: -32% auto 0 auto;
+	-webkit-background-size: 100%;
+	background-size: 89%;
+	padding-top: 70%;
+	margin:0 auto\0;
+	padding-top: 50%\0;
+}
+.case-article .computer-bg img{
+	position: absolute;
+	left: 8.5%;
+	top: 4%;
+	width: 83%;
+}
+.case-article .case-back{
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 90px;
+}
+.case-article .case-back a{
+	display: inline-block;
+	width: 178px;
+	height: 48px;
+	text-align: center;
+	line-height: 48px;
+	border: 1px solid #63637f;
+	color: #002;
+	font-size: 18px;
+	border-radius: 5px;
+}
+.case-article .case-back a:hover{
+	background-color: #e4392a;
+	color: #fff;
+	border-color: #e4392a;
+}
+.article-prev,.article-next{
+	position: absolute;
+	top: 50%;
+	background: url("../images/article_prev.png")/*tpa=http://www.seehope.net/seehope/images/article_prev.png*/ no-repeat;
+	width: 36px;
+	height: 66px;
+	margin-top: -33px;
+	left: 0;
+	z-index: 2;
+}
+.article-next{
+	background-image: url("../images/article_next.png")/*tpa=http://www.seehope.net/seehope/images/article_next.png*/;
+	left: auto;
+	right: 0;
+}
+
+
+/*网思服务*/
+.h50{
+	height: 50px;
+	overflow: hidden;
+	clear:both;
+}
+.ul-webset li{
+	float: left;
+	width: 33.333%;
+	text-align: center;
+	height: 322px;
+}
+.ul-webset li .block{
+	position: relative;
+	height: 220px;
+	margin: 0 auto;
+}
+.ul-webset li.li1 .block{
+	width: 366px;
+}
+.ul-webset li.li2 .block{
+	width: 316px;
+}
+.ul-webset li.li3 .block{
+	width: 230px;
+}
+.ul-webset li .block img{
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 0)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+.ul-webset li h3{
+	font-size: 24px;
+	line-height: 34px;
+	color: #333;
+}
+.ul-webset li .btn{
+	background: url("../images/disc2.png")/*tpa=http://www.seehope.net/seehope/images/disc2.png*/ center center no-repeat #e60012;
+	width: 34px;
+	height: 34px;
+	border-radius: 100%;
+	display: inline-block;
+	margin-top: 30px;
+}
+.ul-webset li .btn:hover{
+	opacity: .6;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 60)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+}
+
+.ul-webset{
+
+}
+.webset-pop{
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: #f5f6fa;
+	border: 1px solid #e4e5e7;
+	z-index: 60;
+	padding: 0 27px;
+	padding-bottom: 30px;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	z-index: -1;
+	left: -100%;
+	width: 100%;
+	overflow: hidden;
+}
+.webset-pop h2{
+	font-size: 20px;
+	text-align: left;
+	line-height: 66px;
+}
+.webset-pop h2 a.close{
+	background: url("../images/close.png")/*tpa=http://www.seehope.net/seehope/images/close.png*/ no-repeat;
+	width: 28px;
+	height: 28px;
+	display: inline-block;
+	position: relative;
+	top: 20px;
+	left: auto;
+	float: right;
+}
+
+.webset-pop .txt{
+	width: 25%;
+	margin-right: -10px;
+	display: inline-block;
+	text-align: left;
+	vertical-align: top;
+}
+.nowrap *{
+	white-space: nowrap;
+}
+.webset-pop .txt h4{
+	font-size: 20px;
+	background: url("../images/icon1.png")/*tpa=http://www.seehope.net/seehope/images/icon1.png*/ left top no-repeat;
+	padding-left: 60px;
+	height: 40px;
+}
+.webset-pop .txt h4.tit-web1{
+	background-image: url("../images/icon2.png")/*tpa=http://www.seehope.net/seehope/images/icon2.png*/;
+}
+.webset-pop .txt h4.tit-web2{
+	background-image: url("../images/icon3.png")/*tpa=http://www.seehope.net/seehope/images/icon3.png*/;
+}
+.webset-pop .txt dl{
+	padding-left: 57px;
+}
+.webset-pop .txt dl dd{
+	font-size: 16px;
+	line-height: 34px;
+	background: url("../images/disc4.png")/*tpa=http://www.seehope.net/seehope/images/disc4.png*/ left center no-repeat;
+	padding-left: 15px;
+}
+.webset-pop .txt1{
+	width: 50%;
+}
+.ul-webset li .ul-txt{
+	padding-left: 57px;
+	border: 0;
+}
+.ul-webset li .ul-txt li{
+	width: 100%;
+	text-align: left;
+	height: auto;
+}
+.ul-webset li .ul-txt li h5{
+	border: 0;
+	font-size: 16px;
+	height: 36px;
+	line-height: 36px;
+}
+.ul-webset li .ul-txt li h5 a{
+	padding-left: 15px;
+	background: url("../images/disc4.png")/*tpa=http://www.seehope.net/seehope/images/disc4.png*/ left center no-repeat;
+
+}
+.ul-webset li .ul-txt li .txt-1{
+	font-size: 14px;
+	line-height: 24px;
+	color: #999;
+	padding-left: 27px;
+	padding-bottom: 15px;
+	display: none;
+}
+.ul-webset li .ul-txt li.ok .txt-1{
+	display: block;
+}
+
+..ul-web{
+	background: url("../images/jjd.png")/*tpa=http://www.seehope.net/seehope/images/jjd.png*/ center center no-repeat;
+	overflow: hidden;
+	background-size: 100%;
+}
+.ul-web li{
+	float: left;
+	text-align: center;
+	width: 25%;
+	padding-left: 5%;
+}
+.ul-web li h3{
+	display: inline-block;
+	border: 1px dashed #358acb;
+	height: 38px;
+	line-height: 38px;
+	border-radius: 5px;
+	padding: 0 17px;
+	color: #358acb;
+	font-size: 16px;
+	margin-top: 20px;
+}
+.ul-web li .block{
+	position: relative;
+	height: 151px;
+}
+.ul-web li .block img{
+	position: absolute;
+	left: 20px;
+	top: 0;
+	opacity: 0;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 0)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+.ul-web li.li1 .block{
+	width: 116px;
+	left: 50%;
+	margin-left: -70px;
+}
+.ul-web li.li2 .block{
+	width: 151px;
+	left: 50%;
+	margin-left: -95px;
+}
+.ul-web li.li3 .block{
+	width: 125px;
+	left: 50%;
+	margin-left: -85px;
+}
+.ul-web li.li4 .block{
+	width: 195px;
+	left: 50%;
+	margin-left: -120px;
+}
+
+
+.bg-blue{
+	background: url("../images/bg_4.png")/*tpa=http://www.seehope.net/seehope/images/bg_4.png*/ center top no-repeat;
+	padding-top: 25px;
+	padding-bottom: 100px;
+}
+.ul-tab{
+	width: 193px;
+	float: left;
+	background: url("../images/line3.png")/*tpa=http://www.seehope.net/seehope/images/line3.png*/ repeat-y 183px top;
+	margin-right: 80px;
+	padding-top: 45px;
+}
+.ul-tab li{
+	margin-bottom: 50px;
+}
+.ul-tab li a{
+	color: #666;
+}
+.ul-tab li h3{
+	font-size: 20px;
+	background: url("../images/circle.png")/*tpa=http://www.seehope.net/seehope/images/circle.png*/ right center no-repeat;
+}
+.ul-tab li span{
+	display: block;
+	font-size: 14px;
+	color: #999;
+}
+.ul-tab li.hover h3,.ul-tab li a:hover h3{
+	background-image: url("../images/circle1.png")/*tpa=http://www.seehope.net/seehope/images/circle1.png*/;
+	color: #e4392a;
+}
+.ul-tab li.hover span,.ul-tab li a:hover span{
+	color: #e4392a;
+}
+.tab-show{
+	
+}
+.tab-con{
+	overflow: hidden;
+}
+.tab-con .animated{
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.tab-show{
+	height: 419px;
+	overflow: hidden;
+}
+.web-con .shou{
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 10;
+}
+.web-con .pic{
+	float: right;
+	position: relative;
+	width: 139px;
+	text-align: center;
+	margin-top: 50px;
+	margin-right: 40px;
+}
+.web-con .flex-control-nav{
+	display: none;
+}
+.web-con .pic .img{
+	/* position: absolute;
+	left: 43px;
+	top: 50px; */
+	width: 139px;
+	z-index: -1;
+	display: inline-block;
+}
+.tab-con .txt{
+	/*width: 66%;*/width: 84%;
+}
+.tab-con .pic{
+	float: right;
+	position: relative;
+	width: 218px;
+	text-align: center;
+	margin-top: 50px;
+}
+.tab-con .pic .img{
+	/* position: absolute;
+	left: 43px;
+	top: 50px; */
+	width: 139px;
+	z-index: -1;
+}
+.tab-con-box{
+	width: 59%;
+	float: left;
+}
+.tab-con .txt p{
+	font-size: 14px;
+	line-height: 24px;
+	color: #666;
+	padding-bottom: 45px;
+}
+.ul-icon{
+	/*padding-right: 50px;*/
+	overflow: hidden;
+}
+.ul-icon li{
+	width: 94px;
+	height: 94px;
+	border-radius: 100%;
+	background-color: #e4e5e7;
+	color: #666;
+	text-align: center;
+	float: left;
+	font-size: 15px;
+	line-height: 22px;
+	padding: 0 17px;
+	margin:  0 25px 30px 25px;
+}
+.ul-icon li b,.ul-icon li span{
+	display: inline-block;
+	vertical-align: middle;
+}
+.ul-icon li b{
+	width: 0;
+	height: 100%;
+}
+
+.service{
+	background: url("../images/bg_5.png")/*tpa=http://www.seehope.net/seehope/images/bg_5.png*/ center top no-repeat;
+	padding-top: 25px;
+	padding-bottom: 63px;
+}
+.process{
+	overflow: hidden;
+}
+.process .con{
+	position: relative;
+}
+.animate-box,
+.animate-box .con{
+	width: 1170px;
+}
+
+.process .pad{
+	padding-top: 26%;
+}
+.process img{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.process span{
+	display: inline-block;
+	color: #90a1b3;
+	font-size: 16px;
+	position: absolute;
+}
+.process span.s1{
+	left: 0%;
+	top: 0%;
+}
+.process span.s2{
+	left: 4.6%;
+	top: 0%;
+}
+.process span.s3{
+	left: 1.6%;
+	top: 22%;
+}
+.process span.s4{
+	left: 1.6%;
+	top: 65%;
+}
+.process span.s5{
+	left: 9.5%;
+	top: 42%;
+}
+.process span.s6{
+	left: 20%;
+	top: 65%;
+}
+.process span.s7{
+	left: 27%;
+	top: 50%;
+}
+.process span.s8{
+	left: 38%;
+	top: 89%;
+}
+.process span.s9{
+	left: 49%;
+	top: 15%;
+}
+.process span.s10{
+	left: 57%;
+	top: 89%;
+}
+.process span.s11{
+	left: 77.5%;
+	top: 64%;
+}
+.process span.s12{
+	left: 94%;
+	top: 4%;
+}
+.process em{
+	position: absolute;
+	background: url("../images/r1.png")/*tpa=http://www.seehope.net/seehope/images/r1.png*/ no-repeat;
+	display: inline-block;
+	z-index: 60;
+	opacity: 0;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 0)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+.process em.q1{
+	width: 60px;
+	height: 61px;
+	left: 0;
+	top: 40%;
+}
+
+.process em.q2{
+	width: 57px;
+	height: 57px;
+	top: 42%;
+	left: 19%;
+	background-image: url("../images/r2.png")/*tpa=http://www.seehope.net/seehope/images/r2.png*/;
+}
+.process em.q3{
+	background-image: url("../images/r3.png")/*tpa=http://www.seehope.net/seehope/images/r3.png*/;
+	width: 62px;
+	height: 56px;
+	top: 68%;
+	left: 38%;
+}
+.process em.q4{
+	background-image: url("../images/r4.png")/*tpa=http://www.seehope.net/seehope/images/r4.png*/;
+	width: 86px;
+	height: 86px;
+	top: 29%;
+	left: 47%;
+}
+.process em.q5{
+	background-image: url("../images/r5.png")/*tpa=http://www.seehope.net/seehope/images/r5.png*/;
+	width: 63px;
+	height: 59px;
+	top: 68%;
+	left: 57%;
+}
+.process em.q6{
+	background-image: url("../images/r6.png")/*tpa=http://www.seehope.net/seehope/images/r6.png*/;
+	width: 51px;
+	height: 51px;
+	left:77%;
+	top: 40%;
+}
+.process em.q7{
+	background-image: url("../images/r7.png")/*tpa=http://www.seehope.net/seehope/images/r7.png*/;
+	width: 68px;
+	height: 63px;
+	left: 94%;
+	top: 18%;
+}
+
+
+.ul-solution{
+    overflow: hidden;
+}
+.ul-solution li{
+	float: left;
+	width:16.66666%;/*width: 15.67%;*/
+	text-align: center;
+	margin-bottom: 65px;
+    position: relative;
+}
+.ul-solution li a{
+	display: block;
+	height: 140px;
+	font-size: 16px;
+	line-height: 30px;
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;
+}
+.ul-solution li a span{
+	display: block;
+	background: url("../images/icon_solution.png")/*tpa=http://www.seehope.net/seehope/images/icon_solution.png*/ no-repeat;
+	width: 102px;
+	height: 102px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	position: relative;
+}
+.ul-solution li a em{
+	display: block;
+	position: relative;
+}
+.ul-solution li.li1 span{
+	background-position: -1px 0;
+}
+.ul-solution li.li2 span{
+	background-position: -215px 0;
+}
+.ul-solution li.li3 span{
+	background-position: -429px 0;
+}
+.ul-solution li.li4 span{
+	background-position: -643px 0;
+}
+.ul-solution li.li5 span{
+	background-position: -857px 0;
+}
+.ul-solution li.li6 span{
+	background-position: -1070px 0;
+}
+.ul-solution li.li7 span{
+	background-position: 0px bottom;
+}
+.ul-solution li.li8 span{
+	background-position: -215px bottom;
+}
+.ul-solution li.li9 span{
+	background-position: -429px bottom;
+}
+.ul-solution li.li10 span{
+	background-position: -643px bottom;
+}
+.ul-solution li.li11 span{
+	background-position: -857px bottom;
+}
+.ul-solution li.li12 span{
+	background-position: -1070px bottom;
+}
+.ul-solution li a:hover span{
+	background-image: url("../images/icon_solution_h.png")/*tpa=http://www.seehope.net/seehope/images/icon_solution_h.png*/;
+}
+
+.service-con .pic a:hover{
+	opacity: .8;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 80)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+}
+.service-con .col-l,.service-con .col-r{
+	width: 50%;
+	float: left;
+}
+.service-con .tit-s{
+	line-height: 100px;
+	background: url("../images/disc3.png")/*tpa=http://www.seehope.net/seehope/images/disc3.png*/ left center no-repeat;
+	padding-left: 14px;
+	font-size: 18px;
+}
+.ul-service li{
+	float: left;
+	width: 50%;
+	padding-right: 29px;
+	margin-bottom: 30px;
+}
+.ul-service li .pad{
+	font-size: 14px;
+	padding: 14px;
+	height: 148px;
+	border: 1px solid #e5e5e5;
+}
+.ul-service li .pad p{
+	max-height: 60px;
+	overflow: hidden;
+}
+.ul-service li .pad span {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+.ul-service li .pad span i{
+	display: block;
+	font-style: normal;
+	vertical-align: top;
+	padding-left: 40px;
+	padding-top: 6px;
+}
+.ul-service li img{
+	display: block;
+	float: left;
+	margin-bottom: 16px;
+}
+
+.ul-txt{
+	border: 1px solid #e5e5e5;
+}
+.ul-txt li{
+}
+.ul-txt li h5{
+    background: url("../images/jia.png")/*tpa=http://www.seehope.net/seehope/images/jia.png*/ 95% center no-repeat;
+    font-size: 14px;
+    height: 48px;
+    line-height: 48px;
+    border-bottom: 1px solid #e5e5e5;
+    padding-left: 14px;
+}
+.ul-txt li .txt{
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 20px;
+    display: none;
+    color: #666;
+    height: 130px;
+    padding: 0 14px;
+}
+.ul-txt li.ok .txt{
+    display: block;
+}
+.ul-txt li.ok h5{
+    background-image: url("../images/jian.png")/*tpa=http://www.seehope.net/seehope/images/jian.png*/;
+    border-bottom: 0;
+}
+
+.service-btn{
+	text-align: center;
+	padding: 55px 0;
+}
+.service-btn a{
+	display: inline-block;
+	width: 170px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	background-color: #e4392a;
+	color: #fff;
+	font-size: 14px;
+	border-radius: 5px;
+	margin: 0 22px;
+}
+.service-btn a:hover{
+	opacity: .8;
+	-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 80)';
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+}
+.case-img2 p{text-align: center;}
