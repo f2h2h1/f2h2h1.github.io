@@ -21,7 +21,7 @@
         <div class="row clearfix">
             <div class="col-md-12 column">
                 <div class="form-group">
-                    <label for="name">选择列表</label>
+                    <label for="name">选择列表{{selected}}</label>
                     <select class="form-control" v-model="selected">
                         <option v-for="item in campus" :value="item.number">{{item.text}}</option>
                     </select>
@@ -183,15 +183,17 @@
                     if (week === 0 || week === 6) { // 周末
                         if (this.selected === 0) { // 当前位置在本校
                             this.getTrain(this.timetable.Weekend.centerToNorth);
-                            console.log(this.timetable.Weekend.centerToNorth());
                         } else { // 当前位置在北院
                             this.getTrain(this.timetable.Weekend.northToCenter);
                         }
                     } else { // 周一至周五
-                        if (this.selected === 1) { // 当前位置在北院
+                        if (this.selected === 0) { // 当前位置在本校
                             this.getTrain(this.timetable.mondayToFriday.centerToNorth);
+                            console.log(this.timetable);
                         } else { // 当前位置在北院
                             this.getTrain(this.timetable.mondayToFriday.northToCenter);
+                            console.log(this.timetable);
+                            console.log(this.selected);
                         }
                     }
                 },
@@ -231,7 +233,8 @@
                                     this.stopOverSpecialStation = "";
                                 }
                             }
-                            let str = timetableArray[i].depart + "  " + waitHour + " 小时 " + waitMinute + " 分钟 " + waitSecond + " 秒";
+                            // let str = timetableArray[i].depart + "  " + waitHour + " 小时 " + waitMinute + " 分钟 " + waitSecond + " 秒";
+                            let str = timetableArray[i].depart + "&nbsp&nbsp&nbsp&nbsp&nbsp" + waitHour + " 小时 " + waitMinute + " 分钟 ";
                             if (timetableArray[i].stopOverSpecialStation != 0) {
                                 str += " \<br\/\> 此班车经停" + this.specialStation[timetableArray[i].stopOverSpecialStation];
                             }
