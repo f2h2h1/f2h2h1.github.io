@@ -22,7 +22,7 @@
             <div class="col-md-12 column">
                 <div class="form-group">
                     <label for="name">选择列表</label>
-                    <select class="form-control" v-model="selected" @change="selectCampus()">
+                    <select class="form-control" v-model="selected">
                         <option v-for="item in campus" :value="item.number">{{item.text}}</option>
                     </select>
                 </div>
@@ -30,13 +30,58 @@
         </div>
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <h3 class="text-center">离下一班校车发车时间还有 {{ selected }}</h3>
+                <h3 class="text-center">离下一班校车发车时间还有</h3>
                 <h3 class="text-center">{{ train }}</h3>
                 <p class="text-center">{{ stopOverSpecialStation }}</p>
                 <p class="text-center">法定节假日不发车</p>
             </div>
         </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title text-center">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">查看其它班次</a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="panel-body">
+
+                                <ul>
+                                    <li v-for="item in otherTrain" v-html="item"></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="panel-group" id="accordion2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title text-center">
+                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">查看发车时间表</a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <ul>
+                                    <li v-for="item in otherTrain">{{item}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
     </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
     <script>
         "use strict";
@@ -54,10 +99,10 @@
                 timetable: { // 发车时间表
                     mondayToFriday: {
                         centerToNorth: [{
-                            depart: "7:15",
+                            depart: "07:15",
                             stopOverSpecialStation: 1,
                         }, {
-                            depart: "9:00",
+                            depart: "09:00",
                             stopOverSpecialStation: 0,
                         }, {
                             depart: "12:05",
@@ -100,7 +145,7 @@
                     },
                     Weekend: {
                         centerToNorth: [{
-                            depart: "7:15",
+                            depart: "07:15",
                             stopOverSpecialStation: 1,
                         }, {
                             depart: "12:00",
@@ -130,6 +175,7 @@
                 selected: null,
                 train: null,
                 stopOverSpecialStation: null,
+                otherTrain: [],
             },
             methods: {
                 selectCampus: function() {
@@ -137,6 +183,7 @@
                     if (week === 0 || week === 6) { // 周末
                         if (this.selected === 0) { // 当前位置在本校
                             this.getTrain(this.timetable.Weekend.centerToNorth);
+                            console.log(this.timetable.Weekend.centerToNorth());
                         } else { // 当前位置在北院
                             this.getTrain(this.timetable.Weekend.northToCenter);
                         }
@@ -158,6 +205,7 @@
                     let day = myDate.getDate(); // 获取当前日
                     let week = myDate.getDay() // 获取星期
                         // console.log(timetableArray)
+                    this.otherTrain = [];
                     for (let i = 0; i < timetableArray.length; i++) {
                         let timeArray = timetableArray[i].depart.split(":", 2); // 获取具体的发车时间 时 分
                         let tagTime = new Date(Date.UTC(year, month, day, timeArray[0] - 8, timeArray[1], 0));
@@ -175,16 +223,27 @@
                             waitMinute = waitMinute % 60;
                             waitHour = Math.round((waitTime / 60) / 60);
                             console.log(waitHour)
-                            this.train = waitHour + " 小时 " + waitMinute + " 分钟 " + waitSecond + " 秒";
-                            if (timetableArray[i].stopOverSpecialStation != 0) {
-                                this.stopOverSpecialStation = "此班车经停" + this.specialStation[timetableArray[i].stopOverSpecialStation];
-                            } else {
-                                this.stopOverSpecialStation = "";
+                            if (this.otherTrain.length === 0) {
+                                this.train = waitHour + " 小时 " + waitMinute + " 分钟 " + waitSecond + " 秒";
+                                if (timetableArray[i].stopOverSpecialStation != 0) {
+                                    this.stopOverSpecialStation = "此班车经停" + this.specialStation[timetableArray[i].stopOverSpecialStation];
+                                } else {
+                                    this.stopOverSpecialStation = "";
+                                }
                             }
-                            return;
+                            let str = timetableArray[i].depart + "  " + waitHour + " 小时 " + waitMinute + " 分钟 " + waitSecond + " 秒";
+                            if (timetableArray[i].stopOverSpecialStation != 0) {
+                                str += " \<br\/\> 此班车经停" + this.specialStation[timetableArray[i].stopOverSpecialStation];
+                            }
+                            this.otherTrain.push(str);
                         }
                     }
+                    // this.train = this.otherTrain[0];
+
                 },
+            },
+            watch: {
+                'selected': 'selectCampus',
             }
         })
     </script>
