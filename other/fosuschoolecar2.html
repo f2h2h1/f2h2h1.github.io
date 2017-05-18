@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>校车查询</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <h3 class="text-center">
+                    校车查询
+                </h3>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="form-group">
+                    <label for="name">选择列表</label>
+                    <select class="form-control" v-model="selected" @change="selectCampus()">
+                        <option v-for="item in campus" :value="item.number">{{item.text}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <h3 class="text-center">离下一班校车发车时间还有 {{ selected }}</h3>
+                <h3 class="text-center">{{ train }}</h3>
+                <p class="text-center">{{ stopOverSpecialStation }}</p>
+                <p class="text-center">法定节假日不发车</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
+    <script>
+        "use strict";
+        let appData = {
+            campus: [{
+                number: 0,
+                text: "本校",
+            }, {
+                number: 1,
+                text: "北院"
+            }],
+            timetable: null,
+        };
+        let app = new Vue({
+            el: '#app',
+            data: {
+                campus: [{ // 校区
+                    number: 0,
+                    text: "本校",
+                }, {
+                    number: 1,
+                    text: "北院"
+                }],
+                specialStation: [null, "东海国际", "佛山大桥"], // 需要特别注明的经停车站
+                timetable: { // 发车时间表
+                    mondayToFriday: {
+                        centerToNorth: [{
+                            depart: "7:15",
+                            stopOverSpecialStation: 1,
+                        }, {
+                            depart: "9:00",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "12:05",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "13:10",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "15:00",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "16:00",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "18:30",
+                            stopOverSpecialStation: 0,
+                        }],
+                        northToCenter: [{
+                            depart: "10:00",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "12:05",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "13:10",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "15:55",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "17:05",
+                            stopOverSpecialStation: 2,
+                        }, {
+                            depart: "17:45",
+                            stopOverSpecialStation: 2,
+                        }, {
+                            depart: "21:30",
+                            stopOverSpecialStation: 0,
+                        }],
+                    },
+                    Weekend: {
+                        centerToNorth: [{
+                            depart: "7:15",
+                            stopOverSpecialStation: 1,
+                        }, {
+                            depart: "12:00",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "17:00",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "21:00",
+                            stopOverSpecialStation: 0,
+                        }],
+                        northToCenter: [{
+                            depart: "8:00",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "13:00",
+                            stopOverSpecialStation: 0,
+                        }, {
+                            depart: "18:00",
+                            stopOverSpecialStation: 2,
+                        }, {
+                            depart: "21:30",
+                            stopOverSpecialStation: 0,
+                        }],
+                    },
+                },
+                selected: null,
+                train: null,
+                stopOverSpecialStation: null,
+            },
+            methods: {
+                selectCampus: function() {
+                    let week = new Date().getDay(); // 获取星期
+                    if (week === 0 || week === 6) { // 周末
+                        if (this.selected === 0) { // 当前位置在本校
+                            this.getTrain(this.timetable.Weekend.centerToNorth);
+                        } else { // 当前位置在北院
+                            this.getTrain(this.timetable.Weekend.northToCenter);
+                        }
+                    } else { // 周一至周五
+                        if (this.selected === 1) { // 当前位置在北院
+                            this.getTrain(this.timetable.mondayToFriday.centerToNorth);
+                        } else { // 当前位置在北院
+                            this.getTrain(this.timetable.mondayToFriday.northToCenter);
+                        }
+                    }
+                },
+                getTrain: function(timetableArray) {
+                    let myDate = new Date();
+                    let zeroPoint = new Date(new Date().toLocaleDateString()).getTime() / 1000; // 获取当天零点时间戳
+                    let nowTimestamp = Math.round(myDate.getTime() / 1000); // 获取当前时间戳
+                    console.log(nowTimestamp)
+                    let year = myDate.getFullYear(); // 获取当前年份
+                    let month = myDate.getMonth(); // 获取当前月份
+                    let day = myDate.getDate(); // 获取当前日
+                    let week = myDate.getDay() // 获取星期
+                        // console.log(timetableArray)
+                    for (let i = 0; i < timetableArray.length; i++) {
+                        let timeArray = timetableArray[i].depart.split(":", 2); // 获取具体的发车时间 时 分
+                        let tagTime = new Date(Date.UTC(year, month, day, timeArray[0] - 8, timeArray[1], 0));
+                        tagTime = tagTime.getTime() / 1000;
+                        console.log(tagTime)
+                        let waitTime = tagTime - nowTimestamp;
+                        console.log(waitTime)
+                        if (waitTime >= 0) {
+                            console.log(timetableArray[i].depart)
+                            let waitHour;
+                            let waitMinute;
+                            let waitSecond;
+                            waitSecond = waitTime % 60;
+                            waitMinute = Math.round(waitTime / 60);
+                            waitMinute = waitMinute % 60;
+                            waitHour = Math.round((waitTime / 60) / 60);
+                            console.log(waitHour)
+                            this.train = waitHour + " 小时 " + waitMinute + " 分钟 " + waitSecond + " 秒";
+                            if (timetableArray[i].stopOverSpecialStation != 0) {
+                                this.stopOverSpecialStation = "此班车经停" + this.specialStation[timetableArray[i].stopOverSpecialStation];
+                            } else {
+                                this.stopOverSpecialStation = "";
+                            }
+                            return;
+                        }
+                    }
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>
