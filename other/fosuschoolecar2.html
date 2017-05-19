@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <!--<div class="row clearfix">
+        <div class="row clearfix">
             <div class="col-md-12 column">
                 <div class="panel-group" id="accordion2">
                     <div class="panel panel-default">
@@ -69,15 +69,30 @@
                         </div>
                         <div id="collapseThree" class="panel-collapse collapse">
                             <div class="panel-body">
+                                <h4>周一到周五</h4>
+                                <h5>{{campus[0].text}}->{{campus[1].text}}</h5>
                                 <ul>
-                                    <li v-for="item in otherTrain">{{item}}</li>
+                                    <li v-for="item in timetable.mondayToFriday.centerToNorth">{{item.depart}}<span v-if="item.stopOverSpecialStation>0?true:false">&nbsp&nbsp&nbsp&nbsp经停{{specialStation[item.stopOverSpecialStation]}}</span></li>
+                                </ul>
+                                <h5>{{campus[1].text}}->{{campus[0].text}}</h5>
+                                <ul>
+                                    <li v-for="item in timetable.mondayToFriday.northToCenter">{{item.depart}}<span v-if="item.stopOverSpecialStation>0?true:false">&nbsp&nbsp&nbsp&nbsp经停{{specialStation[item.stopOverSpecialStation]}}</span></li>
+                                </ul>
+                                <h4>周六、日</h4>
+                                <h5>{{campus[0].text}}->{{campus[1].text}}</h5>
+                                <ul>
+                                    <li v-for="item in timetable.Weekend.centerToNorth">{{item.depart}}<span v-if="item.stopOverSpecialStation>0?true:false">&nbsp&nbsp&nbsp&nbsp经停{{specialStation[item.stopOverSpecialStation]}}</span></li>
+                                </ul>
+                                <h5>{{campus[1].text}}->{{campus[0].text}}</h5>
+                                <ul>
+                                    <li v-for="item in timetable.Weekend.northToCenter">{{item.depart}}<span v-if="item.stopOverSpecialStation>0?true:false">&nbsp&nbsp&nbsp&nbsp经停{{specialStation[item.stopOverSpecialStation]}}</span></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
@@ -90,7 +105,7 @@
             data: {
                 campus: [{ // 校区
                     number: 0,
-                    text: "本校",
+                    text: "本部",
                 }, {
                     number: 1,
                     text: "北院"
@@ -189,11 +204,8 @@
                     } else { // 周一至周五
                         if (this.selected === 0) { // 当前位置在本校
                             this.getTrain(this.timetable.mondayToFriday.centerToNorth);
-                            console.log(this.timetable);
                         } else { // 当前位置在北院
                             this.getTrain(this.timetable.mondayToFriday.northToCenter);
-                            console.log(this.timetable);
-                            console.log(this.selected);
                         }
                     }
                 },
@@ -201,7 +213,6 @@
                     let myDate = new Date();
                     let zeroPoint = new Date(new Date().toLocaleDateString()).getTime() / 1000; // 获取当天零点时间戳
                     let nowTimestamp = Math.round(myDate.getTime() / 1000); // 获取当前时间戳
-                    console.log(nowTimestamp)
                     let year = myDate.getFullYear(); // 获取当前年份
                     let month = myDate.getMonth(); // 获取当前月份
                     let day = myDate.getDate(); // 获取当前日
@@ -212,11 +223,8 @@
                         let timeArray = timetableArray[i].depart.split(":", 2); // 获取具体的发车时间 时 分
                         let tagTime = new Date(Date.UTC(year, month, day, timeArray[0] - 8, timeArray[1], 0));
                         tagTime = tagTime.getTime() / 1000;
-                        console.log(tagTime)
                         let waitTime = tagTime - nowTimestamp;
-                        console.log(waitTime)
                         if (waitTime >= 0) {
-                            console.log(timetableArray[i].depart)
                             let waitHour;
                             let waitMinute;
                             let waitSecond;
@@ -224,7 +232,6 @@
                             waitMinute = Math.round(waitTime / 60);
                             waitMinute = waitMinute % 60;
                             waitHour = Math.round((waitTime / 60) / 60);
-                            console.log(waitHour)
                             if (this.otherTrain.length === 0) {
                                 this.train = waitHour + " 小时 " + waitMinute + " 分钟 " + waitSecond + " 秒";
                                 if (timetableArray[i].stopOverSpecialStation != 0) {
@@ -240,6 +247,9 @@
                             }
                             this.otherTrain.push(str);
                         }
+                    }
+                    if (this.otherTrain.length === 0) {
+                        this.train = "今天已无班次";
                     }
                     // this.train = this.otherTrain[0];
 
