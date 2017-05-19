@@ -72,7 +72,7 @@
                                 <h4>周一到周五</h4>
                                 <h5>{{campus[0].text}}->{{campus[1].text}}</h5>
                                 <ul>
-                                    <li v-for="item in timetable.mondayToFriday.centerToNorth">{{item.depart}}<span v-if="item.stopOverSpecialStation>0?true:false"> &nbsp;;&nbsp;; 经停{{specialStation[item.stopOverSpecialStation]}}</span></li>
+                                    <li v-for="item in timetable.mondayToFriday.centerToNorth">{{item.depart}}<span v-if="item.stopOverSpecialStation>0?true:false"> &nbsp;&nbsp; 经停{{specialStation[item.stopOverSpecialStation]}}</span></li>
                                 </ul>
                                 <h5>{{campus[1].text}}->{{campus[0].text}}</h5>
                                 <ul>
