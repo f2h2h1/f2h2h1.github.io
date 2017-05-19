@@ -33,7 +33,9 @@
                 <h3 class="text-center">离下一班校车发车时间还有</h3>
                 <h3 class="text-center">{{ train }}</h3>
                 <p class="text-center">{{ stopOverSpecialStation }}</p>
-                <p class="text-center">法定节假日不发车</p>
+                <p class="text-center">假期及法定节假日不发车</p>
+                <p class="text-center">考试周和特殊情况校车班次、时间将有所调整</p>
+                <p class="text-center">具体情况请看学校安排</p>
             </div>
         </div>
         <div class="row clearfix">
@@ -92,6 +94,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="footer" class="container">
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div class="navbar-inner navbar-content-center">
+                    <p class="text-muted credit text-center" style="padding: 10px;" v-html="footer">
+
+                    </p>
+                </div>
+            </nav>
         </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
@@ -190,6 +201,7 @@
                 train: null,
                 stopOverSpecialStation: null,
                 otherTrain: [],
+                footer: "白兰缘© " + new Date().getFullYear() + " All Rights Reserved",
             },
             methods: {
                 selectCampus: function() {
