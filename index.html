@@ -64,7 +64,7 @@
 				success: function(result) {
 						let articleList = result;
 						let content = document.getElementById('content');
-						for (let i = 0, len = articleList.length; i < len; i++) {
+						for (let i = articleList.length - 1, len = 0; i >= len; i--) {
 							let div = document.createElement("div");
 							let a = document.createElement("a");
 							let h1 = document.createElement("h1");
