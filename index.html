@@ -8,10 +8,6 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<style>
-		/* .main {
-			margin-top: 50px;
-			padding-top: 10px;
-		} */
 		hr {
 			margin-top: 10px;
 			margin-bottom: 10px;
@@ -26,7 +22,7 @@
 	<nav class="navbar-inverse">
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="index.html">主页</a>
+				<a class="navbar-brand" href="#">主页</a>
 			</div>
 		</div>
 	</nav>
@@ -38,16 +34,15 @@
 	</div>
 
 	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- 渲染md -->
 	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 	<!-- 代码高亮 -->
-	<link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/solarized_dark.min.css">
+	<link rel="stylesheet" href="static/solarized_dark.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 	<script>
 		$(function() {
 			function getKey(key) {
-				var url = location.search.replace(/^\?/, '').split('&');
+				var url = location.hash.replace(/^\#/, '').split('&');
 				var paramsObj = {};
 				for (var i = 0, iLen = url.length; i < iLen; i++) {
 					var param = url[i].split('=');
@@ -58,56 +53,74 @@
 				};
 				return paramsObj;
 			};
-			let title = getKey("title");
-			if (title === '') {
-				$.ajax({
-				type: "GET",
-				url: "articleList.json",
-				dataType: "json",
-				success: function(result) {
-						let articleList = result;
-						let content = document.getElementById('content');
-						for (let i = articleList.length - 1, len = 0; i >= len; i--) {
-							let div = document.createElement("div");
-							let a = document.createElement("a");
-							let h1 = document.createElement("h1");
-							let h6 = document.createElement("h6");
-							let hr = document.createElement("hr");
-							let articleTitle = articleList[i].title;
+			var content = document.getElementById('content');
+			var articleList = {};
 
-							h1.innerHTML = articleTitle;
-							a.appendChild(h1);
-							a.href = "index.html?title=" + articleTitle;
+			function showArticleList() {
+				content.innerHTML = '';
+				for (let i = articleList.length - 1, len = 0; i >= len; i--) {
+					let div = document.createElement("div");
+					let a = document.createElement("a");
+					let h1 = document.createElement("h1");
+					let h6 = document.createElement("h6");
+					let hr = document.createElement("hr");
+					let articleTitle = articleList[i].title;
 
-							h6.innerHTML = articleList[i].date;
-							div.appendChild(a);
-							div.appendChild(h6);
-							div.appendChild(hr);
-							content.appendChild(div);
-						}
-					}
-				});
-			} else {
-				hljs.initHighlightingOnLoad();
-				$.ajax({
-				type: "GET",
-				url: "article/" + title + ".md",
-				dataType: "text",
-				success: function(result) {
-						marked.setOptions({
-							renderer: new marked.Renderer(),
-							highlight: function (code, lang) {
-								return hljs.highlightAuto(code).value;
-							}
-						});
-						document.getElementById('content').innerHTML = marked(result);
-						let codeBlockList = document.getElementsByTagName('code');
-						for (let i = 0, len = codeBlockList.length; i < len; i++) {
-							codeBlockList[i].className = codeBlockList[i].className + ' ' + 'hljs';
-						}
-					}
-				});
+					h1.innerHTML = articleTitle;
+					a.appendChild(h1);
+					a.href = "index.html#title=" + articleTitle;
+
+					h6.innerHTML = articleList[i].date;
+					div.appendChild(a);
+					div.appendChild(h6);
+					div.appendChild(hr);
+					content.appendChild(div);
+				}
 			}
+
+			function hashChangeFire() {
+				let title = getKey("title");
+				if (title === '') {
+					if (Object.getOwnPropertyNames(articleList).length === 0) {
+						$.ajax({
+							type: "GET",
+							url: "articleList.json",
+							dataType: "json",
+							success: function(result) {
+									articleList = result;
+									showArticleList();
+								}
+						});
+					} else {
+						showArticleList();
+					}
+				} else {
+					hljs.initHighlightingOnLoad();
+					$.ajax({
+						type: "GET",
+						url: "article/" + title + ".md",
+						// dataType: "text",
+						success: function(result) {
+								marked.setOptions({
+									renderer: new marked.Renderer(),
+									highlight: function (code, lang) {
+										return hljs.highlightAuto(code).value;
+									}
+								});
+								content.innerHTML = marked(result);
+								let codeBlockList = document.getElementsByTagName('code');
+								for (let i = 0, len = codeBlockList.length; i < len; i++) {
+									codeBlockList[i].className = codeBlockList[i].className + ' ' + 'hljs';
+								}
+							},
+						error: function() {
+							content.innerHTML = '<div class="jumbotron"><div class="container"><h1>404</h1><p><a href="javascript:history.back()">go back</a></p></div></div>';
+						}
+					});
+				}
+			}
+			hashChangeFire();
+			window.onhashchange = hashChangeFire;
 		});
 	</script>
 	<script>
