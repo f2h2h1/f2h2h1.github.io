@@ -70,7 +70,7 @@
 					a.appendChild(h1);
 					a.href = "#title=" + articleTitle;
 
-					h6.innerHTML = articleList[i].date;
+					h6.innerHTML = articleList[i].createTime;
 					div.appendChild(a);
 					div.appendChild(h6);
 					div.appendChild(hr);
@@ -99,7 +99,7 @@
 					$.ajax({
 						type: "GET",
 						url: "article/" + title + ".md",
-						// dataType: "text",
+						dataType: "text",
 						success: function(result) {
 								marked.setOptions({
 									renderer: new marked.Renderer(),
@@ -111,6 +111,10 @@
 								let codeBlockList = document.getElementsByTagName('code');
 								for (let i = 0, len = codeBlockList.length; i < len; i++) {
 									codeBlockList[i].className = codeBlockList[i].className + ' ' + 'hljs';
+								}
+								let tableList = document.getElementsByTagName('table');
+								for (let i = 0, len = tableList.length; i < len; i++) {
+									tableList[i].className = 'table';
 								}
 							},
 						error: function() {
