@@ -1,4 +1,4 @@
-# 在Windows下配置PHP服务器.md
+# 在Windows下配置PHP服务器
 
 ## 0. 目标
 - 搭建一个 wamp 服务器
