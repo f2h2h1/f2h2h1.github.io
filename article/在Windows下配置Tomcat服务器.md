@@ -12,7 +12,7 @@ https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.
 ```
 选择，Windows 64 位
 ## 2. 安装 JAVA
-打开下载的 exe 文件，一路点 next 知道安装完毕
+打开下载的 exe 文件，一路点 next 直到安装完毕
 
 ## 3. 配置 JAVA 环境变量
 1. 新建一个环境变量 JAVA_HOME ，值为 JDK 的安装目录，例子
