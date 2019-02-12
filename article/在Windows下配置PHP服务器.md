@@ -6,17 +6,20 @@
 - apache 2.4
 - MySQL 8
 - php 7.3
+
 ## 1. 下载 php
 ```plaintext
 http://php.net/downloads.php
 ```
 这里要注意，选择 7.3 版本和 ts 版， ts 版 才有这个模块 php7apache2_4.dll
+
 ## 2. 下载并安装对应版本的 vc 库
 php 7.3 的 vc 版本是 vc 15
 ```plaintext
 https://www.microsoft.com/zh-cn/download/details.aspx?id=48145
 ```
 这里要注意，选择简体中文和 64 位的版本
+
 ## 3. 配置 php
 1. 解压下载下来的压缩包
 2. 把解压后的文件夹重命名为 php
@@ -41,31 +44,37 @@ extension=sockets
 extension=sqlite3
 extension=xsl
 ```
+
 ## 4. 下载 Apache
 ```plaintext
 https://www.apachelounge.com/download/
 ```
 Apache 官方只提供源码，二进制文件都是第三方编译的，这里选择 Apache Lounge 提供的二进制文件
+
 ## 5. 配置 Apache
 1. 把 Apache 添加进环境变量
 2. 把 php 目录下的 php7apache2_4.dll 复制到 Apache 目录下的 modules
 3. 打开 Apache 的配置文件 httpd.conf，往 httpd.conf 里添加 php 的模块，httpd.conf 这个文件在 Apache 安装目录的 conf 文件夹里
-```plaintext
-LoadModule php7_module modules/php7apache2_4.dll
 
-AddHandler application/x-httpd-php .php
-PHPIniDir "C:/php"
-```
+    ```plaintext
+    LoadModule php7_module modules/php7apache2_4.dll
+
+    AddHandler application/x-httpd-php .php
+    PHPIniDir "C:/php"
+    ```
+
 这段配置，加在 httpd.conf 的 179 行左后，就是加载模块那部分的尾部
 
 4. 打开 httpd.conf，将里面的 #ServerName localhost:80 注释去掉。
+
 5. 在 httpd.conf 里找到这一段
-```plaintext
-<Directory />
-    AllowOverride none
-    Require all denied
-</Directory>
-```
+
+    ```plaintext
+    <Directory />
+        AllowOverride none
+        Require all denied
+    </Directory>
+    ```
 把这一段修改为
 ```plaintext
 <Directory />
@@ -73,6 +82,7 @@ PHPIniDir "C:/php"
     Require all granted
 </Directory>
 ```
+
 6. 把 httpd.conf 里的 #Include conf/extra/httpd-vhosts.conf 注释去掉。
 7. 打开 httpd-vhosts.conf，把里面的例子删掉
 8. 在 httpd-vhosts.conf 里添加一个站点
@@ -121,6 +131,7 @@ httpd -k stop
 Errors reported here must be corrected before the service can be started
 ```
 并不是error，而是提示：如果这行下边出现错误则解决错误后再启动！
+
 ## 6. 下载 MySQL
 0. 目标，下载 MySQL 8 的社区版的 ZIP 版本
 1. 打开 MySQL 的官网
@@ -132,6 +143,7 @@ https://dev.mysql.com/
 4. 点击 MySQL Community Server
 5. 拉到页面下面，找到 Other Downloads 选择里面的 ZIP 版本，点击 Download
 6. 点击 No thanks, just start my download
+
 ## 7. 配置 MySQL
 1. 在 C 盘的根目录下新建一个名为 mysql 的文件夹，解压下载后的文件，把文件解压到 C:/mysql （这里可以是任意目录）
 2. 把 C:/mysql/bin 添加进环境变量 Path
@@ -177,6 +189,7 @@ use mysql;
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '你的密码';
 ```
 7. MySQL 的 ZIP 版本配置起来很麻烦，会出现很容易出现各种奇怪的错误，如果可以尽量使用安装版
+
 ## 8. phpmyadmin
 1. 下载 phpmyadmin
 ```
