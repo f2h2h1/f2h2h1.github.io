@@ -63,7 +63,7 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
     PHPIniDir "C:/php"
     ```
 
-这段配置，加在 httpd.conf 的 179 行左后，就是加载模块那部分的尾部
+这段配置，加在 httpd.conf 的 179 行左右，就是加载模块那部分的尾部
 
 4. 打开 httpd.conf，将里面的 #ServerName localhost:80 注释去掉。
 
