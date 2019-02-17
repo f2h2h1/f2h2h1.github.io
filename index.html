@@ -97,6 +97,16 @@
 				}
 			}
 
+			function findArticleInfo(title) {
+				for (let i = articleList.length - 1, len = 0; i >= len; i--) {
+					if (articleList[i].title === title) {
+						return articleList[i];
+					}
+				}
+
+				return null;
+			}
+
 			function hashChangeFire() {
 				let title = getKey("title");
 				if (title === '') {
@@ -127,6 +137,7 @@
 								}
 							});
 							content.innerHTML = marked(result);
+
 							let codeBlockList = document.getElementsByTagName('code');
 							for (let i = 0, len = codeBlockList.length; i < len; i++) {
 								codeBlockList[i].className = codeBlockList[i].className + ' ' + 'hljs';
@@ -135,6 +146,13 @@
 							for (let i = 0, len = tableList.length; i < len; i++) {
 								tableList[i].className = 'table';
 							}
+
+							articleInfo = findArticleInfo(title);
+							let span = document.createElement("span");
+							let hr = document.createElement("hr");
+							span.innerHTML = "create time: " + articleInfo.createTime;
+							content.appendChild(hr);
+							content.appendChild(span);
 						},
 						error: function () {
 							content.innerHTML = '<div class="jumbotron"><div class="container"><h1>404</h1><p><a href="javascript:history.back()">go back</a></p></div></div>';
