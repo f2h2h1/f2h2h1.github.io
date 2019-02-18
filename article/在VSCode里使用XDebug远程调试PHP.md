@@ -1,8 +1,8 @@
-# 在 VSCode 里使用 XDebug 远程调试 PHP
+# 在 VSCode 里使用 Xdebug 远程调试 PHP
 
 ## 0.
 1. 本地的 VSCode 需要安装好 PHP Extension Pack
-2. 远程服务器的 PHP 需要正确安装好 XDebug 拓展
+2. 远程服务器的 PHP 需要正确安装好 Xdebug 拓展
 3. 需要额外的一部服务器用作代理
 4. 因为一般本地开发的电脑不会有公网 ip ，所以这里多加了一部服务器用作代理
 5. 请求的流程
@@ -10,28 +10,29 @@
 用户->服务器->php->代理服务器->VSCode
 ```
 
-## 1. 远程服务器的 PHP 安装 XDebug 拓展
+## 1. 远程服务器的 PHP 安装 Xdebug 拓展
 1. 在命令行里运行
 ```plaintext
 php -i
 ```
-2. 打开这个网址 https://xdebug.org/wizard.php 把第一步输出的结果复制进去，然后获得对应版本 XDebug 的下载地址，当然如果你知道熟悉 PHP 的版本也可以直接选择相应的版本下载
-3. 解压下载后的压缩包，把 XDebug 的拓展复制进 PHP 的拓展目录里，PHP 的拓展目录一般是安装目录里的 ext 文件夹
+2. 打开这个网址 https://xdebug.org/wizard.php 把第一步输出的结果复制进去，然后获得对应版本 Xdebug 的下载地址，当然如果你知道熟悉 PHP 的版本也可以直接选择相应的版本下载
+3. 解压下载后的压缩包，把 Xdebug 的拓展复制进 PHP 的拓展目录里，PHP 的拓展目录一般是安装目录里的 ext 文件夹
 
 ## 2. 修改 php.ini
 在 php.ini 的最后加上如下内容
 ```plaintext
-[XDebug]
-; XDebug 拓展路径
+[Xdebug]
+; Xdebug 拓展路径
 zend_extension=""
-; 调试输出路径
+; 分析器输出路径
 xdebug.profiler_output_dir=""
-xdebug.remote_log = ""
+; 日志路径
+xdebug.remote_log=""
 ; 跟踪输出路径
 xdebug.trace_output_dir=""
 ; 是否开启远程调试
 xdebug.remote_enable=on
-; 是否开启调试内容
+; 是否开启分析器
 xdebug.profiler_enable=on
 ; 允许调试的客户端IP
 xdebug.remote_host=127.0.0.1
@@ -43,14 +44,17 @@ xdebug.remote_autostart=on
 xdebug.show_local_vars = on
 ; 显示默认的错误信息
 xdebug.default_enable = on
+; ide key
+xdebug.idekey = "vscode"
 ```
 请根据实际填写以下参数
 ```plaintext
-; XDebug 拓展路径
+; Xdebug 拓展路径
 zend_extension=""
-; 调试输出路径
+; 分析器输出路径
 xdebug.profiler_output_dir=""
-xdebug.remote_log = ""
+; 日志路径
+xdebug.remote_log=""
 ; 跟踪输出路径
 xdebug.trace_output_dir=""
 ; 允许调试的客户端 IP
@@ -98,7 +102,7 @@ frpc -c frpc.ini
 0. 安装 VSCode 的 PHP 拓展包，在 VSCode 的拓展里搜索 PHP Extension Pack 然后选择安装即可
 1. 使用 VSCode 打开需要调试的 PHP 项目的目录
 2. 添加一个调试配置，在环境选择的时候选 PHP
-3. 在新建的配置里，添加两个值 localSourceRoot 和 serverSourceRoot ，localSourceRoot是本地代码路径， serverSourceRoot 是服务器代码的路径， XDebug 需要路径一致才能击中断点，调试时 localSourceRoot 会映射为 serverSourceRoot。
+3. 在新建的配置里，添加两个值 localSourceRoot 和 serverSourceRoot ，localSourceRoot是本地代码路径， serverSourceRoot 是服务器代码的路径， Xdebug 需要路径一致才能击中断点，调试时 localSourceRoot 会映射为 serverSourceRoot。
 4. 把 port 的值修改为 frpc.ini 的 local_port 一样的值
 5. 完整的配置
 ````json
