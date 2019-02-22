@@ -94,8 +94,10 @@ find –name nginx.conf
 find / -name mysql -type d
 ```
 
-创建test.c这个文件
+- 创建test.c这个文件
+```shell
 touch test.c
+```
 
 - 新建一个文件夹
 ```shell
