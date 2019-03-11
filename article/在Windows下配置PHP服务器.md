@@ -202,3 +202,29 @@ https://www.phpmyadmin.net/
 $cfg['blowfish_secret'] = ''
 ```
 这个值的长度要大于 64
+
+## 9. composer
+1. 下载安装脚本
+```
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+```
+
+3. 安装
+```
+php composer-setup.php
+```
+
+4. 删除安装脚本
+```
+php -r "unlink('composer-setup.php');"
+```
+
+5. 使用中国镜像
+```
+composer config -g repo.packagist composer https://packagist.phpcomposer.com
+```
+
+6. 在 PHP 的文件夹下新建一个名为 composer.bat 的文件，把以下内容复制进去，然后保存
+```
+@php "%~dp0composer.phar" %*
+```
