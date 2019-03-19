@@ -69,12 +69,12 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
 
 5. 在 httpd.conf 里找到这一段
 
-    ```plaintext
-    <Directory />
-        AllowOverride none
-        Require all denied
-    </Directory>
-    ```
+```plaintext
+<Directory />
+    AllowOverride none
+    Require all denied
+</Directory>
+```
 把这一段修改为
 ```plaintext
 <Directory />
