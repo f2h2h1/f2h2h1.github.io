@@ -380,3 +380,62 @@ curl.cainfo="php目录/extras/ssl/ca-bundle.crt"
  // create_function('$cfgValue', 'return (int) $cfgValue === 0;'),
 function ($cfgValue) {return (int) $cfgValue === 0;},
 ```
+
+## git 相关
+
+- 在当前目录创建 git 仓库
+```
+git init
+```
+
+- 把文件添加到暂存区
+```
+git add 文件名
+```
+
+- 把暂存区的内容提交到当前分支
+```
+git commit -m "这是注释"
+```
+
+- 克隆远程仓库
+```
+git clone 远程仓库地址
+```
+
+- 克隆到指定的目录
+```
+git clone 远程仓库地址 目录
+```
+
+- 把远程仓库的修改更新到本地
+```
+git pull
+```
+
+- 把本地修改推送到远程仓库，master 是远程分支名，这里可以替换成其它分支名
+```
+git push origin master
+```
+
+- 新建 git 分支
+```
+git branch 分支名
+```
+
+- 切换到分支
+```
+git checkout 分支名
+```
+
+- 查看本地分支
+```
+git branch
+```
+
+- 查看所有分支
+```
+git branch -a
+```
+
+- 运行git命令时，遇到end符号且不能退出时，可以尝试按下键盘的q键
