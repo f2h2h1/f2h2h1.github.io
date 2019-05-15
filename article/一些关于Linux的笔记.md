@@ -267,8 +267,7 @@ ls -l 文件名或目录名
 
 - 如何理阶 ls -l 的输出
 ```shell
--rwxrwxrwx
-
+ -rwxrwxrwx
 第一位是 d 或 -
 代表目录或文件
 接着三位是所有者的权限
@@ -277,7 +276,7 @@ ls -l 文件名或目录名
 r 读 4
 w 写 2
 x 执行 1
-- 无权限 0
+ -无权限 0
 ```
 
 - linux修改文件权限
@@ -310,21 +309,18 @@ kill pid
 - linux 查看用户
 ```shell
 cat /etc/passwd
-
 用户名:密码:UID:GID:用户信息:HOME目录路径:用户shell
 ```
 
 - linux 查看用户组
 ```shell
 cat /etc/group
-
 用户组名:组密码:GID:组内帐号（多个帐号用逗号分隔）
 ```
 
 - mobaxterm ssh连接设置不超时
 ```
 原因：服务器为了节省资源采取了一些措施，其中一条就是如果检测一个会话(session)几分钟或者几小时没有数据流入或者流出就会断开这个链接；
-
 解决方案：设置SSH keepalive，settings->configuration->SSH->Sessions Settings->勾选SSH keepalive；
 ```
 
