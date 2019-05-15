@@ -435,3 +435,45 @@ git branch -a
 ```
 
 - 运行git命令时，遇到end符号且不能退出时，可以尝试按下键盘的q键
+
+- git 删除本地分支
+```
+git branch -D 分支名
+```
+
+- 合并本地分支，把 某个分支 合并到当前分支
+```
+git merge 分支名
+```
+
+- 合并远程分支，把 某个分支 合并到当前分支
+```
+git merge 远程仓库名/分支名
+```
+
+- 查看git日志
+```
+git log
+```
+
+- 新增远程仓库
+```
+git remote add 远程仓库名 远程仓库地址
+例子
+git remote add test3 ssh://username@127.0.0.1//alidata/www/.git
+```
+
+- 推送到不是 origin 的远程仓库
+```
+git push 远程仓库名
+```
+
+- 拉取不是 origin 的远程仓库
+```
+git pull 远程仓库名
+```
+
+- 查看远程仓库信息
+```
+git remote -v
+```
