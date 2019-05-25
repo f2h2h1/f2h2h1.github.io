@@ -1,272 +1,272 @@
 # 一些关于 Linux 的笔记
 
 - 查看守护进程
-```shell
+````shell
 ps -x
-```
+````
 
 - 查看linux的80端口是否关闭
-```shell
+````shell
 netstat -an | grep :80
-```
+````
 
 - 将文件mirror重命名为php-7.1.0.tar.gz
-```shell
+````shell
 mv mirror php-7.1.0.tar.gz
-```
+````
 
 - linux下查找nginx里的nginx.conf文件地址方法
-```shell
+````shell
 nginx -t
-```
+````
 
 - 下载文件
-```shell
+````shell
 wget http://cn2.php.net/get/php-7.1.0.tar.gz/from/this/mirror
-```
+````
 
 - 显示当前路径
-```shell
+````shell
 pwd
-```
+````
 
 - 查看 ip
-```shell
+````shell
 ip addr
 ifconfig
-```
+````
 
 - 查看系统负载
-```shell
+````shell
 top
 vmstat
 w
 uptime
-```
+````
 
 - 查看磁盘负载
-```shell
+````shell
 iostat
-```
+````
 
 - 查看 linux 版本
-```shell
+````shell
 uname -a
-```
+````
 
 - 查看 centos 版本
-```shell
+````shell
 cat /etc/redhat-release
-```
+````
 
 - 把 mynginx 目录下的文件打包
-```shell
+````shell
 tar -cf mynginx4.tar mynginx/*
-```
+````
 
 - 将多个文件打包成一个tar
-```shell
+````shell
 tar -cf d.tar a b c
-```
+````
 
 - 解压tar文件
-```shell
+````shell
 tar -xf all.tar
-```
+````
 
 - 解压tar文件到指定目录
-```shell
+````shell
 tar -xf bbs.tar -C /zzz/bbs
-```
+````
 
 - 通过文件名查找文件
-```shell
+````shell
 find / -name httpd.conf
-```
+````
 
 - 查找某个文件
-```shell
+````shell
 find –name nginx.conf
-```
+````
 
 - 查找某个文件夹
-```shell
+````shell
 find / -name mysql -type d
-```
+````
 
 - 创建test.c这个文件
-```shell
+````shell
 touch test.c
-```
+````
 
 - 新建一个文件夹
-```shell
+````shell
 mkdir 文件夹名
-```
+````
 
 - 更新yum仓库
-```shell
+````shell
 yum -y update
-```
+````
 
 - linux下重命名文件或文件夹的命令mv既可以重命名，又可以移动文件或文件夹.
-```shell
+````shell
 例子：将目录A重命名为B
 mv A B
 例子：将/a目录移动到/b下，并重命名为c
 mv /a /b/c
-```
+````
 
 - 查找当前系统是否已经安装sshd
-```shell
+````shell
 rpm -qa |grep ssh 
-```
+````
 
 - linux 查看已安装软件
-```shell
+````shell
 rpm -qa
-```
+````
 
 - 处理木马程序可能要用到的命令
-```shell
+````shell
 top
 ps
 lsof
-```
+````
 
 - 查看由网络连接的进程
-```shell
+````shell
 lsof -i
-```
+````
 
 - 查看所有进程
-```shell
+````shell
 ps -ef
-```
+````
 
 - 使用-p查看指定进程ID已打开的内容
-```shell
+````shell
 lsof -p 10075
-```
+````
 
 - 安装某个 包/库/软件
-```shell
+````shell
 yum –y httpd-devel
-```
+````
 
 - 返回上一级目录
-```shell
+````shell
 cd ..
-```
+````
 
 - 将 /home/user1目录下的所有东西拷到/root/temp/下而不拷贝user1目录本身。
 即格式为：cp -Rf 原路径/ 目的路径/
-```shell
+````shell
 cp -Rf /home/user1/* /root/temp/
-```
+````
 
 - 复制文件夹
-```shell
+````shell
 cp -R data /root
-```
+````
 
 - 立刻重启(root用户使用)
-```shell
+````shell
 shutdown -r now
-```
+````
 
 - 普通 curl
-```shell
+````shell
 curl -i http://localhost
-```
+````
 
 - post数据的 curl
-```shell
+````shell
 curl -i -d a=asd 127.0.0.1
-```
+````
 
 - 列出文件夹里的文件
-```shell
+````shell
 ls
 ll
-```
+````
 
 - 关闭端口
-```shell
+````shell
 iptables -A INPUT -p tcp --dport 111 -j DROP
-```
+````
 
 - 打开端口
-```shell
+````shell
 iptables -A INPUT -p tcp --dport 111 -j ACCEPT
-```
+````
 
 - 删除文件
-```shell
+````shell
 rm 文件名
-```
+````
 
 - 删除文件夹，只能删除空文件夹
-```shell
+````shell
 rm -d 文件夹名
-```
+````
 
 - 删除文件夹下的全部内容，文件夹里每个文件都需要确认一次
-```shell
+````shell
 rm -r 文件夹名
-```
+````
 
 - 删除文件夹，不需要确认
-```shell
+````shell
 rm –rf 文件夹名
-```
+````
 
 - 安装openssh-sever服务器
-```shell
+````shell
 yum install openssh-server
-```
+````
 
 - 查看正在开放的端口
-```shell
+````shell
 netstat -tanp
-```
+````
 
 - 处理木马程序可能要用到的命令
-```shell
+````shell
 top
 ps
 lsof
-```
+````
 
 - 查看由网络连接的进程
-```shell
+````shell
 lsof -i
-```
+````
 
 - 使用-p查看指定进程ID已打开的内容
-```shell
+````shell
 lsof -p 10075
-```
+````
 
 - 解压tar.xz文件，先 xz -d xxx.tar.xz 将 xxx.tar.xz解压成 xxx.tar 然后，再用 tar xvf xxx.tar来解包
-```shell
+````shell
 xz -d xxx.tar.xz
 tar xvf xxx.tar
-```
+````
 
 - 创建tar.xz文件，要先 tar cvf xxx.tar xxx/ 这样创建xxx.tar文件先，然后使用 xz -z xxx.tar 来将 xxx.tar压缩成为 xxx.tar.xz
-```shell
+````shell
 tar cvf xxx.tar xxx/
 xz -z xxx.tar
-```
+````
 
 - linux查看权限
-```shell
+````shell
 ls -l 文件名或目录名
-```
+````
 
 - 如何理阶 ls -l 的输出
-```shell
+````shell
  -rwxrwxrwx
 第一位是 d 或 -
 代表目录或文件
@@ -277,84 +277,84 @@ r 读 4
 w 写 2
 x 执行 1
  -无权限 0
-```
+````
 
 - linux修改文件权限
-```shell
+````shell
 chmod 数字 文件名
-```
+````
 
 - 给修改目录下所有文件和子目录的权限
-```shell
+````shell
 chmod -R 数字 目录名
 例子
 chmod -R 777 ci3
-```
+````
 
 - linux 后台运行
-```shell
+````shell
 nohup 命令 &
-```
+````
 
 - 查看命令是否在运行
-```shell
+````shell
 ps -ef | gerp 命令
-```
+````
 
 - 停止进程， pid 通过 查看命令是否在运行 获取
-```shell
+````shell
 kill pid
-```
+````
 
 - linux 查看用户
-```shell
+````shell
 cat /etc/passwd
 用户名:密码:UID:GID:用户信息:HOME目录路径:用户shell
-```
+````
 
 - linux 查看用户组
-```shell
+````shell
 cat /etc/group
 用户组名:组密码:GID:组内帐号（多个帐号用逗号分隔）
-```
+````
 
 - mobaxterm ssh连接设置不超时
-```
+````
 原因：服务器为了节省资源采取了一些措施，其中一条就是如果检测一个会话(session)几分钟或者几小时没有数据流入或者流出就会断开这个链接；
 解决方案：设置SSH keepalive，settings->configuration->SSH->Sessions Settings->勾选SSH keepalive；
-```
+````
 
 ## php 相关
 
 - 安装php-fpm
-```shell
+````shell
 yum –y install php-fpm
-```
+````
 
 - 测试 php-fpm 是否安装成功
-```shell
+````shell
 php-fpm -t
-```
+````
 
 - 查看 php 配置文件的目录
-```shell
+````shell
 php -ini
-```
+````
 
 - 启动 php 进程服务
-```shell
+````shell
 service php-fpm start
-```
+````
 
 - 查看 php 进程服务是否启动成功
-```shell
+````shell
 ps -aux|grep php
-```
+````
 
 - 查看 php 安装路径
-```shell
+````shell
 whereis php
-```
+````
 
 - 当php的curl遇到这种问题时
 curl: (60) SSL certificate problem: unable to get local issuer certificate
@@ -370,110 +370,128 @@ curl.cainfo="php目录/extras/ssl/ca-bundle.crt"
 - 如何替换 symfony 4.2 以下版本的 create_function
 1. 全局搜索 create_function
 2. 把 create_function 替换为匿名函数
-```
+````
 例子
 
  // create_function('$cfgValue', 'return (int) $cfgValue === 0;'),
 function ($cfgValue) {return (int) $cfgValue === 0;},
-```
+````
+
+- 使用 composer 自动加载
+1. 在 composer.json 里添加一项， Acme 是名命空间， src/ 是路径
+````json
+    "autoload": {
+        "psr-4": {"Acme\\": "src/"}
+    }
+````
+2. 在命令行里运行
+````shell
+composer dump-autoload
+````
+3. 也可在代码里添加名命空间，像这样
+````php
+$loader = require 'vendor/autoload.php';
+$loader->add('Acme\\Test\\', __DIR__);
+````
+
 
 ## git 相关
 
 - 在当前目录创建 git 仓库
-```
+````
 git init
-```
+````
 
 - 把文件添加到暂存区
-```
+````
 git add 文件名
-```
+````
 
 - 把暂存区的内容提交到当前分支
-```
+````
 git commit -m "这是注释"
-```
+````
 
 - 克隆远程仓库
-```
+````
 git clone 远程仓库地址
-```
+````
 
 - 克隆到指定的目录
-```
+````
 git clone 远程仓库地址 目录
-```
+````
 
 - 把远程仓库的修改更新到本地
-```
+````
 git pull
-```
+````
 
 - 把本地修改推送到远程仓库，master 是远程分支名，这里可以替换成其它分支名
-```
+````
 git push origin master
-```
+````
 
 - 新建 git 分支
-```
+````
 git branch 分支名
-```
+````
 
 - 切换到分支
-```
+````
 git checkout 分支名
-```
+````
 
 - 查看本地分支
-```
+````
 git branch
-```
+````
 
 - 查看所有分支
-```
+````
 git branch -a
-```
+````
 
 - 运行git命令时，遇到end符号且不能退出时，可以尝试按下键盘的q键
 
 - git 删除本地分支
-```
+````
 git branch -D 分支名
-```
+````
 
 - 合并本地分支，把 某个分支 合并到当前分支
-```
+````
 git merge 分支名
-```
+````
 
 - 合并远程分支，把 某个分支 合并到当前分支
-```
+````
 git merge 远程仓库名/分支名
-```
+````
 
 - 查看git日志
-```
+````
 git log
-```
+````
 
 - 新增远程仓库
-```
+````
 git remote add 远程仓库名 远程仓库地址
 例子
 git remote add test3 ssh://username@127.0.0.1//alidata/www/.git
-```
+````
 
 - 推送到不是 origin 的远程仓库
-```
+````
 git push 远程仓库名
-```
+````
 
 - 拉取不是 origin 的远程仓库
-```
+````
 git pull 远程仓库名
-```
+````
 
 - 查看远程仓库信息
-```
+````
 git remote -v
-```
+````
