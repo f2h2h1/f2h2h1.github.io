@@ -7,7 +7,7 @@
 4. 因为一般本地开发的电脑不会有公网 ip ，所以这里多加了一部服务器用作代理
 5. 请求的流程
 ```plaintext
-用户->服务器->php->代理服务器->VSCode
+客户端->服务器->php->代理服务器->VSCode
 ```
 
 ## 1. 远程服务器的 PHP 安装 Xdebug 拓展
@@ -65,11 +65,12 @@ xdebug.remote_port=9002
 这里的 允许调试的客户端 IP 就是代理服务器的 IP，远程调试的端口 就是代理服务器的端口
 
 ## 3. 配置代理服务器
-1. 下载 frp 到代理服务器里，这是使用的是 frp 0.22.0，https://github.com/fatedier/frp/releases
+1. 下载 frp 到代理服务器里，这是使用的是 frp 0.29.0，https://github.com/fatedier/frp/releases
 2. 新建一个 frps.ini 文件，并添加以下内容
 ````ini
 [common]
 bind_port = 7080
+token = sl12321dfkjsldfjsld3
 ````
 
 3. 启动 frp
@@ -85,13 +86,14 @@ frps -c frps.ini
 [common]
 server_addr = 192.168.xxx.xxx
 server_port = 7080
+token = sl12321dfkjsldfjsld3
 [xdebug]
 type = tcp
 local_ip = 0.0.0.0
 local_port = 9098
 remote_port = 9098
 ````
-server_addr 填的是代理服务器的 ip ，server_port 需要和代理服务器的端口一致
+server_addr 填的是代理服务器的 ip ，server_port 需要和代理服务器的端口一致，服务器的 token 和本地的 token 需要一致
 
 3. 启动 frp
 ````plaintext
@@ -112,7 +114,10 @@ frpc -c frpc.ini
     "request": "launch",
     "localSourceRoot": "D:\\phpStudy\\PHPTutorial\\WWW",
     "serverSourceRoot": "C:\\phpStudy\\PHPTutorial\\WWW",
-    "port": 9098
+    "port": 9098,
+    "env": {
+        "DBGP_IDEKEY":"vscode"
+    }
 }
 ````
 
