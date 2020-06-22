@@ -75,7 +75,7 @@ docker cp nginx:/etc/nginx ./config/
 vi ./config/nginx/conf.d/default.conf
 ```
 
-把 default.conf 文件改成这样子
+2. 把 default.conf 文件改成这样子
 ```
 server {
     listen       80;
