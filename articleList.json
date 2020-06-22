@@ -63,5 +63,10 @@
 		"title": "mongodb分片",
 		"createTime": "2020/06/20 00:46:30",
 		"updateTime": ""
+	},
+	{
+		"title": "用docker-compose部署lnmp环境",
+		"createTime": "2020/06/22 21:44:30",
+		"updateTime": ""
 	}
 ]
