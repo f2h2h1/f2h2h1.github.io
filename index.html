@@ -41,7 +41,7 @@
 	<footer class="footer">
 		<div class="container">
 			<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-				<img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
+				<img alt="知识共享许可协议" style="border-width:0" src="static/cc4.0.png" />
 			</a>
 			<br>
 			本作品采用
@@ -53,9 +53,6 @@
 	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 	<!-- 渲染md -->
 	<script src="static/marked.min.js"></script>
-	<!-- 代码高亮 -->
-	<link rel="stylesheet" href="static/solarized_dark.min.css">
-	<script src="static/highlight.min.js"></script>
 	<script>
 		$(function () {
 			function getKey(key) {
@@ -122,24 +119,12 @@
 						showArticleList();
 					}
 				} else {
-					hljs.initHighlightingOnLoad();
 					$.ajax({
 						type: "GET",
 						url: "article/" + title + ".md",
 						dataType: "text",
 						success: function (result) {
-							marked.setOptions({
-								renderer: new marked.Renderer(),
-								highlight: function (code, lang) {
-									return hljs.highlightAuto(code).value;
-								}
-							});
 							content.innerHTML = marked(result);
-
-							let codeBlockList = document.getElementsByTagName('code');
-							for (let i = 0, len = codeBlockList.length; i < len; i++) {
-								codeBlockList[i].className = codeBlockList[i].className + ' ' + 'hljs';
-							}
 							let tableList = document.getElementsByTagName('table');
 							for (let i = 0, len = tableList.length; i < len; i++) {
 								tableList[i].className = 'table';
