@@ -32,7 +32,7 @@
 		}
 
 		.footer {
-			margin-top: 50px;
+			margin-top: 25px;
 			width: 100%;
 			height: 60px;
 		}
@@ -56,7 +56,7 @@
 	<footer class="footer">
 		<div class="container">
 			<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-				<img alt="知识共享许可协议" style="border-width:0" src="static/cc4.0.webp" />
+				<img alt="知识共享许可协议" src="static/cc4.0.webp" />
 			</a>
 			本作品采用
 			<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
@@ -95,6 +95,19 @@
 				};
 				return paramsObj;
 			};
+			function timetostr(timestamp) {
+				return new Date(parseInt(timestamp + '000')).toLocaleString();
+			}
+			function timespan(articleInfo) {
+				if (!articleInfo.createTime || !articleInfo.updateTime) {
+					return '';
+				}
+				return 'create time: ' + timetostr(articleInfo.createTime) + '&nbsp&nbsp update time: ' + timetostr(articleInfo.updateTime);
+			}
+			function topFunction() {
+				document.body.scrollTop = 0;
+				document.documentElement.scrollTop = 0;
+			}
 			var content = document.getElementById('content');
 			var articleList = {};
 
@@ -123,21 +136,21 @@
 			async function showArticleList() {
 				let articleList = await getArticleList();
 				content.innerHTML = '';
-				for (let i = articleList.length - 1, len = 0; i >= len; i--) {
+				for (let i = 0, len = articleList.length ; i < len; i++) {
 					let div = document.createElement("div");
 					let a = document.createElement("a");
-					let h1 = document.createElement("h1");
-					let h6 = document.createElement("h6");
+					let h2 = document.createElement("h2");
+					let p = document.createElement("p");
 					let hr = document.createElement("hr");
 					let articleTitle = articleList[i].title;
 
-					h1.innerHTML = articleTitle;
-					a.appendChild(h1);
+					h2.innerHTML = articleTitle;
+					a.appendChild(h2);
 					a.href = "#title=" + articleTitle;
 
-					h6.innerHTML = articleList[i].createTime;
+					p.innerHTML = timespan(articleList[i]);
 					div.appendChild(a);
-					div.appendChild(h6);
+					div.appendChild(p);
 					div.appendChild(hr);
 					content.appendChild(div);
 				}
@@ -165,6 +178,7 @@
 						dataType: "text",
 						success: function (result) {
 							content.innerHTML = marked(result);
+							topFunction();
 							let tableList = document.getElementsByTagName('table');
 							for (let i = 0, len = tableList.length; i < len; i++) {
 								tableList[i].className = 'table';
@@ -173,7 +187,7 @@
 							articleInfo = findArticleInfo(title);
 							let span = document.createElement("span");
 							let hr = document.createElement("hr");
-							span.innerHTML = "create time: " + articleInfo.createTime;
+							span.innerHTML = timespan(articleInfo);
 							content.appendChild(hr);
 							content.appendChild(span);
 						},

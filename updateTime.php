@@ -16,11 +16,15 @@ foreach (glob('article/*.md') as $item) {
         }
         $articleList[] = [
             'title' => basename($item),
-            'createTime' => $createTime,
-            'updateTime' => $updateTime,
+            'createTime' => strtotime($createTime),
+            'updateTime' => strtotime($updateTime),
         ];
     }
 }
+
+usort($articleList, function ($a, $b) {
+    return ($a['createTime'] > $b['createTime']) ? -1 : 1;
+});
 
 // echo json_encode($articleList, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
