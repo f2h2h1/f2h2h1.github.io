@@ -8,6 +8,12 @@
             "type": "shell",
             "command": "php updateTime.php",
             "problemMatcher": []
+        },
+        {
+            "label": "start test server",
+            "type": "shell",
+            "command": "php -S 127.0.0.1:9012",
+            "problemMatcher": []
         }
     ]
 }
