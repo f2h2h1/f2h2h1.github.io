@@ -1,0 +1,4 @@
+{
+    "pasteImage.path": "${projectRoot}/static/img/",
+    "pasteImage.namePrefix": "md_"
+}
