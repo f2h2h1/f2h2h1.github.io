@@ -16,6 +16,11 @@
 			}
 		}
 
+		pre {
+			background-color: #363434;
+			color: #f5f5f5;
+		}
+
 		hr {
 			margin-top: 10px;
 			margin-bottom: 10px;
@@ -93,7 +98,30 @@
 			var content = document.getElementById('content');
 			var articleList = {};
 
-			function showArticleList() {
+			async function getArticleList() {
+				if (Object.getOwnPropertyNames(articleList).length === 0) {
+					articleList = await (function(){
+						return new Promise((resolve, reject) => {
+							$.ajax({
+								type: "GET",
+								url: "articleList.json",
+								dataType: "json",
+								success: (data, textStatus) => {
+									resolve(data);
+								},
+								error: (XMLHttpRequest, textStatus, errorThrown) => {
+									reject({});
+								}
+							});
+						});
+					})();
+				}
+
+				return articleList;
+			}
+
+			async function showArticleList() {
+				let articleList = await getArticleList();
 				content.innerHTML = '';
 				for (let i = articleList.length - 1, len = 0; i >= len; i--) {
 					let div = document.createElement("div");
@@ -116,6 +144,7 @@
 			}
 
 			function findArticleInfo(title) {
+				// let articleList = await getArticleList();
 				for (let i = articleList.length - 1, len = 0; i >= len; i--) {
 					if (articleList[i].title === title) {
 						return articleList[i];
@@ -128,23 +157,11 @@
 			function hashChangeFire() {
 				let title = getKey("title");
 				if (title === '') {
-					if (Object.getOwnPropertyNames(articleList).length === 0) {
-						$.ajax({
-							type: "GET",
-							url: "articleList.json",
-							dataType: "json",
-							success: function (result) {
-								articleList = result;
-								showArticleList();
-							}
-						});
-					} else {
-						showArticleList();
-					}
+					showArticleList();
 				} else {
 					$.ajax({
 						type: "GET",
-						url: "article/" + title + ".md",
+						url: "article/" + title,
 						dataType: "text",
 						success: function (result) {
 							content.innerHTML = marked(result);
@@ -152,7 +169,7 @@
 							for (let i = 0, len = tableList.length; i < len; i++) {
 								tableList[i].className = 'table';
 							}
-
+							title = decodeURIComponent(title);
 							articleInfo = findArticleInfo(title);
 							let span = document.createElement("span");
 							let hr = document.createElement("hr");
@@ -166,8 +183,10 @@
 					});
 				}
 			}
+			getArticleList();
 			hashChangeFire();
-			window.onhashchange = hashChangeFire;
+			// window.onhashchange = hashChangeFire;
+			window.addEventListener('hashchange', hashChangeFire);
 		});
 	</script>
 	<script>
