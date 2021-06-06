@@ -9,6 +9,13 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<style>
+		@media (prefers-color-scheme: dark) {
+			body {
+				background-color: black;
+				color: gray;
+			}
+		}
+
 		hr {
 			margin-top: 10px;
 			margin-bottom: 10px;
@@ -33,6 +40,9 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">主页</a>
 			</div>
+			<div class="navbar-form navbar-right">
+				<button class="btn btn-default" id="theme_btn">切换主题</button>
+			</div>
 		</div>
 	</nav>
 	<article class="container" id="content">
@@ -41,9 +51,8 @@
 	<footer class="footer">
 		<div class="container">
 			<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-				<img alt="知识共享许可协议" style="border-width:0" src="static/cc4.0.png" />
+				<img alt="知识共享许可协议" style="border-width:0" src="static/cc4.0.webp" />
 			</a>
-			<br>
 			本作品采用
 			<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
 			进行许可。
@@ -55,6 +64,20 @@
 	<script src="static/marked.min.js"></script>
 	<script>
 		$(function () {
+			var themeFlg = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			function changeTheme() {
+				if (themeFlg) {
+					themeFlg = false;
+					document.body.style.backgroundColor = 'white';
+					document.body.style.color = 'black';
+				} else {
+					themeFlg = true;
+					document.body.style.backgroundColor = 'black';
+					document.body.style.color = 'gray';
+				}
+			}
+			document.getElementById('theme_btn').addEventListener('click', changeTheme);
+
 			function getKey(key) {
 				var url = location.hash.replace(/^\#/, '').split('&');
 				var paramsObj = {};
