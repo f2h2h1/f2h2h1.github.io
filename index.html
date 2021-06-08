@@ -99,10 +99,25 @@
 				return new Date(parseInt(timestamp + '000')).toLocaleString();
 			}
 			function timespan(articleInfo) {
-				if (!articleInfo.createTime || !articleInfo.updateTime) {
-					return '';
+				let div = document.createElement('div');
+				div.classList.add('row');
+				function createCol(str) {
+					let col = document.createElement('div');
+					col.classList.add('col-lg-3');
+					col.classList.add('col-md-4');
+					col.classList.add('col-sm-6');
+					col.classList.add('col-xs-12');
+					col.innerHTML = str;
+					return col;
 				}
-				return 'create time: ' + timetostr(articleInfo.createTime) + '&nbsp&nbsp update time: ' + timetostr(articleInfo.updateTime);
+				if (articleInfo.createTime) {
+					div.appendChild(createCol('create time: ' + timetostr(articleInfo.createTime)));
+				}
+				if (articleInfo.updateTime) {
+					div.appendChild(createCol('update time: ' + timetostr(articleInfo.updateTime)));
+				}
+				return div;
+				// return 'create time: ' + timetostr(articleInfo.createTime) + '&nbsp&nbsp update time: ' + timetostr(articleInfo.updateTime);
 			}
 			function topFunction() {
 				document.body.scrollTop = 0;
@@ -140,7 +155,6 @@
 					let div = document.createElement("div");
 					let a = document.createElement("a");
 					let h2 = document.createElement("h2");
-					let p = document.createElement("p");
 					let hr = document.createElement("hr");
 					let articleTitle = articleList[i].title;
 
@@ -148,9 +162,8 @@
 					a.appendChild(h2);
 					a.href = "#title=" + articleTitle;
 
-					p.innerHTML = timespan(articleList[i]);
 					div.appendChild(a);
-					div.appendChild(p);
+					div.appendChild(timespan(articleList[i]));
 					div.appendChild(hr);
 					content.appendChild(div);
 				}
@@ -187,9 +200,8 @@
 							articleInfo = findArticleInfo(title);
 							let span = document.createElement("span");
 							let hr = document.createElement("hr");
-							span.innerHTML = timespan(articleInfo);
 							content.appendChild(hr);
-							content.appendChild(span);
+							content.appendChild(timespan(articleInfo));
 						},
 						error: function () {
 							content.innerHTML = '<div class="jumbotron"><div class="container"><h1>404</h1><p><a href="javascript:history.back()">go back</a></p></div></div>';
