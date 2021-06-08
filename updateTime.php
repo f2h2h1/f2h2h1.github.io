@@ -15,7 +15,7 @@ foreach (glob('article/*.md') as $item) {
             $updateTime = $output[0];
         }
         $articleList[] = [
-            'title' => basename($item),
+            'title' => pathinfo($item, PATHINFO_FILENAME),
             'createTime' => strtotime($createTime),
             'updateTime' => strtotime($updateTime),
         ];

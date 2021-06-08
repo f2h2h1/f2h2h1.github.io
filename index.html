@@ -174,7 +174,7 @@
 				} else {
 					$.ajax({
 						type: "GET",
-						url: "article/" + title,
+						url: "article/" + title + '.md',
 						dataType: "text",
 						success: function (result) {
 							content.innerHTML = marked(result);
