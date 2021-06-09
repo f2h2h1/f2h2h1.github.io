@@ -36,6 +36,45 @@
 			width: 100%;
 			height: 60px;
 		}
+
+		@keyframes d2l {
+			0% {
+				background-color: rgb(16, 16, 16);
+			}
+			25% {
+				background-color: rgb(32, 32, 32);
+			}
+			50% {
+				background-color: rgb(64, 64, 64);
+			}
+			75% {
+				background-color: rgb(128, 128, 128);
+			}
+			100% {
+				background-color: white;
+				color: black;
+			}
+		}
+
+		@keyframes l2d {
+			0% {
+				background-color: rgb(128, 128, 128);
+			}
+			25% {
+				background-color: rgb(64, 64, 64);
+			}
+			50% {
+				background-color: rgb(32, 32, 32);
+			}
+			75% {
+				background-color: rgb(16, 16, 16);
+			}
+			100% {
+				background-color: black;
+				color: gray;
+			}
+		}
+
 	</style>
 </head>
 
@@ -73,12 +112,14 @@
 			function changeTheme() {
 				if (themeFlg) {
 					themeFlg = false;
-					document.body.style.backgroundColor = 'white';
-					document.body.style.color = 'black';
+					// document.body.style.backgroundColor = 'white';
+					// document.body.style.color = 'black';
+					document.body.style.animation = 'd2l 1s 1 normal forwards';
 				} else {
 					themeFlg = true;
-					document.body.style.backgroundColor = 'black';
-					document.body.style.color = 'gray';
+					// document.body.style.backgroundColor = 'black';
+					// document.body.style.color = 'gray';
+					document.body.style.animation = 'l2d 1s 1 normal forwards';
 				}
 			}
 			document.getElementById('theme_btn').addEventListener('click', changeTheme);
