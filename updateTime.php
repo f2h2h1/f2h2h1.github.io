@@ -7,7 +7,7 @@ foreach (glob('article/*.md') as $item) {
     $output = [];
     exec('git log --format=%aD ' . $item, $output, $return_val);
     $len = count($output);
-    if ($len > 1) {
+    if ($len >= 1) {
         $createTime = end($output);
         if ($len == 1) {
             $updateTime = $createTime;
