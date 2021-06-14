@@ -237,8 +237,7 @@ gitblit 这个是笔者当前在用的，后端用 java 写成，虽然功能没
 
 gitea 这个最近很流行，后端用 go 写成，网上比少教程都在推荐这个。
 
-gogs 是 gitea 的原本，好像应为社区的原因，gitea 从 gogs 分裂出来，据说分裂后的 gitea 发展得更好。
-
+gogs 是 gitea 的原版，好像应为社区的原因，gitea 从 gogs 分裂出来，据说分裂后的 gitea 发展得更好。
 
 ## 一段能兼容 smart http 和 gitweb 的 php 脚本
 1. 在 gitweb 的文件夹里新建一个名为 HTTPServerRequestHandler.php 的文件，并写入下面的内容
