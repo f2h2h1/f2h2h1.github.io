@@ -124,6 +124,16 @@
 			}
 			document.getElementById('theme_btn').addEventListener('click', changeTheme);
 
+			function insertAfter(newElement, targetElement) {
+				var parent = targetElement.parentNode;
+				if (parent.lastChild == targetElement) {
+					// 如果最后的节点是目标元素，则直接添加。因为默认是最后
+					parent.appendChild(newElement);
+				} else {
+					parent.insertBefore(newElement, targetElement.nextSibling);
+					//如果不是，则插入在目标元素的下一个兄弟节点 的前面。也就是目标元素的后面
+				}
+			}
 			function getKey(key) {
 				var url = location.hash.replace(/^\#/, '').split('&');
 				var paramsObj = {};
@@ -243,6 +253,18 @@
 							let hr = document.createElement("hr");
 							content.appendChild(hr);
 							content.appendChild(timespan(articleInfo));
+							if (new Date().getTime() / 1000 - articleInfo.updateTime > 15552000) {
+								let h1 = content.querySelector('h1');
+								let newElement = document.createElement("p");
+								newElement.innerText = "这篇文章最后更新的时间在六个月之前，文章所叙述的内容可能已经失效，请谨慎参考！";
+								newElement.style.backgroundColor = '#b5b53b';
+								newElement.style.color = 'black';
+								if (h1) {
+									insertAfter(newElement, h1);
+								} else {
+									content.insertBefore(newElement, content.firstChild);
+								}
+							}
 						},
 						error: function () {
 							content.innerHTML = '<div class="jumbotron"><div class="container"><h1>404</h1><p><a href="javascript:history.back()">go back</a></p></div></div>';
