@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 $articleList = [];
 foreach (glob('article/*.md') as $item) {
+    if ($item == 'draft.md') {
+        continue;
+    }
     $output = [];
     exec('git log --format=%aD ' . $item, $output, $return_val);
     $len = count($output);
