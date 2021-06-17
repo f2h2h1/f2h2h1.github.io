@@ -1,5 +1,10 @@
 [
     {
+        "title": "使用docker部署nuxt",
+        "createTime": 1623921015,
+        "updateTime": 1623921015
+    },
+    {
         "title": "在Windows下搭建git服务",
         "createTime": 1623639494,
         "updateTime": 1623705743
@@ -72,6 +77,6 @@
     {
         "title": "关于",
         "createTime": 1549036104,
-        "updateTime": 1623705752
+        "updateTime": 1623723078
     }
 ]
