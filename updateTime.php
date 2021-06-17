@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $articleList = [];
 foreach (glob('article/*.md') as $item) {
-    if ($item == 'draft.md') {
+    if (filter_var($item, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/(?:.*)draft.md$/']])) {
         continue;
     }
     $output = [];
@@ -29,6 +29,6 @@ usort($articleList, function ($a, $b) {
     return ($a['createTime'] > $b['createTime']) ? -1 : 1;
 });
 
-// echo json_encode($articleList, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+// echo json_encode($articleList, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);exit;
 
 file_put_contents('articleList.json', json_encode($articleList, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
