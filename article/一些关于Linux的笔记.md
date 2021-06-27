@@ -265,7 +265,7 @@ xz -z xxx.tar
 ls -l 文件名或目录名
 ```
 
-- 如何理阶 ls -l 的输出
+- 如何理解 ls -l 的输出
 ```shell
  -rwxrwxrwx
 第一位是 d 或 -

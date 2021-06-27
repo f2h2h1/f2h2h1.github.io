@@ -6,6 +6,16 @@
 - 本文所提及的所有命令都在 git bash 里运行
 - 本问提及的命令大部分也能在 liunx 里运行
 
+## git for windows 和 git for windows sdk
+
+- git for windows sdk 有一套完成的 cygwin 工具链，有 gcc make 等工具，还能方便地安装各种包
+- git for windows 虽然也有一个 cygwin 的环境，但只包含 git bash 和 git bash 相关的依赖
+- git for windows sdk 也是在 git for windows 的网页里下载，用心找一下就能找到下载链接了。
+因为网络的问题，下载速度可能有点慢，
+因为网络的问题，安装的速度可能有点慢，或者总是安装失败，
+安装目录必须是一个空目录，如果安装失败，又重新在原本的目录安装，需要清空原本的目录。
+- 笔者本人比较推荐安装 git for windows sdk ，因为这样就不用装一套 git bash 又装一套 cygwin 了。
+
 ## git 的仓库
 git 有两种仓库，普通仓库和裸仓。普通仓库有工作目录，裸仓没有工作目录。
 
@@ -241,7 +251,7 @@ gogs 是 gitea 的原版，好像应为社区的原因，gitea 从 gogs 分裂�
 
 ## 一段能兼容 smart http 和 gitweb 的 php 脚本
 1. 在 gitweb 的文件夹里新建一个名为 HTTPServerRequestHandler.php 的文件，并写入下面的内容
-2. 打开 gitweb.cgi ，然后大概在 87 行左右的位置，找到 `our $projectroot` 和 `our $GIT`。修改成
+2. 打开 gitweb.cgi ，然后大概在 87 行左右的位置，找到 `our $projectroot` 和 `our $GIT` 修改成
     ```
     our $GIT = $ENV{'GIT_BIN'};
     our $projectroot = $ENV{'GIT_PROJECT_ROOT'};

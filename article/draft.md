@@ -29,14 +29,20 @@ maven的使用
 tcp 和 udp
 什么是socket
 从socket里读写内容
-http
-cgi
+    最简单的例子，服务端只输出一句话，客户端只接收一次服务端的输出就关闭连接
+    一次只能接受一个客户端的 echo 服务器
+    能接受多个客户端的 echo 服务器
+    最简单的聊天室
+http 静态服务
+http + cgi
 select poll epoll
-多线成
+多线程
 多进程
-fastcgi
 socket 双写
 proxy
+fastcgi
+websocket
+
 
 seo 的经验
 ================================
@@ -263,9 +269,9 @@ DuckDuckGo
 # 使用正则表达式实现的关键词过滤
 # KiB 和 KB 和 Kb 和 Kbps 的联系与区别
 # 计算机网络基础
+# pac 文件解释
 
 自由软件托管服务比较
 版本控制软件比较
 除了git的其它版本管理工具
-从linux笔记分裂出git的经验
 https://download.libsodium.org/libsodium/releases/
