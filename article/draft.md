@@ -255,11 +255,31 @@ DuckDuckGo
 ## 计算机的发展历史
 
 
+各类安全问题及应对方法
+================================
+拒绝服务攻击
+    dos
+    ddos
+    cc
+旁观者攻击
+中间人
+sql注入
+XSRF/CSRF
+XSS/CSS
+    反射型
+    存储型
+    dom 型
+SSRF
+文件上传
+    上传木马
+    zip炸弹
+XXE
 
 
 # 各类加密算法和https
 # 在vscdoe里调试c语言
-# 各类安全问题及应对方法
+# 使用 debian 作为日常用机的系统
+# 浏览器和服务器通讯的方法总结
 # vscode的使用技巧
 # 爬虫与反爬虫的经验
 # 如何应对面试
@@ -275,3 +295,13 @@ DuckDuckGo
 版本控制软件比较
 除了git的其它版本管理工具
 https://download.libsodium.org/libsodium/releases/
+一些未能分类的经验
+
+windows 更新 python
+cmd 下
+1、先通过 pip freeze > requirements.txt   将你的旧版本中的第三方库的名字，输出到requirements.txt 文件中。
+2、卸载python，重启电脑
+3、安装新的python ，安装时一定要添加选择path
+4、重启电脑
+5、pip install -r requirements.txt
+
