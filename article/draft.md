@@ -294,12 +294,19 @@ XXE
 # 如何做一个js库
 # pac 文件解释
 # 各种支付的接入指南
+# linux 的防火墙设置
+Nginx 基于tcp/udp代理
+python 的 socket 编程
+搭建 L2TP/IPsec 服务
 
 自由软件托管服务比较
 版本控制软件比较
 除了git的其它版本管理工具
 https://download.libsodium.org/libsodium/releases/
 一些未能分类的经验
+
+python + openssl
+c + openssl
 
 windows 更新 python
 cmd 下
