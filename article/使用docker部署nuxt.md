@@ -143,6 +143,8 @@ location / {
     |project|项目名 这个其实可以随便填的，只是为了区分不同的项目|
     |projectDir|项目根目录的绝对地址|
     |userName|镜像用户名|
+    |apiUrl|接口域名|
+    |dockerHostIP|宿主机的ip 一般都是 172.17.0.1|
 0. 每次更新会生成类似这样的镜像 `my/nuxt:d15b2f4-2106171413` ，其中 my 是用户名； nuxt 是项目名； d15b2f4 是镜像对应的 commitid ； 2106171413 是镜像构建的时间
 0. 这种更新方式，每更新一次就会产生一个新的镜像，所以要定期清理不使用的镜像，不然服务器的硬盘很快就会满的
 0. 如果没有提示成功，那么就是失败
@@ -153,12 +155,19 @@ location / {
 ```bash
 #!/bin/bash
 
+# 获取脚本当前目录
+SHELL_FOLDER=$(dirname $(readlink -f "$0"))
+# 设置日志文件路径
+logfile=$SHELL_FOLDER"/deploy-"`date +'%g%m%d%H%M%S'`".log"
+if [ ! -f "$logfile" ]; then
+    touch $logfile
+fi
+
 # 输出日志的函数
 function logger() {
     timestamp=`date +'%g-%m-%d %H:%M:%S'`
     echo [$timestamp] $1
-    # 这里的日志为什么会没有效果
-    # echo [$timestamp] $1 >> deploy.log
+    echo [$timestamp] $1 >> $logfile
 }
 # 移除容器的函数
 function rmimage() {
@@ -172,7 +181,7 @@ function rmimage() {
 nodeVersion=14.16
 
 # 项目构建命令 从安装依赖开始 多个命令用 && 隔开
-buildCommand="npm install && npm run build"
+buildCommand="rm -r -f node_modules && npm i && npm install && npm audit fix && npm run build"
 
 # 项目运行命令 多个命令用 && 隔开
 runCommand="npm run start"
@@ -189,6 +198,11 @@ project="nuxt"
 
 # 项目根目录的绝对地址
 projectDir="/www/wwwroot/my_nuxt"
+
+# 接口域名，如果前端和后端部署在同一台服务器里，把接口域名解释成本地ip，接口响应·速度能提升不少的
+apiUrl=""
+# docker 宿主机的ip 一般都是 172.17.0.1
+dockerHostIP="172.17.0.1"
 
 # 如果项目根目录不是当前目录，就切换到项目根目录
 # 如果项目根目录为空，则会默认当前目录是项目根目录
@@ -216,16 +230,26 @@ backupName="$pordName-backup"
 
 logger "这段脚本的运行速度可能会有一点的慢，请耐心等待，请勿中断脚本的运行"
 
-# 构建新的 dockerfile 文件
+logger "构建新的容器入口运行脚本"
+rm -f entrypoint.sh
+touch entrypoint.sh
+echo "#!/bin/bash" >> entrypoint.sh
+if [ $dockerHostIP ]; then
+    echo "echo \"$dockerHostIP    $apiUrl\" >> /etc/hosts" >> entrypoint.sh
+fi
+echo $runCommand >> entrypoint.sh
+cat entrypoint.sh
+
+logger "构建新的 dockerfile 文件"
 rm -f dockerfile
 touch dockerfile
 echo "FROM "$baseImageName >> dockerfile
 echo "COPY . /app" >> dockerfile
 echo "WORKDIR /app" >> dockerfile
 echo "RUN "$buildCommand >> dockerfile
-echo "ENTRYPOINT [\"/bin/bash\", \"-c\"]" >> dockerfile
-echo "CMD [\"$runCommand\"]" >> dockerfile
-# cat dockerfile
+echo "RUN chmod +x /app/entrypoint.sh" >> dockerfile
+echo "ENTRYPOINT [\"/app/entrypoint.sh\"]" >> dockerfile
+cat dockerfile
 
 logger "正在拉取新的代码，请耐心地等待"
 git reset --hard
