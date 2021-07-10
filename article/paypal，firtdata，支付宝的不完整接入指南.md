@@ -71,9 +71,10 @@ https://support.payeezy.com/hc/en-us/articles/203730499-eCommerce-Response-Codes
 
 3. 写接入相关的代码并利用测试账号测试
 
+<!--
 可以参考这个类 `frontend\models\payment\Firstdata.php` 和这篇文档 《FirstData 后台的设置》
-
 > 当前 firstdata 的接入方式可以显示标准收据页面的同时又有回调
+-->
 
 ## 判断 paypal 和 firstdata 是否有回调
 1. 在 paypal 或 firstdata 的后台正确地设置回调地址
