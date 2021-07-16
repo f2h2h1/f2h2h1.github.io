@@ -32,3 +32,11 @@ usort($articleList, function ($a, $b) {
 // echo json_encode($articleList, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);exit;
 
 file_put_contents('articleList.json', json_encode($articleList, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+
+$readme = file_get_contents('README.md');
+$listStr = array_reduce($articleList, function($carry, $item) {
+    return $carry .= '- [' . $item['title'] . '](article/' . $item['title'] . '.md)' . "\n";
+}, '');
+$readme = preg_replace('/(?<=<!-- list -->).*(?=<!-- list -->)/ims', "\n" . $listStr, $readme);
+echo $readme;
+file_put_contents('README.md', $readme);
