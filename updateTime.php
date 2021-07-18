@@ -38,5 +38,5 @@ $listStr = array_reduce($articleList, function($carry, $item) {
     return $carry .= '- [' . $item['title'] . '](article/' . $item['title'] . '.md)' . "\n";
 }, '');
 $readme = preg_replace('/(?<=<!-- list -->).*(?=<!-- list -->)/ims', "\n" . $listStr, $readme);
-echo $readme;
+// echo $readme;
 file_put_contents('README.md', $readme);
