@@ -8,7 +8,7 @@
 
 ## git for windows 和 git for windows sdk
 
-- git for windows sdk 有一套完成的 cygwin 工具链，有 gcc make 等工具，还能方便地安装各种包
+- git for windows sdk 有一套完成的 cygwin 工具链，有 gcc make 等工具，还能用 pacman 方便地安装各种包
 - git for windows 虽然也有一个 cygwin 的环境，但只包含 git bash 和 git bash 相关的依赖
 - git for windows sdk 也是在 git for windows 的网页里下载，用心找一下就能找到下载链接了。
 因为网络的问题，下载速度可能有点慢，
@@ -41,9 +41,15 @@ git reset --hard
 ## git 的协议
 git 连接远程仓库有四种协议。文件协议，http 协议，ssh 协议和 git 协议。
 
+http 协议又分为哑 http 协议和 smart http 协议，主要区别是哑 http 协议不能推送。
+
+## 文件协议
+
 文件协议，用得比较少，网上的教程基本都是围绕 http 协议和 ssh 协议的。
 
-http 协议又分为哑 http 协议和 smart http 协议，主要区别是哑 http 协议不能推送。
+文件协议一般都是用在本地的，如果要用文件协议搞远程仓库，可能需要 nfs 或 smb 。
+
+除此之外， git 其实还支持 ftp sftp 和 rsync 。在 git 的文档里有提及，但不建议使用 https://git-scm.com/docs/git-push/2.1.4#_git_urls
 
 ## 哑 http 协议
 要部署哑 http 协议非常简单，只要让 .git 目录能被访问到就可以的了。
