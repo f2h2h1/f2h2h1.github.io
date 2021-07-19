@@ -47,13 +47,6 @@ websocket
 seo 的经验
 ================================
 
-如果是 google 的 seo 可以添加结构化数据标记，这样可以更好地呈现搜索结果
-如果是 google 的 seo 可以使用面包屑导航 https://developers.google.cn/search/docs/data-types/breadcrumb
-
-移动设备的兼容性，可访问性，网站质量在未来也会影响到seo
-最好还要考虑一下 Lynx 这样的纯文本浏览器的访问性
-
-
 社交媒体优化（英语：Social media optimization，缩写为SMO）是利用一些网点和社区进行宣传，提高产品，服务品牌或活动的认识。
 所涉及的社交媒体类型包括RSS订阅，社交新闻和书签网站，以及社交网站，如Facebook，Twitter，影片分享网站和网志网站。
 SMO类似于搜索引擎优化，其目的是生成网络流量和网站，并提高网站的认识。
@@ -83,54 +76,7 @@ https://www.zhihu.com/question/24297390/answer/148331845
 在谷歌判断网站是否有收录
 site: domain.com
 
-谷歌的网站测速，可以看到优化建议
-https://developers.google.com/speed/pagespeed/insights
-是否适合移动设备浏览
-https://search.google.com/test/mobile-friendly
-检查 html
-https://validator.w3.org/nu/
-检查 css
-http://jigsaw.w3.org/css-validator/
-检查 https
-https://myssl.com/ssl.html
-https://myssl.com/ats.html
 
-（App Transport Security）
-
-Web 辅助功能评估工具
-https://wave.webaim.org/
-
-另一个网页评价工具
-https://www.webpagetest.org/
-
-
-还要考虑加上 Open Graph 和 Twitter Card 的标签
-
-
-其中Google Search Console是必须要用到的。
-Google Analytics也是做Google SEO必须用到的工具。
-其他一些免费或者付费的SEO工具：
-Soovle 关键词分析，免费，可以给你自动生成多个网站用户的搜索相关词语。
-KWFinder 关键词分析，付费，可免费试用。
-MOZ 多种SEO工具，付费，30天免费试用。
-ahrefs 多种SEO工具，带中文，支持7天试用，很多人用这个。
-Semrush 多种SEO工具，免费账号有限制，支持中文。
-Answerthepublic 通过关键词分析用户经常搜索和提问的句子，带Pro版本。
-请记住，SEO工具只是辅助，关键还是网站内容和基础的SEO优化。
-
-http://seo.chinaz.com
-
-sitemap 要根据内容跟新，不要更新了，但内容没更新
-网页的 节点结构 要对 seo 友好
-
-最后要提醒的是，Google SEO的方法要跟着Google的规则不断学习和调整，搜索引擎每天都在进步，可能一些过时的教程已经并不实用了。
-如果你没精力去研究最新的Google SEO技巧，那么只需要记住你的内容是满足用户需求的，有价值的。
-那么不管规则怎么改动，你都不会受到太大的影响。
-
-还要考虑使用谷歌的结构化数据
-
-
-使用语义化标签，有利于seo，无障碍访问，和代码的可读性
 
 dns 反查
 nslookup -qt=ptr 74.125.128.106
@@ -206,9 +152,8 @@ XXE
 # 使用正则表达式实现的关键词过滤
 # KiB 和 KB 和 Kb 和 Kbps 的联系与区别
 # 如何做一个js库
-# 各种支付的接入指南
+# 如何定位和解决问题
 # spa 的 ssr
-# 把网页导出成 pdf
 # 一些博客
 # 一些文章
     原文链接 快照链接

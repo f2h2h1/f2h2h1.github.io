@@ -138,3 +138,38 @@ git status
     上述命令其实相当于git fetch 和 git merge在实际使用中，git fetch更安全一些，
     因为在merge前，我们可以查看更新情况，然后再决定是否合并。
 ```
+
+- 设置 gpg 用户id
+```
+git config user.signingkey [用户ID]
+```
+
+- 签名标签
+```
+git tag -s tagname -m 'msg'
+```
+
+- 验证标签的签名
+```
+git tag -v tagname
+```
+
+- 如果标签是经过签名的 git show ，能看到 GPG 签名附属在后面：
+```
+git show tagname
+```
+
+- 签名提交
+```
+git commit -S -m 'msg'
+```
+
+- 验证提交的签名
+```
+git verify-commit commitid
+```
+
+- 显示提交日志的签名
+```
+git log --show-signature -10
+```
