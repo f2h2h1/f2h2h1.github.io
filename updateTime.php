@@ -58,11 +58,31 @@ $rss = <<<EOF
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
-  <title>(*>_>*)</title>
-  <link>https://f2h2h1.github.io</link>
-  <description>blog of f2h2h1</description>
+  <title>f2h2h1's blog</title>
+  <link>https://f2h2h1.github.io/</link>
+  <description>f2h2h1's blog</description>
   $itemList
 </channel>
 </rss>
 EOF;
 file_put_contents('rss.xml', $rss);
+
+$itemList = '';
+foreach ($articleList as $article) {
+    $item = <<<EOF
+    <url>
+        <loc>%s</loc>
+        <lastmod>%s</lastmod>
+        <priority>0.5</priority>
+    </url>
+    EOF;
+    $item = sprintf($item, 'https://f2h2h1.github.io/#title=' . urlencode($article['title']), date('Y-m-d', $article['updateTime']));
+    $itemList .= trim($item) . PHP_EOL;
+}
+$rss = <<<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+$itemList
+</urlset>
+EOF;
+file_put_contents('sitemap.xml', $rss);
