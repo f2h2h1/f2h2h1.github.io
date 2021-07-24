@@ -3,6 +3,8 @@ SEO 的经验
 
 搜索引擎优化（英语：search engine optimization，缩写为SEO）是透过了解搜索引擎的运作规则来调整网站，以及提高目的网站在有关搜索引擎内排名的方式。
 
+SEO 的方法要跟随搜索引擎的规则不断调整。如果没有精力研究 SEO 的技巧，那么只需要记住内容是满足用户需求的，有价值的。这样不管规则怎么改动，站点都不会受到太大的影响。
+
 ## SEO 的三个方面
 
 - 技术
@@ -80,6 +82,7 @@ SEO 的经验
     - 页面里需要有导航栏
     - 至少有一个 h1 标签
     - 尽量地使用 html5 里那些语义化标签，不要全用 div
+    - 网页的 节点结构 要对 seo 友好
     - 避免表格的嵌套，表格嵌套不要超过三层
     - 少用 iframe 标签
 - 链接
@@ -113,7 +116,6 @@ SEO 的经验
     - 理想状态下，页面的全部内容都应该可以用键盘访问
     - 如果浏览器的原生多媒体控件，不能通过键盘访问，那么应该用 js 来实现
     - 音频和视频最好有描述和文本轨道
-- 不要搞 SEO 的作弊
 
 ### sitemap 和 robots.txt
 - 正确地填写 sitemap 并放在网站根目录里
@@ -121,6 +123,7 @@ SEO 的经验
 - robots.txt 声明不需要抓取的页面
 - robots.txt 不要阻止访问 ico 图片
 - sitemap 更新要及时
+- sitemap 要根据内容跟新，不要 sitemap 更新了，但内容没更新
 
 ### 其它
 - html 代码要符合标准， css 最好也要符合相关标准
@@ -130,6 +133,7 @@ SEO 的经验
 - 使用搜索引擎提供的站长工具
 - 使用一个站点分析工具
 - 除了 sitemap 和 robots.txt 之外，还可以加一个 rss
+- 不要搞 SEO 的作弊
 
 ## SEO 的辅助工具
 
@@ -144,8 +148,12 @@ SEO 的经验
 - 检查 html https://validator.w3.org/nu/
 - 检查 css http://jigsaw.w3.org/css-validator/
 - 检查 https https://myssl.com/ssl.html
+- 苹果的 ats https://myssl.com/ats.html
 - Web 辅助功能评估工具 https://wave.webaim.org/
 - 站长之家 http://tool.chinaz.com/
+- 另一个网页评价工具 https://www.webpagetest.org/
+
+可以根据 insights 的建议来优化页面
 
 ### SEO 分析工具
 - Soovle
@@ -159,20 +167,30 @@ SEO 的经验
 - Google Analytics https://analytics.withgoogle.com/
 - 百度统计 https://tongji.baidu.com/
 
-一个站点里只需要一个站点工具
+一个站点里只需要一个站点分析工具
 
 ## SPA 如何做 SEO
 
-基本原则是页面被 spider 抓取时，返回完整的页面内容。
+基本原则是页面被搜索引擎爬虫访问时，返回完整的页面内容。
 
+- SSG
+    - 提前生成静态页面，对于中小型网站或更新不频繁的网站这是一个很好的解决方案
 - 预渲染
+    - 类似于 SSG ，但一部分内容还是通过接口获取
+    - 大多数情况下预渲染并不能很好地应对 SEO ，因为大多数情况下，预渲染只是预渲染了前端的框架部分和一些很少修改的页面，页面的主要内容还是会通过接口请求
 - SSR
     - 全站 SSR
-        - 使用 node 实现的 SSR
-        - 使用 headless 浏览器实现的 SSR
     - 首屏 SSR ，其它页面依然保持 CSR
 
 - 谷歌的爬虫是能执行 js 的，如果只做谷歌的 SEO ， SPA 其实可以不做 SSR 的，但是爬虫执行 js 有时间限制，如果渲染的速度太慢，页面可能渲染不完整。
+
+### SPA 的 SSR
+- 使用 node 实现的 SSR
+    - 使用 nxut 这类框架实现，需要改动前端的代码
+    - 虽然 vue 和 react 都有提供原生的 SSR 方案，但都比较简陋
+- 使用 headless 浏览器实现的 SSR
+    - 可以在不改动前端代码的前提下实现，但这只能针对搜索引擎
+    - 具体的实现可以参考笔者的这个仓库 https://github.com/f2h2h1/seo-ssr
 
 ## 需要重视的平台
 
@@ -197,7 +215,9 @@ SEO 的经验
     - 推特
     - 脸书
 
-这几个平台都有特定的分享标签和分享 api
+这几个平台都有特定的分享标签和分享 api 。
+例如 谷歌的结构化数据， Open Graph 和 Twitter Card 标签。
+谷歌的结构化数据可以更好地呈现搜索结果 https://developers.google.cn/search/docs/advanced/structured-data/intro-structured-data
 
 ## 参考
 
