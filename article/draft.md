@@ -73,10 +73,6 @@ https://www.zhihu.com/question/24297390/answer/148331845
 现在的搜索引擎应该能解释spa的
 
 
-在谷歌判断网站是否有收录
-site: domain.com
-
-
 
 dns 反查
 nslookup -qt=ptr 74.125.128.106
@@ -163,6 +159,7 @@ XXE
 除了git的其它版本管理工具
 https://download.libsodium.org/libsodium/releases/
 一些未能分类的经验
+SSL双向认证
 
 python + openssl
 c + openssl
