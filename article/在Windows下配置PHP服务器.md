@@ -197,11 +197,13 @@ https://www.phpmyadmin.net/
 ```
 下载完后，解压到网站根目录，并把文件夹重命名为 phpmyadmin
 
-2. 打开这两个文件 phpmyadmin/libraries/config.default.php phpmyadmin/config.sample.inc.php ，设置这两个文件里的这个值
+2. 打开这两个文件 `phpmyadmin/libraries/config.default.php` `phpmyadmin/config.sample.inc.php` ，设置这两个文件里的这个值
 ```
 $cfg['blowfish_secret'] = ''
 ```
 这个值的长度要大于 64
+
+3. 可以在这个文件里 `phpmyadmin/config.sample.inc.php` 修改 mysql 的连接参数
 
 ## 9. composer
 1. 下载安装脚本
