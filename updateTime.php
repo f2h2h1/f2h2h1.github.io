@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// 获取文章列表
 $articleList = [];
 foreach (glob('article/*.md') as $item) {
     if (filter_var($item, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/(?:.*)draft.md$/']])) {
@@ -25,22 +26,23 @@ foreach (glob('article/*.md') as $item) {
     }
 }
 
+// 文章列表按创建时间排序
 usort($articleList, function ($a, $b) {
     return ($a['createTime'] > $b['createTime']) ? -1 : 1;
 });
 
-// echo json_encode($articleList, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);exit;
-
+// 用于页面的 articleList.json
 file_put_contents('articleList.json', json_encode($articleList, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
+// README 里的列表
 $readme = file_get_contents('README.md');
 $listStr = array_reduce($articleList, function($carry, $item) {
     return $carry .= '- [' . $item['title'] . '](article/' . $item['title'] . '.md)' . "\n";
 }, '');
 $readme = preg_replace('/(?<=<!-- list -->).*(?=<!-- list -->)/ims', "\n" . $listStr, $readme);
-// echo $readme;
 file_put_contents('README.md', $readme);
 
+// rss
 $itemList = '';
 foreach ($articleList as $article) {
     $item = <<<EOF
@@ -67,6 +69,7 @@ $rss = <<<EOF
 EOF;
 file_put_contents('rss.xml', $rss);
 
+// sitemap
 $itemList = '';
 foreach ($articleList as $article) {
     $item = <<<EOF
@@ -79,10 +82,10 @@ foreach ($articleList as $article) {
     $item = sprintf($item, 'https://f2h2h1.github.io/#title=' . urlencode($article['title']), date('Y-m-d', $article['updateTime']));
     $itemList .= trim($item) . PHP_EOL;
 }
-$rss = <<<EOF
+$sitemap = <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 $itemList
 </urlset>
 EOF;
-file_put_contents('sitemap.xml', $rss);
+file_put_contents('sitemap.xml', $sitemap);

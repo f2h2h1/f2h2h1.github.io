@@ -10,6 +10,18 @@
             "problemMatcher": []
         },
         {
+            "label": "update matedata",
+            "type": "shell",
+            "command": "git add articleList.json sitemap.xml rss.xml README.md; git commit -m \"update auxiliary\"",
+            "dependsOn": ["updateTime"],
+            "options": {
+                "shell": {
+                    "executable": "powershell"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "start test server",
             "type": "shell",
             "command": "php -S 127.0.0.1:9012",
