@@ -364,10 +364,10 @@ if [ $? != 0 ]; then
 fi
 logger "正式的容器启动成功"
 
-if [ $backupFlg -eq 1 ]; then
-    logger "删除热备份的容器 "
-    rmimage $backupName
-fi
+# if [ $backupFlg -eq 1 ]; then
+#     logger "删除热备份的容器 "
+#     rmimage $backupName
+# fi
 
 logger "正在删除悬空的镜像，请耐心等候"
 echo "y" | docker image prune

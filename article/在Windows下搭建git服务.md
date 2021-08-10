@@ -47,7 +47,14 @@ http 协议又分为哑 http 协议和 smart http 协议，主要区别是哑 ht
 
 文件协议，用得比较少，网上的教程基本都是围绕 http 协议和 ssh 协议的。
 
-文件协议一般都是用在本地的，如果要用文件协议搞远程仓库，可能需要 nfs 或 smb 。
+文件协议一般都是用在本地的，远程仓库的地址直接填本地的绝对路径可以了，例如这样
+```
+[remote "origin"]
+    url = C:/git/test/.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+```
+
+如果要用文件协议搞远程仓库，可能需要 nfs 或 smb 。
 
 除此之外， git 其实还支持 ftp sftp 和 rsync 。在 git 的文档里有提及，但不建议使用 https://git-scm.com/docs/git-push/2.1.4#_git_urls
 

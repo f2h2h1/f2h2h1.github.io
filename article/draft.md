@@ -137,24 +137,25 @@ XXE
     各种事件（键盘，鼠标，滚动条，窗口）的记录
 
 
-# 在vscdoe里调试c语言
-# 使用 debian 作为日常用机的系统
-# 浏览器和服务器通讯的方法总结
-# vscode的使用技巧
-# 爬虫与反爬虫的经验
-# 如何应对面试
-# 这些年来的生活经验 学习如何学习
-# 如何写一篇xx管理系统的论文
-# 使用正则表达式实现的关键词过滤
-# KiB 和 KB 和 Kb 和 Kbps 的联系与区别
-# 如何做一个js库
-# 如何定位和解决问题
-# spa 的 ssr
-# 一些博客
-# 一些文章
-    原文链接 快照链接
-# git的一般使用指南
-# 如何制作一个php框架
+在vscdoe里调试c语言
+使用 debian 作为日常用机的系统
+浏览器和服务器通讯的方法总结
+vscode的使用技巧
+爬虫与反爬虫的经验
+如何应对面试
+这些年来的生活经验 学习如何学习 如何寻找问题的解决办法 如何定位问题
+如何写一篇xx管理系统的论文
+使用正则表达式实现的关键词过滤
+KiB 和 KB 和 Kb 和 Kbps 的联系与区别
+如何做一个js库
+如何定位和解决问题
+spa 的 ssr
+一些博客
+一些文章
+  原文链接 快照链接
+git的一般使用指南
+如何制作一个php框架
+浏览器和服务器通讯方式的不完整总结
 
 
 自由软件托管服务比较
@@ -175,3 +176,18 @@ cmd 下
 4、重启电脑
 5、pip install -r requirements.txt
 
+git add articleList.json sitemap.xml rss.xml README.md; git commit -m "update auxiliary"
+
+git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
+
+新增一篇文章
+    add 文章标题
+大幅更新某一篇文章的内容
+    add section 更新的内容
+    update section 更新的内容
+只更新了一点内容
+    update fraction
+修改 错别字 标点 格式
+    update format
+更新 sitemap 之类的文件
+    update auxiliary
