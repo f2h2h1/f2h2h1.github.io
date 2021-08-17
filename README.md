@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- list -->
+- [HTTP认证方式的不完整总结](article/HTTP认证方式的不完整总结.md)
 - [PHP各种运行方式的不完整总结](article/PHP各种运行方式的不完整总结.md)
 - [把网页导出成PDF](article/把网页导出成PDF.md)
 - [FirstData后台的设置](article/FirstData后台的设置.md)
