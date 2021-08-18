@@ -5,6 +5,12 @@
   <link>https://f2h2h1.github.io/</link>
   <description>f2h2h1's blog</description>
   <item>
+    <title>浏览器和服务器通讯方式的不完整总结</title>
+    <link>https://f2h2h1.github.io/#title=%E6%B5%8F%E8%A7%88%E5%99%A8%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%AE%AF%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%80%BB%E7%BB%93</link>
+    <description>浏览器和服务器通讯方式的不完整总结</description>
+    <pubDate>2021-08-18</pubDate>
+</item>
+<item>
     <title>HTTP认证方式的不完整总结</title>
     <link>https://f2h2h1.github.io/#title=HTTP%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%80%BB%E7%BB%93</link>
     <description>HTTP认证方式的不完整总结</description>
@@ -35,15 +41,15 @@
     <pubDate>2021-08-03</pubDate>
 </item>
 <item>
-    <title>paypal，firtdata，支付宝的不完整接入指南</title>
-    <link>https://f2h2h1.github.io/#title=paypal%EF%BC%8Cfirtdata%EF%BC%8C%E6%94%AF%E4%BB%98%E5%AE%9D%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97</link>
-    <description>paypal，firtdata，支付宝的不完整接入指南</description>
-    <pubDate>2021-07-10</pubDate>
-</item>
-<item>
     <title>微信支付的不完整接入指南</title>
     <link>https://f2h2h1.github.io/#title=%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97</link>
     <description>微信支付的不完整接入指南</description>
+    <pubDate>2021-07-10</pubDate>
+</item>
+<item>
+    <title>paypal，firtdata，支付宝的不完整接入指南</title>
+    <link>https://f2h2h1.github.io/#title=paypal%EF%BC%8Cfirtdata%EF%BC%8C%E6%94%AF%E4%BB%98%E5%AE%9D%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97</link>
+    <description>paypal，firtdata，支付宝的不完整接入指南</description>
     <pubDate>2021-07-10</pubDate>
 </item>
 <item>
