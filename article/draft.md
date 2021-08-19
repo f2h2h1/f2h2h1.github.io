@@ -96,8 +96,35 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
 以开发软件为目标的计算机入门简明指南
 ================================
 ## 计算机入门的前置知识
+    如果只做业务相关，需要 初等数学 外加一点 数理逻辑
+    如果涉及数据库的，还需要一点 集合论
+    如果涉及到一些高深的算法，可能还需要 图论 和 组合数学
+    如果涉及数据分析，还需要 概率论 和 数理统计
+    如果涉及计算机图形，还需要 线性代数
+    英语至少要有初中的水平 (要学会使用各类翻译服务 谷歌翻译 百度翻译 必应翻译 ...)
+    递归是一个重要的概念
 ## 计算机学科的相关概念
 ## 计算机的发展历史
+## 计算机的组成
+    抽象的计算机组成
+    显示的计算机组成
+## 从二极管到指令集和汇编语言的抽象
+## 操作系统
+    环境变量
+    抽象的操作系统
+    linux 系统的一般使用
+## 编程语言
+    编译原理
+    正则表达式
+## 数据库
+    抽象的数据库
+        sql
+    mysql的一般使用
+## 计算机网络
+## 软件工程
+## 一些工具
+    git 的一般使用
+## 参考
 
 
 各类安全问题及应对方法
@@ -137,25 +164,47 @@ XXE
     各种事件（键盘，鼠标，滚动条，窗口）的记录
 
 
+一些博客
+================================
+淘系前端团队 https://fed.taobao.org/
+百度前端 https://fex.baidu.com/
+腾讯 Alloy Team http://www.alloyteam.com/
+腾讯CDC https://cdc.tencent.com/
+美团技术团队 https://tech.meituan.com/
+360奇舞团 https://75.team/
+小米信息部技术团队 https://xiaomi-info.github.io/
+
+
+浏览器数据持久化缓存技术
+================================
+HTTP文件缓存
+cookie
+localStorage
+sessionStorage
+Application Cache 和 pwa 相关
+CacheStorage 和 service worker 相关
+WebSQL 关系型数据库，火狐不支持
+IndexedDB 非关系型数据库
+一些浏览器会对 favicon.ico 有特殊的缓存
+
+
 在vscdoe里调试c语言
 使用 debian 作为日常用机的系统
-浏览器和服务器通讯的方法总结
 vscode的使用技巧
 爬虫与反爬虫的经验
 如何应对面试
-这些年来的生活经验 学习如何学习 如何寻找问题的解决办法 如何定位问题
+这些年来的生活经验 学习如何学习 如何寻找问题的解决办法 如何定位问题 自己的编程哲学
 如何写一篇xx管理系统的论文
 使用正则表达式实现的关键词过滤
 KiB 和 KB 和 Kb 和 Kbps 的联系与区别
 如何做一个js库
-如何定位和解决问题
 spa 的 ssr
-一些博客
 一些文章
   原文链接 快照链接
 git的一般使用指南
 如何制作一个php框架
-浏览器和服务器通讯方式的不完整总结
+windows10下安全退出u盘的方法
+windows里的脚本语言
 
 
 自由软件托管服务比较
@@ -163,7 +212,6 @@ git的一般使用指南
 除了git的其它版本管理工具
 https://download.libsodium.org/libsodium/releases/
 一些未能分类的经验
-SSL双向认证
 
 python + openssl
 c + openssl
