@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- list -->
+- [在Windows下安装Magento2.3](article/在Windows下安装Magento2.3.md)
 - [浏览器和服务器通讯方式的不完整总结](article/浏览器和服务器通讯方式的不完整总结.md)
 - [HTTP认证方式的不完整总结](article/HTTP认证方式的不完整总结.md)
 - [PHP各种运行方式的不完整总结](article/PHP各种运行方式的不完整总结.md)
