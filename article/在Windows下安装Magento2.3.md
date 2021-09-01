@@ -1,0 +1,184 @@
+在 Windows 下安装 Magento2.3
+================================
+
+[TOC]
+
+## 环境依赖
+
+- windows10 20H2
+- git for windows 2.33
+- php 7.3 64 位 nts 版
+- composer 1.10.22
+- mysql 5.7
+- nginx 1.12
+
+需要注意的事项
+- php 需要安装 vc 依赖，在 php 下载页面的左边有 vc 库的下载链接的，用心找一下
+- composer 需要 1 的版本，现在下载的 composer 默认是 2 的版本，可以用这句命令把 composer 降级 `composer self-update --1`
+- php 需要开启这些拓展
+    ```
+    curl
+    fileinfo
+    gd2
+    intl
+    mbstring
+    exif
+    openssl
+    pdo_mysql
+    soap
+    sockets
+    sodium
+    tidy
+    xsl
+    ```
+- php 需要修改配置文件
+    ```
+    post_max_size = 128M
+    memory_limit = 2048M
+    upload_max_filesize = 64M
+    short_open_tag = On
+    max_execution_time = 300
+    ```
+- php 最好启用 opcache ，因为 magento2 真的很慢
+- 调整这两个值能有效地提升性能
+    ```
+    PHP_FCGI_CHILDREN
+    PHP_FCGI_MAX_REQUESTS
+
+    大概就是在环境变量里设置
+    set PHP_FCGI_MAX_REQUESTS=1000
+    set PHP_FCGI_CHILDREN=32
+    ```
+- mysql 需要提前新建对应的数据库，并且默认编码是 utf-8
+- magento2.3 不支持 xdebug3.0
+- magento2 里有大量的静态文件需要加载，启用 http2 能稍微提升一下速度
+- nginx 的配置 worker_processes 要设为 cpu 逻辑核心数的两倍，例如 cpu 是 2 核 4 线程，那么 worker_processes 就是 8
+- nginx php-cgi mysql 最好以管理员运行，这样可以有效避免权限的问题
+- nginx 最好用信号的形式关闭，用信号形式关闭的 nginx 需要等待一段时间 nginx 的进程才会完全终止
+    ```
+    nginx -s quit
+    ```
+- 一些可能会用到的命令
+    ```
+    查看被占用端口对应的 PID
+    netstat -aon|findstr "8081"
+    查看指定 PID 的进程
+    tasklist|findstr "9088"
+    结束进程 强制（/F参数）杀死 pid 为 9088 的所有进程包括子进程（/T参数）
+    taskkill /T /F /PID 9088
+    结束进程 强制（/F参数）杀死 IMAGENAME 为 nginx.exe 的所有进程包括子进程（/T参数）
+    taskkill /T /F /FI "IMAGENAME eq nginx.exe"
+    ```
+
+## 安装 Magento2.3
+
+1. 申请一个 magento 的账号
+1. 生成一个用于 composer 的 access kye
+1. 在安装的目录里运行这句命令，要留意命令最后的 `.` ，命令最后的参数是安装目录， `.` 是安装到当前目录
+    ```
+    composer create-project --repository=https://repo.magento.com/ magento/project-community-edition=2.3.7 .
+    ```
+1. 安装的过程中会要求输入 magento 的 access kye
+1. 安装的过程有点慢，要耐心地等待
+1. magento2 的依赖有点多，最好准备一个 github-oauth
+1. 修改源码
+    1. `vendor\magento\framework\Image\Adapter\Gd2.php` 大概在 90 行左右的位置
+    ```
+    private function validateURLScheme(string $filename) : bool
+    {
+        if(!file_exists($filename)) { // if file not exist
+            $allowed_schemes = ['ftp', 'ftps', 'http', 'https'];
+            $url = parse_url($filename);
+            if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    ```
+    1. `vendor\magento\framework\View\Element\Template\File\Validator.php` 大概在 140 行左右的位置
+    ```
+    protected function isPathInDirectories($path, $directories)
+    {
+        if (!is_array($directories)) {
+            $directories = (array)$directories;
+        }
+        //$realPath = $this->fileDriver->getRealPath($path);
+        $realPath = str_replace('\\', '/', $this->fileDriver->getRealPath($path));
+        foreach ($directories as $directory) {
+            if (0 === strpos($realPath, $directory)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    ```
+1. 修改 hosts 文件，把域名 localhost-magento 指向本地 ip （其实这步没有也没关系，但为了方便下文的描述还是加上了这步）
+1. 运行安装命令
+    ```
+    php bin/magento setup:install `
+        --base-url=http://localhost-magento/ `
+        --db-host=localhost `
+        --db-name=magento2ce `
+        --db-user=root `
+        --db-password=1234 `
+        --admin-firstname=admin `
+        --admin-lastname=admin `
+        --admin-email=admin@admin.com `
+        --admin-user=admin `
+        --admin-password=admin123 `
+        --language=en_US `
+        --currency=USD `
+        --timezone=America/Chicago `
+        --use-rewrites=1
+    ```
+1. 运行一些必要的命令
+    ```
+    php bin/magento indexer:reindex
+    php bin/magento setup:upgrade
+    php bin/magento setup:static-content:deploy -f
+    php bin/magento cache:flush
+    ```
+1. 修改 nginx 的配置
+    ```
+    upstream fastcgi_backend {
+        server  127.0.0.1:9001;
+    }
+    server {
+        listen 80;
+
+        access_log  logs/localhost-magento.access.log;
+        error_log  logs/localhost-magento.error.log;
+
+        server_name  localhost-magento;
+        set $MAGE_ROOT C:/code/magento-community; # 这里是 magento 的根目录
+        set $MAGE_DEBUG_SHOW_ARGS 1;
+        include C:/code/magento-community/nginx.conf.sample; # 这里是 magento 的根目录里的 nginx.conf.sample
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        proxy_buffer_size 128k;
+        proxy_buffers 4 256k;
+        proxy_busy_buffers_size 256k;
+    }
+    ```
+1. 重启 nginx 然后在浏览器里输入 localhost-magento ，如无意外能看到 magento 的 home page
+
+需要注意的事项
+- 如果没有对应的语言包就不要修改语言设置，因为没有对应的语言包但又修改了语言设置，可能会导致一些 css 加载失败
+- 日志在这个位置 `var/log` ，安装过程中遇到什么问题可以在这里找日志看
+- 可以在这个文件 `app/etc/env.php` 里查看 admin 的 url ，运行完安装命令后也会输出 admin 的 url
+    ```
+    'backend' => [
+        'frontName' => 'admin_1a3uev'
+    ],
+    ```
+- 支付的设置在这里
+    ```
+    admin >> STORE >> Configuration >> SALES >> Payment Methods
+    ```
+- magento2 的运行效率真的很低
+- 可以在 magento 的根目录里运行这样的命令启动 php 的内置 web server ，但速度真的很慢，要注意修改 base-url
+    ```
+    php -S 127.0.0.1:8082 -t ./pub/ ./phpserver/router.php
+    ```
