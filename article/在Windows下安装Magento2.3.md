@@ -64,6 +64,8 @@
     netstat -aon|findstr "8081"
     查看指定 PID 的进程
     tasklist|findstr "9088"
+    查看 IMAGENAME 为 nginx.exe 的进程
+    tasklist /V /FI "IMAGENAME eq nginx.exe"
     结束进程 强制（/F参数）杀死 pid 为 9088 的所有进程包括子进程（/T参数）
     taskkill /T /F /PID 9088
     结束进程 强制（/F参数）杀死 IMAGENAME 为 nginx.exe 的所有进程包括子进程（/T参数）
@@ -182,3 +184,57 @@
     ```
     php -S 127.0.0.1:8082 -t ./pub/ ./phpserver/router.php
     ```
+- magento2 的缓存十分严重，如果发现一些修改没有生效，可以尝试运行这几条命令刷新缓存
+    ```
+    php bin/magento cache:clean
+    php bin/magento indexer:reindex
+    php bin/magento cache:flush
+    ```
+- 可以修改 app/etc/env.php 使用 redis 作为缓存，这是 redis 大致的配置，使用 redis 后能有效地提升速度
+    ```
+    'session' => [
+        'save' => 'redis',
+        'redis' => [
+            'host' => '127.0.0.1',
+            'port' => '6379',
+            'password' => '',
+            'timeout' => '2.5',
+            'persistent_identifier' => '',
+            'database' => '2',
+            'compression_threshold' => '2048',
+            'compression_library' => 'gzip',
+            'log_level' => '4',
+            'max_concurrency' => '6',
+            'break_after_frontend' => '5',
+            'break_after_adminhtml' => '30',
+            'first_lifetime' => '600',
+            'bot_first_lifetime' => '60',
+            'bot_lifetime' => '7200',
+            'disable_locking' => '0',
+            'min_lifetime' => '60',
+            'max_lifetime' => '2592000'
+        ]
+    ],
+    'cache' => [
+        'frontend' => [
+            'default' => [
+                'backend' => 'Cm_Cache_Backend_Redis',
+                'backend_options' => [
+                    'server' => '127.0.0.1',
+                    'database' => '0',
+                    'port' => '6379'
+                ],
+            ],
+            'page_cache' => [
+                'backend' => 'Cm_Cache_Backend_Redis',
+                'backend_options' => [
+                    'server' => '127.0.0.1',
+                    'port' => '6379',
+                    'database' => '1',
+                    'compress_data' => '0'
+                ]
+            ]
+        ]
+    ],
+    ```
+- 关掉 xdebug 后速度也有提升
