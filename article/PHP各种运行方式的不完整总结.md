@@ -9,7 +9,7 @@ NTS(None-Thread Safe) 即非线程安全，不提供数据访问保护，有可�
 
 ## PHP 常用的 SAPI
 
-SAPI （Server Application Programming Interface，服务端应用编程端口 ）
+SAPI （Server Application Programming Interface，服务端应用编程端口）
 
 - cli
     - 就是一般的命令行模式
@@ -44,6 +44,8 @@ echo php_sapi_name();
 
 这时 php 可以直接提供 http 服务或者通过反向代理和其它 http 服务器组合使用。
 
+php 的内置服务器是单进程单线程的，运行的效率并不高
+
 ### cgi 模式
 
 通过 php-cgi 和 http 服务器的组合，通常是 php-cgi + apache ， nginx 不能直接支持 cgi 。
@@ -55,6 +57,14 @@ echo php_sapi_name();
 1. 直接使用 php-cgi 对接 http 服务器，例如 windows 环境下的 nginx + php-cgi ，好像是因为 fpm 依赖 fork ，但 windows 里没有 fork ，所以 fpm 没有 windows 版
 2. 使用 fpm 对接 http 服务器，例如 linux 环境下的 nginx + fpm
 3. 使用一个 fastcgi 管理器，然后配置 php-cgi 对接 http 服务器，例如 nginx + spawn-fcgi + php-cgi
+
+使用 php-cgi 时最好配置这个环境变量 PHP_FCGI_CHILDREN 。
+
+PHP_FCGI_CHILDREN 默认值是 1 ，大致就是一个管理器，一个子进程，速度估计也就比 php 的内置服务器好一点。
+
+如果 PHP_FCGI_CHILDREN 的值为 0 ，就只有一个子进程，那么只要累计的请求数达到 PHP_FCGI_MAX_REQUESTS ， php-cgi 就会自动退出，继续有请求时 nginx 就会返回 502 。
+
+php-cgi 没有平滑重启，修改 php.ini 后要重启 php-cgi 。
 
 ### apache 模块
 
@@ -95,4 +105,4 @@ php 的运行模式有很多种。
 
 因为 swoole 的发展，在 cli 下实现 http 服务的运行方式也越来越流行了。
 
-
+无论哪种运行方式，本质上都是 接收数据 处理数据 输出数据 三板斧。
