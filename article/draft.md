@@ -6,10 +6,10 @@ draft
 frp的使用
 ================================
 1. 下载和安装
-2. 作为 Windows 远程桌面的代理
-3. 作为 xdebug 远程调试的代理
-4. 作为代理使得本地的网站能被外网访问
-5. 使用子域名的方式在本地部署多个网站
+1. 作为 Windows 远程桌面的代理
+1. 作为 xdebug 远程调试的代理
+1. 作为代理使得本地的网站能被外网访问
+1. 使用子域名的方式在本地部署多个网站
 
 
 在vscode里调试java
@@ -163,7 +163,6 @@ XXE
     窗口大小的变化
     各种事件（键盘，鼠标，滚动条，窗口）的记录
 
-
 一些博客
 ================================
 淘系前端团队 https://fed.taobao.org/
@@ -188,30 +187,170 @@ IndexedDB 非关系型数据库
 一些浏览器会对 favicon.ico 有特殊的缓存
 
 
-在vscdoe里调试c语言
 使用 debian 作为日常用机的系统
+    各类硬件驱动
+    网卡的配置
+    apt源
+    桌面环境
+    deb snap
+    中文输入法
+    wine
+    加入域
+    替代 office
+        office 365
+        google docs
+        wps
+        libreoffice
+    一些常用的 gui 软件
+        firefox
+        vscode
 vscode的使用技巧
+    常用的拓展
+    显示空格
+    显示 .git 文件夹
+    使用 git
+    搜索文档内容的技巧
+    搜索文件的技巧
+    task的配置
+    调试各种语言
+        php
+        js
+        java
+        python
+        c
+    远程开发的配置
 爬虫与反爬虫的经验
+    爬虫
+        无视 robots.txt
+        使用正则表达式和 xpath 抓取数据
+        修改 ua
+        构造完整的请求包
+        使用代理来规避请求频率的限制
+        使用无头浏览器来执行 js
+        即使速度慢也加载图片
+        使用 playwright 这类工具打开页面，显示窗口，修改ua
+        最终目标 抓取到完整的数据
+    反爬虫
+        站点使用https
+        robots.txt 声名禁止爬虫
+        内容里混杂不可见的无用的字符
+        禁止爬虫的 ua
+        内容需要认证才能显示
+        限制请求频率
+        内容需要执行 js 才能显示
+        使用验证码
+            是否加载图片
+            判断 favicon.ico 是否有加载
+            鼠标的移动轨迹
+            判断 屏幕分辨率 浏览器高度 页面高度 这几个值
+            无差别地随机出现
+        防止页面的源码被获取
+            js 的代码要经过打包，且不暴漏 map
+            js 的代码里要有一个循环的 debugger
+            js 的代码要检测开发者工具是否有打开，如果是就清空页面的内容
+            js 的代码要检测是否在无头浏览器里打开，如果是就清空页面的内容
+            js 的代码要检测是否在 selenium 等环境里，如果是就清空页面的内容
+            js 的代码要判断当前的运行环境是否在 nodejs ，如果是就清空页面的内容
+            禁用鼠标右键，禁用f12快捷键，禁止选中和复制
+        最终目标 只允许人访问，频率不能太高，限制的内容不能被抓取
+        反爬虫的措施太猛可能会使搜索引擎也抓取不了内容
+            通过搜索引擎爬虫的ua和ip地址的反查，单独做一个供搜索引擎抓取的版本
 如何应对面试
-这些年来的生活经验 学习如何学习 如何寻找问题的解决办法 如何定位问题 自己的编程哲学
+    递归式提问
+    递归式寻找答案
+    技术的边界
+这些年来的生活经验 学习如何学习 如何定位问题 如何寻找问题的解决办法
 如何写一篇xx管理系统的论文
 使用正则表达式实现的关键词过滤
 KiB 和 KB 和 Kb 和 Kbps 的联系与区别
 如何做一个js库
+    去npm官方文档注册账号,并验证邮箱 官网地址:https://www.npmjs.com/
+    在github新建一个空仓库，并克隆到本地
+    在仓库根目录内执行初始化指令(npm init)并设置包的参数
+        接着就依次填写, 不想填写的话也可以一路Enter
+        name: 模块名，之后发布之后就可以让用户npm install xxxx来引用你的开源模块了
+        version: 版本号，语义版本号分为X.Y.Z三位，分别代表主版本号、次版本号和补丁版本号。当代码变更时，版本号按以下原则更新。
+            如果只是修复bug，需要更新Z位。 如果是新增了功能，但是向下兼容，需要更新Y位。
+            如果有大变动，向下不兼容，需要更新X位。
+        description: 简单介绍自己的模块
+        main: 入口文件，必要，当通过require('xxx')时，是读取main里声明的文件
+        test command: 测试命令
+        git repository: git仓库地址
+        keywords: 关键词，可以通过npm搜索你填写的关键词找到你的模块
+        author: 作者信息，可以之后编辑更详细一些
+        license(ISC): 代码授权许可
+        以上放心可以大胆写，因为之后反正要改。
+        初始化项目完成，可以看到目录中出现了一个叫 package.json 的文件
+    新建一个 index.js 文件，并写入你的 js 方法
+    执行 npm install -g 检查是否报错
+    执行 npm link (旨在安装开发包并实时查看更改，而无需继续重新安装)
+    执行 npm login 登录npm账号
+    执行 npm publish 上传代码到npm包管理库
+如何定位和解决问题
 spa 的 ssr
 一些文章
   原文链接 快照链接
 git的一般使用指南
-如何制作一个php框架
-windows10下安全退出u盘的方法
-windows里的脚本语言
-
-
-自由软件托管服务比较
-版本控制软件比较
-除了git的其它版本管理工具
-https://download.libsodium.org/libsodium/releases/
+如何制作一个 php 框架
+    把框架做成一个 composer project template
 一些未能分类的经验
+    如何做一个 composer 包
+        申请一个 composer 账号
+        新建一个 github 仓库
+        clone 到本地
+        在仓库根目录里运行这句 composer init
+    如何给其它 github 仓库提交 pr
+        假设已经拥有一个 github 账号
+        fork 仓库
+        clone 到本地
+        在本地修改，提交，推送到 github
+        新建一个 pr
+一般的项目开发流程
+    工具
+        LDAP
+            linux 的账号管理
+            公司内网的域管理
+            其它信息系统的关联
+                oa
+                hrm
+                erp
+                itam
+                crm
+        邮箱
+            自建邮箱服务
+            企业邮箱
+        项目管理
+        流水线
+        git 仓库
+        镜像仓库
+        内部文档
+            入职用的文档，让新成员能迅速地熟悉工作流程
+        im
+            企业微信
+            钉钉
+            qq
+            其它内部im
+                XMPP
+        文件共享
+            webdav
+            smb
+            ftp
+            网盘
+magento2 配置 paypal
+数据结构和算法的学习笔记
+
+
+版本控制软件比较
+    git
+        github
+        gitlab
+        gitee
+    mercurial hg
+        Bitbucket
+    Subversion SVN
+    Perforce
+https://download.libsodium.org/libsodium/releases/
+SSL双向认证
 
 python + openssl
 c + openssl

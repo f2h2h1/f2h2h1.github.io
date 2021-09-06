@@ -3,7 +3,7 @@ HTTP 认证方式的不完整总结
 
 ## 基本认证 (Basic Authentication)
 
-当浏览器请求需要认证的资源时，服务端返回 401 状态码，并在响应头里加上一个字段 WWW-Authenticate ， WWW-Authenticate 里有两个值 Basic 表示认证的方式， realm 是安全域字符串（一般用来提示用户输入账号密码之类的，但好像没什么用）。
+当浏览器请求需要认证的资源时，服务端返回 401 状态码，并在响应头里加上一个字段 WWW-Authenticate ， WWW-Authenticate 里有两个值 Basic 表示认证的方式， realm 是安全域字符串（一显示在浏览器的登录框里的提示，但现在的浏览器好像都不显示这个了）。
 
 例如这样
 ```
@@ -205,7 +205,26 @@ SSL 客户端证书，应该是最安全的形式了，但也是最麻烦的形�
 
 几种认证方式可以组合来使用， 基础认证/摘要认证 + 表单认证 + SSL 客户端证书 。
 
-http 认证里还有一个 Bearer ，是和 OAuth2.0 相关的，但浏览器不直接支持，这里就不提及了。
+http 的认证还有很多种
+
+| |
+|-|
+|Bearer|
+|HOBA|
+|Mutual|
+|OAuth|
+|SCRAM-SHA-1|
+|SCRAM-SHA-256|
+|vapid|
+
+除此之外还有一些没有标准化的认证方式
+
+| |
+|-|
+|SPNEGO|
+|Kerberos|
+|NTLM|
+|Negotiate|
 
 ## 参考
 
@@ -216,3 +235,9 @@ http 摘要认证 https://www.rfc-editor.org/rfc/rfc7616.html
 http 基础认证 https://www.rfc-editor.org/rfc/rfc7617.html
 
 MDN 关于 http 认证的描述 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Authentication
+
+Authentication Scheme https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml
+
+https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/feature-details/understanding-http-authentication
+
+https://hc.apache.org/httpcomponents-client-4.5.x/current/tutorial/html/authentication.html
