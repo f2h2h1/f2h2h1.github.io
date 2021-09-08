@@ -55,6 +55,11 @@ php 的内置服务器是单进程单线程的，运行的效率并不高
 ### fastcgi 模式
 
 1. 直接使用 php-cgi 对接 http 服务器，例如 windows 环境下的 nginx + php-cgi ，好像是因为 fpm 依赖 fork ，但 windows 里没有 fork ，所以 fpm 没有 windows 版
+    - 如果一定要在 windows 运行 fpm ，可以尝试这些 windows 下的 linux 环境
+        - wsl
+        - 虚拟机
+        - docker
+        - cygwin
 2. 使用 fpm 对接 http 服务器，例如 linux 环境下的 nginx + fpm
 3. 使用一个 fastcgi 管理器，然后配置 php-cgi 对接 http 服务器，例如 nginx + spawn-fcgi + php-cgi
 

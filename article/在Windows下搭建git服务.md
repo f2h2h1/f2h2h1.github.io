@@ -141,6 +141,8 @@ ssh 协议部署起来也很简单。只要开启了 sshd 服务，且登录的�
 
 那么 clone 的命令就是 `git clone ssh://127.0.0.1/c/git/test/.git`
 
+如果 clone 遇到需要输入密码的，一般就是开启 sshd 用户的密码，如果系统里有其它账号且有权限读写仓库目录，也可以用其它账号登录，但要在链接里加上账号名，例如这样 `git clone ssh://guest@127.0.0.1/c/git/test/.git`
+
 ssh 协议的缺点是即使是 pull 也需要授权，这样不利于搞开源
 
 ### 用 git bash 来启用 sshd 服务
@@ -148,9 +150,10 @@ ssh 协议的缺点是即使是 pull 也需要授权，这样不利于搞开源
 2. 然后运行这句 /usr/bin/sshd
     - 如果运行 /usr/bin/sshd 遇到这种错误 sshd: no hostkeys available -- exiting
     - 那么就先用管理员打开 git bash 然后运行这句 `ssh-keygen -A`
+    - 运行这句 `ssh-keygen -A` 失败，可以用管理员权限打开 git bash 再运行一次
 3. 如果要关闭 sshd
     - 先通过 ps -elf 找到对应的 pid ，然后 kill pid
-    - 或者像这样一句话删除 `kill ps -elf | grep /usr/bin/sshd | awk '{print $2}'`
+    - 或者像这样一句话删除 `kill $(ps -elf | grep /usr/bin/sshd | awk '{print $2}')`
 
 ## git 协议
 git 协议就是启用 git 的守护进行。

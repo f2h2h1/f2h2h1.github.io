@@ -201,6 +201,9 @@ IndexedDB 非关系型数据库
         google docs
         wps
         libreoffice
+        Calligra Suite(KOffice)
+        GNOME Office
+        openoffice
     一些常用的 gui 软件
         firefox
         vscode
@@ -372,6 +375,7 @@ git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
 大幅更新某一篇文章的内容
     add section 更新的内容
     update section 更新的内容
+    update article 文章标题
 只更新了一点内容
     update fraction
 修改 错别字 标点 格式

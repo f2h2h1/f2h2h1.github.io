@@ -305,39 +305,29 @@ if [ $forceUpdate -eq 1 ]; then
     docker tag $imageName $imageNameLatest
 fi
 
-logger "判断当前是否已有正式的容器"
-backupFlg=0
-docker ps -a | grep $pordName &> /dev/null
-if [ $? -eq 0 ]; then
-    backupFlg=1
-    logger "当前有正式的容器"
+logger "删除热备份的容器（为了兼容性，在部署容器之前都会尝试删除旧的容器）"
+rmimage $backupName
 
-    logger "删除热备份的容器（为了兼容性，在部署容器之前都会尝试删除旧的容器）"
+logger "部署热备份的容器"
+docker run -d --name $backupName -p $backupPort:$nuxtPort $imageName
+if [ $? != 0 ]; then
+    logger "部署热备份的容器失败 "
     rmimage $backupName
-
-    logger "部署热备份的容器"
-    docker run -d --name $backupName -p $backupPort:$nuxtPort $imageName
-    if [ $? != 0 ]; then
-        logger "部署热备份的容器失败 "
-        rmimage $backupName
-        exit 1
-    fi
- 
-    logger "等待 45 秒，确保热备份的容器已经运行起来"
-    sleep 45
-
-    logger "判断热备份的容器是否有启动成功"
-    # curl 127.0.0.1:$backupPort || echo "热备份的容器启动失败"; exit 1
-    curl 127.0.0.1:$backupPort &> /dev/null
-    if [ $? != 0 ]; then
-        logger "热备份的容器启动失败 "
-        rmimage $backupName
-        exit 1
-    fi
-    logger "热备份的容器启动成功"
-else
-    logger "当前版本没有正式的容器，忽略热备份，直接部署正式的容器"
+    exit 1
 fi
+
+logger "等待 45 秒，确保热备份的容器已经运行起来"
+sleep 45
+
+logger "判断热备份的容器是否有启动成功"
+# curl 127.0.0.1:$backupPort || echo "热备份的容器启动失败"; exit 1
+curl 127.0.0.1:$backupPort &> /dev/null
+if [ $? != 0 ]; then
+    logger "热备份的容器启动失败 "
+    rmimage $backupName
+    exit 1
+fi
+logger "热备份的容器启动成功"
 
 sleep 1
 
@@ -363,11 +353,6 @@ if [ $? != 0 ]; then
     exit 1
 fi
 logger "正式的容器启动成功"
-
-# if [ $backupFlg -eq 1 ]; then
-#     logger "删除热备份的容器 "
-#     rmimage $backupName
-# fi
 
 logger "正在删除悬空的镜像，请耐心等候"
 echo "y" | docker image prune
