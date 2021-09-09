@@ -373,8 +373,8 @@ git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
 新增一篇文章
     add 文章标题
 大幅更新某一篇文章的内容
-    add section 更新的内容
-    update section 更新的内容
+    add section 文章标题 更新的内容
+    update section 文章标题 更新的内容
     update article 文章标题
 只更新了一点内容
     update fraction

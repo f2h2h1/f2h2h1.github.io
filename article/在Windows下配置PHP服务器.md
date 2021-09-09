@@ -111,37 +111,40 @@ https://dev.mysql.com/
 2. 把 C:/mysql/bin 添加进环境变量 Path
 3. 在 mysql 文件夹里新建一个名为 data 的文件夹
 4. 在 mysql 文件夹里新建一个名为 my.ini 的文件
-```ini
-[mysqld]
-# 设置3306端口
-port=3306
-# 设置mysql的安装目录
-basedir=C:\\mysql
-# 设置mysql数据库的数据的存放目录
-#datadir=C:\\mysql\\data
-# 允许最大连接数
-max_connections=200
-# 允许连接失败的次数。这是为了防止有人从该主机试图攻击数据库系统
-max_connect_errors=10
-# 服务端使用的字符集默认为UTF8
-character-set-server=utf8
-# 创建新表时将使用的默认存储引擎
-default-storage-engine=INNODB
-[mysql]
-# 设置mysql客户端默认字符集
-default-character-set=utf8
-[client]
-# 设置mysql客户端连接服务端时默认使用的端口
-port=3306
-default-character-set=utf8
-```
-- my.ini 的编码必须为 utf-8 无 bom，换行符使用 \n
-- 遇到错误时，可以去查看 data 文件夹里，err后缀的文件
+    ```ini
+    [mysqld]
+    # 设置3306端口
+    port=3306
+    # 设置mysql的安装目录
+    basedir=C:\\mysql
+    # 设置mysql数据库的数据的存放目录
+    #datadir=C:\\mysql\\data
+    # 允许最大连接数
+    max_connections=200
+    # 允许连接失败的次数。这是为了防止有人从该主机试图攻击数据库系统
+    max_connect_errors=10
+    # 服务端使用的字符集默认为UTF8
+    character-set-server=utf8
+    # 创建新表时将使用的默认存储引擎
+    default-storage-engine=INNODB
+    [mysql]
+    # 设置mysql客户端默认字符集
+    default-character-set=utf8
+    [client]
+    # 设置mysql客户端连接服务端时默认使用的端口
+    port=3306
+    default-character-set=utf8
+    ```
+    - my.ini 的编码必须为 utf-8 无 bom，换行符使用 \n
+    - 遇到错误时，可以去查看 data 文件夹里， err 后缀的文件
 
-5. 初始化，注意，执行完之后，会自动生成一个密码，这个密码需要记下来，这个是命令行登录的密码
-    ```
-    mysqld --initialize
-    ```
+5. 初始化
+    - 初始化命令
+        ```
+        mysqld --initialize
+        ```
+    - 注意，执行完之后，会自动生成一个密码，这个密码需要记下来，这个是命令行登录的密码。如果命令行里没有输出密码，那么就去 data 文件夹里，找到 err 后缀的文件，密码再这里面
+    - 初始化后，第一次运行 mysqld ，要用命令行登录，然后修改密码。初始化的密码如果不修改好像不能通过 php 或其它客户端连接
 
 6. 运行
     - 直接在命令行运行

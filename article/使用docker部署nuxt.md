@@ -321,7 +321,7 @@ sleep 45
 
 logger "判断热备份的容器是否有启动成功"
 # curl 127.0.0.1:$backupPort || echo "热备份的容器启动失败"; exit 1
-curl 127.0.0.1:$backupPort &> /dev/null
+curl --max-time 15 -L 127.0.0.1:$backupPort &> /dev/null
 if [ $? != 0 ]; then
     logger "热备份的容器启动失败 "
     rmimage $backupName
@@ -346,7 +346,7 @@ logger "等待 45 秒，确保正式的容器已经运行起来"
 sleep 45
 
 logger "判断正式的容器是否启动成功"
-curl 127.0.0.1:$prodPort &> /dev/null
+curl --max-time 15 -L 127.0.0.1:$prodPort &> /dev/null
 if [ $? != 0 ]; then
     logger "正式的容器启动失败 "
     rmimage $pordName
