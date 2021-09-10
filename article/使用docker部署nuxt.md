@@ -171,38 +171,59 @@ function logger() {
 }
 # 移除容器的函数
 function rmimage() {
+    # 移除容器之前先记录容器的日志
+    logger $1
+    logger "$(docker logs --tail 100 $1)"
     docker stop $1 && docker rm $1
+}
+# 给变量赋值的同时输出到日志
+function setvar() {
+    logger "$1 $2"
+    eval $1="\$(echo \"$2\")"
 }
 
 # ==================================================
 # 这些变量名 请根据实际情况修改
 
 # node 的版本号
-nodeVersion=14.16
+setvar nodeVersion 14.16
 
 # 项目构建命令 从安装依赖开始 多个命令用 && 隔开
-buildCommand="rm -r -f node_modules && npm i && npm install && npm audit fix && npm run build"
+setvar buildCommand "rm -r -f node_modules && npm i && npm install && npm audit fix && npm run build"
 
 # 项目运行命令 多个命令用 && 隔开
-runCommand="npm run start"
+setvar runCommand "npm run start"
 
 # 作为正式容器的端口
-prodPort=3002
+setvar prodPort 3002
 # 作为热备份容器的端口
-backupPort=3003
+setvar backupPort 3003
 # nuxt 配置文件里的端口
-nuxtPort=3001
+setvar nuxtPort 3001
 
 # 项目名
-project="nuxt"
+setvar project "nuxt"
 
 # 项目根目录的绝对地址
-projectDir="/www/wwwroot/my_nuxt"
+setvar projectDir "/www/wwwroot/my_nuxt"
 
 # 接口域名，如果前端和后端部署在同一台服务器里，把接口域名解释成本地ip，接口响应·速度能提升不少的
-apiUrl=""
+setvar apiUrl ""
 # docker 宿主机的ip 一般都是 172.17.0.1
-dockerHostIP="172.17.0.1"
+setvar dockerHostIP "172.17.0.1"
+
+# 镜像的用户名
+setvar userName "my"
+
+# node 镜像名
+setvar baseImageName "node:$nodeVersion-slim"
+
+# 作为正式容器的容器名
+setvar pordName "$project-nuxt"
+# 作为热备份容器的容器名
+setvar backupName "$pordName-backup"
+
+# ==================================================
 
 # 如果项目根目录不是当前目录，就切换到项目根目录
 # 如果项目根目录为空，则会默认当前目录是项目根目录
@@ -212,21 +233,6 @@ else
     projectDir = $(pwd)
 fi
 logger "切换到项目根目录 "$projectDir
-
-# ==================================================
-
-# 镜像的用户名
-userName="my"
-
-# node 镜像名
-baseImageName="node:$nodeVersion-slim"
-
-# 作为正式容器的容器名
-pordName="$project-nuxt"
-# 作为热备份容器的容器名
-backupName="$pordName-backup"
-
-# ==================================================
 
 logger "这段脚本的运行速度可能会有一点的慢，请耐心等待，请勿中断脚本的运行"
 
@@ -264,6 +270,8 @@ commitid=$(git rev-parse --short HEAD)
 # 根据 commitid 拼接镜像名
 imageName="$(echo $userName/$project:$commitid-`date +%g%m%d%H%M`)"
 imageNameLatest="$userName/$project:latest"
+logger $imageName
+logger $imageNameLatest
 
 logger "判断当前版本是否已有镜像"
 forceUpdate=0
