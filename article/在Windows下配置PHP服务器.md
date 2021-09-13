@@ -373,6 +373,8 @@ hosts 的文件位置是 `%WINDIR%\System32\drivers\etc\hosts`
 notepad %WINDIR%\System32\drivers\etc\hosts
 ```
 
+hosts 修改后如果沒有生效，可以用这个命令刷新 DNS `ipconfig /flushdns`
+
 ### 一些实用的命令
 
 - netstat

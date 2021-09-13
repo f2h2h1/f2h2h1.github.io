@@ -95,7 +95,7 @@ IntelliSense 的插件有两个， IntelliSense 只需要装一个就可以的�
 3. 设置 Xdebug Helper 的 IDE Key 为 other ，vaule 为 vscode
 4. 这是点击，浏览器地址栏右边的 debug 图标就可以进行调试了
 5. 然后在浏览器里访问对应的地址
-6. Xdebug Helper 实现的原理是， xdebug.idekey 的值会添加到 cookies 里， php 检测到 xdebug.idekey 后就会通知 IDE 启动调试
+6. Xdebug Helper 实现的原理是， xdebug.idekey 的值会添加到 cookies 里（大概像这样 `XDEBUG_SESSION=vscode` ）， php 检测到 xdebug.idekey 后就会通知 IDE 启动调试
 
 ## 6. 使用分析工具
 

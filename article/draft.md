@@ -777,6 +777,68 @@ magento2 配置 paypal
                     拓扑排序
                     关键路径
 
+开发php扩展
+    安装必要依赖
+        更新源 apt-get update
+        apt-get -y install \
+            curl libxml2-dev libsqlite3-dev \
+            gcc make autoconf automake pkg-config
+        curl 是为了下载 php 源码
+        gcc make pkg-config 编译主体必须的
+        autoconf 编译拓展必须的
+        autoconf 依赖 automake
+        除非禁用了相关编译参数，不然这两个包是必须的 libxml2-dev libsqlite3-dev
+    下载源码
+        curl -L -C - https://www.php.net/distributions/php-7.4.23.tar.gz -o php-7.4.23.tar.gz
+        tar -xzf php-7.4.23.tar.gz
+    编译
+        ./configure
+            如果内存小于 1g ，要加上 --disable-fileinfo
+            想这样 ./configure --disable-fileinfo
+        make
+        make install
+    配置文件
+        寻找php的安装目录
+            直接运行这句 php-config
+            其实可以在 configure 指定安装目录的，但默认情况下可以直接加入环境变量 ./configure --prefix=/root/php-7.4.23/target
+        找到 --ini-path 的位置，把配置文件复制到 --ini-path
+        cp php.ini-development /usr/local/lib/php.ini
+    新建扩展骨架
+        进入扩展目录
+        运行 php ext_skel.php --ext helloworld
+        这样就能生成一个示例扩展
+        编译扩展
+            phpize
+            ./configure --with-php-config=/usr/local/bin/php-config
+                --with-php-config 的路径要填绝对路径，
+                    whereis php-config
+                    whcih php-config
+                    php-config 一般和 php 的可执行文件在同一个目录下
+            make
+            make install
+            默认情况下扩展是动态编译的，就是直接把编译后的 so 文件路径加入到 php.ini 就可以了
+        把扩展的路径加到 php.ini
+            echo "extension=/root/php-7.4.23/ext/helloworld/modules/helloworld.so" >> /usr/local/lib/php.ini
+        验证扩展
+            php -m | grep helloworld
+            php -r "helloworld_test1();"
+            php -r "helloworld_test1();echo helloworld_test2('world');echo PHP_EOL;"
+        helloworld_test1 和 helloworld_test2 是扩展骨架里自带的函数，可以根据这两个示例来开发自己的扩展
+    docker
+        dockerfile
+            FROM debian:bullseye-slim
+            ARG PHP_VERSION=7.4.23
+            ARG PHP_DIR=/root
+            WORKDIR ${PHP_DIR}
+            RUN apt-get update
+            RUN apt-get install -y curl
+            RUN curl -L -C - https://www.php.net/distributions/php-${PHP_VERSION}.tar.gz -o php-${PHP_VERSION}.tar.gz && tar -xzf php-${PHP_VERSION}.tar.gz
+            RUN apt-get -y install \
+                gcc make automake autoconf pkg-config \
+                libxml2-dev libsqlite3-dev
+            RUN cd php-${PHP_VERSION} && ./configure --disable-fileinfo && make && make install
+        docker build -t asd/php_ext:0.1 .
+        docker run -it --rm asd/php_ext:0.1 /bin/bash
 
 版本控制软件比较
     git
