@@ -54,7 +54,7 @@ foreach ($articleList as $article) {
     </item>
     EOF;
     $item = sprintf($item, $article['title'], 'https://f2h2h1.github.io/#title=' . urlencode($article['title']), $article['title'], date('Y-m-d', $article['updateTime']));
-    $itemList .= trim($item) . PHP_EOL;
+    $itemList .= trim($item) . "\n";
 }
 $rss = <<<EOF
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -80,7 +80,7 @@ foreach ($articleList as $article) {
     </url>
     EOF;
     $item = sprintf($item, 'https://f2h2h1.github.io/#title=' . urlencode($article['title']), date('Y-m-d', $article['updateTime']));
-    $itemList .= trim($item) . PHP_EOL;
+    $itemList .= trim($item) . "\n";
 }
 $sitemap = <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
