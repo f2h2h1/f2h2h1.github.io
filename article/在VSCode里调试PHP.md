@@ -96,6 +96,10 @@ IntelliSense 的插件有两个， IntelliSense 只需要装一个就可以的�
 4. 这是点击，浏览器地址栏右边的 debug 图标就可以进行调试了
 5. 然后在浏览器里访问对应的地址
 6. Xdebug Helper 实现的原理是， xdebug.idekey 的值会添加到 cookies 里（大概像这样 `XDEBUG_SESSION=vscode` ）， php 检测到 xdebug.idekey 后就会通知 IDE 启动调试
+7. 用 postman 或 curl 这类工具测试时，只要 http 头的 cookie 带有 `XDEBUG_SESSION=vscode` ，就是触发调试的了，类似于这样
+    ```
+    curl -k --cookie "XDEBUG_SESSION=vscode" http://testurl
+    ```
 
 ## 6. 使用分析工具
 
