@@ -209,11 +209,31 @@ IndexedDB 非关系型数据库
         vscode
 vscode的使用技巧
     常用的拓展
+        git
+            Git History
+            GitLens — Git supercharged
+        php
+            PHP Debug
+            PHP Intelephense
+            PHP IntelliSense
+        其它
+            vscode-icons
+            sftp https://marketplace.visualstudio.com/items?itemName=Natizyskunk.sftp
+            remote ssh
     显示空格
+        "editor.renderControlCharacters": true, // 显示控制字符
+        "editor.renderWhitespace": "all", // 渲染全部空白
     显示 .git 文件夹
+        "files.exclude": {
+            "**/.git": false
+        },
     使用 git
     搜索文档内容的技巧
+        排除 或 包含 可以用 , 表示多个条件，例如像这样 .jmx,.js,.css,.less,.xml,.md
+        排除 或 包含 可以用 * 表示通配
+        匹配空行的正则表达式 ^\s*(?=\r?$)\n
     搜索文件的技巧
+        ctrl+p 按文件名搜索
     task的配置
     调试各种语言
         php
@@ -295,6 +315,47 @@ spa 的 ssr
   原文链接 快照链接
 git的一般使用指南
 如何制作一个 php 框架
+    组件
+        解释http请求 和 发送响应 symfony/http-foundation
+        路由组件 symfony/routing
+        渲染视图 原生php 或 twig/twig
+        控制器 symfony/http-kernel
+        事件调度 symfony/event-dispatcher
+        依赖注入 symfony/dependency-injection
+        错误处理 symfony/error-handler
+        日志 monolog/monolog
+        文件管理 symfony/finder
+        数据库 doctrine/orm
+        命令行 symfony/console
+        缓存 symfony/cache
+        邮件 swiftmailer/swiftmailer
+        数据库迁移 doctrine/migrations
+        测试数据 fzaninotto/faker 虽然作者已经声名不维护了，但好像没有更好的实现
+        国际化 symfony/intl
+        http客户端 symfony/http-client
+        认证和授权 symfony/security-core
+        转义 ezyang/htmlpurifier
+        验证 respect/validation
+        单元测试 phpunit
+        静态分析 vimeo/psalm
+        格式检查 friendsofphp/php-cs-fixer
+        突变测试 infection/infection
+    php的小型框架
+        https://github.com/slimphp/Slim
+        https://github.com/jadephp/jade
+        https://github.com/silexphp/Silex 基于 Symfony2 的，现在已经不更新了
+    参考
+        https://symfony.com/doc/current/the-fast-track/zh_CN/index.html
+        https://symfony.com/doc/current/create_framework/index.html
+        http://www.symfonychina.com/doc/current/create_framework/index.html
+        https://github.com/CraryPrimitiveMan/create-your-own-php-framework
+        https://github.com/learnku-xxh-cds/php_frame
+        https://github.com/yeszao/fastphp
+        https://github.com/coolephp/skeleton
+        https://www.awaimai.com/128.html
+        https://learnku.com/articles/6271/build-a-micro-framework-for-your-project-using-composer
+        https://learnku.com/articles/52099
+        https://learnku.com/laravel/t/9365/teach-you-to-write-modern-php-code-without-using-a-framework
     把框架做成一个 composer project template
 一些未能分类的经验
     如何做一个 composer 包
@@ -403,6 +464,11 @@ magento2 配置 paypal
         Adobe RGB
         Adobe宽色域RGB
         DCI-P3
+    位深度 ColorDepth
+        显示一个颜色需要用多少位
+        如果位深度 1 就是只能显示一种颜色
+        位深度 2 就是能显示两种颜色
+        位深度 8 就是能显示 2^8 种颜色
     基本16色
         在HTML 4.01版本中，确定了16种颜色的英语名称
             CSS 标准 1 只接受 16 个基本颜色，称为VGA颜色，因为它们来源于 VGA 显卡所显示的颜色集合而被称为 VGA colors （视频图形阵列色彩）
