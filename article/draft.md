@@ -283,6 +283,49 @@ vscode的使用技巧
     递归式寻找答案
     技术的边界
 这些年来的生活经验 学习如何学习 如何定位问题 如何寻找问题的解决办法
+    如何定位问题
+        问题出现的环境
+            浏览器版本 用户组 操作系统 之类的
+        问题出现的业务场景
+            注册 登录 浏览商品 下单 支付 之类的
+        有没有错误输出
+        寻找对应的日志记录
+        了解完整的调用链路
+    如何寻找问题的解决办法
+        解决问题要从简单的例子入手
+        把一个大的问题分解为多个小的问题，然后逐个解决
+        在 搜索引擎里搜索
+            bing 国内版
+            百度
+            bing 国际版
+            google
+            用英文在 google 上搜索
+        在 q群里提问
+            如何加q群？
+            在qq添加那里直接搜索对应的关键字就可以了
+            例如，直接搜 php 就会有php的群，然后就申请加入，最好一次多加几个，因为有可能不通过
+            在 q群里提问可以以 酬谢 红包感谢 这类字眼结尾
+            除了q群之外，还可以找钉钉群 微信群之类的
+        在 stackoverflow segmentfault 等技术类的网站搜索
+        如果是某个特定软件的问题，
+            去看官方的文档
+            去官方的论坛（如果有）上搜索
+            去 github iusess 上搜索
+        如果用中文搜不到，就把问题翻译成英文再搜一次
+        如果遇到英文网站看不懂就用谷歌翻译
+        问一下朋友，同事，同学，把问题发到朋友圈上
+        在 segmentfault 知乎 等网站找大佬，付费提问
+        尝试一下大力奇迹
+            把当前的问题特例化，不考虑通用的情况，把当前问题解决了再算
+            不考虑内存时间的消耗，内存不够就加内存，时间太久就升级cpu
+        尝试换一种思路去解决问题
+        问题解决之后要做一个记录
+        如何描述问题
+            描述目标
+            描述问题
+            描述问题出现的环境
+            描述一下为解决这个问题做过的努力
+        如何提问 https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md
 如何写一篇xx管理系统的论文
 使用正则表达式实现的关键词过滤
 KiB 和 KB 和 Kb 和 Kbps 的联系与区别
@@ -344,6 +387,26 @@ git的一般使用指南
         https://github.com/slimphp/Slim
         https://github.com/jadephp/jade
         https://github.com/silexphp/Silex 基于 Symfony2 的，现在已经不更新了
+    php的型框架
+        ci
+        thinkphp
+        laravel
+        yii
+        cakephp
+        symfony
+        yaf
+        ZendFramework
+        Phalcon
+        workman
+            GatewayWorker
+            webman
+        swoole
+            easyswoole
+            hyperf
+    模板引擎
+        Smarty
+        Twig
+        Blade
     参考
         https://symfony.com/doc/current/the-fast-track/zh_CN/index.html
         https://symfony.com/doc/current/create_framework/index.html
@@ -1096,7 +1159,7 @@ magento2 配置 paypal
     编译
         ./configure
             如果内存小于 1g ，要加上 --disable-fileinfo
-            想这样 ./configure --disable-fileinfo
+            像这样 ./configure --disable-fileinfo
         make
         make install
     配置文件
