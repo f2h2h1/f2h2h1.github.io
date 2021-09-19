@@ -5,7 +5,7 @@ declare(strict_types=1);
 // 获取文章列表
 $articleList = [];
 foreach (glob('article/*.md') as $item) {
-    if (filter_var($item, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^_(?:.*).md$/']])) {
+    if (filter_var($item, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^article\/_(?:.*).md$/']])) {
         continue;
     }
     $output = [];
