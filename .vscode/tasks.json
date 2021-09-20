@@ -12,7 +12,7 @@
         {
             "label": "update matedata",
             "type": "shell",
-            "command": "git add articleList.json sitemap.xml rss.xml README.md; git commit -m \"update auxiliary\"",
+            "command": "git add articleList.json sitemap.xml rss.xml README.md SUMMARY.md",
             "dependsOn": ["updateTime"],
             "options": {
                 "shell": {
@@ -26,6 +26,24 @@
             "type": "shell",
             "command": "php -S 127.0.0.1:9012",
             "problemMatcher": []
-        }
+        },
+        {
+            "label": "gitbook build",
+            "type": "shell",
+            "command": "gitbook build",
+            "problemMatcher": []
+        },
+        {
+            "label": "gitbook serve",
+            "type": "shell",
+            "command": "gitbook serve",
+            "problemMatcher": []
+        },
+        {
+            "label": "gitbook run with php",
+            "type": "shell",
+            "command": "giphp -S 127.0.0.1:9012 -t _book",
+            "problemMatcher": []
+        },
     ]
 }
