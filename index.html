@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>(*>_>*)</title>
+	<title>f2h2h1's blog</title>
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -21,7 +21,7 @@
 				display: none;
 			}
 			.container-fluid {
-				padding: 25px;
+				padding-top: 0px;
 			}
 			#content {
 				width: 100%;
@@ -40,7 +40,11 @@
 		}
 
 		#content blockquote {
-			border-left: 5px solid #6e6666;
+			font-size: 15px;
+			padding: 6px 10px;
+			border-width: 0px;
+			border-left: 3px solid #6e6666;
+			margin: 5px 0px;
 		}
 
 		.container-fluid {
@@ -118,10 +122,12 @@
 				</dl>
 				<dl>
 					<dt>Link exchange</dt>
+					<dd><a target="_blank" href="https://github.com/timqian/chinese-independent-blogs">中文独立博客列表</a></dd>
+					<dd>可以通过 issues 或 邮件 的方式提交你的站点</dd>
 				</dl>
 				<dl>
 					<dt>About</dt>
-					<dd><a target="_blank" href="https://github.com/f2h2h1">github</a></dd>
+					<dd><a target="_blank" href="https://github.com/f2h2h1/f2h2h1.github.io">github</a></dd>
 					<dd><a target="_blank" href="sitemap.xml">sitemap</a></dd>
 					<dd><a target="_blank" href="rss.xml">rss</a></dd>
 				</dl>
@@ -153,6 +159,11 @@
 					document.body.style.animation = 'd2l 1s 1 normal forwards';
 				}
 			}
+			if (mql.matches) {
+				themeBtn.checked = true;
+			} else {
+				themeBtn.checked = false;
+			}
 			mql.addListener(function(e) {
 				changeTheme(e.matches);
 			});
@@ -182,7 +193,7 @@
 							}
 							options.success && options.success(result, xhr.responseXML);
 						} else {
-							options.error && options.error(status, xhr.responseText);
+							options.error && options.error(status, xhr.responseText, options.error);
 						}
 						options.complete && options.complete();
 					}
@@ -286,6 +297,7 @@
 						div.appendChild(hr);
 						content.appendChild(div);
 					}
+					document.querySelector('title').innerText = 'f2h2h1\'s blog';
 				}
 				return IndexList;
 			})();
@@ -343,6 +355,7 @@
 							let hr = document.createElement("hr");
 							content.appendChild(hr);
 							content.appendChild(timespan(articleInfo));
+							document.querySelector('title').innerText = title;
 							if (new Date().getTime() / 1000 - articleInfo.updateTime > 15552000) {
 								let h1 = content.querySelector('h1');
 								let newElement = document.createElement("p");
@@ -357,6 +370,7 @@
 							}
 						},
 						error: function () {
+							document.querySelector('title').innerText = '404';
 							content.innerHTML = '<div class="jumbotron"><div class="container"><h1>404</h1><p><a href="javascript:history.back()">go back</a></p></div></div>';
 						}
 					});
@@ -377,7 +391,7 @@
 									resolve(data);
 								},
 								error: (XMLHttpRequest, textStatus, errorThrown) => {
-									reject({});
+									reject(errorThrown);
 								}
 							});
 						});
@@ -386,8 +400,15 @@
 				return articleList;
 			}
 			async function hashChangeFire() {
-				articleList = await getArticleList();
 				let content = document.getElementById('content');
+				try {
+					articleList = await getArticleList();
+				} catch (e) {
+					console.log(e);
+					document.querySelector('title').innerText = '500';
+					content.innerHTML = '<div class="jumbotron"><div class="container"><h1>500</h1><p><a href="javascript:window.location.reload()">reload</a></p></div></div>';
+					return;
+				}
 				let indexList = new IndexList(content, articleList);
 				let article = new Article(content, articleList);
 				let title = getKey("title");
