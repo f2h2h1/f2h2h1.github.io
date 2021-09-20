@@ -1,0 +1,15 @@
+{
+    "title": "f2h2h1's blog",
+    "author": "f2h2h1",
+    "language": "zh-Hans",
+    "gitbook": ">= 3.2.3",
+    "links": {
+        "sidebar": {
+            "rss": "/rss.xml",
+            "sitemap": "/sitemap.xml"
+        }
+    },
+    "plugins": [
+        "-sharing"
+    ]
+}

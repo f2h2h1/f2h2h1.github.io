@@ -42,6 +42,11 @@ $listStr = array_reduce($articleList, function($carry, $item) {
 $readme = preg_replace('/(?<=<!-- list -->).*(?=<!-- list -->)/ims', "\n" . $listStr, $readme);
 file_put_contents('README.md', $readme);
 
+// SUMMARY
+file_put_contents('SUMMARY.md', '# Summary' . "\n\n" . '* [Introduction](README.md)' . "\n" . array_reduce($articleList, function($carry, $item) {
+    return $carry .= '* [' . $item['title'] . '](article/' . $item['title'] . '.md)' . "\n";
+}, ''));
+
 // rss
 $itemList = '';
 foreach ($articleList as $article) {
