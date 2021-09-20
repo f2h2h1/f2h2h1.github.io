@@ -9,12 +9,12 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<style>
-		/* @media (prefers-color-scheme: dark) { */
+		@media (prefers-color-scheme: dark) {
 			body {
 				background-color: black;
 				color: gray;
 			}
-		/* } */
+		}
 
 		pre {
 			background-color: #363434;
@@ -44,6 +44,45 @@
 			width: 100%;
 			height: 60px;
 		}
+
+		@keyframes d2l {
+			0% {
+				background-color: rgb(16, 16, 16);
+			}
+			25% {
+				background-color: rgb(32, 32, 32);
+			}
+			50% {
+				background-color: rgb(64, 64, 64);
+			}
+			75% {
+				background-color: rgb(128, 128, 128);
+			}
+			100% {
+				background-color: white;
+				color: black;
+			}
+		}
+
+		@keyframes l2d {
+			0% {
+				background-color: rgb(128, 128, 128);
+			}
+			25% {
+				background-color: rgb(64, 64, 64);
+			}
+			50% {
+				background-color: rgb(32, 32, 32);
+			}
+			75% {
+				background-color: rgb(16, 16, 16);
+			}
+			100% {
+				background-color: black;
+				color: gray;
+			}
+		}
+
 	</style>
 </head>
 
@@ -53,9 +92,9 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">Home</a>
 			</div>
-			<!-- <div class="navbar-form navbar-right">
-				<button class="btn btn-default" id="theme_btn">切换主题</button>
-			</div> -->
+			<div class="navbar-form navbar-right">
+				<label style="color: white;"><input type="checkbox" id="theme_btn" /> dark</label>
+			</div>
 		</div>
 	</header>
 	<main class="container-fluid">
@@ -71,8 +110,8 @@
 				<dl>
 					<dt>About</dt>
 					<dd><a target="_blank" href="https://github.com/f2h2h1">github</a></dd>
-					<dd><a target="_blank" href="rss.xml">sitemap</a></dd>
-					<dd><a target="_blank" href="sitemap.xml">rss</a></dd>
+					<dd><a target="_blank" href="sitemap.xml">sitemap</a></dd>
+					<dd><a target="_blank" href="rss.xml">rss</a></dd>
 				</dl>
 				<div>
 		</div>
@@ -91,6 +130,24 @@
 	<script src="static/marked.min.js"></script>
 	<script>
 		window.addEventListener('load', function() {
+			var themeBtn = document.getElementById('theme_btn');
+			var mql = window.matchMedia('(prefers-color-scheme: dark)');
+			function changeTheme(themeFlg) {
+				if (themeFlg) {
+					themeBtn.checked = true;
+					document.body.style.animation = 'l2d 1s 1 normal forwards';
+				} else {
+					themeBtn.checked = false;
+					document.body.style.animation = 'd2l 1s 1 normal forwards';
+				}
+			}
+			mql.addListener(function(e) {
+				changeTheme(e.matches);
+			});
+			themeBtn.addEventListener('click', function() {
+				changeTheme(themeBtn.checked);
+			});
+
 			function ajax(options) {
 				options = options || {};
 				options.type = (options.type || 'GET').toUpperCase();
