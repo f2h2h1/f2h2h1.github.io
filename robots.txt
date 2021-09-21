@@ -1,3 +1,3 @@
 User-agent: *
 Disallow: /.vscode/
-Sitemap: /sitemap.xml
+Sitemap: https://f2h2h1.github.io/sitemap.xml
