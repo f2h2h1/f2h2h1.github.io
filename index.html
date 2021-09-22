@@ -9,6 +9,9 @@
 	<meta name="description" content="This is a blog used by a programmers to record experience">
 	<title>f2h2h1's blog</title>
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="manifest" href="/manifest.webmanifest">
+	<meta name="theme-color" content="gray">
+	<link rel="apple-touch-icon" href="/icons-512.png">
 	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<style>
 		@media (prefers-color-scheme: dark) {
@@ -163,6 +166,9 @@
 	</footer>
 	<script src="static/marked.min.js"></script>
 	<script>
+		if (navigator.serviceWorker) {
+			navigator.serviceWorker.register('/sw.js');
+		}
 		window.addEventListener('load', function() {
 			var themeBtn = document.getElementById('theme_btn');
 			var mql = window.matchMedia('(prefers-color-scheme: dark)');
@@ -215,7 +221,11 @@
 					}
 				}
 				if (options.type == 'GET') {
-					xhr.open('GET', options.url + '?' + params, true);
+					if (params != '') {
+						xhr.open('GET', options.url + '?' + params, true);
+					} else {
+						xhr.open('GET', options.url, true);
+					}
 					xhr.send(null);
 				} else if (options.type == 'POST') {
 					xhr.open('POST', options.url, true);

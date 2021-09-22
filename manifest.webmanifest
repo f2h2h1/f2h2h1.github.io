@@ -1,0 +1,23 @@
+{
+    "name": "f2h2h1's blog",
+    "short_name": "f2h2h1",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "theme_color":"gray",
+    "background_color": "gray",
+    "description": "This is a blog used by a programmers to record experience",
+    "prefer_related_applications": true,
+    "icons": [
+        {
+            "src": "icons-512.png",
+            "sizes": "512x512",
+            "type":"image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons-192.png",
+            "sizes": "192x192",
+            "type":"image/png"
+        }
+    ]
+}
