@@ -368,10 +368,17 @@ hosts 的文件位置是 `%WINDIR%\System32\drivers\etc\hosts`
 修改 hosts 需要管理员权限，直接用记事本修改会保存失败的，可以用 vscode 修改
 
 或者打开管理员的命令行，再在命令行里打开记事本，再用记事本打开 hosts
-例如这样
+例如这样 这是 bat 的
 ```
 notepad %WINDIR%\System32\drivers\etc\hosts
 ```
+
+或者这样 这是 powershell 的
+```
+notepad $env:windir\system32\drivers\etc\hosts
+```
+
+hosts 修改后，可以用这个命令 `nslookup 域名` 来判断有没有生效
 
 hosts 修改后如果沒有生效，可以用这个命令刷新 DNS `ipconfig /flushdns`
 
@@ -399,7 +406,7 @@ hosts 修改后如果沒有生效，可以用这个命令刷新 DNS `ipconfig /f
 
 - taskkill
     ```
-    tasklist /T /F /FI "WINDOWTITLE eq titlename"
-    tasklist /T /F /FI "PID eq 9088"
+    taskkill /T /F /FI "WINDOWTITLE eq titlename"
+    taskkill /T /F /FI "PID eq 9088"
     taskkill /T /F /FI "IMAGENAME eq nginx.exe"
     ```
