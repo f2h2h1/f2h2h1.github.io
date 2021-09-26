@@ -12,6 +12,7 @@ this.addEventListener("install", function(event) {
         '/static/marked.min.js',
         '/static/cc4.0.webp',
         '/articleList.json',
+        '/exchangeList.json',
     ];
     event.waitUntil(
         // 请求资源并添加到缓存里面去

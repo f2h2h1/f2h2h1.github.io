@@ -6,7 +6,7 @@
         {
             "label": "updateTime",
             "type": "shell",
-            "command": "php updateTime.php",
+            "command": "php updateMetadata.php",
             "problemMatcher": []
         },
         {
@@ -43,6 +43,7 @@
             "label": "gitbook run with php",
             "type": "shell",
             "command": "giphp -S 127.0.0.1:9012 -t _book",
+            "dependsOn": ["gitbook build"],
             "problemMatcher": []
         },
     ]

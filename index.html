@@ -64,8 +64,13 @@
 			padding-left: 25px;
 		}
 
+		dt, dd {
+			margin-top: 5px;
+		}
+
 		.footer {
 			margin-top: 25px;
+			margin-bottom: 15px;
 			width: 100%;
 			height: 60px;
 		}
@@ -137,15 +142,14 @@
 			<nav class="col-md-3">
 				<dl id="article_list">
 				</dl>
-				<dl>
-					<dt>Link exchange</dt>
-					<dd><a target="_blank" rel="noreferrer" href="https://github.com/timqian/chinese-independent-blogs">中文独立博客列表</a></dd>
-					<dd><a target="_blank" rel="noreferrer" href="https://5ime.cn/">I Am I</a></dd>
-					<dd><a target="_blank" rel="noreferrer" href="https://funix.cn">56Kb/s</a></dd>
-					<dd>可以通过 issues 或 邮件 的方式提交你的站点</dd>
+				<dl id="link_exchange">
 				</dl>
 				<dl>
 					<dt>About</dt>
+					<dd>名称: f2h2h1's blog</dd>
+					<dd>地址: https://f2h2h1.github.io/</dd>
+					<dd>描述: 这是一个程序员记录开发经验的博客</dd>
+					<dd>头像: https://f2h2h1.github.io/avatar.png</dd>
 					<dd><a target="_blank" rel="noreferrer" href="https://github.com/f2h2h1/f2h2h1.github.io">github</a></dd>
 					<dd><a target="_blank" href="sitemap.xml">sitemap</a></dd>
 					<dd><a target="_blank" href="rss.xml">rss</a></dd>
@@ -156,6 +160,7 @@
 
 	<footer class="footer">
 		<div class="container-fluid">
+			<p>Copyright ©2021 f2h2h1</p>
 			<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
 				<img alt="知识共享许可协议" width="87px" height="30px" src="static/cc4.0.webp">
 			</a>
@@ -403,6 +408,50 @@
 				}
 				return Article;
 			})();
+
+			var LinkExchange = (function() {
+				var DOM;
+				function LinkExchange(initDOM) {
+					DOM = initDOM;
+				}
+				LinkExchange.prototype.render = function() {
+					DOM.appendChild((function() {
+						let dt = document.createElement('dt');
+						dt.innerHTML = 'Link exchange';
+						return dt;
+					})());
+					ajax({
+						type: 'GET',
+						url: 'exchangeList.json',
+						dataType: "json",
+						success: function (result) {
+							let linkExchangeList = result;
+							for (let i in linkExchangeList) {
+								DOM.appendChild((function(item) {
+									let dd = document.createElement('dd');
+									let a = document.createElement('a');
+									a.setAttribute('target', '_blank');
+									a.setAttribute('rel', 'noreferrer');
+									a.setAttribute('href', item.href);
+									a.innerText = item.name;
+									dd.appendChild(a);
+									return dd;
+								})(linkExchangeList[i]));
+							}
+						},
+						error: function () {},
+						complete: function () {
+							DOM.appendChild((function() {
+								let dd = document.createElement('dd');
+								dd.innerText = '可以通过 issues 或 邮件 的方式提交你的站点';
+								return dd;
+							})());
+						}
+					});
+				}
+				return LinkExchange;
+			})();
+			(new LinkExchange(document.getElementById('link_exchange'))).render();
 
 			var articleList = {};
 			async function getArticleList() {
