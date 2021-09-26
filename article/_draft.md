@@ -434,10 +434,12 @@ git的一般使用指南
         新建一个 pr
 一般的项目开发流程
     工具
+        注册域名
         LDAP
             linux 的账号管理
             公司内网的域管理
             其它信息系统的关联
+                email
                 oa
                 hrm
                 erp
@@ -445,19 +447,32 @@ git的一般使用指南
                 crm
         邮箱
             自建邮箱服务
+                域名 mx 记录
+                mta Postfix
+                    amavisd-new 调度 ClamAV 和 SpamAssassin
+                    ClamAV 邮件反病毒
+                    SpamAssassin 过滤垃圾邮件
+                mda Dovecot
+                mua webmail RainLoop
             企业邮箱
+            通讯录
+                CardDAV
+                ad 域或 ladp 的组织架构
         项目管理
         流水线
         git 仓库
         镜像仓库
         内部文档
             入职用的文档，让新成员能迅速地熟悉工作流程
+            公司的一些规章制度，例如 员工手册 之类的
+            项目部署和开发的文档，让新成员能迅速上手项目的开发
         im
             企业微信
             钉钉
             qq
             其它内部im
                 XMPP
+                    Openfire
         文件共享
             webdav
             smb
