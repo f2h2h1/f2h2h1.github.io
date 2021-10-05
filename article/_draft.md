@@ -424,6 +424,7 @@ vscode的使用技巧
             描述一下为解决这个问题做过的努力
         如何提问 https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md
 如何写一篇xx管理系统的论文
+如何搭建一个邮件服务器
 使用正则表达式实现的关键词过滤
     一般文本
         文本->tts->语音识别->识别后的文本->语义分析->判断是否违规
@@ -547,13 +548,24 @@ git的一般使用指南
                 crm
         邮箱
             自建邮箱服务
-                域名 mx 记录
+                域名解释
+                    A 记录
+                        @ 指向 ip
+                    CNAME 记录
+                        mail 指向 A 记录
+                    MX 记录
+                        @ 指向 CNAME 记录
+                    TXT 记录
+                        spf dkim dmarc
+                    PTR 记录
+                        域名 指向 ip
                 mta Postfix
                     amavisd-new 调度 ClamAV 和 SpamAssassin
                     ClamAV 邮件反病毒
                     SpamAssassin 过滤垃圾邮件
                 mda Dovecot
                 mua webmail RainLoop
+                opendkim
             企业邮箱
             通讯录
                 CardDAV
