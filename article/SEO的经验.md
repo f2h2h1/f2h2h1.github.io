@@ -64,6 +64,7 @@ SEO 的方法要跟随搜索引擎的规则不断调整。如果没有精力研�
 - 不能返回 5xx
 - 网站要使用 https
 - 网页里的链接要尽量也是 https
+- https 的 tls 尽量使用 1.2 或以上版本
 - 对已停用的网址使用 301 重定向
 - http 都和 html 文档里都应该指明编码，且两个编码要一致
 - 确保您的网络服务器能够正确地支持 If-Modified-Since HTTP 标头。此功能可指示您的网络服务器告诉 Google，自我们上次抓取您的网站以来，您的内容是否发生了变化。支持此功能可以节省带宽和开销。
@@ -135,6 +136,7 @@ SEO 的方法要跟随搜索引擎的规则不断调整。如果没有精力研�
 - 使用搜索引擎提供的站长工具
 - 使用一个站点分析工具
 - 除了 sitemap 和 robots.txt 之外，还可以加一个 rss
+- 重视链接的分享
 - 不要搞 SEO 的作弊
 
 ## SEO 的辅助工具
@@ -240,6 +242,9 @@ https://www.google.com/advanced_search
 这几个平台都有特定的分享标签和分享 api 。
 例如 谷歌的结构化数据， Open Graph 和 Twitter Card 标签。
 谷歌的结构化数据可以更好地呈现搜索结果 https://developers.google.cn/search/docs/advanced/structured-data/intro-structured-data
+
+使用通用的 Web Share API ，虽然还只是草案，但 Chrome Edge 和 Safari 都已经支持了
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API
 
 针对社交平台的优化会被称为 SMO (Social Media Optimization 社交媒体优化)
 
