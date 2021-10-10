@@ -39,3 +39,38 @@
 - [安装PHP7的GUI扩展](article/安装PHP7的GUI扩展.md)
 - [关于](article/关于.md)
 <!-- list -->
+
+## gitbook
+
+### 依赖
+- node 14.17
+- npm 7.24
+- gitbook-cli 2.3.2
+
+### 安装 gitbook
+
+```
+npm install gitbook-cli -g
+```
+
+### 运行 gitbook
+
+构建和运行，默认会占用 4000 端口
+```
+gitbook serve
+```
+
+只构建
+```
+gitbook build
+```
+
+### 其它
+
+gitbook 的项目地址
+
+https://github.com/GitbookIO/gitbook
+
+https://github.com/GitbookIO/gitbook-cli
+
+gitbook 已经不更新了。真的好可惜。
