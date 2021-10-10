@@ -12,30 +12,78 @@
 	<link rel="manifest" href="/manifest.webmanifest">
 	<meta name="theme-color" content="gray">
 	<link rel="apple-touch-icon" href="/icons-512.png">
-	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<style>
 		@media (prefers-color-scheme: dark) {
 			body {
-				background-color: black;
-				color: gray;
+				background-color: rgb(0, 0, 0);
+				color: rgb(204, 204, 204);
 			}
 		}
 
-		@media print {
-			header {
-				display: none;
+		a {
+			color: #2278c2;
+			text-decoration: none;
+		}
+
+		a:focus, a:hover {
+			color: #068472;
+			text-decoration: underline;
+		}
+
+		.navbar-header {
+			padding: 9px;
+			border-bottom: solid;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.navbar-header a {
+			font-weight: bold;
+		}
+
+		main {
+			display: grid;
+			grid-template-columns: 100%;
+		}
+
+		@media screen and (min-width: 768px) { /* >=768的设备 */
+			main {
+				grid-template-columns: 68% 32%;
 			}
-			.container-fluid {
-				padding-top: 0px;
+		}
+
+		@media screen and (min-width: 992px) { /* >=992的设备 */
+			main {
+				grid-template-columns: 70% 30%;
 			}
-			#content {
-				width: 100%;
+		}
+
+		@media screen and (min-width: 1200px) { /* >=1200的设备 */
+			main {
+				grid-template-columns: 80% 20%;
 			}
 		}
 
 		pre {
 			background-color: #363434;
 			color: #f5f5f5;
+			padding: 8px;
+			width: 98%;
+		}
+
+		code {
+			word-break: break-all;
+			overflow-wrap: anywhere;
+			white-space: pre-wrap;
+		}
+
+		pre code {
+			width: 100%;
+			word-break: normal;
+			white-space: pre;
+			overflow-wrap: normal;
+			overflow: auto;
+			display: inline-block;
 		}
 
 		hr {
@@ -52,126 +100,163 @@
 			margin: 5px 0px;
 		}
 
-		.container-fluid {
-			padding-left: 25px;
+		#content blockquote p {
+			margin: 5px 0px;
 		}
 
 		nav {
-			margin-top: 15px;
+			margin-left: 15px;
 		}
 
-		ul, ol {
+		ul,
+		ol {
 			padding-left: 25px;
 		}
 
-		dt, dd {
-			margin-top: 5px;
+		dt {
+			padding-top: 8px;
+			font-weight: bold;
+		}
+		dd {
+			margin-top: 12px;
+			margin-left: 0px;
+			overflow-wrap: anywhere;
 		}
 
-		.footer {
+		.timespan {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+
+		.timespan div {
+			margin: auto 5px;
+		}
+
+		footer {
 			margin-top: 25px;
 			margin-bottom: 15px;
 			width: 100%;
-			height: 60px;
+		}
+
+		table {
+			border-top: 1px solid #999;
+			border-left: 1px solid #999;
+			border-spacing: 0;
+		}
+
+		td, th {
+			padding: 5px;
+			border-bottom: 1px solid #999;
+			border-right: 1px solid #999;
 		}
 
 		@keyframes d2l {
 			0% {
-				background-color: rgb(16, 16, 16);
+				background-color: rgb(0, 0, 0);
 			}
-			25% {
-				background-color: rgb(32, 32, 32);
+			20% {
+				background-color: rgb(68, 68, 68);
 			}
-			50% {
-				background-color: rgb(64, 64, 64);
+			40% {
+				background-color: rgb(136, 136, 136);
 			}
-			75% {
-				background-color: rgb(128, 128, 128);
+			60% {
+				background-color: rgb(195, 195, 195);
+			}
+			80% {
+				background-color: rgb(225, 225, 225);
 			}
 			100% {
-				background-color: white;
-				color: black;
+				background-color: rgb(255, 255, 255);
+				color: rgb(0, 0, 0);
 			}
 		}
 
 		@keyframes l2d {
 			0% {
-				background-color: rgb(128, 128, 128);
+				background-color: rgb(255, 255, 255);
 			}
-			25% {
-				background-color: rgb(64, 64, 64);
+			20% {
+				background-color: rgb(225, 225, 225);
 			}
-			50% {
-				background-color: rgb(32, 32, 32);
+			40% {
+				background-color: rgb(195, 195, 195);
 			}
-			75% {
-				background-color: rgb(16, 16, 16);
+			60% {
+				background-color: rgb(136, 136, 136);
+			}
+			80% {
+				background-color: rgb(68, 68, 68);
 			}
 			100% {
-				background-color: black;
-				color: gray;
+				background-color: rgb(0, 0, 0);
+				color: rgb(204, 204, 204);
 			}
 		}
 
+		@media print {
+			header {
+				display: none;
+			}
+
+			#content {
+				width: 100%;
+			}
+
+			main {
+				display: block;
+			}
+
+			pre code {
+				width: 100%;
+				word-break: break-all;
+				overflow-wrap: anywhere;
+				white-space: pre-wrap;
+			}
+		}
 	</style>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-42Z0Q0TP8B"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-42Z0Q0TP8B');
-	</script>
 </head>
 
 <body>
-	<header class="navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Home</a>
-			</div>
-			<div class="navbar-form navbar-right">
-				<label style="color: white;"><input type="checkbox" id="theme_btn" /> dark</label>
-			</div>
+	<header>
+		<div class="navbar-header">
+			<a href="#">Home</a>
+			<label><input type="checkbox" id="theme_btn" /> dark</label>
 		</div>
 	</header>
-	<main class="container-fluid">
-		<div class="row">
-			<article class="col-md-9" id="content">
-			</article>
-			<nav class="col-md-3">
-				<dl id="article_list">
-				</dl>
-				<dl id="link_exchange">
-				</dl>
-				<dl>
-					<dt>About</dt>
-					<dd>名称: f2h2h1's blog</dd>
-					<dd>地址: https://f2h2h1.github.io/</dd>
-					<dd>描述: 这是一个程序员记录开发经验的博客</dd>
-					<dd>头像: https://f2h2h1.github.io/avatar.png</dd>
-					<dd><a target="_blank" rel="noreferrer" href="https://github.com/f2h2h1/f2h2h1.github.io">github</a></dd>
-					<dd><a target="_blank" href="sitemap.xml">sitemap</a></dd>
-					<dd><a target="_blank" href="rss.xml">rss</a></dd>
-				</dl>
-			</nav>
-		</div>
+	<main>
+		<article id="content">
+		</article>
+		<nav>
+			<dl id="article_list">
+			</dl>
+			<dl id="link_exchange">
+			</dl>
+			<dl>
+				<dt>About</dt>
+				<dd>名称: f2h2h1's blog</dd>
+				<dd>地址: https://f2h2h1.github.io/</dd>
+				<dd>描述: 这是一个程序员记录开发经验的博客</dd>
+				<dd>头像: https://f2h2h1.github.io/avatar.png</dd>
+				<dd><a target="_blank" rel="noreferrer" href="https://github.com/f2h2h1/f2h2h1.github.io">github</a>
+				</dd>
+				<dd><a target="_blank" href="sitemap.xml">sitemap</a></dd>
+				<dd><a target="_blank" href="rss.xml">rss</a></dd>
+			</dl>
+		</nav>
 	</main>
-
-	<footer class="footer">
-		<div class="container-fluid">
-			<p>如果文章内容有什么错误的地方，恳请各位大佬能通过 issues 或 邮件 的方式告诉作者</p>
-			<p>Copyright ©2021 f2h2h1</p>
-			<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-				<img alt="知识共享许可协议" width="87px" height="30px" src="static/cc4.0.webp">
-			</a>
-			本作品采用
-			<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
-			进行许可。
-		</div>
+	<footer>
+		<p>如果文章内容有什么错误的地方，恳请各位大佬能通过 issues 或 邮件 的方式告诉作者</p>
+		<p>Copyright ©2021 f2h2h1</p>
+		<img alt="知识共享许可协议" width="87px" height="30px" src="static/cc4.0.webp" />
+		本作品采用
+		<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+		进行许可。
 	</footer>
 	<script src="static/marked.min.js"></script>
 	<script>
+		'use strict';
 		if (navigator.serviceWorker) {
 			navigator.serviceWorker.register('/sw.js');
 		}
@@ -270,13 +355,9 @@
 			}
 			function timespan(articleInfo) {
 				let div = document.createElement('div');
-				div.classList.add('row');
+				div.classList.add('timespan');
 				function createCol(str) {
 					let col = document.createElement('div');
-					col.classList.add('col-lg-3');
-					col.classList.add('col-md-4');
-					col.classList.add('col-sm-6');
-					col.classList.add('col-xs-12');
 					col.innerHTML = str;
 					return col;
 				}

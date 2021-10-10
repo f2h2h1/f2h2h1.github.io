@@ -7,7 +7,6 @@ this.addEventListener("install", function(event) {
     caches.open(CACHE_NAME);
     // 首页
     let cacheResources = [
-        'https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css',
         '/index.html',
         '/static/marked.min.js',
         '/static/cc4.0.webp',
