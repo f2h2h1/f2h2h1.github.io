@@ -88,6 +88,11 @@ composer config -g repo.packagist composer https://packagist.phpcomposer.com
 @php "%~dp0composer.phar" %*
 ```
 
+7. 把 composer.phar 复制一份，并重名命为 composer ，这样在 git bash 里也可以直接用 composer 的命令了
+```
+php -r "copy('composer.phar', 'composer');"
+```
+
 ### xdebug
 
 xdebug 的配置可以参考这篇文章 《在 VSCode 里调试 PHP》

@@ -263,7 +263,7 @@ XXE
 鳥哥的 Linux 私房菜 http://linux.vbird.org/
 Allen https://blog.csdn.net/q1007729991
 O 的笔记 https://ouonline.net/
-
+halfrost https://halfrost.com/
 
 浏览器数据持久化缓存技术
 ================================
@@ -404,6 +404,7 @@ vscode的使用技巧
         提前了解公司的业务类型和规模
         根据 岗位描述 任职要求 公司的业务类型 公司的规模 来预判公司在技术上可能存在的难点，并提前准备相关的解决方案
         准备一份简单的自我介绍
+            准备一份英文的自我介绍
         技术面试
             递归式提问
             递归式寻找答案
@@ -589,7 +590,7 @@ vscode的使用技巧
         在 segmentfault 知乎 等网站找大佬，付费提问
         尝试一下大力奇迹
             把当前的问题特例化，不考虑通用的情况，把当前问题解决了再算
-            不考虑内存时间的消耗，内存不够就加内存，时间太久就升级cpu
+            不考虑内存和时间的消耗，内存不够就加内存，时间太久就升级cpu
         尝试换一种思路去解决问题
         问题解决之后要做一个记录
         如何描述问题
@@ -777,6 +778,21 @@ git的一般使用指南
             smb
             ftp
             网盘
+                自建的网盘
+                第三方网盘
+        防火墙
+            网络防火墙
+                ufw
+                firewall
+                iptables
+                TCP_Wrappers
+                Netfilter
+            web 防火墙
+                ModSecurity
+                Naxsi
+                OpenWAF
+                unixhot
+                VeryNginx
 magento2 配置 paypal
 颜色
     色域是一个三维空间
