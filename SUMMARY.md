@@ -1,6 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
+* [使用Tesseract识别字符验证码](article/使用Tesseract识别字符验证码.md)
 * [开发Magento2的模块](article/开发Magento2的模块.md)
 * [在Windows下安装Magento2.3](article/在Windows下安装Magento2.3.md)
 * [浏览器和服务器通讯方式的不完整总结](article/浏览器和服务器通讯方式的不完整总结.md)
