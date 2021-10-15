@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+ini_set('date.timezone', 'Asia/Shanghai');
+
 // 获取文章列表
 $articleList = [];
 foreach (glob('article/*.md') as $item) {
@@ -56,9 +58,11 @@ foreach ($articleList as $article) {
         <link>%s</link>
         <description>%s</description>
         <pubDate>%s</pubDate>
+        <guid>%s</guid>
     </item>
     EOF;
-    $item = sprintf($item, $article['title'], 'https://f2h2h1.github.io/#title=' . urlencode($article['title']), $article['title'], date('Y-m-d', $article['updateTime']));
+    $link = 'https://f2h2h1.github.io/#title=' . urlencode($article['title']);
+    $item = sprintf($item, $article['title'], $link, $article['title'], date('r', $article['updateTime']), $link);
     $itemList .= trim($item) . "\n";
 }
 $rss = <<<EOF
