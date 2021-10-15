@@ -151,6 +151,11 @@
 			border-right: 1px solid #999;
 		}
 
+		.jumbotron {
+			padding: 4rem 2rem;
+			margin: 2rem;
+		}
+
 		@keyframes d2l {
 			0% {
 				background-color: rgb(0, 0, 0);
@@ -251,15 +256,16 @@
 				</dd>
 				<dd><a target="_blank" href="sitemap.xml">sitemap</a></dd>
 				<dd><a target="_blank" href="rss.xml">rss</a></dd>
+				<dd><a target="_blank" href="atom.xml">atom</a></dd>
 			</dl>
 		</nav>
 	</main>
 	<footer>
 		<p>如果文章内容有什么错误的地方，恳请各位大佬能通过 issues 或 邮件 的方式告诉作者</p>
-		<p>Copyright ©2021 f2h2h1</p>
-		<img alt="知识共享许可协议" width="87px" height="30px" src="static/cc4.0.webp" />
+		<p>Copyright ©2021 f2h2h1 | All Rights Reserved</p>
+		<img alt="知识共享许可协议" width="87" height="30" src="static/cc4.0.webp" />
 		本作品采用
-		<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+		<a rel="license" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
 		进行许可。
 	</footer>
 	<script src="static/marked.min.js"></script>
@@ -492,7 +498,7 @@
 						},
 						error: function () {
 							document.querySelector('title').innerText = '404';
-							content.innerHTML = '<div class="jumbotron"><div class="container"><h1>404</h1><p><a href="javascript:history.back()">go back</a></p></div></div>';
+							content.innerHTML = '<div class="jumbotron"><h1>404</h1><button onclick="history.back()">go back</button></div>';
 						}
 					});
 				}
@@ -571,7 +577,7 @@
 				} catch (e) {
 					console.log(e);
 					document.querySelector('title').innerText = '500';
-					content.innerHTML = '<div class="jumbotron"><div class="container"><h1>500</h1><p><a href="javascript:window.location.reload()">reload</a></p></div></div>';
+					content.innerHTML = '<div class="jumbotron"><h1>500</h1><button onclick="window.location.reload()">reload</button></div>';
 					return;
 				}
 				let indexList = new IndexList(content, articleList);
