@@ -67,16 +67,50 @@ foreach ($articleList as $article) {
 }
 $rss = <<<EOF
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>f2h2h1's blog</title>
-  <link>https://f2h2h1.github.io/</link>
-  <description>f2h2h1's blog</description>
-  $itemList
+    <title>f2h2h1's blog</title>
+    <link>https://f2h2h1.github.io/</link>
+    <description>f2h2h1's blog</description>
+    <atom:link href="https://f2h2h1.github.io/atom.xml" rel="self" type="application/rss+xml" />
+$itemList
 </channel>
 </rss>
 EOF;
 file_put_contents('rss.xml', $rss);
+
+// atom
+$itemList = array_reduce($articleList, function ($carry, $article) {
+    $title = $article['title'];
+    $link = 'https://f2h2h1.github.io/#title=' . urlencode($article['title']);
+    $updated = date('c', $article['updateTime'] + mt_rand(0, 99));
+    $item = <<<EOF
+    <entry>
+        <title>%s</title>
+        <link href="%s" />
+        <id>%s</id>
+        <updated>%s</updated>
+        <summary>%s</summary>
+    </entry>
+    EOF;
+    return $carry .= trim(sprintf($item, $title, $link, $link, $updated, $title)) . "\n";
+}, '');
+$updated = date('c', time());
+$atom = <<<EOF
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>f2h2h1's blog</title>
+    <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
+    <link href="https://f2h2h1.github.io/" />
+    <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
+    <updated>$updated</updated>
+    <author>
+        <name>f2h2h1's blog</name>
+    </author>
+$itemList
+</feed>
+EOF;
+file_put_contents('atom.xml', $atom);
 
 // sitemap
 $itemList = '';
