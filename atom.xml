@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>f2h2h1's blog</title>
+    <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
+    <link href="https://f2h2h1.github.io/" />
+    <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
+    <updated>2021-10-15T21:09:50+08:00</updated>
+    <author>
+        <name>f2h2h1's blog</name>
+    </author>
+<entry>
+    <title>使用Tesseract识别字符验证码</title>
+    <link href="https://f2h2h1.github.io/#title=%E4%BD%BF%E7%94%A8Tesseract%E8%AF%86%E5%88%AB%E5%AD%97%E7%AC%A6%E9%AA%8C%E8%AF%81%E7%A0%81" />
+    <id>https://f2h2h1.github.io/#title=%E4%BD%BF%E7%94%A8Tesseract%E8%AF%86%E5%88%AB%E5%AD%97%E7%AC%A6%E9%AA%8C%E8%AF%81%E7%A0%81</id>
+    <updated>2021-10-15T13:29:22+08:00</updated>
+    <summary>使用Tesseract识别字符验证码</summary>
+</entry>
+<entry>
+    <title>开发Magento2的模块</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%BC%80%E5%8F%91Magento2%E7%9A%84%E6%A8%A1%E5%9D%97" />
+    <id>https://f2h2h1.github.io/#title=%E5%BC%80%E5%8F%91Magento2%E7%9A%84%E6%A8%A1%E5%9D%97</id>
+    <updated>2021-09-14T20:40:57+08:00</updated>
+    <summary>开发Magento2的模块</summary>
+</entry>
+<entry>
+    <title>在Windows下安装Magento2.3</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85Magento2.3" />
+    <id>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85Magento2.3</id>
+    <updated>2021-09-24T18:34:33+08:00</updated>
+    <summary>在Windows下安装Magento2.3</summary>
+</entry>
+<entry>
+    <title>浏览器和服务器通讯方式的不完整总结</title>
+    <link href="https://f2h2h1.github.io/#title=%E6%B5%8F%E8%A7%88%E5%99%A8%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%AE%AF%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%80%BB%E7%BB%93" />
+    <id>https://f2h2h1.github.io/#title=%E6%B5%8F%E8%A7%88%E5%99%A8%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%AE%AF%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%80%BB%E7%BB%93</id>
+    <updated>2021-10-05T16:23:02+08:00</updated>
+    <summary>浏览器和服务器通讯方式的不完整总结</summary>
+</entry>
+<entry>
+    <title>HTTP认证方式的不完整总结</title>
+    <link href="https://f2h2h1.github.io/#title=HTTP%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%80%BB%E7%BB%93" />
+    <id>https://f2h2h1.github.io/#title=HTTP%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%80%BB%E7%BB%93</id>
+    <updated>2021-09-02T13:26:33+08:00</updated>
+    <summary>HTTP认证方式的不完整总结</summary>
+</entry>
+<entry>
+    <title>PHP各种运行方式的不完整总结</title>
+    <link href="https://f2h2h1.github.io/#title=PHP%E5%90%84%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%80%BB%E7%BB%93" />
+    <id>https://f2h2h1.github.io/#title=PHP%E5%90%84%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%80%BB%E7%BB%93</id>
+    <updated>2021-09-08T18:35:51+08:00</updated>
+    <summary>PHP各种运行方式的不完整总结</summary>
+</entry>
+<entry>
+    <title>把网页导出成PDF</title>
+    <link href="https://f2h2h1.github.io/#title=%E6%8A%8A%E7%BD%91%E9%A1%B5%E5%AF%BC%E5%87%BA%E6%88%90PDF" />
+    <id>https://f2h2h1.github.io/#title=%E6%8A%8A%E7%BD%91%E9%A1%B5%E5%AF%BC%E5%87%BA%E6%88%90PDF</id>
+    <updated>2021-07-18T16:57:00+08:00</updated>
+    <summary>把网页导出成PDF</summary>
+</entry>
+<entry>
+    <title>FirstData后台的设置</title>
+    <link href="https://f2h2h1.github.io/#title=FirstData%E5%90%8E%E5%8F%B0%E7%9A%84%E8%AE%BE%E7%BD%AE" />
+    <id>https://f2h2h1.github.io/#title=FirstData%E5%90%8E%E5%8F%B0%E7%9A%84%E8%AE%BE%E7%BD%AE</id>
+    <updated>2021-07-15T22:37:23+08:00</updated>
+    <summary>FirstData后台的设置</summary>
+</entry>
+<entry>
+    <title>SEO的经验</title>
+    <link href="https://f2h2h1.github.io/#title=SEO%E7%9A%84%E7%BB%8F%E9%AA%8C" />
+    <id>https://f2h2h1.github.io/#title=SEO%E7%9A%84%E7%BB%8F%E9%AA%8C</id>
+    <updated>2021-10-08T08:37:49+08:00</updated>
+    <summary>SEO的经验</summary>
+</entry>
+<entry>
+    <title>微信支付的不完整接入指南</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97" />
+    <id>https://f2h2h1.github.io/#title=%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97</id>
+    <updated>2021-07-10T23:45:05+08:00</updated>
+    <summary>微信支付的不完整接入指南</summary>
+</entry>
+<entry>
+    <title>paypal，firtdata，支付宝的不完整接入指南</title>
+    <link href="https://f2h2h1.github.io/#title=paypal%EF%BC%8Cfirtdata%EF%BC%8C%E6%94%AF%E4%BB%98%E5%AE%9D%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97" />
+    <id>https://f2h2h1.github.io/#title=paypal%EF%BC%8Cfirtdata%EF%BC%8C%E6%94%AF%E4%BB%98%E5%AE%9D%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97</id>
+    <updated>2021-07-10T23:47:55+08:00</updated>
+    <summary>paypal，firtdata，支付宝的不完整接入指南</summary>
+</entry>
+<entry>
+    <title>观察网站性能</title>
+    <link href="https://f2h2h1.github.io/#title=%E8%A7%82%E5%AF%9F%E7%BD%91%E7%AB%99%E6%80%A7%E8%83%BD" />
+    <id>https://f2h2h1.github.io/#title=%E8%A7%82%E5%AF%9F%E7%BD%91%E7%AB%99%E6%80%A7%E8%83%BD</id>
+    <updated>2021-07-18T14:04:43+08:00</updated>
+    <summary>观察网站性能</summary>
+</entry>
+<entry>
+    <title>git的笔记</title>
+    <link href="https://f2h2h1.github.io/#title=git%E7%9A%84%E7%AC%94%E8%AE%B0" />
+    <id>https://f2h2h1.github.io/#title=git%E7%9A%84%E7%AC%94%E8%AE%B0</id>
+    <updated>2021-07-19T23:32:48+08:00</updated>
+    <summary>git的笔记</summary>
+</entry>
+<entry>
+    <title>密码学入门简明指南</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%AF%86%E7%A0%81%E5%AD%A6%E5%85%A5%E9%97%A8%E7%AE%80%E6%98%8E%E6%8C%87%E5%8D%97" />
+    <id>https://f2h2h1.github.io/#title=%E5%AF%86%E7%A0%81%E5%AD%A6%E5%85%A5%E9%97%A8%E7%AE%80%E6%98%8E%E6%8C%87%E5%8D%97</id>
+    <updated>2021-10-11T08:53:04+08:00</updated>
+    <summary>密码学入门简明指南</summary>
+</entry>
+<entry>
+    <title>使用docker部署nuxt</title>
+    <link href="https://f2h2h1.github.io/#title=%E4%BD%BF%E7%94%A8docker%E9%83%A8%E7%BD%B2nuxt" />
+    <id>https://f2h2h1.github.io/#title=%E4%BD%BF%E7%94%A8docker%E9%83%A8%E7%BD%B2nuxt</id>
+    <updated>2021-09-10T21:26:28+08:00</updated>
+    <summary>使用docker部署nuxt</summary>
+</entry>
+<entry>
+    <title>在Windows下搭建git服务</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E6%90%AD%E5%BB%BAgit%E6%9C%8D%E5%8A%A1" />
+    <id>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E6%90%AD%E5%BB%BAgit%E6%9C%8D%E5%8A%A1</id>
+    <updated>2021-09-08T18:35:30+08:00</updated>
+    <summary>在Windows下搭建git服务</summary>
+</entry>
+<entry>
+    <title>用docker-compose部署lnmp环境</title>
+    <link href="https://f2h2h1.github.io/#title=%E7%94%A8docker-compose%E9%83%A8%E7%BD%B2lnmp%E7%8E%AF%E5%A2%83" />
+    <id>https://f2h2h1.github.io/#title=%E7%94%A8docker-compose%E9%83%A8%E7%BD%B2lnmp%E7%8E%AF%E5%A2%83</id>
+    <updated>2020-06-22T21:47:26+08:00</updated>
+    <summary>用docker-compose部署lnmp环境</summary>
+</entry>
+<entry>
+    <title>mongodb分片</title>
+    <link href="https://f2h2h1.github.io/#title=mongodb%E5%88%86%E7%89%87" />
+    <id>https://f2h2h1.github.io/#title=mongodb%E5%88%86%E7%89%87</id>
+    <updated>2020-06-20T00:46:53+08:00</updated>
+    <summary>mongodb分片</summary>
+</entry>
+<entry>
+    <title>练习</title>
+    <link href="https://f2h2h1.github.io/#title=%E7%BB%83%E4%B9%A0" />
+    <id>https://f2h2h1.github.io/#title=%E7%BB%83%E4%B9%A0</id>
+    <updated>2020-01-06T00:34:00+08:00</updated>
+    <summary>练习</summary>
+</entry>
+<entry>
+    <title>一些开发笔记</title>
+    <link href="https://f2h2h1.github.io/#title=%E4%B8%80%E4%BA%9B%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0" />
+    <id>https://f2h2h1.github.io/#title=%E4%B8%80%E4%BA%9B%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0</id>
+    <updated>2021-10-06T00:38:36+08:00</updated>
+    <summary>一些开发笔记</summary>
+</entry>
+<entry>
+    <title>一些关于Linux的笔记</title>
+    <link href="https://f2h2h1.github.io/#title=%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8ELinux%E7%9A%84%E7%AC%94%E8%AE%B0" />
+    <id>https://f2h2h1.github.io/#title=%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8ELinux%E7%9A%84%E7%AC%94%E8%AE%B0</id>
+    <updated>2021-06-27T23:28:21+08:00</updated>
+    <summary>一些关于Linux的笔记</summary>
+</entry>
+<entry>
+    <title>在Windows下安装pear</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85pear" />
+    <id>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85pear</id>
+    <updated>2019-02-19T23:36:27+08:00</updated>
+    <summary>在Windows下安装pear</summary>
+</entry>
+<entry>
+    <title>在VSCode里使用Xdebug远程调试PHP</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%9C%A8VSCode%E9%87%8C%E4%BD%BF%E7%94%A8Xdebug%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95PHP" />
+    <id>https://f2h2h1.github.io/#title=%E5%9C%A8VSCode%E9%87%8C%E4%BD%BF%E7%94%A8Xdebug%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95PHP</id>
+    <updated>2019-12-29T15:15:20+08:00</updated>
+    <summary>在VSCode里使用Xdebug远程调试PHP</summary>
+</entry>
+<entry>
+    <title>下载AcFun视频</title>
+    <link href="https://f2h2h1.github.io/#title=%E4%B8%8B%E8%BD%BDAcFun%E8%A7%86%E9%A2%91" />
+    <id>https://f2h2h1.github.io/#title=%E4%B8%8B%E8%BD%BDAcFun%E8%A7%86%E9%A2%91</id>
+    <updated>2019-02-17T21:12:29+08:00</updated>
+    <summary>下载AcFun视频</summary>
+</entry>
+<entry>
+    <title>在Windows下配置Tomcat服务器</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E9%85%8D%E7%BD%AETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8" />
+    <id>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E9%85%8D%E7%BD%AETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8</id>
+    <updated>2019-02-13T01:42:57+08:00</updated>
+    <summary>在Windows下配置Tomcat服务器</summary>
+</entry>
+<entry>
+    <title>在Windows下配置PHP服务器</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E9%85%8D%E7%BD%AEPHP%E6%9C%8D%E5%8A%A1%E5%99%A8" />
+    <id>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E9%85%8D%E7%BD%AEPHP%E6%9C%8D%E5%8A%A1%E5%99%A8</id>
+    <updated>2021-10-11T08:52:55+08:00</updated>
+    <summary>在Windows下配置PHP服务器</summary>
+</entry>
+<entry>
+    <title>关于字符编码的一些坑</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%85%B3%E4%BA%8E%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91" />
+    <id>https://f2h2h1.github.io/#title=%E5%85%B3%E4%BA%8E%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91</id>
+    <updated>2021-07-14T23:33:11+08:00</updated>
+    <summary>关于字符编码的一些坑</summary>
+</entry>
+<entry>
+    <title>在VSCode里调试PHP</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%9C%A8VSCode%E9%87%8C%E8%B0%83%E8%AF%95PHP" />
+    <id>https://f2h2h1.github.io/#title=%E5%9C%A8VSCode%E9%87%8C%E8%B0%83%E8%AF%95PHP</id>
+    <updated>2021-09-14T20:41:14+08:00</updated>
+    <summary>在VSCode里调试PHP</summary>
+</entry>
+<entry>
+    <title>安装PHP7的GUI扩展</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%AE%89%E8%A3%85PHP7%E7%9A%84GUI%E6%89%A9%E5%B1%95" />
+    <id>https://f2h2h1.github.io/#title=%E5%AE%89%E8%A3%85PHP7%E7%9A%84GUI%E6%89%A9%E5%B1%95</id>
+    <updated>2019-02-02T12:22:48+08:00</updated>
+    <summary>安装PHP7的GUI扩展</summary>
+</entry>
+<entry>
+    <title>关于</title>
+    <link href="https://f2h2h1.github.io/#title=%E5%85%B3%E4%BA%8E" />
+    <id>https://f2h2h1.github.io/#title=%E5%85%B3%E4%BA%8E</id>
+    <updated>2021-10-11T08:53:41+08:00</updated>
+    <summary>关于</summary>
+</entry>
+
+</feed>
