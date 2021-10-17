@@ -9,6 +9,8 @@
 ## 列表
 
 <!-- list -->
+- [用纯CSS3实现的滑动按钮](article/用纯CSS3实现的滑动按钮.md)
+- [Linux的GUI](article/Linux的GUI.md)
 - [使用Tesseract识别字符验证码](article/使用Tesseract识别字符验证码.md)
 - [开发Magento2的模块](article/开发Magento2的模块.md)
 - [在Windows下安装Magento2.3](article/在Windows下安装Magento2.3.md)

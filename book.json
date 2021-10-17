@@ -5,8 +5,9 @@
     "gitbook": ">= 3.2.3",
     "links": {
         "sidebar": {
+            "sitemap": "/sitemap.xml",
             "rss": "/rss.xml",
-            "sitemap": "/sitemap.xml"
+            "atom": "/atom.xml"
         }
     },
     "plugins": [
