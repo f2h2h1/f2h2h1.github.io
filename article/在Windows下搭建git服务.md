@@ -224,6 +224,7 @@ Listen 83
 然后使用类似这样的网址 `http://127.0.0.1:83/gitweb.cgi` 在浏览器访问 gitweb
 
 gitweb.cgi 需要这几个环境变量
+
 |变量名|备注|
 |:--|:--|
 |PATH_INFO| 文件路径，如果 gitweb.cgi 就在网站根目录，这里可以是空 |
