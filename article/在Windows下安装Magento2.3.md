@@ -11,8 +11,10 @@
 - composer 1.10.22
 - mysql 5.7
 - nginx 1.12
+- magento 2.3.7
 
 需要注意的事项
+- 环境的搭建可以参考这篇文章 《在Windows下配置PHP服务器》
 - php 需要安装 vc 依赖，在 php 下载页面的左边有 vc 库的下载链接的，用心找一下
 - composer 需要 1 的版本，现在下载的 composer 默认是 2 的版本，可以用这句命令把 composer 降级 `composer self-update --1`
 - php 需要开启这些拓展
@@ -54,9 +56,19 @@
 - magento2 里有大量的静态文件需要加载，启用 http2 能稍微提升一下速度
 - nginx 的配置 worker_processes 要设为 cpu 逻辑核心数的两倍，例如 cpu 是 2 核 4 线程，那么 worker_processes 就是 8
 - nginx php-cgi mysql 最好以管理员运行，这样可以有效避免权限的问题
+- nginx php mysql 等软件和 magento2 的源码，最好不要放在系统盘，这样可以有效避免权限的问题
+- nginx 的命令需要在 nginx 的安装目录里运行
 - nginx 最好用信号的形式关闭，用信号形式关闭的 nginx 需要等待一段时间 nginx 的进程才会完全终止
     ```
     nginx -s quit
+    ```
+- nginx 最好用信号的形式重启
+    ```
+    nginx -s reload
+    ```
+- nginx 在启动之前可以用这个命令来测试配置文件
+    ```
+    nginx -T
     ```
 - 一些可能会用到的命令
     ```

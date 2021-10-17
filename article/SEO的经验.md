@@ -255,3 +255,5 @@ https://zh.wikipedia.org/wiki/%E6%90%9C%E5%B0%8B%E5%BC%95%E6%93%8E%E6%9C%80%E4%B
 https://developers.google.cn/search/docs
 
 https://developers.google.cn/search/docs/beginner/seo-starter-guide
+
+https://backlinko.com/introducing-content-marketing-hub-2-0

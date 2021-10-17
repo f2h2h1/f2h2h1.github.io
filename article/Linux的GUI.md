@@ -90,6 +90,9 @@ Xorg 的部分组件
 - Xt (X Toolkit) 在 Xlib 基础上封装的 X客户端库
 - Xaw (X Athena Widgets) 在 Xt 基础上封装的 X客户端库
 
+x11-apps 是 Xorg 的应用和工具的其他集合
+https://www.x.org/wiki/UserDocumentation/GettingStarted/
+
 X.Org 基金会的文档
 https://www.x.org/releases/current/doc/index.html
 
