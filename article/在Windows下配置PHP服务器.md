@@ -3,7 +3,7 @@
 ## 环境依赖
 - Windows 10 (x64) 20H2
 - php 7.4
-- MySQL 8
+- MySQL 8 或 5.7
 - apache 2.4
 - nginx 1.12
 - redis 3.2.1 (redis 的 windows 版已经很久没更新了，虽然还是能用)
@@ -179,6 +179,39 @@ https://dev.mysql.com/
 
 8. MySQL 的 ZIP 版本容易出现各种奇怪的错误，安装版能省心一点
 
+### 5.7
+1. 下载 zip 版
+1. 从官网下载时，要用心找一下，因为 5.7 算是旧版了，下载地址不像 8 那样显眼
+1. 5.7 的配置和 8 基本一致
+1. 如果没有加入到环境变量，需要显式声明配置文件的地址，像这样
+    ```
+    初始化 mysql
+    mysqld --defaults-file="C:\Program Files\mysql-5.7.34-winx64\my.ini" --initialize
+    ```
+1. 5.7 第一次运行时使用这样的命令， --skip-grant-tables 是忽略权限验证的意思
+    ```
+    mysqld --defaults-file="C:\Program Files\mysql-5.7.34-winx64\my.ini" --console --skip-grant-tables
+    ```
+    1. 第一次运行时要修改 root 密码
+    1. 用命令行运行mysql的客户端
+        ```
+        mysql -uroot
+        ```
+    1. 进入 mysql 后，依次运行下面的命令
+        ```
+        use mysql;
+        update user set authentication_string=password('1234') where user='root';
+        flush privileges;
+        ```
+1. 之后就可以退出mysql客户端和mysqld了，关掉 mysqld ，以后运行 mysqld 就用这样的命令
+    ```
+    mysqld --defaults-file="C:\Program Files\mysql-5.7.34-winx64\my.ini" --console
+    ```
+1. 因为没有加入到环境变量，所以需要显式声明配置文件的路径，运行目录也需要是 安装路径/bin
+1. 从安装配置的角度来看， 5.7 和 8 最大的不同是，修改密码的方式
+    - 8 没有这种命令行参数 --skip-grant-tables
+    - 5.7 和 8 修改密码的 sql 语句也有一点差别
+
 ## Apache
 
 ### 下载 Apache
@@ -268,6 +301,28 @@ Errors reported here must be corrected before the service can be started
 ```
 并不是 error ，而是提示：如果这行下边出现错误则解决错误后再启动！
 
+11. https  配置
+    1. 安装 ssl 模块 mod_ssl.so ，大多数情况下 mod_ssl.so 是默认安装好的
+    1. 启用 mod_ssl.so ，就是在 httpd.conf 文件里把那句 mod_ssl.so 的注释删掉
+    1. 监听 443 端口 listen 443
+    1. 在 VirtualHost 里至少加上这几个字段
+        ```
+        SSLEngine on
+        SSLCertificateFile "${SRVROOT}/conf/ssl/domain.crt"
+        SSLCertificateKeyFile "${SRVROOT}/conf/ssl/rsa_private_key.pem"
+        ```
+    1. 大概的例子
+        ```
+        <VirtualHost _default_:443>
+        DocumentRoot "${SRVROOT}/htdocs"
+        ServerName 2.example.com:443
+        ServerAlias 3.example.com 4.example.com
+        SSLEngine on
+        SSLCertificateFile "${SRVROOT}/conf/ssl/domain.crt"
+        SSLCertificateKeyFile "${SRVROOT}/conf/ssl/rsa_private_key.pem"
+        </VirtualHost>
+        ```
+
 ## nginx
 
 ### 下载 nginx
@@ -302,6 +357,18 @@ http://nginx.org/download/nginx-1.21.1.zip
             }
         }
         ```
+
+3. https 的配置
+    - 在 server 块里加上这三句
+    - ssl_certificate 是证书路径， ssl_certificate_key 是私钥路径
+    - ssl_certificate 和 ssl_certificate_key 的路径，要么填绝对路径，要么填相对于 nginx 根目录的路径
+    - http2 不是必须的，但现在的浏览器都支持了，多加一句能稍微提升一下性能
+    ```
+    listen       443 ssl http2;
+    ssl_certificate  ./crt/127.0.0.1/domain.crt;
+    ssl_certificate_key ./crt/127.0.0.1/rsa_private_key.pem;
+    ```
+
 ### 启动 nginx
 
 1. 启动 php-cgi ，端口号要和 nginx 的配置里一致， PHP_FCGI_CHILDREN 如果不设置，默认值是 1 ，性能会比较差，大部分情况下和 nginx 的 worker_processes 设为一样就可以了
@@ -337,6 +404,14 @@ redis-server.exe redis.windows.conf
 https://www.redis.com.cn/redis-installation.html
 
 ## 其它
+
+nginx 和 apache 大多数情况下安装一个就可以，当然啦 nginx 反代 apache 也是可以的。
+
+相比于 xampp 和 wampp 这类集成环境，笔者更喜欢，全部软件都自行安装。因为这样可以更好地控制各个软件的配置，和方便地安装同一个软件的多个版本 ~~（所以这篇文章里的 mysql 才会选 zip 版来安装）~~ 。
+
+笔者对 Windows 的服务并不了解，所以大多数软件都是通过命令行直接运行的。
+
+https 自签证书的生成，可以参考这篇文章 《密码学入门简明指南》 的这个章节 OpenSSL 的一般使用 。
 
 ### phpmyadmin
 1. 下载 phpmyadmin
