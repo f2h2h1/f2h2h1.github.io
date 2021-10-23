@@ -4,7 +4,14 @@
     <title>f2h2h1's blog</title>
     <link>https://f2h2h1.github.io/</link>
     <description>f2h2h1's blog</description>
-    <atom:link href="https://f2h2h1.github.io/atom.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
+<item>
+    <title>在Windows下安装Magento2</title>
+    <link>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85Magento2</link>
+    <description>在Windows下安装Magento2</description>
+    <pubDate>Sat, 23 Oct 2021 13:45:07 +0800</pubDate>
+    <guid>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85Magento2</guid>
+</item>
 <item>
     <title>用纯CSS3实现的滑动按钮</title>
     <link>https://f2h2h1.github.io/#title=%E7%94%A8%E7%BA%AFCSS3%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%BB%91%E5%8A%A8%E6%8C%89%E9%92%AE</link>
@@ -16,7 +23,7 @@
     <title>Linux的GUI</title>
     <link>https://f2h2h1.github.io/#title=Linux%E7%9A%84GUI</link>
     <description>Linux的GUI</description>
-    <pubDate>Sat, 16 Oct 2021 21:25:10 +0800</pubDate>
+    <pubDate>Sun, 17 Oct 2021 22:07:04 +0800</pubDate>
     <guid>https://f2h2h1.github.io/#title=Linux%E7%9A%84GUI</guid>
 </item>
 <item>
@@ -32,13 +39,6 @@
     <description>开发Magento2的模块</description>
     <pubDate>Tue, 14 Sep 2021 20:39:30 +0800</pubDate>
     <guid>https://f2h2h1.github.io/#title=%E5%BC%80%E5%8F%91Magento2%E7%9A%84%E6%A8%A1%E5%9D%97</guid>
-</item>
-<item>
-    <title>在Windows下安装Magento2.3</title>
-    <link>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85Magento2.3</link>
-    <description>在Windows下安装Magento2.3</description>
-    <pubDate>Fri, 24 Sep 2021 18:33:30 +0800</pubDate>
-    <guid>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85Magento2.3</guid>
 </item>
 <item>
     <title>浏览器和服务器通讯方式的不完整总结</title>
@@ -79,7 +79,7 @@
     <title>SEO的经验</title>
     <link>https://f2h2h1.github.io/#title=SEO%E7%9A%84%E7%BB%8F%E9%AA%8C</link>
     <description>SEO的经验</description>
-    <pubDate>Fri, 08 Oct 2021 08:37:04 +0800</pubDate>
+    <pubDate>Sun, 17 Oct 2021 22:07:04 +0800</pubDate>
     <guid>https://f2h2h1.github.io/#title=SEO%E7%9A%84%E7%BB%8F%E9%AA%8C</guid>
 </item>
 <item>
@@ -114,7 +114,7 @@
     <title>密码学入门简明指南</title>
     <link>https://f2h2h1.github.io/#title=%E5%AF%86%E7%A0%81%E5%AD%A6%E5%85%A5%E9%97%A8%E7%AE%80%E6%98%8E%E6%8C%87%E5%8D%97</link>
     <description>密码学入门简明指南</description>
-    <pubDate>Sat, 16 Oct 2021 21:26:17 +0800</pubDate>
+    <pubDate>Sun, 17 Oct 2021 22:06:18 +0800</pubDate>
     <guid>https://f2h2h1.github.io/#title=%E5%AF%86%E7%A0%81%E5%AD%A6%E5%85%A5%E9%97%A8%E7%AE%80%E6%98%8E%E6%8C%87%E5%8D%97</guid>
 </item>
 <item>
@@ -128,7 +128,7 @@
     <title>在Windows下搭建git服务</title>
     <link>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E6%90%AD%E5%BB%BAgit%E6%9C%8D%E5%8A%A1</link>
     <description>在Windows下搭建git服务</description>
-    <pubDate>Wed, 08 Sep 2021 18:34:16 +0800</pubDate>
+    <pubDate>Sun, 17 Oct 2021 22:06:18 +0800</pubDate>
     <guid>https://f2h2h1.github.io/#title=%E5%9C%A8Windows%E4%B8%8B%E6%90%AD%E5%BB%BAgit%E6%9C%8D%E5%8A%A1</guid>
 </item>
 <item>

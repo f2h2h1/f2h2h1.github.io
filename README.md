@@ -9,11 +9,11 @@
 ## 列表
 
 <!-- list -->
+- [在Windows下安装Magento2](article/在Windows下安装Magento2.md)
 - [用纯CSS3实现的滑动按钮](article/用纯CSS3实现的滑动按钮.md)
 - [Linux的GUI](article/Linux的GUI.md)
 - [使用Tesseract识别字符验证码](article/使用Tesseract识别字符验证码.md)
 - [开发Magento2的模块](article/开发Magento2的模块.md)
-- [在Windows下安装Magento2.3](article/在Windows下安装Magento2.3.md)
 - [浏览器和服务器通讯方式的不完整总结](article/浏览器和服务器通讯方式的不完整总结.md)
 - [HTTP认证方式的不完整总结](article/HTTP认证方式的不完整总结.md)
 - [PHP各种运行方式的不完整总结](article/PHP各种运行方式的不完整总结.md)
@@ -42,6 +42,21 @@
 - [安装PHP7的GUI扩展](article/安装PHP7的GUI扩展.md)
 - [关于](article/关于.md)
 <!-- list -->
+
+## 在本地运行
+
+- 用 vscode 或其它能渲染 markdown 的软件浏览
+- 运行一个静态的服务器，然后在浏览器里打开
+    1. php
+        ```
+        php -S 127.0.0.1:9012
+        ```
+    1. python
+        ```
+        python -m http.server -b 127.0.0.1 9012
+        ```
+- 使用 gitbook
+- ~~其实直接用记事本打开也是可以的，只是没有图片和样式~~
 
 ## gitbook
 

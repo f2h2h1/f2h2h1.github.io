@@ -72,7 +72,7 @@ $rss = <<<EOF
     <title>f2h2h1's blog</title>
     <link>https://f2h2h1.github.io/</link>
     <description>f2h2h1's blog</description>
-    <atom:link href="https://f2h2h1.github.io/atom.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
 $itemList
 </channel>
 </rss>
