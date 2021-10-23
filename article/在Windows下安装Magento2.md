@@ -1,4 +1,4 @@
-在 Windows 下安装 Magento2.3
+在 Windows 下安装 Magento2
 ================================
 
 [TOC]
@@ -93,6 +93,7 @@
     composer create-project --repository=https://repo.magento.com/ magento/project-community-edition=2.3.7 .
     ```
 1. 安装的过程中会要求输入 magento 的 access kye
+    - 用 composer 下载 magento 时， puliic key 就是 username ， private key 就是 password
 1. 安装的过程有点慢，要耐心地等待
 1. magento2 的依赖有点多，最好准备一个 github-oauth
 1. 修改源码
@@ -149,8 +150,9 @@
     ```
 1. 运行一些必要的命令
     ```
-    php bin/magento indexer:reindex
+    php bin/magento setup:di:compile
     php bin/magento setup:upgrade
+    php bin/magento indexer:reindex
     php bin/magento setup:static-content:deploy -f
     php bin/magento cache:flush
     ```
@@ -177,6 +179,19 @@
     }
     ```
 1. 重启 nginx 然后在浏览器里输入 localhost-magento ，如无意外能看到 magento 的 home page
+1. 安装示例数据，这一步不是必须的
+    1. 调整到开发者模式，安装时的默认模式是 maintenance
+    ```
+    php bin/magento deploy:mode:set developer
+    ```
+    1. 下载示例数据。这一步也是需要 magento 的账号密码，如果失败，就多试几次
+    ```
+    php bin/magento sampledata:deploy
+    ```
+    1. 更新
+    ```
+    php bin/magento setup:upgrade
+    ```
 
 需要注意的事项
 - 如果没有对应的语言包就不要修改语言设置，因为没有对应的语言包但又修改了语言设置，可能会导致一些 css 加载失败
@@ -191,6 +206,7 @@
     ```
     admin >> STORE >> Configuration >> SALES >> Payment Methods
     ```
+    - 支付设置的相关文档 https://docs.magento.com/user-guide/payment/payments.html
 - magento2 的运行效率真的很低
 - 可以在 magento 的根目录里运行这样的命令启动 php 的内置 web server ，但速度真的很慢，要注意修改 base-url
     ```
@@ -252,3 +268,68 @@
 - 关掉 xdebug 后速度也有提升
 - 运行这句 composer 命令 `composer dumpautoload -o` 后速度也有提升
 - 打开浏览器的开发者工具时，关掉禁用缓存的选项也能提升速度， magento2 的静态文件真的非常多，但有时又会因为浏览器的缓存这样观察不到更新
+
+## 安装 2.4
+
+笔者发现 magento2 的每个小版本的系统依赖都有一点不一样
+https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html
+
+2.3 和 2.4 的主要区别是 2.4 必须使用 Elasticsearch 和 mysql 需要 8.0。
+因为 Elasticsearch 的存在使得门槛高了不少。笔者感觉多奥多比正在抛弃中小用户。
+
+安装流程和注意事项和 2.3 的基本一致。
+
+### 安装 Elasticsearch
+
+2.4.0 依赖的 elasticsearch 版本为 7.6 。
+
+直接从官网下载就可以了，下载后解压，然后运行 bin/elasticsearch.bat 。压缩包里原本就带着 jdk 。
+
+magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给 es 加上 http 认证。
+
+### 安装步骤和 2.3 的区别
+
+1. 下载 magento2 的命令要把版本号改为 2.4.0
+    ```
+    composer create-project --repository=https://repo.magento.com/ magento/project-community-edition=2.4.0 .
+    ```
+
+1. 安装命令要加上 Elasticsearch 的配置
+    ```
+    php bin/magento setup:install `
+        --base-url=http://localhost-magento/ `
+        --db-host=localhost `
+        --db-name=magento2ce2 `
+        --db-user=root `
+        --db-password=1234 `
+        --admin-firstname=admin `
+        --admin-lastname=admin `
+        --admin-email=admin@admin.com `
+        --admin-user=admin `
+        --admin-password=admin123 `
+        --language=en_US `
+        --currency=USD `
+        --timezone=America/Chicago `
+        --use-rewrites=1 `
+        --search-engine=elasticsearch7 `
+        --elasticsearch-host=localhost `
+        --elasticsearch-port=9200 `
+        --elasticsearch-index-prefix=magento2
+    ```
+
+1. 进入后台之前需要禁用两步验证的模块和刷新缓存，不然会因为没有两步验证而无法进入后台
+    ```
+    php bin/magento module:disable Magento_TwoFactorAuth
+    php bin/magento cache:flush
+    ```
+
+## 参考
+
+用户指南 https://docs.magento.com/user-guide/
+
+开发文档 https://devdocs.magento.com/
+
+magento 相关的博客
+- https://www.yshuq.com/
+- https://forum.magentochina.org/
+- https://www.mageoo.com/
