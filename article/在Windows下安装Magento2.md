@@ -98,37 +98,37 @@
 1. magento2 的依赖有点多，最好准备一个 github-oauth
 1. 修改源码
     1. `vendor\magento\framework\Image\Adapter\Gd2.php` 大概在 90 行左右的位置
-    ```
-    private function validateURLScheme(string $filename) : bool
-    {
-        if(!file_exists($filename)) { // if file not exist
-            $allowed_schemes = ['ftp', 'ftps', 'http', 'https'];
-            $url = parse_url($filename);
-            if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes)) {
-                return false;
+        ```
+        private function validateURLScheme(string $filename) : bool
+        {
+            if(!file_exists($filename)) { // if file not exist
+                $allowed_schemes = ['ftp', 'ftps', 'http', 'https'];
+                $url = parse_url($filename);
+                if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes)) {
+                    return false;
+                }
             }
-        }
 
-        return true;
-    }
-    ```
+            return true;
+        }
+        ```
     1. `vendor\magento\framework\View\Element\Template\File\Validator.php` 大概在 140 行左右的位置
-    ```
-    protected function isPathInDirectories($path, $directories)
-    {
-        if (!is_array($directories)) {
-            $directories = (array)$directories;
-        }
-        //$realPath = $this->fileDriver->getRealPath($path);
-        $realPath = str_replace('\\', '/', $this->fileDriver->getRealPath($path));
-        foreach ($directories as $directory) {
-            if (0 === strpos($realPath, $directory)) {
-                return true;
+        ```
+        protected function isPathInDirectories($path, $directories)
+        {
+            if (!is_array($directories)) {
+                $directories = (array)$directories;
             }
+            //$realPath = $this->fileDriver->getRealPath($path);
+            $realPath = str_replace('\\', '/', $this->fileDriver->getRealPath($path));
+            foreach ($directories as $directory) {
+                if (0 === strpos($realPath, $directory)) {
+                    return true;
+                }
+            }
+            return false;
         }
-        return false;
-    }
-    ```
+        ```
 1. 修改 hosts 文件，把域名 localhost-magento 指向本地 ip （其实这步没有也没关系，但为了方便下文的描述还是加上了这步）
 1. 运行安装命令
     ```
