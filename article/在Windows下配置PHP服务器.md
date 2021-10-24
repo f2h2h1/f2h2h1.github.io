@@ -301,7 +301,7 @@ Errors reported here must be corrected before the service can be started
 ```
 并不是 error ，而是提示：如果这行下边出现错误则解决错误后再启动！
 
-11. https  配置
+11. https 配置
     1. 安装 ssl 模块 mod_ssl.so ，大多数情况下 mod_ssl.so 是默认安装好的
     1. 启用 mod_ssl.so ，就是在 httpd.conf 文件里把那句 mod_ssl.so 的注释删掉
     1. 监听 443 端口 listen 443
@@ -322,6 +322,26 @@ Errors reported here must be corrected before the service can be started
         SSLCertificateKeyFile "${SRVROOT}/conf/ssl/rsa_private_key.pem"
         </VirtualHost>
         ```
+12. http2 配置
+    1. 安装 ssl 模块 mod_http2.so ，大多数情况下 mod_http2.so 是默认安装好的
+    1. 启用 mod_http2.so ，就是在 httpd.conf 文件里把那句 mod_http2.so 的注释删掉
+    1. 在 VirtualHost 里至少加上这个字段
+        ```
+        Protocols h2 h2c http/1.1 http/1.0
+        ```
+    1. 大概的例子
+        ```
+        <VirtualHost _default_:443>
+        DocumentRoot "${SRVROOT}/htdocs"
+        ServerName 2.example.com:443
+        ServerAlias 3.example.com 4.example.com
+        SSLEngine on
+        SSLCertificateFile "${SRVROOT}/conf/ssl/domain.crt"
+        SSLCertificateKeyFile "${SRVROOT}/conf/ssl/rsa_private_key.pem"
+        Protocols h2 h2c http/1.1 http/1.0
+        </VirtualHost>
+        ```
+    1. 启用 http2 必须先启用 https
 
 ## nginx
 
