@@ -150,8 +150,8 @@
     ```
 1. 运行一些必要的命令
     ```
-    php bin/magento setup:di:compile
     php bin/magento setup:upgrade
+    php bin/magento setup:di:compile
     php bin/magento indexer:reindex
     php bin/magento setup:static-content:deploy -f
     php bin/magento cache:flush
@@ -180,7 +180,7 @@
     ```
 1. 重启 nginx 然后在浏览器里输入 localhost-magento ，如无意外能看到 magento 的 home page
 1. 安装示例数据，这一步不是必须的
-    1. 调整到开发者模式，安装时的默认模式是 maintenance
+    1. 调整到开发者模式，安装时的默认模式是 default
     ```
     php bin/magento deploy:mode:set developer
     ```
@@ -265,6 +265,8 @@
         ]
     ],
     ```
+- 在 php 的配置文件启用命令行的 opcace `opcache.enable_cli=1`
+- 使用开发者模式可以不用编译，但运行速度会变得更慢
 - 关掉 xdebug 后速度也有提升
 - 运行这句 composer 命令 `composer dumpautoload -o` 后速度也有提升
 - 打开浏览器的开发者工具时，关掉禁用缓存的选项也能提升速度， magento2 的静态文件真的非常多，但有时又会因为浏览器的缓存这样观察不到更新
@@ -333,3 +335,5 @@ magento 相关的博客
 - https://www.yshuq.com/
 - https://forum.magentochina.org/
 - https://www.mageoo.com/
+- http://www.sbboke.com/
+- https://bbs.mallol.cn/

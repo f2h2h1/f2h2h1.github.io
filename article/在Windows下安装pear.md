@@ -97,3 +97,4 @@ pear uninstall packagename
 | 2004 | PECL |
 | 2009 | PEAR2 |
 | 2012 | Composer |
+| 2021 | pickle |
