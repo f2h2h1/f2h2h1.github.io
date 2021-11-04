@@ -442,6 +442,7 @@ vscode的使用技巧
             公司的参保人数
                 参保人数太少，或人数和招聘平台的简介里差距有点大的话，这样的公司也可能是坑
     准备简历
+        简历最好只用一种字体，最好是无衬线的字体
         最好要根据 岗位描述和任职要求 来准备简历，最好不要一份简历海投
         如果长得不好看，就不要在简历里放照片
         刚毕业简历尽量不要超过1张单面a4纸，工作五年内不要超过2张单面a4纸
@@ -987,6 +988,9 @@ git的一般使用指南
                 OpenWAF
                 unixhot
                 VeryNginx
+        堡垒机
+            shell 审计
+            sql 审计
 magento2 配置 paypal
 颜色
     色域是一个三维空间
@@ -1739,7 +1743,7 @@ magento2 配置 paypal
             RUN cd php-${PHP_VERSION} && ./configure --disable-fileinfo && make && make install
         docker build -t asd/php_ext:0.1 .
         docker run -it --rm asd/php_ext:0.1 /bin/bash
-
+中文文案排版指北 https://github.com/sparanoid/chinese-copywriting-guidelines
 版本控制软件比较
     git
         github

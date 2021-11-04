@@ -296,6 +296,16 @@ magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给
     composer create-project --repository=https://repo.magento.com/ magento/project-community-edition=2.4.0 .
     ```
 
+1. 修改源码
+    1. `vendor\magento\framework\App\StaticResource.php` 大概在 278 行左右的位置
+    ```
+    private function isThemeAllowed(string $theme): bool
+    {
+        $theme = str_replace('\\', '/', $theme); //fix windows path
+        return in_array($theme, array_keys($this->themePackageList->getThemes()));
+    }
+    ```
+
 1. 安装命令要加上 Elasticsearch 的配置
     ```
     php bin/magento setup:install `

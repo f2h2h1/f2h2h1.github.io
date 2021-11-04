@@ -250,6 +250,7 @@ DEC
 Digital Equipment Corporation
 数字设备公司
 1998年1月DEC公司被康柏(Compaq)以96亿美元的价格收购。
+DEC 曾经生产过很多款流行的终端 vt50 vt52 vt100 vt220
 
 康柏电脑，是由三位来自德州仪器公司的高级经理罗德·肯尼恩（Rod Canion），吉米·哈里斯（Jim Harris）和比尔·默顿（Bill Murto）于1982年2月分别投资1000美元共同创建的。2002年康柏公司被惠普公司收购。
 

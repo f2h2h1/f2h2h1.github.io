@@ -19,26 +19,42 @@
 
 ```html
 <style>
+.switch {
+    position: relative;
+}
 .switch input[type=checkbox] {
     display:none;
 }
+.switch span {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    text-align: center;
+    padding-left: 50px;
+}
 .switch span::before {
     content: "";
-    display: block;
+    cursor: pointer;
     width: 40px;
     height: 24.5px;
     border: 1px solid rgb(156, 155, 155);
     background-color: rgb(179, 176, 176);
     border-radius: 25px;
+    position: absolute;
+    left: 0px;
+    display: inline-block;
 }
 .switch span::after {
     content: "";
-    display: block;
+    cursor: pointer;
     width: 25px;
     height: 25px;
     background-color: rgb(255, 255, 255);
-    margin-top: -26px;
     border-radius: 25px;
+    position: absolute;
+    left: 0px;
+    top:0px;
+    display: inline-block;
 }
 .switch input[type=checkbox]:checked + span::before {
     background-color: green;
@@ -50,7 +66,7 @@
 <div class="switch">
     <label>
         <input type="checkbox" />
-        <span></span>
+        <span>label</span>
     </label>
 </div>
 ```
