@@ -63,7 +63,7 @@ maven的使用
             tcp
             dup
         网际层
-            ip
+            ip v4 v6
             icmp
             IPsec
         数据链路层
@@ -235,7 +235,7 @@ XXE
 ================================
 捕获异常
 盲水印
-外部数据要现判断是否存在再调用，不要把接口的数据直接渲染到视图
+外部数据要先判断是否存在再调用，不要把接口的数据直接渲染到视图
 前端代码的配置要区分生产环境和开发环境
 要把git的commitid写进配置文件里
 打包时要保留map，map不能被外部访问
@@ -248,29 +248,60 @@ XXE
 
 一些博客
 ================================
-淘系前端团队 https://fed.taobao.org/
-百度前端 https://fex.baidu.com/
-腾讯 Alloy Team http://www.alloyteam.com/
-腾讯CDC https://cdc.tencent.com/
-美团技术团队 https://tech.meituan.com/
-360奇舞团 https://75.team/
-小米信息部技术团队 https://xiaomi-info.github.io/
-阮一峰 https://www.ruanyifeng.com/blog/
-廖雪峰 https://www.liaoxuefeng.com/
-并发编程网 https://ifeve.com/
-王垠 https://www.yinwang.org/
-风雪之隅 https://www.laruence.com/
-鳥哥的 Linux 私房菜 http://linux.vbird.org/
-Allen https://blog.csdn.net/q1007729991
-O 的笔记 https://ouonline.net/
-halfrost https://halfrost.com/
-blackglory https://blackglory.me/
-黄玄的博客 http://huangxuan.me/
+博客
+    淘系前端团队 https://fed.taobao.org/
+    百度前端 https://fex.baidu.com/
+    腾讯 Alloy Team http://www.alloyteam.com/
+    腾讯CDC https://cdc.tencent.com/
+    美团技术团队 https://tech.meituan.com/
+    360奇舞团 https://75.team/
+    小米信息部技术团队 https://xiaomi-info.github.io/
+    阮一峰 https://www.ruanyifeng.com/blog/
+    廖雪峰 https://www.liaoxuefeng.com/
+    并发编程网 https://ifeve.com/
+    王垠 https://www.yinwang.org/
+    风雪之隅 https://www.laruence.com/
+    鳥哥的 Linux 私房菜 http://linux.vbird.org/
+    Allen https://blog.csdn.net/q1007729991
+    O 的笔记 https://ouonline.net/
+    halfrost https://halfrost.com/
+    blackglory https://blackglory.me/
+    黄玄的博客 http://huangxuan.me/
 一些网址
 文档
+    mdn
+    msdn
 教程
-博客
+    https://www.runoob.com/
+    https://www.edx.org/school/w3cx
+    https://www.w3schools.com/
+    https://www.w3school.com.cn/
+    https://www.w3cschool.cn/
+    https://www.yiibai.com/
+    http://c.biancheng.net/
+    https://zh.javascript.info/
+    廖雪峰 和 阮一峰 的博客里也有不少的教程
+    mdn 和 msdn 里也有不少的教程
+    git 的教程
+        https://github.com/pcottle/learnGitBranching
+        https://www.liaoxuefeng.com/wiki/896043488029600
+        http://git-scm.com/book/zh
+        https://backlog.com/git-tutorial/cn/
+        http://rogerdudler.github.io/git-guide/index.zh.html
+        http://marklodato.github.io/visual-git-guide/index-zh-cn.html
+    除了这些文档外，更应该关注各项技术的官方文档
+    现在网络上的教程真的非常多，问题不在于寻找教程，而在于选择哪一个去看
 社区
+    github
+    思否
+    v2ex
+    知乎
+    掘金
+    w3ctech
+    简书
+    StackOverflow
+    StackExchange
+信息类网站
 git仓库
 书籍
     鸟哥私房菜
@@ -764,6 +795,7 @@ vscode的使用技巧
         在 搜索引擎里搜索
             bing 国内版
             百度
+                百度开发者搜索 https://kaifa.baidu.com/
             bing 国际版
             google
             用英文在 google 上搜索

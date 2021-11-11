@@ -124,3 +124,7 @@ php bin/magento cache:flush 刷新缓存
 ```
 
 模块的代码修改后也要刷新缓存
+
+## 参考
+
+生成 magento 模块 https://cedcommerce.com/magento-2-module-creator/
