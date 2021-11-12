@@ -57,6 +57,7 @@
 - nginx 的配置 worker_processes 要设为 cpu 逻辑核心数的两倍，例如 cpu 是 2 核 4 线程，那么 worker_processes 就是 8
 - nginx php-cgi mysql 最好以管理员运行，这样可以有效避免权限的问题
 - nginx php mysql 等软件和 magento2 的源码，最好不要放在系统盘，这样可以有效避免权限的问题
+- 软件和源码最好都放在固态硬盘里，这样能有效地提升速度。
 - nginx 的命令需要在 nginx 的安装目录里运行
 - nginx 最好用信号的形式关闭，用信号形式关闭的 nginx 需要等待一段时间 nginx 的进程才会完全终止
     ```
@@ -218,6 +219,12 @@
     php bin/magento indexer:reindex
     php bin/magento cache:flush
     ```
+- 如果运行了上面几句命令都没有效果，可以试试直接删掉对应的临时文件，像这样
+    ```
+    rm -rf var/di/* var/generation/* var/cache/* var/page_cache/* var/view_preprocessed/* var/composer_home/cache/*
+    rm -rf generated/code/* generated/metadata/*
+    rm -rf pub/static/*
+    ```
 - 可以修改 app/etc/env.php 使用 redis 作为缓存，这是 redis 大致的配置，使用 redis 后能有效地提升速度
     ```
     'session' => [
@@ -269,7 +276,16 @@
 - 使用开发者模式可以不用编译，但运行速度会变得更慢
 - 关掉 xdebug 后速度也有提升
 - 运行这句 composer 命令 `composer dumpautoload -o` 后速度也有提升
+    - 这句需要运行在 `php bin/magento setup:di:compile` 后面
+    - 这句需要运行在 `php bin/magento setup:static-content:deploy -f` 前面
+    - 如果是开发者模式就不要运行这句
 - 打开浏览器的开发者工具时，关掉禁用缓存的选项也能提升速度， magento2 的静态文件真的非常多，但有时又会因为浏览器的缓存这样观察不到更新
+- 使用 imdisk 这类内存硬盘能有效地提升速度。但内存硬盘存在断电后数据丢失的风险，而且真的非常消耗内存，内存至少也要有 16G
+    - 只把生成的目录和文件放在内存硬盘里，这里需要用软连接把 var 和 generated 文件夹映射到内存硬盘
+    - 把整套项目源码放在内存硬盘里
+    - 把整套项目源码和数据库都放在内存硬盘里
+- 可以使用 Papercut-SMTP 这类软件来接收测试的邮件
+- 浏览器禁用图片的加载也能有效地提升速度
 
 ## 安装 2.4
 
@@ -277,6 +293,7 @@
 https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html
 
 2.3 和 2.4 的主要区别是 2.4 必须使用 Elasticsearch 和 mysql 需要 8.0。
+还有就是 composer 需要 2 以上版本。
 因为 Elasticsearch 的存在使得门槛高了不少。笔者感觉多奥多比正在抛弃中小用户。
 
 安装流程和注意事项和 2.3 的基本一致。

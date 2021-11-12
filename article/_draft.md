@@ -615,9 +615,10 @@ vscode的使用技巧
             主要是复习各类基础知识和背面试题目
         可以先找几家不是目标公司面试，先积累一下面试的感觉
         先准备一周，然后随便面试一周，最后才是目标公司的面试
+        面试的关键在于 预判面试官的问题，预判面试官对问题答案的期待
     拒绝不合适的公司
         要对比已经收到的 offer
-    试用期过后要考虑去留
+    试用期期间要考虑去留
         面试时承诺的工资福利是否给到位
             工资发放是否准时
         工作内容
@@ -650,25 +651,35 @@ vscode的使用技巧
         如果没钱了怎么办
             先找一家小公司入职，然后在试用期结束之前跑路（快则一个月，慢则三个月），期间要保持学习
     为什么总是找不到好的工作
-        市场已经萎缩 这是根本原因
-        年龄大了
-        不愿意或没有勇气跑路去大城市
-        没有能力 润
-        用人单位没有能力判断应聘者的水平
-            简历
-            学历
-            证书
-            上一家公司的规模
-            上一份工作的工资
-            笔试的表现
-            面试的表现
-            github
-            leetcode
-            博客
-        面试时太紧张了，未能完整地向招聘的企业展示自己的能力
-        面试的时候，面试官的水平太低
-            只想着用困难的题目拦着求职者，而忽略公司实际的业务需求和工作环境
-            这使得求职者的情况和公司的需求即使互相适合，求职者也无法顺利地通过面试
+        主观的原因
+            年龄大了
+            不愿意或没有勇气跑路去大城市
+            没有能力 润
+            基础还是不够好
+            面试时太紧张了，未能完整地向招聘的企业展示自己的能力
+        客观的原因
+            市场已经萎缩 这是根本原因
+                求职者多，岗位少
+                招聘的企业会不断地提供入职的门槛，即使远超岗位要求
+                招聘的企业会不断地附加入职的条件，即使和工作一点也不相关
+            面试的时候，面试官的水平太低
+                只想着用困难的题目拦着求职者，而忽略公司实际的业务需求和工作环境
+                这使得求职者的情况和公司的需求即使互相适合，求职者也无法顺利地通过面试
+            面试时的问题和 岗位描述 任职要求 差距很大，面试之前又刚好没准备到相关的知识，导致面试的表现不好
+                例如，岗位描述里是后端开发，但在面试时又问了很多后端相关的知识
+            用人单位没有能力准确地判断应聘者的水平
+                通常情况下，招聘的企业会通过这几个方面了解应聘者的水平
+                    简历
+                    学历
+                    证书
+                    上一家公司的规模
+                    上一份工作的内容
+                    上一份工作的工资
+                    面试的表现
+                    笔试的表现
+                    github
+                    leetcode
+                    博客
 这些年来的生活经验 学习如何学习 如何定位问题 如何寻找问题的解决办法
     这些年来的生活经验
         要有一个博客记录开发的经验
@@ -1775,6 +1786,45 @@ magento2 配置 paypal
             RUN cd php-${PHP_VERSION} && ./configure --disable-fileinfo && make && make install
         docker build -t asd/php_ext:0.1 .
         docker run -it --rm asd/php_ext:0.1 /bin/bash
+composer
+    composer提供了四种方式加载第三方包，分别是
+        PSR-0
+        PSR-4
+            psr-0 和 psr-4 都是根据命名空间名从文件系统中载入类文件
+        class-map
+            class-map 则是直接一个 命名空间 => 文件 的数组， 加载速度会比 psr-0 和 psr-4 快
+        直接包含files
+            files 直接包含文件，主要是为了包含一些 公共函数
+    加载流程
+        vendor/autoload.php
+            vendor/composer/autoload_real.php
+                vendor/composer/autoload_psr4.php
+                vendor/composer/autoload_classmap.php
+                vendor/composer/autoload_files.php
+                vendor/composer/autoload_namespaces.php
+        composer dumpautoload 命令会根据 composer.json 更新这四个文件
+            autoload_psr4.php -> psr-4
+            autoload_classmap.php -> classmap
+            autoload_files.php -> files
+            autoload_namespaces.php -> psr-0
+        如果更新过 composer.json 的 autoload 或 autoload-dev ，就需要运行一次 composer dumpautoload
+        composer dumpautoload 的参数
+            -o PSR-4/PSR-0 的规则转化为了 classmap 的规则， 因为 classmap 中包含了所有类名与类文件路径的对应关系，所以加载器不再需要到文件系统中查找文件了。
+                可以从 classmap 中直接找到类文件的路径。
+            -a （权威的 Authoritative）在 classmap 搜索不到就会报错， -o 当加载器找不到目标类时，仍旧会根据PSR-4/PSR-0 的规则去文件系统中查找 
+            --apcu 使用 apcu 缓存
+            --no-dev 不加载 autoload-dev 规则
+        install 和 update 运行完之后都会运行一次 没有参数的 dumpautoload
+        spl_autoload_register 这个方法就是自动加载的关键
+    在项目根目录下运行这句，能归档整个项目，可以用来备份代码
+        composer archive --format=zip
+        composer archive --format=zip --file=archiveFileName
+        归档的文件名会自动加上 .zip 的后缀
+        归档的代码并不包含 vendor
+        可以在 composer.json 里设置忽略的归档文件
+            "archive": {
+                "exclude": ["var/cache/", "tmp", "/*.test", "!/var/di/"]
+            }
 中文文案排版指北 https://github.com/sparanoid/chinese-copywriting-guidelines
 版本控制软件比较
     git
