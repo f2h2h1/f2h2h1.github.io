@@ -6,6 +6,13 @@
     <description>f2h2h1's blog</description>
     <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
 <item>
+    <title>如何完成以xx管理系统为选题的毕业设计</title>
+    <link>https://f2h2h1.github.io/#title=%E5%A6%82%E4%BD%95%E5%AE%8C%E6%88%90%E4%BB%A5xx%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E4%B8%BA%E9%80%89%E9%A2%98%E7%9A%84%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1</link>
+    <description>如何完成以xx管理系统为选题的毕业设计</description>
+    <pubDate>Tue, 16 Nov 2021 22:25:40 +0800</pubDate>
+    <guid>https://f2h2h1.github.io/#title=%E5%A6%82%E4%BD%95%E5%AE%8C%E6%88%90%E4%BB%A5xx%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E4%B8%BA%E9%80%89%E9%A2%98%E7%9A%84%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1</guid>
+</item>
+<item>
     <title>DNSSEC简介</title>
     <link>https://f2h2h1.github.io/#title=DNSSEC%E7%AE%80%E4%BB%8B</link>
     <description>DNSSEC简介</description>
@@ -163,7 +170,7 @@
     <title>一些开发笔记</title>
     <link>https://f2h2h1.github.io/#title=%E4%B8%80%E4%BA%9B%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0</link>
     <description>一些开发笔记</description>
-    <pubDate>Fri, 12 Nov 2021 13:38:13 +0800</pubDate>
+    <pubDate>Tue, 16 Nov 2021 00:46:27 +0800</pubDate>
     <guid>https://f2h2h1.github.io/#title=%E4%B8%80%E4%BA%9B%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0</guid>
 </item>
 <item>
