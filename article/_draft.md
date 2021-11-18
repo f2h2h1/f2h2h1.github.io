@@ -210,27 +210,6 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
 ## 参考
 
 
-各类安全问题及应对方法
-================================
-拒绝服务攻击
-    dos
-    ddos
-    cc
-旁观者攻击
-中间人
-sql注入
-XSRF/CSRF
-XSS/CSS
-    反射型
-    存储型
-    dom 型
-SSRF
-文件上传
-    上传木马
-    zip炸弹
-XXE
-
-
 捕获前端的错误
 ================================
 捕获异常
@@ -1734,7 +1713,176 @@ magento2 配置 paypal
         真的解决不了性能上的瓶颈就解决业务场景
         当无法有效提升『实际性能』时，可以考虑适当转移用户的注意力，来缩短某项操作的感知时间，改善感知性能。
         优化不应该只有技术层面上的，产品层面上的优化也很重要
-
+安全
+    常见攻击
+        DOS
+            DDOS
+                当黑客使用网络上两个或以上被攻陷的电脑作为“僵尸”向特定的目标发动“拒绝服务”式攻击时，称为分布式拒绝服务攻击（distributed denial-of-service attack，简称DDoS攻击）
+            防范方式
+                设置ip黑名单
+                限制单个ip在短时间内的访问次数
+                session，接口都要有访问频率的限制
+                防火墙仅允许特定的端口和协议访问
+                syn
+                    网关超时设置
+                        防火墙计数器到时，还没收到第3次握手包，则往服务器发送RST包，以使服务器从对列中删除该半连接。
+                        网关超时设置，不宜过小也不宜过大。过小影响正常通讯，过大，影响防范SYN攻击的效果。
+                    SYN网关
+                         SYN网关将数据包转发给服务器，需要第3次握手包时，SYN网关以客户端名义给服务器发第3次握手包。
+                        一般服务器所承受的连接数量比半连接数量大得多。可以减轻SYN攻击。
+                    增加最大半连接数
+                禁用icmp
+                    仅允许白名单下的ip ping
+                流量清洗 
+                    通过DDoS防御软件的处理，将正常流量和恶意流量区分开，正常的流量则回注回客户网站，反之则屏蔽。这样一来可站点能够保持正常的运作，仅仅处理真实用户访问网站带来的合法流量。
+                    但问题在于怎样区分恶意流量和正常流量
+                购买云服务器提供的ddos防护
+            带宽消耗型攻击
+                UDP洪水攻击（User Datagram Protocol floods）
+                ICMP洪水攻击（ICMP floods）
+                死亡之Ping（ping of death）
+                泪滴攻击
+            资源消耗型攻击
+                半连接攻击(SYN攻击)
+                    发生在TCP 3次握手中。如果A向B发起TCP请求，B也按照正常情况进行响应了，但是A不进行第3次握手，这就是半连接攻击。 
+                全连接攻击
+                    客户端仅仅“连接”到服务器，然后再也不发送任何数据，直到服务器超时处理或者耗尽服务器的处理进程。
+                CC
+        SQL注入
+            防范方式
+                对输入进行严格的转义和过滤
+                使用参数化
+                使用存储过程
+        XSRF/CSRF
+            Cross Site Request Forgery
+                跨站请求伪造
+                客户端请求伪造
+            防范方式
+                阻止不明外域的访问
+                    Samesite Cookie
+                        Strict
+                            这种称为严格模式，表明这个 Cookie 在任何情况下都不可能作为第三方 Cookie，绝无例外
+                            在http头里这样设置
+                                Set-Cookie: foo=1; Samesite=Strict
+                        lax
+                            这种称为宽松模式，比 Strict 放宽了点限制：假如这个请求是这种请求（改变了当前页面或者打开了新页面）且同时是个GET请求，则这个Cookie可以作为第三方Cookie
+                            在http头里这样设置
+                                Set-Cookie: foo=2; Samesite=Lax
+                        缺点
+                            不支持子域
+                            浏览器支持不够友好
+                                好像只有谷歌和火狐支持
+                    同源检测
+                        Origin
+                            因为要保护隐私的原因，这个值可能不够准确
+                        Referer
+                            可以参考 MDN 的 Referrer Policy 的规定
+                        如果http头没有这两个参数就直接拒绝掉请求 403
+                        直接在地址栏里输这个地址是没有这两个参数的
+                        好像只有页面接口请求时才有这两个参数
+                        验证 Sec-Fetch-* 
+                            这些请求头都是Forbidden header ，理论上不能在浏览器里的js修改
+                            旧版浏览器不支持
+                提交时要求附加本域才能获取的信息
+                    每一个请求都要携带一个token (CSRF Token)
+                        最好是通过计算的方式校验
+                            这样能减少io
+                    双重Cookie验证
+                        在用户访问网站页面时，向请求域名注入一个Cookie，内容为随机字符串（例如csrfcookie=v8g9e4ksfhw）。
+                        在前端向后端发起请求时，取出Cookie，并添加到URL的参数中（接上例POST  域名/comment?csrfcookie=v8g9e4ksfhw）。
+                        后端接口验证Cookie中的字段与URL参数中的字段是否一致，不一致则拒绝。
+                其它
+                    保证页面的幂等性，后端接口不要在GET页面中做用户操作
+                    http响应头添加Header X-Content-Type-Options: nosniff
+                        下面两种情况的请求将被阻止：
+                        请求类型是"style" 但是 MIME 类型不是 "text/css"，
+                        请求类型是"script" 但是 MIME 类型不是  JavaScript MIME 类型
+                    不要直接使用用户填写的链接
+                        包括但不限于
+                            图片链接
+                            文件下载的链接
+                            其他站点的链接
+        XSS/CSS
+            注入一段js代码
+            反射型
+            存储型
+            Dom 型
+            防范方式
+                输出进行转义
+                CSP
+                    Content-Security-Policy
+                        内容安全策略
+                    在http头或meta标签里设置csp
+                    例子
+                        Content-Security-Policy: default-src 'self'
+                            所有内容均来自站点的同一个源 (不包括其子域名)
+                        Content-Security-Policy: default-src 'self' *.trusted.com
+                            允许内容来自信任的域名及其子域名
+                        更多例子可以查看 mdn 的文档，可以设置图片，媒体，脚本的域名来源
+                Http Only cookie
+                    那么通过js脚本将无法读取到cookie信息
+                    响应头设置 cookie 的例子 Set-Cookie: timeout=30; Path=/test; HttpOnly
+        SSRF
+            服务请求伪造
+            SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，
+            它将一个可以发起网络请求的服务当作跳板来攻击其他服务，SSRF的攻击目标一般是内网。
+            当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，
+            但是没有对目标地址做过滤与限制时就会出现SSRF。
+            防范方式
+                过滤返回的信息，甚至必要情况下不返回
+                限制http端口，仅可使用http https
+                检查IP是否为内网IP，进行黑名单过滤
+                禁止不需要的协议，gopher,ftp,file协议等
+        文件上传
+            防范方式
+                检查文件后缀
+                检查文件mime，mime要和后缀对应
+                上传目录外网不能直接访问
+                上传目录没有执行权限
+                对上传的文件进行重命名且重命名的文件名要有随机性
+            一般是用来上传木马
+            zip炸弹
+                上传一个小的zip文件，但解压后文件非常大，解压时会消耗cpu，解压完后会消耗硬盘容量
+                动态检测解压文件的大小，超过某个大小就报错
+                限制压缩包里文件的数量，超过某个数量也报错
+        php独有的问题
+        中间人攻击
+            防范方式
+                https
+                hsts
+                禁用了不安全的SSL/TLS协议
+                参数的字段里带一个mac
+            更多是在客户端层面的防范
+        ShellCode
+        XXE
+            XML External Entity
+                XML 外部实体
+            由于程序在解析输入的XML数据时，解析了攻击者伪造的外部实体而产生的
+            　利用xxe漏洞可以进行文件读取，拒绝服务攻击，命令(代码)执行，SQL(XSS)注入，内外扫描端口，入侵内网站点等
+            防范方式
+                禁用外部实体的方法
+                    其实把php升级到8就可以了，php8要开启外部实体的加载其实挺麻烦的
+                过滤用户提交的XML数据
+                    过滤关键词：<!DOCTYPE和<!ENTITY，或者SYSTEM和PUBLIC。
+                把xmllib升级到2.9.0以后的版本
+                    xmllib2.9.0以后，是默认不解析外部实体的
+    防御
+        ssh不要用默认端口
+        安全组和防火墙不要开放全部端口，要用端口白名单
+        远程数据库只开放给对应的服务器ip，本地连接用ssh代理
+        nginx fpm 之类用 www 用户执行，mysql 用 mysql 用户执行
+    加密算法
+        加密
+            对称加密
+                des
+                3des
+                aes
+            不对称加密
+                rsa
+        数字摘要
+            sha1
+            md5
+    漏洞
 
 开发php扩展
     安装必要依赖
