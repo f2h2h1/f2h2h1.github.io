@@ -150,7 +150,18 @@ https://dev.mysql.com/
         ```
     - 注意，执行完之后，会自动生成一个密码，这个密码需要记下来，这个是命令行登录的密码。如果命令行里没有输出密码，那么就去 data 文件夹里，找到 err 后缀的文件，密码再这里面
     - 初始化后，第一次运行 mysqld ，要用命令行登录，然后修改密码。初始化的密码如果不修改好像不能通过 php 或其它客户端连接
-
+    - 第一次运行时的密码修改
+        ```
+        # 以这样的方式运行 mysqld
+        mysqld --skip-grant-tables --shared-memory --console
+        # 使用 mysql 登录并修改密码
+        mysql -uroot -p
+        use mysql;
+        flush privileges;
+        ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密码';
+        flush privileges;
+        quit
+        ```
 6. 运行
     - 直接在命令行运行
         ```
@@ -209,7 +220,6 @@ https://dev.mysql.com/
     ```
 1. 因为没有加入到环境变量，所以需要显式声明配置文件的路径，运行目录也需要是 安装路径/bin
 1. 从安装配置的角度来看， 5.7 和 8 最大的不同是，修改密码的方式
-    - 8 没有这种命令行参数 --skip-grant-tables
     - 5.7 和 8 修改密码的 sql 语句也有一点差别
 
 ## Apache

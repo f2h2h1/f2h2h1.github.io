@@ -29,6 +29,8 @@ SAPI （Server Application Programming Interface，服务端应用编程端口�
 - ISAPI
     - ISAPI（Internet Server Application Program Interface）是微软提供的一套面向WEB服务的API接口。
     一般使用在 php + iis 的组合里，好像 7 之后的版本就不支持了，现在已经很少用到了。
+    - 现在使用 iis + php 的组合时通常会用 FastCgiModule 这个模块， php 以 fast-cgi 形式运行
+- SAPI 还有好几种例如 phpdbg embed 这些 
 
 可以这样查看 php 当前的运行模式
 ```
