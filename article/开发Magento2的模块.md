@@ -35,11 +35,7 @@ routeid/controller/action
     ```xml
     <?xml version="1.0"?>
     <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-        <module name="HKT_Account" setup_version="1.0.9">
-            <sequence>
-                <module name="LocalDev_HelloModule" />
-            </sequence>
-        </module>
+        <module name="LocalDev_HelloModule" setup_version="1.0.9"></module>
     </config>
     ```
 0. 新建路由，在 etc 文件夹下新建 frontend 文件夹，在 frontend 下新建 routes.xml 并写入以下内容
