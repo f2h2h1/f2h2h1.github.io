@@ -64,6 +64,8 @@ xdebug.remote_port=9002
 ```
 这里的 允许调试的客户端 IP 就是代理服务器的 IP，远程调试的端口 就是代理服务器的端口
 
+- 这个配置只适用于 xdebug3.0 以下的版本
+
 ## 3. 配置代理服务器
 1. 下载 frp 到代理服务器里，这是使用的是 frp 0.29.0，https://github.com/fatedier/frp/releases
 2. 新建一个 frps.ini 文件，并添加以下内容
@@ -104,7 +106,7 @@ frpc -c frpc.ini
 0. 安装 VSCode 的 PHP 拓展包，在 VSCode 的拓展里搜索 PHP Extension Pack 然后选择安装即可
 1. 使用 VSCode 打开需要调试的 PHP 项目的目录
 2. 添加一个调试配置，在环境选择的时候选 PHP
-3. 在新建的配置里，添加两个值 localSourceRoot 和 serverSourceRoot ，localSourceRoot是本地代码路径， serverSourceRoot 是服务器代码的路径， Xdebug 需要路径一致才能击中断点，调试时 localSourceRoot 会映射为 serverSourceRoot。
+3. 在新建的配置里，添加 pathMappings ， key 是服务器代码的路径， value 是本地代码路径， Xdebug 需要路径一致才能击中断点，调试时 本地代码路径会映射为服务器代码的路径
 4. 把 port 的值修改为 frpc.ini 的 local_port 一样的值
 5. 完整的配置
 ````json
@@ -112,8 +114,9 @@ frpc -c frpc.ini
     "name": "Listen for remote XDebug",
     "type": "php",
     "request": "launch",
-    "localSourceRoot": "D:\\phpStudy\\PHPTutorial\\WWW",
-    "serverSourceRoot": "C:\\phpStudy\\PHPTutorial\\WWW",
+    "pathMappings": {
+        "/var/www/html": "${workspaceFolder}"
+    },
     "port": 9098,
     "env": {
         "DBGP_IDEKEY":"vscode"

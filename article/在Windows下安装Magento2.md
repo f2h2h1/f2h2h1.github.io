@@ -39,7 +39,9 @@
     memory_limit = 2048M
     upload_max_filesize = 64M
     short_open_tag = On
-    max_execution_time = 300
+    max_execution_time = 900
+    max_input_time = 300
+    max_input_vars = 500
     ```
 - php 最好启用 opcache ，因为 magento2 真的很慢
 - 调整这两个值能有效地提升性能

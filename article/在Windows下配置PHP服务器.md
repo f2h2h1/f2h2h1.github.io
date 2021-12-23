@@ -56,8 +56,10 @@ php 需要安装 vc 依赖，在 php 下载页面的左边有 vc 库的下载链
         short_open_tag 是否开启短标签
         memory_limit 运行内存的最大值
         max_execution_time 运行时间的最大值
+        short_open_tag 是否启用短标签
         ```
 1. 最好也启用 opcache ，启用 opcache 需要在配置文件的 [opcache] 下加上这样一句 `zend_extension = "php path\ext\php_opcache.dll"`
+1. 还有就是命令行运行也启用 opcache `opcache.enable_cli=1`
 
 ### composer
 
@@ -88,9 +90,10 @@ composer config -g repo.packagist composer https://packagist.phpcomposer.com
 @php "%~dp0composer.phar" %*
 ```
 
-7. 把 composer.phar 复制一份，并重名命为 composer ，这样在 git bash 里也可以直接用 composer 的命令了
+7. 在 PHP 的文件夹下新建一个名为 composer 的文件，把以下内容复制进去，然后保存，这样在 git bash 里也可以直接用 composer 的命令了
 ```
-php -r "copy('composer.phar', 'composer');"
+#!/usr/bin/env sh
+php "$(dirname "$0")"/composer.phar $*
 ```
 
 ### xdebug
@@ -429,6 +432,17 @@ https://github.com/MicrosoftArchive/redis/releases
 redis-server.exe redis.windows.conf
 ```
 
+### php 的 redis 扩展
+
+下载 https://pecl.php.net/package/redis
+
+下载完后，把 dll 文件放在 php 的 ext 目录。
+
+然后修改 php.ini ，加上下面这一行，最好加在那些拓展的位置
+```
+extension=php_redis.dll
+```
+
 ### 参考
 
 https://www.redis.com.cn/redis-installation.html
@@ -440,6 +454,10 @@ nginx 和 apache 大多数情况下安装一个就可以，当然啦 nginx 反�
 相比于 xampp 和 wampp 这类集成环境，笔者更喜欢，全部软件都自行安装。因为这样可以更好地控制各个软件的配置，和方便地安装同一个软件的多个版本 ~~（所以这篇文章里的 mysql 才会选 zip 版来安装）~~ 。
 
 笔者对 Windows 的服务并不了解，所以大多数软件都是通过命令行直接运行的。
+
+可以用 NSSM 把像 php-cgi 这类在命令行运行的程序封装成服务。
+或者用 instsrv 和 srvany 配合，也可以把任意 exe 封装成服务。
+instsrv.exe 和 srvany.exe 是 Microsoft Windows Resource Kits 工具集中的两个实用工具。
 
 https 自签证书的生成，可以参考这篇文章 《密码学入门简明指南》 的这个章节 OpenSSL 的一般使用 。
 
@@ -455,6 +473,7 @@ https 自签证书的生成，可以参考这篇文章 《密码学入门简明�
     ```
 1. 可以在这个文件里 `/config.sample.inc.php` 修改 mysql 的连接参数
 1. 配置好站点就可以直接运行了，当然也可以在根目录里用 php 的内置服务器运行
+1. 除了 phpmyadmin 外，这里还推荐使用 dbeaver 或 heidisql 作为数据库的管理工具
 
 ### phpredisadmin
 1. 下载 phpredisadmin

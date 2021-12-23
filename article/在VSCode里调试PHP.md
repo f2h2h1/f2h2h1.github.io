@@ -122,5 +122,5 @@ IntelliSense 的插件有两个， IntelliSense 只需要装一个就可以的�
 https://github.com/jokkedk/webgrind
 
 ## 其它
-- 需要把 PHP 的可执行文件加入到环境变量中，如果没有，怎需要在 VSCode 里设置 php.validate.executablePath 的值
+- 需要把 PHP 的可执行文件加入到环境变量中，如果没有，则需要在 VSCode 里设置 php.validate.executablePath 的值
 - xdebug 2.9 升级 xdebug 3.0 的文档 https://xdebug.org/docs/upgrade_guide

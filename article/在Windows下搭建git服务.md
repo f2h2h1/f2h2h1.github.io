@@ -251,12 +251,15 @@ gitweb.cgi 需要这几个环境变量
 
 笔者了解到的 Git 服务器主要有这几个
 - cgit
+- gitiles
 - gitlab
 - gitblit
 - gitea
 - gogs
 
 cgit 的界面和 gitweb 差不多，但 cgit 已经很久没更新了。
+
+gitiles 由谷歌推出的，基于 java 的， git 仓库浏览工具。是 gerrit 的一个组件。 Gerrit 是 Google 为 Android 系统研发量身定制的一套免费开源的代码审核系统。
 
 gitlab 功能非常强大，但对性能的要求比较高，如果只是搞远程仓库不搞其它奇技淫巧 gitlab 就有点大才小用了。
 
