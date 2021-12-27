@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- list -->
+- [使用docker-compose部署magento2](article/使用docker-compose部署magento2.md)
 - [如何完成以xx管理系统为选题的毕业设计](article/如何完成以xx管理系统为选题的毕业设计.md)
 - [DNSSEC简介](article/DNSSEC简介.md)
 - [在Windows下安装Magento2](article/在Windows下安装Magento2.md)
