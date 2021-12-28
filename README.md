@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- list -->
+- [数字号码资源](article/数字号码资源.md)
 - [使用docker-compose部署magento2](article/使用docker-compose部署magento2.md)
 - [如何完成以xx管理系统为选题的毕业设计](article/如何完成以xx管理系统为选题的毕业设计.md)
 - [DNSSEC简介](article/DNSSEC简介.md)

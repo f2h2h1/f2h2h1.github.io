@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+    <loc>https://f2h2h1.github.io/#title=%E6%95%B0%E5%AD%97%E5%8F%B7%E7%A0%81%E8%B5%84%E6%BA%90</loc>
+    <lastmod>2021-12-28</lastmod>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://f2h2h1.github.io/#title=%E4%BD%BF%E7%94%A8docker-compose%E9%83%A8%E7%BD%B2magento2</loc>
     <lastmod>2021-12-27</lastmod>
     <priority>0.5</priority>
