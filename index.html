@@ -53,12 +53,28 @@
 		}
 
 		@media screen and (min-width: 992px) { /* >=992的设备 */
+			body {
+				padding: 0 20px;
+			}
 			main {
 				grid-template-columns: 70% 30%;
 			}
 		}
 
 		@media screen and (min-width: 1200px) { /* >=1200的设备 */
+			body {
+				padding: 0 120px;
+			}
+			main {
+				grid-template-columns: 80% 20%;
+			}
+		}
+
+		@media screen and (min-width: 1600px) { /* >=1600的设备 */
+			body {
+				margin: 0 auto;
+				max-width: 1440px;
+			}
 			main {
 				grid-template-columns: 80% 20%;
 			}
