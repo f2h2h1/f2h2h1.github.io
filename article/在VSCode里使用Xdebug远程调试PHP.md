@@ -2,12 +2,11 @@
 
 ## 0.
 1. 本地的 VSCode 需要安装好 PHP Extension Pack
-2. 远程服务器的 PHP 需要正确安装好 Xdebug 拓展
-3. 需要额外的一部服务器用作代理
-4. 因为一般本地开发的电脑不会有公网 ip ，所以这里多加了一部服务器用作代理
-5. 请求的流程
+1. 远程服务器的 PHP 需要正确安装好 Xdebug 拓展
+1. 需要额外的一个代理
+1. 请求的流程
 ```plaintext
-客户端->服务器->php->代理服务器->VSCode
+客户端->http服务->php->代理->VSCode
 ```
 
 ## 1. 远程服务器的 PHP 安装 Xdebug 拓展
@@ -20,51 +19,65 @@ php -i
 
 ## 2. 修改 php.ini
 在 php.ini 的最后加上如下内容
-```plaintext
-[Xdebug]
-; Xdebug 拓展路径
-zend_extension=""
-; 分析器输出路径
-xdebug.profiler_output_dir=""
-; 日志路径
-xdebug.remote_log=""
-; 跟踪输出路径
-xdebug.trace_output_dir=""
-; 是否开启远程调试
-xdebug.remote_enable=on
-; 是否开启分析器
-xdebug.profiler_enable=on
-; 允许调试的客户端IP
-xdebug.remote_host=127.0.0.1
-; 远程调试的端口
-xdebug.remote_port=9002
-; 开启远程调试自动启动
-xdebug.remote_autostart=on
-; 显示局部变量
-xdebug.show_local_vars = on
-; 显示默认的错误信息
-xdebug.default_enable = on
-; ide key
-xdebug.idekey = "vscode"
-```
-请根据实际填写以下参数
-```plaintext
-; Xdebug 拓展路径
-zend_extension=""
-; 分析器输出路径
-xdebug.profiler_output_dir=""
-; 日志路径
-xdebug.remote_log=""
-; 跟踪输出路径
-xdebug.trace_output_dir=""
-; 允许调试的客户端 IP
-xdebug.remote_host=127.0.0.1
-; 远程调试的端口
-xdebug.remote_port=9002
-```
-这里的 允许调试的客户端 IP 就是代理服务器的 IP，远程调试的端口 就是代理服务器的端口
 
-- 这个配置只适用于 xdebug3.0 以下的版本
+- xdebug 2.9
+    ```plaintext
+    [Xdebug]
+    ; Xdebug 拓展路径
+    zend_extension=""
+    ; 分析器输出路径
+    xdebug.profiler_output_dir=""
+    ; 日志路径
+    xdebug.remote_log=""
+    ; 跟踪输出路径
+    xdebug.trace_output_dir=""
+    ; 是否开启远程调试
+    xdebug.remote_enable=on
+    ; 是否开启分析器
+    xdebug.profiler_enable=on
+    ; 允许调试的客户端IP
+    xdebug.remote_host=127.0.0.1
+    ; 远程调试的端口
+    xdebug.remote_port=9002
+    ; 开启远程调试自动启动
+    xdebug.remote_autostart=on
+    ; 显示局部变量
+    xdebug.show_local_vars = on
+    ; 显示默认的错误信息
+    xdebug.default_enable = on
+    ; ide key
+    xdebug.idekey = "vscode"
+    ```
+    请根据实际填写以下参数
+    ```plaintext
+    ; Xdebug 拓展路径
+    zend_extension=""
+    ; 分析器输出路径
+    xdebug.profiler_output_dir=""
+    ; 日志路径
+    xdebug.remote_log=""
+    ; 跟踪输出路径
+    xdebug.trace_output_dir=""
+    ; 允许调试的客户端 IP
+    xdebug.remote_host=127.0.0.1
+    ; 远程调试的端口
+    xdebug.remote_port=9002
+    ```
+
+- xdebug 3.0
+    ```plaintext
+    [Xdebug]
+    zend_extension = path/to/xdebug
+    xdebug.mode = "debug"
+    xdebug.idekey = "vscode"
+    ; 允许调试的客户端 IP
+    xdebug.client_host = 127.0.0.1
+    ; 远程调试的端口
+    xdebug.client_port = 9002
+    xdebug.connect_timeout_ms = 2000
+    ```
+
+这里的 允许调试的客户端 IP 就是代理服务器的 IP，远程调试的端口 就是代理服务器的端口
 
 ## 3. 配置代理服务器
 1. 下载 frp 到代理服务器里，这是使用的是 frp 0.29.0，https://github.com/fatedier/frp/releases

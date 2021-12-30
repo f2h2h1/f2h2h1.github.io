@@ -1890,7 +1890,7 @@ magento2 配置 paypal
             XML External Entity
                 XML 外部实体
             由于程序在解析输入的XML数据时，解析了攻击者伪造的外部实体而产生的
-            　利用xxe漏洞可以进行文件读取，拒绝服务攻击，命令(代码)执行，SQL(XSS)注入，内外扫描端口，入侵内网站点等
+            利用xxe漏洞可以进行文件读取，拒绝服务攻击，命令(代码)执行，SQL(XSS)注入，内外扫描端口，入侵内网站点等
             防范方式
                 禁用外部实体的方法
                     其实把php升级到8就可以了，php8要开启外部实体的加载其实挺麻烦的
@@ -2019,6 +2019,7 @@ composer
             }
 中文文案排版指北 https://github.com/sparanoid/chinese-copywriting-guidelines
 让长文章更容易阅读的十项原则 https://www.uisdc.com/10-typeset-make-article-readable
+命令行的艺术 https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md
 版本控制软件比较
     git
         github
@@ -2057,4 +2058,6 @@ git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
 修改 错别字 标点 格式
     update format
 更新 sitemap 之类的文件
-    update auxiliary
+    update auxiliary 日期
+    update auxiliary 20211223
+    update auxiliary article

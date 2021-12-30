@@ -334,7 +334,7 @@
 							if (options.dataType && options.dataType == 'json') {
 								result = JSON.parse(result);
 							}
-							options.success && options.success(result, xhr.responseXML);
+							options.success && options.success(result, xhr);
 						} else {
 							options.error && options.error(status, xhr.responseText, options.error);
 						}
@@ -542,9 +542,14 @@
 								DOM.appendChild((function(item) {
 									let dd = document.createElement('dd');
 									let a = document.createElement('a');
+									let desc = item.name;
+									if (item.desc && item.desc != '') {
+										desc = item.desc;
+									}
 									a.setAttribute('target', '_blank');
 									a.setAttribute('rel', 'noreferrer');
 									a.setAttribute('href', item.href);
+									a.setAttribute('title', desc);
 									a.innerText = item.name;
 									dd.appendChild(a);
 									return dd;
@@ -574,7 +579,7 @@
 								type: "GET",
 								url: "articleList.json",
 								dataType: "json",
-								success: (data, textStatus) => {
+								success: (data) => {
 									resolve(data);
 								},
 								error: (XMLHttpRequest, textStatus, errorThrown) => {
