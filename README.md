@@ -8,7 +8,7 @@
 
 ## 列表
 
-<!-- list -->
+<!-- articleList -->
 - [数字号码资源](article/数字号码资源.md)
 - [使用docker-compose部署magento2](article/使用docker-compose部署magento2.md)
 - [如何完成以xx管理系统为选题的毕业设计](article/如何完成以xx管理系统为选题的毕业设计.md)
@@ -24,8 +24,8 @@
 - [把网页导出成PDF](article/把网页导出成PDF.md)
 - [FirstData后台的设置](article/FirstData后台的设置.md)
 - [SEO的经验](article/SEO的经验.md)
-- [微信支付的不完整接入指南](article/微信支付的不完整接入指南.md)
 - [paypal，firtdata，支付宝的不完整接入指南](article/paypal，firtdata，支付宝的不完整接入指南.md)
+- [微信支付的不完整接入指南](article/微信支付的不完整接入指南.md)
 - [观察网站性能](article/观察网站性能.md)
 - [git的笔记](article/git的笔记.md)
 - [密码学入门简明指南](article/密码学入门简明指南.md)
@@ -45,7 +45,25 @@
 - [在VSCode里调试PHP](article/在VSCode里调试PHP.md)
 - [安装PHP7的GUI扩展](article/安装PHP7的GUI扩展.md)
 - [关于](article/关于.md)
-<!-- list -->
+<!-- articleList -->
+
+## 友链
+
+<!-- exchangeList -->
+|站点|头像|网址|描述|
+|-|-|-|-|
+|[中文独立博客列表](https://github.com/timqian/chinese-independent-blogs)||https://github.com/timqian/chinese-independent-blogs||
+|[开往](https://travellings.link)|<img alt="开往" src="https://travellings.link/assets/w.png" style="max-width: 100px" />|https://travellings.link|开往-友链接力|
+|[虫洞](https://www.foreverblog.cn/go.html)|<img alt="虫洞" src="https://img.foreverblog.cn/logo_en_default.png" style="max-width: 100px" />|https://www.foreverblog.cn/go.html|穿梭虫洞-随机访问十年之约友链博客|
+|[I Am I](https://5ime.cn/)||https://5ime.cn/||
+|[56Kb/s](https://funix.cn/)|<img alt="56Kb/s" src="https://funix.cn/images/avatar.png" style="max-width: 100px" />|https://funix.cn/|扶着叛徒的尸体哭泣的人。|
+|[FlyingSky's Blog](https://blog.fsky7.com/)|<img alt="FlyingSky\'s Blog" src="https://static.fsky7.com/images/9c1d35960f638f3f34fcae0c2d8e9da1.jpg" style="max-width: 100px" />|https://blog.fsky7.com/|回忆化成一场长的梦。|
+|[F沈唁志](https://qq52o.me/)|<img alt="F沈唁志" src="https://gravatar.loli.net/avatar/53093cc242ff08b27984e84c9db92c33?s=200&d=mm&r=g" style="max-width: 100px" />|https://qq52o.me/|一个 PHPer 的成长之路|
+|[Emin.ink](https://www.emin.ink/)||https://www.emin.ink/||
+|[炎忍的博客](https://blog.imyan.ren/)|<img alt="炎忍的博客" src="https://blog.imyan.ren/media/avatar.png" style="max-width: 100px" />|https://blog.imyan.ren/|心之所愿，无所不成。|
+|[土木坛子](https://tumutanzi.com/)||https://tumutanzi.com/||
+|[澪同学](https://blog.ihomura.cn/)||https://blog.ihomura.cn/||
+<!-- exchangeList -->
 
 ## 在本地运行
 

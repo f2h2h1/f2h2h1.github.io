@@ -36,12 +36,38 @@ usort($articleList, function ($a, $b) {
 // 用于页面的 articleList.json
 file_put_contents('articleList.json', json_encode($articleList, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
-// README 里的列表
+// README 里的文章列表
 $readme = file_get_contents('README.md');
 $listStr = array_reduce($articleList, function($carry, $item) {
     return $carry .= '- [' . $item['title'] . '](article/' . $item['title'] . '.md)' . "\n";
 }, '');
-$readme = preg_replace('/(?<=<!-- list -->).*(?=<!-- list -->)/ims', "\n" . $listStr, $readme);
+$readme = preg_replace('/(?<=<!-- articleList -->).*(?=<!-- articleList -->)/ims', "\n" . $listStr, $readme);
+file_put_contents('README.md', $readme);
+
+// README 里的友链列表
+$exchangeList = file_get_contents('exchangeList.json');
+$exchangeList = json_decode($exchangeList, true);
+$exchangeTh = <<<EOF
+|站点|头像|网址|描述|
+|-|-|-|-|
+EOF;
+$listStr = array_reduce($exchangeList, function($carry, $item) {
+    $name = $item['name'];
+    $href = $item['href'];
+    $desc = $item['desc'];
+    $avatar = $item['avatar'];
+    $tr = '';
+    if (!empty($avatar) && filter_var($avatar, FILTER_VALIDATE_URL) !== false) {
+        // $avatar = '![' . $name . '](' . $avatar . ')';
+        ;
+        $avatar = '<img alt="' . addslashes($name) . '" src="' . $avatar . '" style="max-width: 100px" />';
+    }
+    $name = "[$name]($href)";
+    $tr = "|$name|$avatar|$href|$desc|";
+    return $carry .= $tr . "\n";
+}, '');
+$listStr = $exchangeTh . "\n" . $listStr;
+$readme = preg_replace('/(?<=<!-- exchangeList -->).*(?=<!-- exchangeList -->)/ims', "\n" . $listStr, $readme);
 file_put_contents('README.md', $readme);
 
 // SUMMARY
