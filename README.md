@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- articleList -->
+- [magento2加上varnish缓存](article/magento2加上varnish缓存.md)
 - [数字号码资源](article/数字号码资源.md)
 - [使用docker-compose部署magento2](article/使用docker-compose部署magento2.md)
 - [如何完成以xx管理系统为选题的毕业设计](article/如何完成以xx管理系统为选题的毕业设计.md)

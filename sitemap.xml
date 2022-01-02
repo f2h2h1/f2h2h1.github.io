@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+    <loc>https://f2h2h1.github.io/#title=magento2%E5%8A%A0%E4%B8%8Avarnish%E7%BC%93%E5%AD%98</loc>
+    <lastmod>2022-01-02</lastmod>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://f2h2h1.github.io/#title=%E6%95%B0%E5%AD%97%E5%8F%B7%E7%A0%81%E8%B5%84%E6%BA%90</loc>
     <lastmod>2021-12-28</lastmod>
     <priority>0.5</priority>
@@ -76,18 +81,18 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://f2h2h1.github.io/#title=%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97</loc>
-    <lastmod>2021-07-10</lastmod>
-    <priority>0.5</priority>
-</url>
-<url>
     <loc>https://f2h2h1.github.io/#title=paypal%EF%BC%8Cfirtdata%EF%BC%8C%E6%94%AF%E4%BB%98%E5%AE%9D%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97</loc>
     <lastmod>2021-07-10</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
+    <loc>https://f2h2h1.github.io/#title=%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%9A%84%E4%B8%8D%E5%AE%8C%E6%95%B4%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97</loc>
+    <lastmod>2021-07-10</lastmod>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://f2h2h1.github.io/#title=%E8%A7%82%E5%AF%9F%E7%BD%91%E7%AB%99%E6%80%A7%E8%83%BD</loc>
-    <lastmod>2021-11-04</lastmod>
+    <lastmod>2021-12-30</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -97,7 +102,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/#title=%E5%AF%86%E7%A0%81%E5%AD%A6%E5%85%A5%E9%97%A8%E7%AE%80%E6%98%8E%E6%8C%87%E5%8D%97</loc>
-    <lastmod>2021-11-19</lastmod>
+    <lastmod>2022-01-01</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -127,7 +132,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/#title=%E4%B8%80%E4%BA%9B%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0</loc>
-    <lastmod>2021-12-08</lastmod>
+    <lastmod>2021-12-30</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -142,7 +147,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/#title=%E5%9C%A8VSCode%E9%87%8C%E4%BD%BF%E7%94%A8Xdebug%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95PHP</loc>
-    <lastmod>2021-12-23</lastmod>
+    <lastmod>2021-12-30</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
