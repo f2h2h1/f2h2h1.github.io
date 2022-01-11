@@ -6,6 +6,13 @@
     <description>f2h2h1's blog</description>
     <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
 <item>
+    <title>对JS原型链的理解</title>
+    <link>https://f2h2h1.github.io/#title=%E5%AF%B9JS%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%9A%84%E7%90%86%E8%A7%A3</link>
+    <description>对JS原型链的理解</description>
+    <pubDate>Tue, 11 Jan 2022 18:30:20 +0800</pubDate>
+    <guid>https://f2h2h1.github.io/#title=%E5%AF%B9JS%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%9A%84%E7%90%86%E8%A7%A3</guid>
+</item>
+<item>
     <title>magento2加上varnish缓存</title>
     <link>https://f2h2h1.github.io/#title=magento2%E5%8A%A0%E4%B8%8Avarnish%E7%BC%93%E5%AD%98</link>
     <description>magento2加上varnish缓存</description>

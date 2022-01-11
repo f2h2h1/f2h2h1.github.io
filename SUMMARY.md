@@ -1,6 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
+* [对JS原型链的理解](article/对JS原型链的理解.md)
 * [magento2加上varnish缓存](article/magento2加上varnish缓存.md)
 * [数字号码资源](article/数字号码资源.md)
 * [使用docker-compose部署magento2](article/使用docker-compose部署magento2.md)
