@@ -149,6 +149,112 @@ app
 0. 可以尝试运行这条命令 `php bin/magento list` ，看看能不能找到新加的命令
 0. 最后运行上面新加的命令 `php bin/magento example:sayhello`
 
+## 新建 GraphQl 的接口
+
+0. 在模块目录 etc 下新建一个文件 schema.graphqls 并写入以下内容
+    ```
+        type Query
+        {
+            CustomGraphql (
+                username: String @doc(description: "Email Address/Mobile Number")
+                password: String @doc(description: "Password")
+                websiteId: Int = 1 @doc (description: "Website Id")
+            ): CustomGraphqlOutput @resolver(class: "Vendor\\Extension\\Model\\Resolver\\CustomGraphql") @doc(description:"Custom Module Datapassing")
+        }
+        type CustomGraphqlOutput
+        {
+            customer_id: Int
+            type: String
+            type_id: Int
+        }
+    ```
+    - CustomGraphql 是请求的参数
+    - CustomGraphqlOutput 是返回的参数
+    - @resolver 是处理请求的类
+
+0. 在模块目录 Model 下新建一个文件夹 Resolver ，然后再在这个文件夹里新建一个类文件 CustomGraphql.php 并写入以下内容
+
+    ```php
+    <?php
+    namespace Vendor\Extension\Model\Resolver;
+
+    use Magento\Framework\GraphQl\Config\Element\Field;
+    use Magento\Framework\GraphQl\Exception\GraphQlInputException;
+    use Magento\Framework\GraphQl\Query\ResolverInterface;
+    use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+
+    class CustomGraphql implements ResolverInterface
+    {
+        /**
+        * @param Field $field
+        * @param \Magento\Framework\GraphQl\Query\Resolver\ContextInterface $context
+        * @param ResolveInfo $info
+        * @param array|null $value
+        * @param array|null $args
+        * @return array|\Magento\Framework\GraphQl\Query\Resolver\Value|mixed
+        * @throws GraphQlInputException
+        */
+        public function resolve(
+            Field $field,
+            $context,
+            ResolveInfo $info,
+            array $value = null,
+            array $args = null)
+        {
+            if (!isset($args['username']) || !isset($args['password']) || !isset($args['websiteId'])||
+                empty($args['username']) || empty($args['password']) || empty($args['websiteId']))
+            {
+                throw new GraphQlInputException(__('Invalid parameter list.'));
+            }
+            $output = [];
+            $output['customer_id'] = 1;
+            $output['type'] = 'type';
+            $output['type_id'] = 1;
+        
+            return $output ;
+        }
+    }
+    ```
+    - $output 的内容需要和 schema.graphqls 里定义的返回参数一致
+
+0. 运行这句命令 `php bin/magento setup:upgrade` 更新数据
+
+0. 用这句 curl 命令尝试请求
+    ```
+    curl 'http://localhost-magento/graphql' \
+    -H 'accept: application/json' \
+    -H 'content-type: application/json' \
+    --data-raw '{"query":"\n    query {\n  CustomGraphql (\n    customer_id: 123\n    type: \"asd\"\n    type_id: 321\n  ) {\n    customer_id\n    type\n    type_id\n  }\n}","variables":{},"operationName":null}' \
+    --compressed \
+    --insecure -s -k
+    ```
+    - 如无意外应该能返回类似这样的数据
+    ```
+    {
+        "data": {
+            "CustomGraphqlOutput": {
+            "customer_id": 123,
+            "type": "asd",
+            "type_id": 321,
+            "end_date": 456
+            }
+        }
+    }
+    ```
+
+0. 可以用这决 curl 命令来查看当前 magento 项目的 graphql 文档
+    ```
+    curl 'https://localhost-magento/graphql' \
+    -H 'accept: application/json' \
+    -H 'content-type: application/json' \
+    --data-raw '{"query":"\n    query IntrospectionQuery {\n      __schema {\n        \n        queryType { name }\n        mutationType { name }\n        subscriptionType { name }\n        types {\n          ...FullType\n        }\n        directives {\n          name\n          description\n          \n          locations\n          args {\n            ...InputValue\n          }\n        }\n      }\n    }\n\n    fragment FullType on __Type {\n      kind\n      name\n      description\n      \n      fields(includeDeprecated: true) {\n        name\n        description\n        args {\n          ...InputValue\n        }\n        type {\n          ...TypeRef\n        }\n        isDeprecated\n        deprecationReason\n      }\n      inputFields {\n        ...InputValue\n      }\n      interfaces {\n        ...TypeRef\n      }\n      enumValues(includeDeprecated: true) {\n        name\n        description\n        isDeprecated\n        deprecationReason\n      }\n      possibleTypes {\n        ...TypeRef\n      }\n    }\n\n    fragment InputValue on __InputValue {\n      name\n      description\n      type { ...TypeRef }\n      defaultValue\n      \n      \n    }\n\n    fragment TypeRef on __Type {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                  ofType {\n                    kind\n                    name\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  ","variables":{},"operationName":"IntrospectionQuery"}' \
+    --compressed -s -k
+    ```
+
+浏览器可以安装这个拓展 https://github.com/altair-graphql/altair
+
+这是 graphql 的中文文档 https://graphql.cn/
+
 ## 启用模块 和 刷新缓存
 
 查看启用的模块
