@@ -92,6 +92,63 @@ app
 
 启用模块和刷新缓存后，访问这样的链接 `http://localhost-magento/local_dev/hello/world` ，应该就能看到 `hello world` 的输出
 
+## 新建命令
+
+0. 在模块目录下 etc/di.xml 加上以下内容
+    ```xml
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="exampleSayHello" xsi:type="object">Vendor\Extension\Console\SayHello</item>
+            </argument>
+        </arguments>
+    </type>
+    ```
+    - 如果是多条命令， item 可以多写几条
+    - item 的值是运行命令的类的命名空间
+
+0. 在模块目录里新建一个文件夹 Console ，在这个新建的文件夹里新建一个文件 SayHello.php 并写入以下内容
+    ```php
+    <?php
+    namespace Vendor\Extension\Console;
+
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
+    use Symfony\Component\Console\Input\InputOption;
+
+    class SayHello extends Command
+    {
+        const NAME = "name";
+
+        protected function configure()
+        {
+            $options = [
+                new InputOption(self::NAME, null, InputOption::VALUE_REQUIRED, 'a description text')
+            ];
+
+            $this->setName("example:sayhello") // 命令的名字
+                ->setDescription('example description') // 命令的描述
+                ->setDefinition($options);
+            parent::configure();
+        }
+
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            if ($name = $input->getOption(self::NAME)) {
+                $output->writeln('hello ' . $name);
+            } else {
+                $output->writeln('hello world');
+            }
+        }
+    }
+    ```
+    - configure 方法里的 setName 就是设置命令的运行名称，例如上面的例子，的运行命令就是 `php bin/magento example:sayhello`
+
+0. 运行这句命令 `php bin/magento setup:upgrade` 更新数据
+0. 可以尝试运行这条命令 `php bin/magento list` ，看看能不能找到新加的命令
+0. 最后运行上面新加的命令 `php bin/magento example:sayhello`
+
 ## 启用模块 和 刷新缓存
 
 查看启用的模块
