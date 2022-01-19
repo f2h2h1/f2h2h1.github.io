@@ -281,7 +281,16 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
     简书
     StackOverflow
     StackExchange
-信息类网站
+信息类网站/关注的新闻
+    通用的
+        新闻联播
+        新加坡联合早报
+    数码行业的
+        cnbeta
+        zol
+        少数派
+    软件行业的
+        开源中国 https://www.oschina.net/news
 git仓库
 书籍
     鸟哥私房菜
@@ -298,6 +307,7 @@ git仓库
     浪潮之巅
     人月神话
     人件
+    程序员的数学1~3
     这就是软件售前工程师! https://read.douban.com/ebook/322579268/
 
 浏览器数据持久化缓存技术
@@ -704,7 +714,8 @@ vscode的使用技巧
             新技术解决了什么问题
             理解新技术相关的概念
             实践新技术
-        要看新闻，特别是业界的新闻
+        要看新闻，特别是业界的新闻，但又不能只看业界的新闻，其他领域的新闻也要留意一下
+        参与一些社群，多和同行交流
         英语水平起码要达到 能看懂文档，能在 issues 用英文和其它人交流
         即使不想跳槽，每年至少也要出去面试一次，这样能了解自己的水平，工资的行情，技术的发展方向
         即使不需要面试，也要每三个月更新一次简历，回顾这三个月自己的工作和学习，判断技能是否有提升
@@ -1011,6 +1022,7 @@ git的一般使用指南
                 CardDAV
                 ad 域或 ladp 的组织架构
         项目管理
+            Redmine
             开发新功能
             bug管理
         流水线
@@ -1022,6 +1034,11 @@ git的一般使用指南
             构建镜像并提交到镜像仓库
             把镜像部署到对应的服务器（测试，生产）
         git 仓库
+            分支模型
+                Git Flow
+                Github Flow
+                Trunk Based Development
+                Aone Flow
         镜像仓库
         内部文档
             入职用的文档，让新成员能迅速地熟悉工作流程，最好有纸质版（最好过塑或者套个塑料封套，因为会多次使用），因为电脑的配置可能需要一些时间
@@ -1549,7 +1566,8 @@ magento2 配置 paypal
                 一主多从
             适当增加冗余，避免多表查询
             搞分布式数据库，或者搞数据库集群
-            适当使用nosql
+            适当使用nosql或new sql
+                根据数据结构和业务来选择数据持久化的方案，不用把全部数据都存进关系型数据库里的
                 例如 momgo 和 es
             通过系统拆分或微服务来达到分库
             极端情况下，如果一个表确定不会有修改操作，在遇到性能瓶颈时可以使用MyISAM 
@@ -2047,17 +2065,21 @@ git add articleList.json sitemap.xml rss.xml README.md; git commit -m "update au
 
 git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
 
+不要同时提交两篇文章
+
 新增一篇文章
-    add 文章标题
+    add [文章标题]
 大幅更新某一篇文章的内容
-    add section 文章标题 更新的内容
-    update section 文章标题 更新的内容
-    update article 文章标题
+    add section [文章标题] 更新的内容
+    update section [文章标题] 更新的内容
+    update article [文章标题]
 只更新了一点内容
-    update fraction
+    update fraction 日期
+    update fraction 20211223
 修改 错别字 标点 格式
     update format
 更新 sitemap 之类的文件
+    update auxiliary 具体内容
     update auxiliary 日期
     update auxiliary 20211223
     update auxiliary article
