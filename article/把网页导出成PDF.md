@@ -61,6 +61,25 @@ a 标签
     - 如果有样式的需求，就尽量在原有的代码里修改样式适应打印，如果改不动了，还是单独写一份用于打印的 html 代码，再用隐藏的 iframe 标签生成 PDF
 1. 如果想让生成的 PDF 样式保持一致，最好还是在后台生成。但笔者认为，大部分情况下浏览器之间微小的差异是可以忽略的。
 
+## 示例的代码
+
+```
+(function(){
+    let printCode = `<h1>test</h1>`;
+    var iframe = document.createElement("iframe");
+    iframe.id = 'iframe_print_' + Math.round(new Date().getTime());
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    iframe.contentWindow.document.write(printCode); // 一定要用 write 方法， innerHTML 属性有时会打印失败
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+    setTimeout(function(){
+        // 如果还没渲染完pdf就移除 iframe 的标签，会打印失败，等待的时间可以调整，甚至一直留着 iframe 标签都可以
+        document.getElementById(iframe.id).parentNode.removeChild(iframe);
+    }, 3000);
+})();
+```
+
 ## PS
 Opera 浏览器（77.0.4054.203）有一个把页面另存为 PDF 的功能（不是打印预览），几乎可以把页面的样式完整地保留下来（不是打印的样式就是当前渲染的样式）而且还能保持 a 标签的链接。但只能通过图形界面操作，没有命令行参数，也不能通过 Playwright 这类工具来操作浏览器生成。
 
