@@ -12,7 +12,7 @@
         {
             "label": "update matedata",
             "type": "shell",
-            "command": "git add articleList.json sitemap.xml rss.xml README.md SUMMARY.md",
+            "command": "git add articleList.json sitemap.xml rss.xml atom.xml README.md SUMMARY.md",
             "dependsOn": ["updateTime"],
             "options": {
                 "shell": {

@@ -58,9 +58,7 @@ $listStr = array_reduce($exchangeList, function($carry, $item) {
     $avatar = $item['avatar'];
     $tr = '';
     if (!empty($avatar) && filter_var($avatar, FILTER_VALIDATE_URL) !== false) {
-        // $avatar = '![' . $name . '](' . $avatar . ')';
-        ;
-        $avatar = '<img alt="' . addslashes($name) . '" src="' . $avatar . '" style="max-width: 100px" />';
+        $avatar = '<img alt="' . addslashes($name) . '" src="' . $avatar . '" style="max-width: 50px" />';
     }
     $name = "[$name]($href)";
     $tr = "|$name|$avatar|$href|$desc|";
@@ -109,7 +107,7 @@ file_put_contents('rss.xml', $rss);
 $itemList = array_reduce($articleList, function ($carry, $article) {
     $title = $article['title'];
     $link = 'https://f2h2h1.github.io/#title=' . urlencode($article['title']);
-    $updated = date('c', $article['updateTime'] + mt_rand(0, 99));
+    $updated = date('c', $article['updateTime']);
     $item = <<<EOF
     <entry>
         <title>%s</title>
