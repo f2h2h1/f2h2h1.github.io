@@ -92,6 +92,94 @@ app
 
 启用模块和刷新缓存后，访问这样的链接 `http://localhost-magento/local_dev/hello/world` ，应该就能看到 `hello world` 的输出
 
+## 新建模型
+
+0. 新建或在 db_schema.xml 文件里添加
+    ```xml
+    <?xml version="1.0"?>
+    <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+        <table name="test_model" resource="default" engine="innodb" comment="Test Model">
+            <column xsi:type="int" name="entity_id" nullable="false" identity="true"/>
+            <column xsi:type="int" name="customer_id" nullable="false" comment="customer_id"/>
+            <column xsi:type="varchar" name="type" nullable="false" length="64" comment="type"/>
+            <constraint xsi:type="primary" referenceId="PRIMARY">
+                <column name="entity_id"/>
+            </constraint>
+        </table>
+    </schema>
+    ```
+    - setup 脚本将会被淘汰， https://devdocs.magento.com/guides/v2.4/extension-dev-guide/declarative-schema/db-schema.html
+0. 新建 resource model
+    - 在模块目录 model/ResourceModel 文件夹下新建 TestModel.php
+
+    ```php
+    <?php
+    namespace Vendor\Extension\Model\ResourceModel;
+
+    use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+
+    class TestModel extends AbstractDb
+    {
+        const TABLE_NAME = 'test_model';
+
+        protected function _construct()
+        {
+            $this->_init(self::TABLE_NAME, 'entity_id');
+        }
+    }
+    ```
+
+0. 新建 model
+    - 在模块目录 model 文件夹下新建 TestModel.php
+
+    ```php
+    <?php
+    namespace Vendor\Extension\Model;
+
+    use Magento\Framework\Model\AbstractModel;
+
+    class TestModel extends AbstractModel
+    {
+        protected function _construct()
+        {
+            $this->_init(Vendor\Extension\Model\ResourceModel\TestModel::class);
+        }
+    }
+    ```
+
+0. 新建 collection
+    - 在模块目录 model/ResourceModel/TestModel 文件夹（这里的 TestModel 对应的是模型名）下新建 Collection.php
+
+    ```php
+    <?php
+    namespace Vendor\Extension\Model\ResourceModel\TestModel;
+
+    use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+
+    class Collection extends AbstractCollection
+    {
+        protected function _construct()
+        {
+            $this->_init(Vendor\Extension\Model\TestModel::class, Vendor\Extension\Model\ResourceModel\TestModel::class);
+        }
+    }
+    ```
+
+0. 然后运行这句新建 db_schema_whitelist.json
+    ```
+    php bin/magento setup:db-declaration:generate-whitelist --module-name=Extension
+    ```
+
+0. 最后运行这句就能新建一个对应的表了
+    ```
+    php bin/magento setup:upgrade
+    ```
+
+- Magento的 模型系统 分为三部分 - 模型 资源模型 集合
+- 模型是一个抽象的对象
+- 资源模型会对应数据库里的表，模型的增删查改通过资源模型进行，例如 资源模型->save(模型)
+- 集合就是模型的集合，一些查询操作也是在集合里进行
+
 ## 新建命令
 
 0. 在模块目录下 etc/di.xml 加上以下内容
