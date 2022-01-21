@@ -343,6 +343,151 @@ app
 
 这是 graphql 的中文文档 https://graphql.cn/
 
+参考 https://devdocs.magento.com/guides/v2.4/graphql/index.html
+
+## 新建索引器
+
+### magento 索引的运行原理
+
+### 新建索引的步骤
+
+0. 在模块目录 etc 新建 inderx.xml
+    ```xml
+    <?xml version="1.0"?>
+    <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Indexer/etc/indexer.xsd">
+        <indexer id="test_indexer" 
+            view_id="test_indexer"
+            class="Vendor\Extension\Model\Indexer\Test"
+            >
+            <title translate="true">test_indexer</title>
+            <description translate="true">Test Indexer</description>
+        </indexer>
+    </config>
+    ```
+
+0. 在模块目录 etc 新建 mview.xml
+    ```xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="urn:magento:framework:Mview/etc/mview.xsd">
+        <view id="test_indexer"
+            class="Vendor\Extension\Model\Indexer\Test"
+            group="indexer" >
+            <subscriptions>
+                <table name="sales_order" entity_column="entity_id"/>
+            </subscriptions>
+        </view>
+    </config>
+    ```
+    - view 节点的 id 对应 indexer.xml 里 indexer 节点的 view_id
+    - view 节点的 class 和 indexer.xml 里 indexer 节点的 class 是一致的
+    - subscriptions 是传递给 indexer class 的参数，是某一个表的某一列，可以是多个表
+    - mview 可能是 materialize view 的缩写
+
+0. 在模块目录 model/indexer 新建 TestIndexer.php
+    ```php
+    <?php
+    namespace HKT\PartnerCode\Model\Indexer;
+
+    class RetrieveUnusedOrder implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
+    {
+        /**
+        * @inheritdoc
+        */
+        public function executeFull()
+        {
+            $this->reindex();
+        }
+
+        /**
+        * @inheritdoc
+        */
+        public function executeList(array $ids)
+        {
+            $this->execute($ids);
+        }
+
+        /**
+        * @inheritdoc
+        */
+        public function executeRow($id)
+        {
+            $this->execute([$id]);
+        }
+
+        /**
+        * @inheritdoc
+        */
+        public function execute($ids)
+        {
+            $this->reindex($ids);
+        }
+
+        /**
+        * @param int[] $ids
+        * @return void
+        */
+        protected function reindex($ids = null)
+        {
+            if ($ids === null) { // 更新全部索引
+
+            } else { // 根据传入的 id 更新索引
+
+            }
+        }
+    }
+    ```
+
+0. 运行这句命令重建索引
+    ```
+    php bin/magento indexer:reindex test_indexer
+    ```
+
+0. 可以在后台里查看索引的状态
+    ```
+    后台 -> SYSTEM -> Index Management
+    ```
+
+### 相关命令
+
+- 在命令行里重建索引
+    ```
+    php bin/magento indexer:reindex
+    php bin/magento indexer:reindex [indexer]
+    ```
+
+- 索引器的信息，就是显示 title 和 desc
+    ```
+    php bin/magento indexer:info
+    ```
+
+- 索引器的状态，就是显示 Ready Reindex Processing
+    ```
+    php bin/magento indexer:status
+    php bin/magento indexer:status [indexer]
+    ```
+
+- 索引器的模式，就是显示 Update on save 或 Update by schedule
+    ```
+    php bin/magento indexer:show-mode
+    php bin/magento indexer:show-mode [indexer]
+    php bin/magento indexer:set-mode {realtime|schedule} [indexer]
+    ```
+
+- 使特定或全部索引起失效
+    ```
+    php bin/magento indexer:reset
+    php bin/magento indexer:reset [indexer]
+    ```
+
+- 上面的命令提及到的 [indexer] 是 inderx.xml 文件里的 indexer 节点的 id 属性
+
+### 参考
+
+https://devdocs.magento.com/guides/v2.4/extension-dev-guide/indexing-custom.html
+
+http://aqrun.oicnp.com/2019/11/10/12.magento2-indexing-reindex.html
+
 ## 启用模块 和 刷新缓存
 
 查看启用的模块
