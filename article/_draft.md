@@ -498,6 +498,9 @@ vscode的使用技巧
             岗位-名字
             岗位-名字-联系方式
     投递简历
+        目标公司的投递渠道
+            通常在官网里都有投递简历的渠道
+        各种招聘平台
     如何应对面试
         简历里提及的内容都要认真准备
         根据岗位描述和任职要求准备面试
@@ -582,6 +585,7 @@ vscode的使用技巧
                 有什么崇拜的人吗
                 希望去哪里就业
                 有什么兴趣爱好，能拿得上台表演的有吗
+                你了解这家公司吗
                 你能为企业带来什么
                 你为什么选择这家公司
                 一些迷信的问题
@@ -639,7 +643,7 @@ vscode的使用技巧
         工作环境
             办公室里是否有 wifi ，办公室的网速如何
             办公用的电脑性能是否足够
-            工位坐得舒服吗
+            工位坐得舒服吗 办公椅和工位面积
             新装修的，有甲醛
             写字楼太残旧了
     如何融入工作环境
@@ -664,6 +668,7 @@ vscode的使用技巧
             不愿意或没有勇气跑路去大城市
             没有能力 润
             基础还是不够好
+            准备不够充分
             面试时太紧张了，未能完整地向招聘的企业展示自己的能力
         客观的原因
             市场已经萎缩 这是根本原因
@@ -864,12 +869,100 @@ vscode的使用技巧
     判断是否包含关键词
     把关键词替换成其它字符
     一般文本
-        文本->tts->语音识别->识别后的文本->语义分析->判断是否违规
+        渲染文本->orc->tts->语音识别->识别后的文本->语义分析->判断是否违规
+            即使是一般文本也要渲染一次，因为 unicode 有组合字有控制文本方向的字符
+            可以通过控制文本方向来规避检测，例如这样
+                rlo词键关 渲染后就是 关键词
     富文本
         渲染文本->orc->文本->tts->语音识别->识别后的文本->语义分析->判断是否违规
     后台管理员要随机抽查
     要有一个由用户举报的渠道
 KiB 和 KB 和 Kb 和 Kbps 的联系与区别
+    b 是 bit 的缩写 比特
+    B 是 Byte 的缩写 字节
+    bit 是计算机里最小的单位，只有 0 和 1
+    byte 是程序访问内存的最小单位
+        绝大多数情况下 1 Byte = 8 bit
+    byte 是 SI 里用于描述信息量的单位
+    国际电工委员会IEC的单位
+        1KiB = 1 Kibibyte = 1 kilo binary byte = 2^10 byte = 1024 byte
+        1MiB = 1 Mebibyte = 1 Mega binary byte = 2^20 byte = 1048576 byte
+        1GiB = 1 Gibibyte = 1 Giga binary byte = 2^30 byte = 1073741824 byte
+        1TiB = 1 Tebibyte = 1 Tera binary byte = 2^40 byte = 1099511627776 byte
+        1PiB = 1 Pebibyte = 1 Peta binary byte = 2^50 byte = 1125899906842624 byte
+        1EiB = 1 Exbibyte = 1 Exa binary byte = 2^60 byte = 1152921504606846976 byte
+        1ZiB = 1 Zebibyte = 1 Zetta binary byte = 2^70 byte = 1180591620717411303424 byte
+        1YiB = 1 Yobibyte = 1 Yotta binary byte = 2^80 byte = 1208925819614629174706176 byte
+    国际单位制SI的单位
+        SI的单位都是十进制的
+        1KB = 1 Kilo byte = 10^3B = 1000 byte
+        1MB = 1 Mega byte = 10^6B = 1000000 byte
+        1GB = 1 Giga byte = 10^9B = 1000000000 byte
+        1TB = 1 Tera byte = 10^12B = 1000000000000 byte
+        1PB = 1 Peta byte = 10^15B = 1000000000000000 byte
+        1EB = 1 Exa byte = 10^18B = 1000000000000000000 byte
+        1ZB = 1 Zetta byte = 10^21B = 1000000000000000000000 byte
+        1YB = 1 Yotta byte = 10^24B = 1000000000000000000000000 byte
+    乘数词头对应的中文
+        kilo 千
+        mega 兆
+        giga 吉
+        tera 太
+        peta 拍
+        exa 艾
+        zetta 泽
+        yotta 尧
+    KiB 和 KB
+        KiB 是基于2次冥
+        KB 是基于10次方
+        在 windows 里 KB 就是 KiB
+        在 linux 和 mac 里会区分 KB 和 KiB
+        KB 这种单位一般用于描述硬盘或内存的容量
+        换算
+            1. 找到同级单位的比例
+            2. 乘以同级单位的比例
+            例子
+                1KiB = 1.024KB
+                2KB = ?
+                    1 * x=1.024
+                    x = 1 / 1.024
+                2KB = 2 * x
+                     = 2 * 1 / 1.024
+                     = 1.953125KiB
+                2KiB = ?
+                     1 = 1.024 * x
+                     x = 1.024 / 1
+                2KiB = 2 * x
+                     = 2 * 1.024
+                     = 2.024
+    Kbps
+        1 Kbps = 1 Kilo per second = 1000 per second
+        1 Mbps = 1 Mega per second = 1000000 per second
+        1M 带宽是指 1Mbps
+            实际速度还要考虑各种头信息和各种控制信号
+        带宽用2次冥还是10次方？维基里显示的是用10次方，但中文互联网很多文章都是用2次冥
+            个人倾向于应该是用10次方的，因为一般硬件厂商都是用10次方的
+        这种单位一般用于描述网速
+    KiB/sec
+        KiB/sec = KiB/s
+        sec = second
+        1 KiB/sec = 1 KiB 每秒
+        这种单位一般用于描述硬盘的读写速度
+    总结
+        b 是 bit
+            类推 Kb 是 Kilo bit
+        B 是 byte
+            类推 KB 是 Kilo byte
+        中间没有 i 的是基于10次方，中间有 i 的是基于2次冥
+        后面带着 ps 或 sec 的是每秒的意思，一般用于描述速度
+        硬件一般用基于10次方
+        软件一般用基于2次冥
+        2次冥 > 10 次方
+            单位越大差距越大
+        大多数语境下 KB 和 KiB 会混用
+            特别是口语里只会说 xxK 或 xxM 很少会说 xxKiB 这种
+        在编程开发中，尽量使用 KiB
+        http://www.elecfans.com/tools/zijiehuansuan.html
 如何做一个js库
     去npm官方文档注册账号,并验证邮箱 官网地址:https://www.npmjs.com/
     在github新建一个空仓库，并克隆到本地

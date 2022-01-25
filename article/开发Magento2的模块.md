@@ -237,6 +237,8 @@ app
 0. 可以尝试运行这条命令 `php bin/magento list` ，看看能不能找到新加的命令
 0. 最后运行上面新加的命令 `php bin/magento example:sayhello`
 
+参考 https://devdocs.magento.com/guides/v2.4/extension-dev-guide/cli-cmds/cli-howto.html
+
 ## 新建 GraphQl 的接口
 
 0. 在模块目录 etc 下新建一个文件 schema.graphqls 并写入以下内容
@@ -520,3 +522,12 @@ php bin/magento cache:flush 刷新缓存
 ## 参考
 
 生成 magento 模块 https://cedcommerce.com/magento-2-module-creator/
+
+https://devdocs.magento.com/guides/v2.4/extension-dev-guide/module-development.html
+
+http://www.wps.team/book/magento2/
+
+<!--
+这是一个收费的文档
+https://www.kancloud.cn/zouhongzhao/magento2-in-action
+-->

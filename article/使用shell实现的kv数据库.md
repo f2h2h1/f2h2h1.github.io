@@ -159,7 +159,7 @@ db_rawshow() {
         echo "$1 does not exist"
         return 1
     fi
-    cat -n $1
+    cat $1
 }
 db_test() {
     test_dependence() {
@@ -169,8 +169,27 @@ db_test() {
             echo "test fail"
             exit 1
         fi
-        echo "$1 ok"
+        echo "    $1 ok"
     }
+    echo "SHELL_FOLDER is $SHELL_FOLDER"
+    if [ ! -d $SHELL_FOLDER ]; then
+        echo "SHELL_FOLDER is not existent"
+        exit 1
+    else
+        echo "SHELL_FOLDER is existent"
+    fi
+    if [ ! -r $SHELL_FOLDER ]; then
+        echo "SHELL_FOLDER can not read"
+        exit 1
+    else
+        echo "SHELL_FOLDER can read"
+    fi
+    if [ ! -w $SHELL_FOLDER ]; then
+        echo "SHELL_FOLDER can not write"
+        exit 1
+    else
+        echo "SHELL_FOLDER can write"
+    fi
     echo "test dependence"
     test_dependence sh
     test_dependence grep
