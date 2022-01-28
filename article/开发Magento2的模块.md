@@ -389,9 +389,9 @@ app
 0. 在模块目录 model/indexer 新建 TestIndexer.php
     ```php
     <?php
-    namespace HKT\PartnerCode\Model\Indexer;
+    namespace Vendor\Extension\Model\Indexer;
 
-    class RetrieveUnusedOrder implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
+    class Test implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
     {
         /**
         * @inheritdoc

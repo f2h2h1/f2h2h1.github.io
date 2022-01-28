@@ -289,13 +289,23 @@
 - 可以使用 Papercut-SMTP 这类软件来接收测试的邮件
 - 浏览器禁用图片的加载也能有效地提升速度
 
+除了可以通过 compoer 安装外，还可以通过 clone github 的仓库安装。
+通过 github 安装就可以不申请 magento 的帐号了。
+通过 composer 安装的 magento 的框架文件在这个目录里 `vendor/magento/framework` 。
+通过 clone github 源码安装的 magento 的框架文件在这个目录里 `lib/internal/Magento/Framework` 。
+github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块 。
+
 ## 安装 2.4
 
 笔者发现 magento2 的每个小版本的系统依赖都有一点不一样
 https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html
 
-2.3 和 2.4 的主要区别是 2.4 必须使用 Elasticsearch 和 mysql 需要 8.0。
-还有就是 composer 需要 2 以上版本。
+2.3 和 2.4 的主要区别是
+- 必须使用 Elasticsearch
+- mysql 需要 8.0
+- php 需要 7.4
+- 还有就是 composer 需要 2 以上版本
+
 因为 Elasticsearch 的存在使得门槛高了不少。笔者感觉多奥多比正在抛弃中小用户。
 
 安装流程和注意事项和 2.3 的基本一致。

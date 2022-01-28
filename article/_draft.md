@@ -23,8 +23,14 @@ maven的使用
 
 如何实现一个web服务器
 ================================
+拓扑结构
+    星型
+    环型
+    总线
+        以太网
+    ...
 模型
-    七层模型
+    七层模型 (由 OSI 提出的)
         应用层
         表示层
             负责转化数据格式，并处理数据加密和数据压缩。
@@ -34,17 +40,17 @@ maven的使用
         网际层
         数据链路层
         物理层
+    四层模型 ip/tcp
+        应用层
+        传输层
+        网际层
+        网络接口层
     五层模型
         应用层 -> data (数据)
         传输层 -> segment (段)
         网际层 -> packet (包)
         数据链路层 -> frame (帧)
         物理层 -> bit (比特)
-    四层模型
-        应用层
-        传输层
-        网际层
-        网络接口层
     各层常用的协议
         应用层
             http
@@ -181,13 +187,21 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
     linux 系统的一般使用
 ## 计算机语言
     机器语言
+        指令集（机器指令的集合）
+        机器指令
+        微程序
+        微指令
+        微命令和微操作
     汇编
+        汇编指令
+        伪指令
+        符号
     高级语言
         编程语言
         标记语言
         查询语言
         层叠样式表
-    基于文本的数据交换格式
+    基于字符串的数据格式
         ini
         yaml
         json
@@ -201,12 +215,18 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
     一个简单的脚本语言
 ## 数据库
     抽象的数据库
-        sql
-    mysql的一般使用
+        树型
+        网状？
+        关系型
+            集合论和谓词逻辑
+            sql
+    mysql 的一般使用
 ## 计算机网络
 ## 软件工程
 ## 一些工具
     git 的一般使用
+        github gitlab gitee 其它的 git 服务
+    vscode 的一般使用
 ## 参考
 
 
@@ -2129,6 +2149,7 @@ composer
                 "exclude": ["var/cache/", "tmp", "/*.test", "!/var/di/"]
             }
 中文文案排版指北 https://github.com/sparanoid/chinese-copywriting-guidelines
+中文技术文档的写作规范 https://github.com/ruanyf/document-style-guide
 让长文章更容易阅读的十项原则 https://www.uisdc.com/10-typeset-make-article-readable
 命令行的艺术 https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md
 版本控制软件比较
