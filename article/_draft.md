@@ -161,7 +161,12 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
     如果涉及数据分析，还需要 概率论 和 数理统计
     如果涉及计算机图形，还需要 线性代数
     英语至少要有初中的水平 (要学会使用各类翻译服务 谷歌翻译 百度翻译 必应翻译 ...)
-    递归是一个重要的概念
+        具体一点就是
+            多邻国英语测试（DET） 55 分 或
+            国家英语等级考试（NETS） 三级 或
+            雅思（LETLS） 3.5 分 或
+            欧洲语言共同参考框架（CEFR） A1
+    抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
 ## 计算机学科的相关概念
     图灵机
     冯诺依曼结构
@@ -179,7 +184,22 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
         集成电路
 ## 计算机的组成
     抽象的计算机组成
+        输入设备
+        输出设备
+        控制器
+        运算器
+        存储器
     具体的计算机组成
+        主板
+        电源
+        cpu - 控制器 运算器
+        内存 - 存储器
+        硬盘 - 存储器
+        显卡 - 运算器
+        键盘 - 输入设备
+        鼠标 - 输入设备
+        屏幕 - 输出设备
+        音箱 - 输出设备
 ## 从二极管到指令集和汇编语言的抽象
 ## 操作系统
     环境变量
@@ -198,14 +218,35 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
         符号
     高级语言
         编程语言
+            c
+            c++
+            c#
+            java
+            javascript
+            python
+            php
+            lisp
+            ...
         标记语言
+            xml
+                xsd
+                svg
+                mathml
+                ...
+            html
+            markdown
         查询语言
+            sql
         层叠样式表
+            css
     基于字符串的数据格式
         ini
         yaml
         json
     编译原理
+        语义设计
+            类型系统
+        语法设计
     四则运算
         从左至右
         有优先级的
@@ -221,12 +262,14 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
             集合论和谓词逻辑
             sql
     mysql 的一般使用
+    nosql 和 newsql
 ## 计算机网络
 ## 软件工程
 ## 一些工具
     git 的一般使用
         github gitlab gitee 其它的 git 服务
     vscode 的一般使用
+    chrome 和 firefox 开发者工具的使用
 ## 参考
 
 
@@ -638,7 +681,7 @@ vscode的使用技巧
         如果一些问题面试官没有正面回答的，就不要追问了，不要把气氛弄得太尴尬
         如果觉得面试的公司没有太多诚意的话，就不要勉强自己
         如果是现场面试，还要观察一下公司的办公环境
-        一天只面试一场，每次面试完都要记录下面试的过程
+        一天只面试一场，每次面试完都要记录下面试的过程（如果记不住，就带一支录音笔，手机的电池未必能续航这么久）
             例如，技术面有哪些问题，反问的时候对方是怎么回答的
             一方面可以查漏补缺，另一方面在收到多个 offer 时，可以更好地对比不同的公司
             列一个表格，对比各家公司的条件
