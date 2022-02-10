@@ -617,6 +617,10 @@ php bin/magento cache:flush 刷新缓存
 
 ## 参考
 
+github 里 magento2 的模块例子
+- https://github.com/magento/magento2-samples
+- sample-module-minimal 是最简单的模块例子
+
 生成 magento 模块 https://cedcommerce.com/magento-2-module-creator/
 
 https://devdocs.magento.com/guides/v2.4/extension-dev-guide/module-development.html

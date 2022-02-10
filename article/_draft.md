@@ -165,7 +165,8 @@ https://developers.google.com/search/docs/advanced/crawling/overview-google-craw
             多邻国英语测试（DET） 55 分 或
             国家英语等级考试（NETS） 三级 或
             雅思（LETLS） 3.5 分 或
-            欧洲语言共同参考框架（CEFR） A1
+            欧洲语言共同参考框架（CEFR） A2
+        在没有翻译的帮助下达到 A2 的水平，加上翻译达到 B1 的水平（所以熟练地使用各类翻译工具也是一种重要的能力）
     抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
 ## 计算机学科的相关概念
     图灵机
@@ -1311,6 +1312,8 @@ magento2 配置 paypal
     网页安全色
         网络安全色是当红色（Red）、绿色（Green）、蓝色（Blue）颜色数字信号值（DAC Count）为0、51、102、153、204、255时构成的颜色组合，它一共有 6 * 6 * 6 = 216 种颜色（其中彩色为210种，非彩色为6种
     网页最安全色
+        关于网页安全色的文章，提到 22 种网页最安全色（包含一部分基本16色）
+        https://www.asc.ohio-state.edu/wilkins.5/color/websafecolors.html
     配色
         单色配色
         互补配色
@@ -2200,6 +2203,7 @@ composer
         github
         gitlab
         gitee
+        coding
     mercurial hg
         Bitbucket
     Subversion SVN

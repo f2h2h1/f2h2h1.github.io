@@ -289,11 +289,12 @@
 - 可以使用 Papercut-SMTP 这类软件来接收测试的邮件
 - 浏览器禁用图片的加载也能有效地提升速度
 
-除了可以通过 compoer 安装外，还可以通过 clone github 的仓库安装。
-通过 github 安装就可以不申请 magento 的帐号了。
-通过 composer 安装的 magento 的框架文件在这个目录里 `vendor/magento/framework` 。
-通过 clone github 源码安装的 magento 的框架文件在这个目录里 `lib/internal/Magento/Framework` 。
-github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块 。
+除了可以通过 compoer 安装外，还可以通过 github 的仓库安装。
+- 通过 github 安装就可以不申请 magento 的帐号了。
+- 通过 composer 安装的 magento 的框架文件在这个目录里 `vendor/magento/framework` 。
+- 通过 github 源码安装的 magento 的框架文件在这个目录里 `lib/internal/Magento/Framework` 。
+- github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块 。
+- 如果 clone 速度太慢，可以在 releases 那里下载源码的压缩包（如果还是太慢就用一些下载工具来下载 releases 的压缩包）
 
 ## 安装 2.4
 
@@ -369,6 +370,8 @@ magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给
 用户指南 https://docs.magento.com/user-guide/
 
 开发文档 https://devdocs.magento.com/
+
+github https://github.com/magento/magento2
 
 magento 相关的博客
 - https://www.yshuq.com/
