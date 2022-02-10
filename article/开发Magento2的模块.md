@@ -490,6 +490,102 @@ https://devdocs.magento.com/guides/v2.4/extension-dev-guide/indexing-custom.html
 
 http://aqrun.oicnp.com/2019/11/10/12.magento2-indexing-reindex.html
 
+## 新建定时任务
+
+### 新建定时任务的步骤
+
+0. 在模块目录 etc 新建 crontab.xml
+    ```xml
+    <?xml version="1.0"?>
+    <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+        <group id="default">
+            <job name="order_complete_fulfillment_end_date_expire" instance="HKT\PartnerCode\Cron\Order\FulfillmentEndDateExpireCron" method="execute">
+                <schedule>0 2 * * *</schedule>
+            </job>
+        </group>
+    </config>
+    ```
+0. 在模块目录里新建文件夹 cron
+0. 在 cron 文件夹里新建一个普通的类，并在这个类里实现一个没有参数的 execute 方法
+
+### 任务组
+
+在模块目录 etc 新建 cron_groups.xml
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/cron_groups.xsd">
+    <group id="token_expired">
+        <schedule_generate_every>1</schedule_generate_every>
+        <schedule_ahead_for>4</schedule_ahead_for>
+        <schedule_lifetime>15</schedule_lifetime>
+        <history_cleanup_every>1440</history_cleanup_every>
+        <history_success_lifetime>60</history_success_lifetime>
+        <history_failure_lifetime>600</history_failure_lifetime>
+        <use_separate_process>1</use_separate_process>
+    </group>
+</config>
+```
+
+group 节点的 id 对应 crontab.xml 里 config group 的 id
+
+### 运行定时任务
+
+修改过 cron 和 cron_groups 需要重新编译并清空缓存才会生效
+```
+php bin/magento setup:di:compile
+php bin/magento cache:clean
+```
+
+运行全部任务组
+```
+php bin/magento cron:run
+```
+
+运行 default 任务组，一般的定时任务都在 default
+```
+php bin/magento cron:run --group=default
+```
+
+运行 index 任务组，这是索引器的任务组，就是 by schedule 类型的索引器
+```
+php bin/magento cron:run --group=index
+```
+
+运行其他任务组修改 --group 参数就可以了
+
+然后让 cron:run 一直运行就可以的了，官方文档提供了使用 crontab 的例子，默认情况下队列好像也是用 crontab 运行。
+```
+* * * * * php bin/magento cron:run
+```
+
+magneto 还提供了自动生成 crontab 配置的命令
+```
+php bin/magento cron:install # 加上 magento 的 cron ，不影响其他配置
+php bin/magento cron:install --force # 加上 magento 的 cron ，清除其他配置
+php bin/magento cron:remove # 移除 magento 的 cron
+```
+
+运行了 cron:install 后，可以用 crontab -l 来查看
+```
+crontab -l
+#~ MAGENTO START c5f9e5ed71cceaabc4d4fd9b3e827a2b
+* * * * * /usr/bin/php /var/www/html/magento2/bin/magento cron:run 2>&1 | grep -v "Ran jobs by schedule" >> /var/www/html/magento2/var/log/magento.cron.log
+#~ MAGENTO END c5f9e5ed71cceaabc4d4fd9b3e827a2b
+```
+
+这是 crontab 配置的解释
+- 2>&1 是把标准错误重定向到标准输出
+- grep -v "Ran jobs by schedule" 是忽略执行成功的日志
+- /var/www/html/var/log/magento.cron.log 是 cron 的日志文件
+
+自己写 crontab 配置或用其它方式（例如 supervisor ）让 cron:run 一直运行也是可以的
+
+### 参考
+
+https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-cron.html
+
+https://devdocs.magento.com/guides/v2.4/config-guide/cron/custom-cron.html
+
 ## 启用模块 和 刷新缓存
 
 查看启用的模块
