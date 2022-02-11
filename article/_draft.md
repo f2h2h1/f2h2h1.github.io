@@ -1,296 +1,232 @@
-draft
-================================
+# draft
 
-***
-
-frp的使用
-================================
-1. 下载和安装
-1. 作为 Windows 远程桌面的代理
-1. 作为 xdebug 远程调试的代理
-1. 作为代理使得本地的网站能被外网访问
-1. 使用子域名的方式在本地部署多个网站
-
-
-在vscode里调试java
-================================
-如何手工编译java的项目
-一般的java项目
-使用springboot的java项目
-使用tomcat的javaweb项目
-maven的使用
-
+```
 
 如何实现一个web服务器
-================================
-拓扑结构
-    星型
-    环型
-    总线
-        以太网
-    ...
-模型
-    七层模型 (由 OSI 提出的)
-        应用层
-        表示层
-            负责转化数据格式，并处理数据加密和数据压缩。
-        会话层
-            主要是用来管理网络设备的会话连接，建立会话，保持会话，断开会话
-        传输层
-        网际层
-        数据链路层
-        物理层
-    四层模型 ip/tcp
-        应用层
-        传输层
-        网际层
-        网络接口层
-    五层模型
-        应用层 -> data (数据)
-        传输层 -> segment (段)
-        网际层 -> packet (包)
-        数据链路层 -> frame (帧)
-        物理层 -> bit (比特)
-    各层常用的协议
-        应用层
-            http
-            telnet
-            ftp
-            dns
-            nntp
-            irc
-            xmpp
-            ntp
-            dhcp
-            stmp
-            pop3
-            imap
-        传输层
-            tcp
-            dup
-        网际层
-            ip v4 v6
-            icmp
-            IPsec
-        数据链路层
+    拓扑结构
+        星型
+        环型
+        总线
             以太网
-    各层对应的硬件
-        网关 (gateway)
-        路由 (route)
-        交换机 (switch)
-        网桥 (bridge)
-        集线器 (ethernet hub 又或者 简称 hub)
-        中继器 (repeater)
-tcp 和 udp
-什么是socket
-从socket里读写内容
-    一些限制
-        输入输出只考虑 asni ，多字节编码不好处理，这里只关注网络连接
-        一次通讯数据包最大的长度为 255 ，因为分包操作也挺麻烦的
-    最简单的例子，服务端只输出一句话，客户端只接收一次服务端的输出就关闭连接
-    一次只能接受一个客户端的 echo 服务器
-    能接受多个客户端的 echo 服务器
-    最简单的聊天室
-http 静态服务
-    mime
-http + cgi
-select poll epoll
-多线程
-多进程
-socket 双写
-proxy
-fastcgi
-websocket
-
-
-seo 的经验
-================================
-
-社交媒体优化（英语：Social media optimization，缩写为SMO）是利用一些网点和社区进行宣传，提高产品，服务品牌或活动的认识。
-所涉及的社交媒体类型包括RSS订阅，社交新闻和书签网站，以及社交网站，如Facebook，Twitter，影片分享网站和网志网站。
-SMO类似于搜索引擎优化，其目的是生成网络流量和网站，并提高网站的认识。
-
-seo
-    域名
-    url
-    http 头
-    html head
-    html 标签
-    html 布局
-    网页内容
-    网页外链
-    sitemap 和 robots.txt
-    js 和 css
-
-
-SPA如何做SEO
-一个看上去比较完美的方案是：腾出来一台服务器，搭建 phantomjs 。
-定时手动抓取自己的SPA页面，生成纯正的静态HTML文件，当爬虫过来的时候根据UA，把蜘蛛带到phantomjs渲染好的页面上来，左右页面与url显示完全一致。
-那这个问题基本就解决了。
-当然你可能想到遇到改版怎么办？不要怕，毕竟是非常低频的事件，当改变之后跑一个脚本，重新抓取一下现有的页面重新生成一套就好了。
-https://www.zhihu.com/question/24297390/answer/148331845
-现在的搜索引擎应该能解释spa的
-
-
-
-dns 反查
-nslookup -qt=ptr 74.125.128.106
-
-
-通过ua和dns反查
-https://developers.google.com/search/docs/advanced/crawling/verifying-googlebot
-https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers
-服务端渲染后再返回给爬虫
-速度慢
-消耗性能
-页面可能不完整
-
-通用的seo
-针对特定搜索引擎的seo
-
-
-其实spa能有效地防止爬虫，搜索引擎的爬虫可以单独做一套ssr
-图片等静态资源防盗链，http头里的Referer
+        ...
+    模型
+        七层模型 (由 OSI 提出的)
+            应用层
+            表示层
+                负责转化数据格式，并处理数据加密和数据压缩。
+            会话层
+                主要是用来管理网络设备的会话连接，建立会话，保持会话，断开会话
+            传输层
+            网际层
+            数据链路层
+            物理层
+        四层模型 ip/tcp
+            应用层
+            传输层
+            网际层
+            网络接口层
+        五层模型
+            应用层 -> data (数据)
+            传输层 -> segment (段)
+            网际层 -> packet (包)
+            数据链路层 -> frame (帧)
+            物理层 -> bit (比特)
+        各层常用的协议
+            应用层
+                http
+                telnet
+                ftp
+                dns
+                nntp
+                irc
+                xmpp
+                ntp
+                dhcp
+                stmp
+                pop3
+                imap
+            传输层
+                tcp
+                dup
+            网际层
+                ip v4 v6
+                icmp
+                IPsec
+            数据链路层
+                以太网
+        各层对应的硬件
+            网关 (gateway)
+            路由 (route)
+            交换机 (switch)
+            网桥 (bridge)
+            集线器 (ethernet hub 又或者 简称 hub)
+            中继器 (repeater)
+    tcp 和 udp
+    什么是socket
+    从socket里读写内容
+        一些限制
+            输入输出只考虑 asni ，多字节编码不好处理，这里只关注网络连接
+            一次通讯数据包最大的长度为 255 ，因为分包操作也挺麻烦的
+        最简单的例子，服务端只输出一句话，客户端只接收一次服务端的输出就关闭连接
+        一次只能接受一个客户端的 echo 服务器
+        能接受多个客户端的 echo 服务器
+        最简单的聊天室
+    http 静态服务
+        mime
+    http + cgi
+    select poll epoll
+    多线程
+    多进程
+    socket 双写
+    proxy
+    fastcgi
+    websocket
 
 以开发软件为目标的计算机入门简明指南
-================================
-## 计算机入门的前置知识
-    如果只做业务相关，需要 初等数学 外加一点 数理逻辑
-    如果涉及数据库的，还需要一点 集合论
-    如果涉及到一些高深的算法，可能还需要 图论 和 组合数学
-    如果涉及数据分析，还需要 概率论 和 数理统计
-    如果涉及计算机图形，还需要 线性代数
-    英语至少要有初中的水平 (要学会使用各类翻译服务 谷歌翻译 百度翻译 必应翻译 ...)
-        具体一点就是
-            多邻国英语测试（DET） 55 分 或
-            国家英语等级考试（NETS） 三级 或
-            雅思（LETLS） 3.5 分 或
-            欧洲语言共同参考框架（CEFR） A2
-        在没有翻译的帮助下达到 A2 的水平，加上翻译达到 B1 的水平（所以熟练地使用各类翻译工具也是一种重要的能力）
-    抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
-## 计算机学科的相关概念
-    图灵机
-    冯诺依曼结构
-## 计算机的发展历史
-    早期工具
-        算盘
-        计算尺
-    模拟计算机
-        机械式
-        电动式
-    电子计算机
-        继电器
-        真空管
-        晶体管
-        集成电路
-## 计算机的组成
-    抽象的计算机组成
-        输入设备
-        输出设备
-        控制器
-        运算器
-        存储器
-    具体的计算机组成
-        主板
-        电源
-        cpu - 控制器 运算器
-        内存 - 存储器
-        硬盘 - 存储器
-        显卡 - 运算器
-        键盘 - 输入设备
-        鼠标 - 输入设备
-        屏幕 - 输出设备
-        音箱 - 输出设备
-## 从二极管到指令集和汇编语言的抽象
-## 操作系统
-    环境变量
-    抽象的操作系统
-    linux 系统的一般使用
-## 计算机语言
-    机器语言
-        指令集（机器指令的集合）
-        机器指令
-        微程序
-        微指令
-        微命令和微操作
-    汇编
-        汇编指令
-        伪指令
-        符号
-    高级语言
-        编程语言
-            c
-            c++
-            c#
-            java
-            javascript
-            python
-            php
-            lisp
-            ...
-        标记语言
-            xml
-                xsd
-                svg
-                mathml
+    ## 计算机入门的前置知识
+        如果只做业务相关，需要 初等数学 外加一点 数理逻辑
+        如果涉及数据库的，还需要一点 集合论
+        如果涉及到一些高深的算法，可能还需要 图论 和 组合数学
+        如果涉及数据分析，还需要 概率论 和 数理统计
+        如果涉及计算机图形，还需要 线性代数
+        英语至少要有初中的水平 (要学会使用各类翻译服务 谷歌翻译 百度翻译 必应翻译 ...)
+            具体一点就是
+                多邻国英语测试（DET） 55 分 或
+                国家英语等级考试（NETS） 三级 或
+                雅思（LETLS） 3.5 分 或
+                欧洲语言共同参考框架（CEFR） A2
+            在没有翻译的帮助下达到 A2 的水平，加上翻译达到 B1 的水平（所以熟练地使用各类翻译工具也是一种重要的能力）
+        抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
+    ## 计算机学科的相关概念
+        图灵机
+        冯诺依曼结构
+    ## 计算机的发展历史
+        早期工具
+            算盘
+            计算尺
+        模拟计算机
+            机械式
+            电动式
+        电子计算机
+            继电器
+            真空管
+            晶体管
+            集成电路
+    ## 计算机的组成
+        抽象的计算机组成
+            输入设备
+            输出设备
+            控制器
+            运算器
+            存储器
+        具体的计算机组成
+            主板
+            电源
+            cpu - 控制器 运算器
+            内存 - 存储器
+            硬盘 - 存储器
+            显卡 - 运算器
+            键盘 - 输入设备
+            鼠标 - 输入设备
+            屏幕 - 输出设备
+            音箱 - 输出设备
+    ## 从二极管到指令集和汇编语言的抽象
+    ## 操作系统
+        环境变量
+        抽象的操作系统
+        linux 系统的一般使用
+    ## 计算机语言
+        机器语言
+            指令集（机器指令的集合）
+            机器指令
+            微程序
+            微指令
+            微命令和微操作
+        汇编
+            汇编指令
+            伪指令
+            符号
+        高级语言
+            编程语言
+                c
+                c++
+                c#
+                java
+                javascript
+                python
+                php
+                lisp
                 ...
-            html
-            markdown
-        查询语言
-            sql
-        层叠样式表
-            css
-    基于字符串的数据格式
-        ini
-        yaml
-        json
-    编译原理
-        语义设计
-            类型系统
-        语法设计
-    四则运算
-        从左至右
-        有优先级的
-        能识别括号的
-    解释 ini yaml json xml
-    正则表达式
-    一个简单的脚本语言
-## 数据库
-    抽象的数据库
-        树型
-        网状？
-        关系型
-            集合论和谓词逻辑
-            sql
-    mysql 的一般使用
-    nosql 和 newsql
-## 计算机网络
-## 软件工程
-## 一些工具
-    git 的一般使用
-        github gitlab gitee 其它的 git 服务
-    vscode 的一般使用
-    chrome 和 firefox 开发者工具的使用
-## 参考
+            标记语言
+                xml
+                    xsd
+                    svg
+                    mathml
+                    ...
+                html
+                markdown
+            查询语言
+                sql
+            层叠样式表
+                css
+        基于字符串的数据格式
+            ini
+            yaml
+            json
+        编译原理
+            语义设计
+                类型系统
+            语法设计
+        四则运算
+            从左至右
+            有优先级的
+            能识别括号的
+        解释 ini yaml json xml
+        正则表达式
+        一个简单的脚本语言
+    ## 数据库
+        抽象的数据库
+            树型
+            网状？
+            关系型
+                集合论和谓词逻辑
+                sql
+        mysql 的一般使用
+        nosql 和 newsql
+    ## 计算机网络
+    ## 软件工程
+    ## 一些工具
+        git 的一般使用
+            github gitlab gitee 其它的 git 服务
+        vscode 的一般使用
+        chrome 和 firefox 开发者工具的使用
+    ## 参考
 
-
+frp的使用
+    下载和安装
+    作为 Windows 远程桌面的代理
+    作为 xdebug 远程调试的代理
+    作为代理使得本地的网站能被外网访问
+    使用子域名的方式在本地部署多个网站
+在vscode里调试java
+    如何手工编译java的项目
+    一般的java项目
+    使用springboot的java项目
+    使用tomcat的javaweb项目
+    maven的使用
 捕获前端的错误
-================================
-捕获异常
-盲水印
-外部数据要先判断是否存在再调用，不要把接口的数据直接渲染到视图
-前端代码的配置要区分生产环境和开发环境
-要把git的commitid写进配置文件里
-打包时要保留map，map不能被外部访问
-如何记录用户的操作？
-    焦点移动
-    鼠标移动
-    滚动条的移动
-    窗口大小的变化
-    各种事件（键盘，鼠标，滚动条，窗口）的记录
-
-一些博客
-================================
+    捕获异常
+    盲水印
+    外部数据要先判断是否存在再调用，不要把接口的数据直接渲染到视图
+    前端代码的配置要区分生产环境和开发环境
+    要把git的commitid写进配置文件里
+    打包时要保留map，map不能被外部访问
+    如何记录用户的操作？
+        焦点移动
+        鼠标移动
+        滚动条的移动
+        窗口大小的变化
+        各种事件（键盘，鼠标，滚动条，窗口）的记录
 博客
     淘系前端团队 https://fed.taobao.org/
     百度前端 https://fex.baidu.com/
@@ -373,20 +309,16 @@ git仓库
     人件
     程序员的数学1~3
     这就是软件售前工程师! https://read.douban.com/ebook/322579268/
-
 浏览器数据持久化缓存技术
-================================
-HTTP文件缓存
-cookie
-localStorage
-sessionStorage
-Application Cache 和 pwa 相关
-CacheStorage 和 service worker 相关
-WebSQL 关系型数据库，火狐不支持
-IndexedDB 非关系型数据库
-一些浏览器会对 favicon.ico 有特殊的缓存
-
-
+    HTTP文件缓存
+    cookie
+    localStorage
+    sessionStorage
+    Application Cache 和 pwa 相关
+    CacheStorage 和 service worker 相关
+    WebSQL 关系型数据库，火狐不支持
+    IndexedDB 非关系型数据库
+    一些浏览器会对 favicon.ico 有特殊的缓存
 使用 debian 作为日常用机的系统
     各类硬件驱动
     网卡的配置
@@ -468,12 +400,13 @@ vscode的使用技巧
     反爬虫
         站点使用https
         robots.txt 声明禁止爬虫
+        使用 http 头 Referer 使图片等静态资源防盗链
         内容里混杂不可见的无用的字符，例如 随机地插入零宽字符
         部分文本使用 css 的伪元素显示
         禁止爬虫的 ua
         内容需要认证才能显示
         限制请求频率
-        内容需要执行 js 才能显示
+        内容需要执行 js 才能显示，类似于 spa
         使用验证码
             判断是否出现验证码
                 是否加载图片
@@ -508,6 +441,9 @@ vscode的使用技巧
         最终目标 只允许人访问，频率不能太高，限制的内容不能被抓取
         反爬虫的措施太猛可能会使搜索引擎也抓取不了内容
             通过搜索引擎爬虫的ua和ip地址的反查，单独做一个供搜索引擎抓取的版本
+                https://developers.google.com/search/docs/advanced/crawling/verifying-googlebot
+                https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers
+                dns 反查 nslookup -qt=ptr 74.125.128.106
 寻找工作
     寻找合适的 岗位 和 公司
         各个招聘平台
@@ -711,6 +647,9 @@ vscode的使用技巧
             新装修的，有甲醛
             写字楼太残旧了
     如何融入工作环境
+        刚入职时遇到问题要多问同事和上级
+        要重视第一个工作任务
+        要记录工作任务和解决问题的流程
     如何离职
         要先了解离职的流程
             问人事
@@ -2194,6 +2133,54 @@ composer
             "archive": {
                 "exclude": ["var/cache/", "tmp", "/*.test", "!/var/di/"]
             }
+前端的模块化方案
+    早期的解决方式
+        闭包
+            moduleA = function（） {
+            var a,b;
+            return {
+                add: function (c){
+                    return a + b + c;
+                };
+            }
+            }()
+        命名空间
+            Yahoo的YUI早期的做法
+            app.tools.moduleA.add = function(c){
+            return app.tools.moduleA.a + c;
+            }
+    commonJS
+        nodejs的模块规范
+        不兼容浏览器
+        Common不兼容浏览器的原因是缺浏览器少一些Node环境的变量，例如 module exports require global
+        Node以及Webpack是采用CommonJS的形式来写的
+    AMD (Asynchronous Module Definition)
+        requireJS是参照AMD规范实现的
+        RequireJS是一个JavaScript文件和模块加载器。它针对浏览器内使用进行了优化，但可以在其他JavaScript环境中使用
+        提前执行（异步加载：依赖先执行）+延迟执行
+    CMD (Common Module Definition)
+        CMD是在AMD基础上改进的一种规范，和AMD不同在于对依赖模块的执行时机处理不同，CMD是就近依赖，而AMD是前置依赖。
+        seajs是参照UMD规范实现的，requireJS的最新的几个版本也是部分参照了UMD规范的实现
+        延迟执行（运行到需加载，根据顺序执行）
+    UMD (Universal Module Definition)
+        兼容AMD和commonJS规范的同时，还兼容全局引用的方式
+        通常能兼容浏览器或服务器环境
+        无导入导出规范，只有一个常规写法
+    ES6 module
+分片上传 和 断点下载
+    分片上传
+        计算md5
+        分隔文件
+        计算每个分隔文件的md5
+        ajax
+        判断每个分隔文件的md5是否一致
+        后台按顺序合并
+        判断合并后的md5是否和原本的一致
+    断点下载
+        http头
+        Range
+        Content-Range
+    实现例子 php 和 js
 中文文案排版指北 https://github.com/sparanoid/chinese-copywriting-guidelines
 中文技术文档的写作规范 https://github.com/ruanyf/document-style-guide
 让长文章更容易阅读的十项原则 https://www.uisdc.com/10-typeset-make-article-readable
@@ -2244,3 +2231,5 @@ git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
     update auxiliary 日期
     update auxiliary 20211223
     update auxiliary article
+
+```
