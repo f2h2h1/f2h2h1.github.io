@@ -1,5 +1,4 @@
-使用 docker-compose 部署 magento2
-==============================
+# 使用 docker-compose 部署 magento2
 
 ## 环境
 - centos 7
@@ -16,6 +15,7 @@
     - 使用 debian:10-slim 作为基础镜像构建
     - 具体的版本是 0.38.0
     - frp 的主要作用是作为 xdebug 的代理
+- elasticsearch:7.9
 
 magento 的版本是 2.3.4
 
@@ -28,11 +28,18 @@ magento 的版本是 2.3.4
 ## 配置文件
 
 1. 在 magento 的根目录新建一个文件夹 docker ，在 docker 里再新建一个 vm 文件夹
+    ```
+    mkdir -p docker/vm
+    ```
 1. 在 vm 文件夹里新建
     - Dockerfile
     - docker-compose.yml
     - nginx 文件夹
     - frps 文件夹
+    ```
+    touch Dockerfile docker-compose.yml
+    mkdir nginx frps
+    ```
 1. 在 /var/html/www/docker/vm/Dockerfile 文件里写入以下内容
     ```
     FROM php:7.3-fpm-buster
@@ -195,54 +202,54 @@ magento 的版本是 2.3.4
         restart: always
         container_name: php
         depends_on:
-        - mysqld
-        - redis
-        - frps
+            - mysqld
+            - redis
+            - frps
         volumes:
-        - ./../../:/var/www/html # 相对于 docker-compose.yml 的路径
+            - ./../../:/var/www/html # 相对于 docker-compose.yml 的路径
         command: ["php-fpm"]
         environment:
-        TZ: Asia/Shanghai
+            TZ: Asia/Shanghai
 
     nginx:
         image: nginx:1.21
         restart: always
         container_name: nginx
         ports:
-        - 80:80
-        - 443:443
+            - 80:80
+            - 443:443
         depends_on:
-        - php
+            - php
         volumes:
-        - ./../../:/var/www/html:ro
-        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-        - ./nginx/domain.crt:/etc/nginx/cert/domain.crt:ro
-        - ./nginx/rsa_private_key.pem:/etc/nginx/cert/rsa_private_key.pem:ro
+            - ./../../:/var/www/html:ro
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./nginx/domain.crt:/etc/nginx/cert/domain.crt:ro
+            - ./nginx/rsa_private_key.pem:/etc/nginx/cert/rsa_private_key.pem:ro
         user: root
         environment:
-        TZ: Asia/Shanghai
+            TZ: Asia/Shanghai
 
     mysqld:
         image: mysql:8.0
         restart: always
         container_name: mysqld
         ports:
-        - 3306:3306
+            - 3306:3306
         volumes:
-        - ~/mysql-data:/var/lib/mysql
+            - ~/mysql-data:/var/lib/mysql
         environment:
         MYSQL_DATABASE: magento234
         MYSQL_ROOT_PASSWORD: 123456
-        TZ: Asia/Shanghai
+            TZ: Asia/Shanghai
 
     redis:
         image: redis:6.2
         restart: always
         container_name: redis
         ports:
-        - 6379:6379
+            - 6379:6379
         environment:
-        TZ: Asia/Shanghai
+            TZ: Asia/Shanghai
 
     frps:
         build:
@@ -250,8 +257,17 @@ magento 的版本是 2.3.4
         dockerfile: Dockerfile
         container_name: frps
         ports:
-        - 8999:8999
-        - 9003:9003
+            - 8999:8999
+            - 9003:9003
+
+    elasticsearch:
+        image: elasticsearch:7.9.3
+        restart: always
+        ports:
+            - 9200:9200
+            - 9300:9300
+        environment:
+            discovery.type: single-node
     ```
 
 ## 构建和运行
@@ -281,7 +297,11 @@ magento 的版本是 2.3.4
 
 要注意容器挂在目录的权限问题， fpm 和 nginx 都需要有权限访问 magento 的目录。
 
-容器启动后需要进入 fpm 的容器运行 magento 的构建命令。
+容器启动后需要进入 fpm 的容器运行 magento 的构建命令，这里假设 fpm 的容器名是 php 。
+```
+docker ps -a
+docker exec -it php /bin/bash
+```
 
 如果是已经存在的 magento 项目，在运行构建命令之前，要先导入数据库，然后改好 core_config_data 表相关的字段。
 
