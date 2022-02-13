@@ -58,7 +58,7 @@ $listStr = array_reduce($exchangeList, function($carry, $item) {
     $avatar = $item['avatar'];
     $tr = '';
     if (!empty($avatar) && filter_var($avatar, FILTER_VALIDATE_URL) !== false) {
-        $avatar = '<img alt="' . addslashes($name) . '" src="' . $avatar . '" style="max-width: 50px" />';
+        $avatar = '<img alt="' . addslashes($name) . '" src="' . $avatar . '" width="119" />';
     }
     $name = "[$name]($href)";
     $tr = "|$name|$avatar|$href|$desc|";

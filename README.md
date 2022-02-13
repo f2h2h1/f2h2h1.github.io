@@ -56,14 +56,14 @@
 |站点|头像|网址|描述|
 |-|-|-|-|
 |[中文独立博客列表](https://github.com/timqian/chinese-independent-blogs)||https://github.com/timqian/chinese-independent-blogs||
-|[开往](https://travellings.link)|<img alt="开往" src="https://travellings.link/assets/w.png" style="max-width: 50px" />|https://travellings.link|开往-友链接力|
-|[虫洞](https://www.foreverblog.cn/go.html)|<img alt="虫洞" src="https://img.foreverblog.cn/logo_en_default.png" style="max-width: 50px" />|https://www.foreverblog.cn/go.html|穿梭虫洞-随机访问十年之约友链博客|
+|[开往](https://travellings.link)|<img alt="开往" src="https://travellings.link/assets/w.png" width="119" />|https://travellings.link|开往-友链接力|
+|[虫洞](https://www.foreverblog.cn/go.html)|<img alt="虫洞" src="https://img.foreverblog.cn/logo_en_default.png" width="119" />|https://www.foreverblog.cn/go.html|穿梭虫洞-随机访问十年之约友链博客|
 |[I Am I](https://5ime.cn/)||https://5ime.cn/||
-|[56Kb/s](https://funix.cn/)|<img alt="56Kb/s" src="https://funix.cn/images/avatar.png" style="max-width: 50px" />|https://funix.cn/|扶着叛徒的尸体哭泣的人。|
-|[FlyingSky's Blog](https://blog.fsky7.com/)|<img alt="FlyingSky\'s Blog" src="https://static.fsky7.com/images/9c1d35960f638f3f34fcae0c2d8e9da1.jpg" style="max-width: 50px" />|https://blog.fsky7.com/|回忆化成一场长的梦。|
-|[F沈唁志](https://qq52o.me/)|<img alt="F沈唁志" src="https://gravatar.loli.net/avatar/53093cc242ff08b27984e84c9db92c33?s=200&d=mm&r=g" style="max-width: 50px" />|https://qq52o.me/|一个 PHPer 的成长之路|
+|[56Kb/s](https://funix.cn/)|<img alt="56Kb/s" src="https://funix.cn/images/avatar.png" width="119" />|https://funix.cn/|扶着叛徒的尸体哭泣的人。|
+|[FlyingSky's Blog](https://blog.fsky7.com/)|<img alt="FlyingSky\'s Blog" src="https://static.fsky7.com/images/9c1d35960f638f3f34fcae0c2d8e9da1.jpg" width="119" />|https://blog.fsky7.com/|回忆化成一场长的梦。|
+|[F沈唁志](https://qq52o.me/)|<img alt="F沈唁志" src="https://gravatar.loli.net/avatar/53093cc242ff08b27984e84c9db92c33?s=200&d=mm&r=g" width="119" />|https://qq52o.me/|一个 PHPer 的成长之路|
 |[Emin.ink](https://www.emin.ink/)||https://www.emin.ink/||
-|[炎忍的博客](https://blog.imyan.ren/)|<img alt="炎忍的博客" src="https://blog.imyan.ren/media/avatar.png" style="max-width: 50px" />|https://blog.imyan.ren/|心之所愿，无所不成。|
+|[炎忍的博客](https://blog.imyan.ren/)|<img alt="炎忍的博客" src="https://blog.imyan.ren/media/avatar.png" width="119" />|https://blog.imyan.ren/|心之所愿，无所不成。|
 |[土木坛子](https://tumutanzi.com/)||https://tumutanzi.com/||
 |[澪同学](https://blog.ihomura.cn/)||https://blog.ihomura.cn/||
 <!-- exchangeList -->
