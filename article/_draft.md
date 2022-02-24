@@ -391,6 +391,7 @@ vscode的使用技巧
         使用 playwright 这类工具打开页面，显示窗口，修改ua
         使用 autoit 这类工具模拟鼠标在页面上的移动
         打开页面后要模拟一下人的操作，例如 移动一下鼠标 移动一下滚动条
+        在 orc 时遇到闪烁的节点，就在同一位置多截几张图，多张图片合成后再进行 orc
         应对验证码
             orc
             机器学习
@@ -402,11 +403,12 @@ vscode的使用技巧
         robots.txt 声明禁止爬虫
         使用 http 头 Referer 使图片等静态资源防盗链
         内容里混杂不可见的无用的字符，例如 随机地插入零宽字符
-        部分文本使用 css 的伪元素显示
+        部分文本使用 css 的伪元素或 svg 显示，例如 数字和英文字母
         禁止爬虫的 ua
         内容需要认证才能显示
         限制请求频率
         内容需要执行 js 才能显示，类似于 spa
+        节点按一定频率闪烁，人眼无法分辨，用于预防 orc 识别内容
         使用验证码
             判断是否出现验证码
                 是否加载图片
@@ -438,7 +440,9 @@ vscode的使用技巧
             js 的代码要检测是否在 selenium 等环境里，如果是就清空页面的内容
             js 的代码要判断当前的运行环境是否在 nodejs ，如果是就清空页面的内容
             禁用鼠标右键，禁止f12，ctrl+f10，ctrl+shift+i，禁止选中和复制
-        最终目标 只允许人访问，频率不能太高，限制的内容不能被抓取
+        最终目标
+            只允许人访问，频率不能太高，限制的内容不能被抓取
+            完全杜绝爬虫是很难的，但可以尽量地提供爬虫的成本
         反爬虫的措施太猛可能会使搜索引擎也抓取不了内容
             通过搜索引擎爬虫的ua和ip地址的反查，单独做一个供搜索引擎抓取的版本
                 https://developers.google.com/search/docs/advanced/crawling/verifying-googlebot
@@ -2133,6 +2137,180 @@ composer
             "archive": {
                 "exclude": ["var/cache/", "tmp", "/*.test", "!/var/di/"]
             }
+给composer里的库打补丁
+    下载这个库 cweagans/composer-patches
+        composer require cweagans/composer-patches
+    在项目的根目录里新建一个 patches 文件夹
+    在 patches 文件夹里新建补丁文件
+    补丁文件通常是这样子的
+        --- /Model/Product/Copier.php    2022-02-23 15:08:21.521148335 +0800
+        +++ /Model/Product/Copier.php    2022-02-23 15:07:56.013242367 +0800
+        @@ -104,10 +104,7 @@ class Copier
+                $this->setDefaultUrl($product, $duplicate);
+                $this->setStoresUrl($product, $duplicate);
+                $this->optionRepository->duplicate($product, $duplicate);
+        -        $product->getResource()->duplicate(
+        -            $product->getData($metadata->getLinkField()),
+        -            $duplicate->getData($metadata->getLinkField())
+        -        );
+        +
+                return $duplicate;
+            }
+    可以用这样的方式生成 patch 文件
+        找到需要修改的文件
+        复制这个需要修改的文件
+        在复制的文件里修改
+        用diff命令输出两份文件不一样的地方
+        例子
+            假设现在有一个库，名为 username/test
+            这个库的根目录下有一个名为 d1.php 的文件
+                这是d1.php 的内容
+                    <?php
+                    echo "d1";
+                可以用这样的方式生成 d1.php
+                    echo -e '<?php\necho "d1";' > d1.php
+            先 cd 进这个库的根目录
+            复制 d1.php
+                cp d1.php d2.php
+            修改 d2.php
+                sed -i 's/echo "d1";/echo "d2";/g' d2.php
+            使用 diff 对比 d1.php 和 d2.php 并把结果输出到一个文件里
+                diff -up d1.php d2.php > d1.patch
+            打开 d1.patch ，把文件开头的 d2.php 的路径修改为和 d1.php 一样的路径
+                开头的两个文件的路径，应该是相对于库根目录的路径
+            把 d1.patch 文件复制进 patches 文件夹里
+        大多数linux发行版和git for windows都有 diff 这个命令
+    在composer.json里加上这段
+        "extra": {
+            "enable-patching": true,
+            "patches": {
+                "drupal/core": { // 需要补丁的库名
+                    "patch1 information": "patch1 file path", // 键是补丁的描述，值是补丁的路径
+                    "test patch": "patches/d1.patch"
+                },
+                "需要补丁的库名": {
+                    "补丁的描述": "补丁的路径"
+                }
+            }
+        }
+    完成上面的步骤后，再运行一次 composer install
+        环境变量里需要有 patch 这个命令
+        一般情况下 windwos 的 cmd 和 powershell 都没有这个命令
+        但 git for windows 的 bash 里有这个命令
+    另一个补丁库 https://github.com/vaimo/composer-patches
+    git diff 命令也可以生成 patch 文件
+最简单的 pwa
+    准备两张用于图标（icons）的图片，png格式的，一张512x512，一张192x192 
+    在页面的head标签里加上这三行，具体参数要按照实际情况来修改
+        <link rel="manifest" href="/manifest.webmanifest">
+        <meta name="theme-color" content="#fff">
+        <link rel="apple-touch-icon" href="/icons8-document-512.png">
+    新建一个 manifest.json 文件，并至少拥有这几个属性， icons 声明的属性要和实际的属性一致
+        {
+            "name": "f2h2h1's blog",
+            "short_name": "f2h2h1",
+            "start_url": "./index.html",
+            "display": "standalone",
+            "theme_color":"#fff",
+            "background_color": "#fff",
+            "description": "This is a blog used by a programmers to record experience",
+            "prefer_related_applications": true,
+            "icons": [
+                {
+                    "src": "icons8-document-512.png",
+                    "sizes": "512x512",
+                    "type":"image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "icons8-document-512.png",
+                    "sizes": "192x192",
+                    "type":"image/png"
+                }
+            ]
+        }
+    新建一个 sw.js 文件，并页面里注册
+        if ('serviceWorker' in navigator) {
+            // 在 load 事件触发后注册 Service Worker，确保 Service Worker 的注册不会影响首屏速度
+            window.addEventListener('load', function () {
+                // 注册 Service Worker
+                navigator.serviceWorker.register('/sw.js').then(function (registration) {
+                    // 注册成功
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope)
+                }).catch(function (err) {
+                    // 注册失败 :(
+                    console.warn('ServiceWorker registration failed: ', err)
+                })
+            })
+        }
+    sw.js 里要监听 install activate fetch 几个事件，并且能利用 CacheStorage ，让页面离线后，仍然能通过 CacheStorage 获取数据
+    sw.js 的例子
+        const CACHE_NAME = "fed-cache";
+        var util = {
+            fetchPut: function (request, callback) {
+                return fetch(request).then(response => {
+                    // 跨域的资源直接return
+                    if (!response || response.status !== 200 || response.type !== "basic") {
+                        return response;
+                    }
+                    util.putCache(request, response.clone());
+                    typeof callback === "function" && callback();
+                    return response;
+                });
+            },
+            putCache: function (request, resource) {
+                // 后台不要缓存，preview链接也不要缓存
+                if (request.method === "GET" && request.url.indexOf("wp-admin") < 0 
+                    && request.url.indexOf("preview_id") < 0) {
+                    caches.open(CACHE_NAME).then(cache => {
+                        cache.put(request, resource);
+                    });
+                }
+            }
+        };
+        this.addEventListener("install", function(event) {
+            // this.skipWaiting();
+            console.log("install service worker");
+            // 创建和打开一个缓存库
+            caches.open(CACHE_NAME);
+            // 首页
+            let cacheResources = [
+                '/index.html',
+                '/static/marked.min.js',
+                '/static/cc4.0.webp',
+                '/articleList.json',
+                '/exchangeList.json',
+            ];
+            event.waitUntil(
+                // 请求资源并添加到缓存里面去
+                caches.open(CACHE_NAME).then(cache => {
+                    cache.addAll(cacheResources);
+                })
+            );
+        });
+        // 激活
+        self.addEventListener('activate', function (e) {
+            // 激活的状态，这里就做一做老的缓存的清理工作
+        });
+        this.addEventListener("fetch", function(event) {
+            event.respondWith(
+                caches.match(event.request).then(response => {
+                    // cache hit
+                    if (response) {
+                        return response;
+                    }
+
+                    return util.fetchPut(event.request.clone());
+                })
+            );
+        });
+    PWA 有三个关键的技术
+        Service Worker
+        Manifest （应用清单）
+        应用通知 （Web Push 和 Notification Api）
+    参考
+        https://github.com/lavas-project/pwa-book
+        https://lavas-project.github.io/pwa-book/
 前端的模块化方案
     早期的解决方式
         闭包
