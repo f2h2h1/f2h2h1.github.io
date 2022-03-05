@@ -84,3 +84,11 @@ a 标签
 Opera 浏览器（77.0.4054.203）有一个把页面另存为 PDF 的功能（不是打印预览），几乎可以把页面的样式完整地保留下来（不是打印的样式就是当前渲染的样式）而且还能保持 a 标签的链接。但只能通过图形界面操作，没有命令行参数，也不能通过 Playwright 这类工具来操作浏览器生成。
 
 可以弄一个单独的 Windows 服务器，用 autoit 这类工具操作 Opera 浏览器把页面另存为 PDF 。
+
+save as pdf 和 pirnt to pdf 是不一样的，
+具体区别还不清楚，其中一个区别是 save as pdf 里的文字是可以选中的， save as pdf 可以保留链接
+
+https://community.adobe.com/t5/framemaker-discussions/quot-save-as-pdf-quot-vs-quot-print-quot-as-pdf/m-p/3571101
+
+https://answers.microsoft.com/en-us/msoffice/forum/all/save-as-pdf-vs-print-to-pdf-quality-issues/28c536c6-6fb2-4484-b28b-1e15ce4aac75
+

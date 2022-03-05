@@ -317,6 +317,7 @@ magento 的构建可以参考这篇文章 《在 Windows 下安装 Magento2》
 对应的端口没有被占用
 
 - 2.3
+
 ```bash
 #!/bin/bash
 
@@ -650,6 +651,7 @@ docker exec php /var/www/html/init.sh
 ```
 
 - 2.4
+
 ```bash
 #!/bin/bash
 

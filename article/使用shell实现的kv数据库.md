@@ -33,7 +33,7 @@ db_get () {
 ## 源码
 
 ```sh
-#!/bin/sh
+#!/bin/bash
 
 SHELL_FOLDER=""
 
