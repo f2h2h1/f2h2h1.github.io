@@ -4,6 +4,20 @@ declare(strict_types=1);
 
 ini_set('date.timezone', 'Asia/Shanghai');
 
+function createUrl($title, $type) {
+    $url = '';
+    switch ($type) {
+        case 'md':
+            $url = 'article/' . $title . '.md';
+            break;
+        case 'html':
+        default:
+            $url = 'https://f2h2h1.github.io/articles/' . $title . '.html';
+            // $url = 'https://f2h2h1.github.io/#title=' . urlencode($title);
+    }
+    return $url;
+}
+
 // 获取文章列表
 $articleList = [];
 foreach (glob('article/*.md') as $item) {
@@ -39,7 +53,7 @@ file_put_contents('articleList.json', json_encode($articleList, JSON_UNESCAPED_U
 // README 里的文章列表
 $readme = file_get_contents('README.md');
 $listStr = array_reduce($articleList, function($carry, $item) {
-    return $carry .= '- [' . $item['title'] . '](article/' . $item['title'] . '.md)' . "\n";
+    return $carry .= '- [' . $item['title'] . '](' . createUrl($item['title'], 'md') . ')' . "\n";
 }, '');
 $readme = preg_replace('/(?<=<!-- articleList -->).*(?=<!-- articleList -->)/ims', "\n" . $listStr, $readme);
 file_put_contents('README.md', $readme);
@@ -70,7 +84,7 @@ file_put_contents('README.md', $readme);
 
 // SUMMARY
 file_put_contents('SUMMARY.md', '# Summary' . "\n\n" . '* [Introduction](README.md)' . "\n" . array_reduce($articleList, function($carry, $item) {
-    return $carry .= '* [' . $item['title'] . '](article/' . $item['title'] . '.md)' . "\n";
+    return $carry .= '* [' . $item['title'] . '](' . createUrl($item['title'], 'md') . ')' . "\n";
 }, ''));
 
 // rss
@@ -85,7 +99,7 @@ foreach ($articleList as $article) {
         <guid>%s</guid>
     </item>
     EOF;
-    $link = 'https://f2h2h1.github.io/#title=' . urlencode($article['title']);
+    $link = createUrl($article['title'], 'html');
     $item = sprintf($item, $article['title'], $link, $article['title'], date('r', $article['updateTime']), $link);
     $itemList .= trim($item) . "\n";
 }
@@ -106,7 +120,7 @@ file_put_contents('rss.xml', $rss);
 // atom
 $itemList = array_reduce($articleList, function ($carry, $article) {
     $title = $article['title'];
-    $link = 'https://f2h2h1.github.io/#title=' . urlencode($article['title']);
+    $link = createUrl($article['title'], 'html');
     $updated = date('c', $article['updateTime']);
     $item = <<<EOF
     <entry>
@@ -146,7 +160,7 @@ foreach ($articleList as $article) {
         <priority>0.5</priority>
     </url>
     EOF;
-    $item = sprintf($item, 'https://f2h2h1.github.io/#title=' . urlencode($article['title']), date('Y-m-d', $article['updateTime']));
+    $item = sprintf($item, createUrl($article['title'], 'html'), date('Y-m-d', $article['updateTime']));
     $itemList .= trim($item) . "\n";
 }
 $sitemap = <<<EOF
