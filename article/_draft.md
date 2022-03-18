@@ -112,6 +112,8 @@
             真空管
             晶体管
             集成电路
+    ## 逻辑门的底层
+    ## 从与或非逻辑门到指令集和汇编语言的抽象
     ## 计算机的组成
         抽象的计算机组成
             输入设备
@@ -130,10 +132,22 @@
             鼠标 - 输入设备
             屏幕 - 输出设备
             音箱 - 输出设备
-    ## 从二极管到指令集和汇编语言的抽象
     ## 操作系统
         环境变量
         抽象的操作系统
+            组成
+                驱动
+                内核
+                    进程调度 -> cpu
+                    内存分配 -> 内存
+                    文件系统 -> 硬盘
+                    网络栈 其实可以算到驱动里，但现代操作系统的网络很重要
+                系统调用
+                外围程序
+                    shell
+            可以简单但不严谨地理解
+                微内核 仅包括了创建一个系统必需的几个部分 进程调度 内存分配 文件系统
+                宏内核 在 微内核的基础上加上 驱动 和 系统调用
         linux 系统的一般使用
     ## 计算机语言
         机器语言
@@ -588,6 +602,14 @@ vscode的使用技巧
                 项目管理的流程是怎样的
                 多久进行一次迭代
                 入职后所在的团队有几个成员？他们分别负责哪些工作
+                有没有入职培训
+                你们的项目有文档吗
+                    代码规范
+                    git规范
+                    开发流程
+                    api文档
+                    项目的使用手册
+                项目能在本地完整地运行吗
                 什么时候会有面试的结果
         人事面试
             常见的问题
@@ -603,6 +625,7 @@ vscode的使用技巧
                 你了解这家公司吗
                 你能为企业带来什么
                 你为什么选择这家公司
+                MBIT职业性格测试
                 一些迷信的问题
                     八字 生肖 星座 血型
             还有什么问题
@@ -1252,9 +1275,16 @@ magento2 配置 paypal
         DCI-P3
     位深度 ColorDepth
         显示一个颜色需要用多少位
-        如果位深度 1 就是只能显示一种颜色
-        位深度 2 就是能显示两种颜色
-        位深度 8 就是能显示 2^8 种颜色
+        位深度 1 能显示 2^1 种颜色
+        位深度 2 能显示 2^2 种颜色
+        位深度 8 能显示 2^8 种颜色
+        位深度 16 能显示 2^16 种颜色
+            5bitR 6bitG 5bitB
+        位深度 24 能显示 2^24 种颜色
+            这个数量已经接近人能分辨的全部颜色，被称为真色彩（true color），色彩 16.7M
+                16.7M=16.7million16.7百万=1670万=2^24
+            刚好一种颜色占用一个字节
+        32 位深度，通常是指 24位深加上8位的alpha通道，alpha用来控制透明
     基本16色
         在HTML 4.01版本中，确定了16种颜色的英语名称
             CSS 标准 1 只接受 16 个基本颜色，称为VGA颜色，因为它们来源于 VGA 显卡所显示的颜色集合而被称为 VGA colors （视频图形阵列色彩）
@@ -1322,6 +1352,7 @@ magento2 配置 paypal
                 视杆细胞
             灵长类三色，哺乳类二色，爬行类四色
             彩色视觉（color vision）是一个生物体或机器基于物体所反射，发出或透过的光的波长（或频率） 以区分物体的能力。
+            通常情况下会用 波长 来区分不同的颜色
         物理
             颜色可以以不同的方式被测量和量化
             色彩属性和物理学中的光谱并不是完全对应的，物理学的人类可见光谱是有两个端点的直线形，并不能形成一个环。
@@ -2149,67 +2180,67 @@ composer
                 "exclude": ["var/cache/", "tmp", "/*.test", "!/var/di/"]
             }
     给composer里的库打补丁
-    下载这个库 cweagans/composer-patches
-        composer require cweagans/composer-patches
-    在项目的根目录里新建一个 patches 文件夹
-    在 patches 文件夹里新建补丁文件
-    补丁文件通常是这样子的
-        --- /Model/Product/Copier.php    2022-02-23 15:08:21.521148335 +0800
-        +++ /Model/Product/Copier.php    2022-02-23 15:07:56.013242367 +0800
-        @@ -104,10 +104,7 @@ class Copier
-                $this->setDefaultUrl($product, $duplicate);
-                $this->setStoresUrl($product, $duplicate);
-                $this->optionRepository->duplicate($product, $duplicate);
-        -        $product->getResource()->duplicate(
-        -            $product->getData($metadata->getLinkField()),
-        -            $duplicate->getData($metadata->getLinkField())
-        -        );
-        +
-                return $duplicate;
-            }
-    可以用这样的方式生成 patch 文件
-        找到需要修改的文件
-        复制这个需要修改的文件
-        在复制的文件里修改
-        用diff命令输出两份文件不一样的地方
-        例子
-            假设现在有一个库，名为 username/test
-            这个库的根目录下有一个名为 d1.php 的文件
-                这是d1.php 的内容
-                    <?php
-                    echo "d1";
-                可以用这样的方式生成 d1.php
-                    echo -e '<?php\necho "d1";' > d1.php
-            先 cd 进这个库的根目录
-            复制 d1.php
-                cp d1.php d2.php
-            修改 d2.php
-                sed -i 's/echo "d1";/echo "d2";/g' d2.php
-            使用 diff 对比 d1.php 和 d2.php 并把结果输出到一个文件里
-                diff -up d1.php d2.php > d1.patch
-            打开 d1.patch ，把文件开头的 d2.php 的路径修改为和 d1.php 一样的路径
-                开头的两个文件的路径，应该是相对于库根目录的路径
-            把 d1.patch 文件复制进 patches 文件夹里
-        大多数linux发行版和git for windows都有 diff 这个命令
-    在composer.json里加上这段
-        "extra": {
-            "enable-patching": true,
-            "patches": {
-                "drupal/core": { // 需要补丁的库名
-                    "patch1 information": "patch1 file path", // 键是补丁的描述，值是补丁的路径
-                    "test patch": "patches/d1.patch"
-                },
-                "需要补丁的库名": {
-                    "补丁的描述": "补丁的路径"
+        下载这个库 cweagans/composer-patches
+            composer require cweagans/composer-patches
+        在项目的根目录里新建一个 patches 文件夹
+        在 patches 文件夹里新建补丁文件
+        补丁文件通常是这样子的
+            --- /Model/Product/Copier.php    2022-02-23 15:08:21.521148335 +0800
+            +++ /Model/Product/Copier.php    2022-02-23 15:07:56.013242367 +0800
+            @@ -104,10 +104,7 @@ class Copier
+                    $this->setDefaultUrl($product, $duplicate);
+                    $this->setStoresUrl($product, $duplicate);
+                    $this->optionRepository->duplicate($product, $duplicate);
+            -        $product->getResource()->duplicate(
+            -            $product->getData($metadata->getLinkField()),
+            -            $duplicate->getData($metadata->getLinkField())
+            -        );
+            +
+                    return $duplicate;
+                }
+        可以用这样的方式生成 patch 文件
+            找到需要修改的文件
+            复制这个需要修改的文件
+            在复制的文件里修改
+            用diff命令输出两份文件不一样的地方
+            例子
+                假设现在有一个库，名为 username/test
+                这个库的根目录下有一个名为 d1.php 的文件
+                    这是d1.php 的内容
+                        <?php
+                        echo "d1";
+                    可以用这样的方式生成 d1.php
+                        echo -e '<?php\necho "d1";' > d1.php
+                先 cd 进这个库的根目录
+                复制 d1.php
+                    cp d1.php d2.php
+                修改 d2.php
+                    sed -i 's/echo "d1";/echo "d2";/g' d2.php
+                使用 diff 对比 d1.php 和 d2.php 并把结果输出到一个文件里
+                    diff -up d1.php d2.php > d1.patch
+                打开 d1.patch ，把文件开头的 d2.php 的路径修改为和 d1.php 一样的路径
+                    开头的两个文件的路径，应该是相对于库根目录的路径
+                把 d1.patch 文件复制进 patches 文件夹里
+            大多数linux发行版和git for windows都有 diff 这个命令
+        在composer.json里加上这段
+            "extra": {
+                "enable-patching": true,
+                "patches": {
+                    "drupal/core": { // 需要补丁的库名
+                        "patch1 information": "patch1 file path", // 键是补丁的描述，值是补丁的路径
+                        "test patch": "patches/d1.patch"
+                    },
+                    "需要补丁的库名": {
+                        "补丁的描述": "补丁的路径"
+                    }
                 }
             }
-        }
-    完成上面的步骤后，再运行一次 composer install
-        环境变量里需要有 patch 这个命令
-        一般情况下 windwos 的 cmd 和 powershell 都没有这个命令
-        但 git for windows 的 bash 里有这个命令
-    另一个补丁库 https://github.com/vaimo/composer-patches
-    git diff 命令也可以生成 patch 文件
+        完成上面的步骤后，再运行一次 composer install
+            环境变量里需要有 patch 这个命令
+            一般情况下 windwos 的 cmd 和 powershell 都没有这个命令
+            但 git for windows 的 bash 里有这个命令
+        另一个补丁库 https://github.com/vaimo/composer-patches
+        git diff 命令也可以生成 patch 文件
 最简单的 pwa
     准备两张用于图标（icons）的图片，png格式的，一张512x512，一张192x192 
     在页面的head标签里加上这三行，具体参数要按照实际情况来修改
