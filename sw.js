@@ -1,6 +1,6 @@
 // 安装
 const CACHE_NAME = "fed-cache";
-this.addEventListener("install", function(event) {
+this.addEventListener("install", function (event) {
     // this.skipWaiting();
     console.log("install service worker");
     // 创建和打开一个缓存库
@@ -24,6 +24,21 @@ this.addEventListener("install", function(event) {
 // 激活
 self.addEventListener('activate', function (e) {
     // 激活的状态，这里就做一做老的缓存的清理工作
+    console.log('[ServiceWorker] Activate');
+    e.waitUntil(
+        caches.keys().then(function (keyList) {
+            console.log(keyList);
+            return Promise.all(keyList.map(function (key) {
+                // if (key !== CACHE_NAME) {
+                    // 清理旧版本
+                    console.log('[ServiceWorker] Removing old cache', key);
+                    return caches.delete(key);
+                // }
+            }));
+        })
+    );
+    // 更新客户端
+    return self.clients.claim();
 });
 
 var util = {
@@ -39,9 +54,7 @@ var util = {
         });
     },
     putCache: function (request, resource) {
-        // 后台不要缓存，preview链接也不要缓存
-        if (request.method === "GET" && request.url.indexOf("wp-admin") < 0 
-              && request.url.indexOf("preview_id") < 0) {
+        if (request.method === "GET") {
             caches.open(CACHE_NAME).then(cache => {
                 cache.put(request, resource);
             });
@@ -49,7 +62,7 @@ var util = {
     }
 };
 
-this.addEventListener("fetch", function(event) {
+this.addEventListener("fetch", function (event) {
     event.respondWith(
         caches.match(event.request).then(response => {
             // cache hit
