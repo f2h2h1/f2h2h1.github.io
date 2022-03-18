@@ -79,7 +79,7 @@ var Application = (function(){
         };
         urlManager.prototype.routeMode = RouteMode.HASH;
         urlManager.prototype.init = function(indexList, article) {
-            if (window.location.hostname == '127.0.0.2') {
+            if (window.location.hostname == 'f2h2h1.github.io') {
                 urlManager.prototype.routeMode = RouteMode.HISTORY;
                 let handleUrl = function (href, target, popstate) {
                     let title = 'f2h2h1\'s blog';
