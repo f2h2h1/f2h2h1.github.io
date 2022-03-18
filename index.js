@@ -2,6 +2,8 @@
 var Application = (function(){
     let application = function(params){};
     var articleList = {};
+    var indexList;
+    var article;
     function ajax(options) {
         options = options || {};
         options.type = (options.type || 'GET').toUpperCase();
@@ -77,7 +79,7 @@ var Application = (function(){
         };
         urlManager.prototype.routeMode = RouteMode.HASH;
         urlManager.prototype.init = function(indexList, article) {
-            if (window.location.hostname == 'f2h2h1.github.io') {
+            if (window.location.hostname == '127.0.0.2') {
                 urlManager.prototype.routeMode = RouteMode.HISTORY;
                 let handleUrl = function (href, target, popstate) {
                     let title = 'f2h2h1\'s blog';
@@ -95,7 +97,7 @@ var Application = (function(){
                         }
                         return false;
                     }
-                    let match = (new RegExp('/article/(.*)\.html', 'g')).exec(url.pathname);
+                    let match = (new RegExp('/articles/(.*)\.html', 'g')).exec(url.pathname);
                     if (match) {
                         for (let i = articleList.length - 1, len = 0; i >= len; i--) {
                             if (encodeURI(articleList[i].title) === match[1]) {
@@ -176,7 +178,7 @@ var Application = (function(){
                 if (urlManager.prototype.routeMode == RouteMode.HASH) {
                     return '#title=' + title;
                 } else {
-                    return '/article/' + title + '.html';
+                    return '/articles/' + title + '.html';
                 }
             } else if (type = 'page') {
                 return '#';
@@ -445,8 +447,8 @@ var Application = (function(){
         try {
             articleList = await getArticleList();
             let content = document.getElementById('content');
-            var indexList = new IndexList(content, articleList);
-            var article = new Article(content, articleList);
+            indexList = new IndexList(content, articleList);
+            article = new Article(content, articleList);
             urlManager.init(indexList, article);
             
             (new ArticleList(document.getElementById('article_list'), articleList)).render();
