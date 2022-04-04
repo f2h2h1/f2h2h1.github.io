@@ -17,6 +17,7 @@
 - 环境的搭建可以参考这篇文章 《在Windows下配置PHP服务器》
 - php 需要安装 vc 依赖，在 php 下载页面的左边有 vc 库的下载链接的，用心找一下
 - composer 需要 1 的版本，现在下载的 composer 默认是 2 的版本，可以用这句命令把 composer 降级 `composer self-update --1`
+- composer 和 magento 的命令最好在有管理员权限的 git bash 下运行
 - php 需要开启这些拓展
     ```
     curl
@@ -307,7 +308,7 @@ https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html
 - php 需要 7.4
 - 还有就是 composer 需要 2 以上版本
 
-因为 Elasticsearch 的存在使得门槛高了不少。笔者感觉多奥多比正在抛弃中小用户。
+因为 Elasticsearch 的存在使得门槛高了不少。笔者感觉奥多比正在抛弃中小用户。
 
 安装流程和注意事项和 2.3 的基本一致。
 

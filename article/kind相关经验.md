@@ -156,7 +156,7 @@ kind delete cluster
 1. 如果需要远程访问（假设k8s是部署在远程服务器上，且需要在本地访问）
     - 用 ssh 的转发
         ```
-        ssh -L localhost:8001:localhost:8001 -NT username@hostname
+        ssh -o ServerAliveInterval=60 -L localhost:8001:localhost:8001 -NT username@hostname
         ```
 
 - 默认情况下 kubernetes-dashboard 只能在本地访问

@@ -1160,6 +1160,7 @@ git的一般使用指南
             开发新功能
             bug管理
         流水线
+            jenkins GitLab-CI
             代码格式检测
             代码静态检测
             测试
@@ -1168,12 +1169,40 @@ git的一般使用指南
             构建镜像并提交到镜像仓库
             把镜像部署到对应的服务器（测试，生产）
         git 仓库
+            GitLab gitblit gitea
             分支模型
                 Git Flow
                 Github Flow
                 Trunk Based Development
                 Aone Flow
+        容器运行时
+            docker
         镜像仓库
+            Harbor Portus
+        容器编排
+            k8s
+        服务器监控
+            Prometheus Grafana kiali Zabbix
+        中间件
+            搜索引擎/全文搜索
+                ElasticSearch
+            缓存
+                redis
+                memcache
+                squid
+                varnish
+                Apache Traffic Server (ATS)
+            队列
+                redis 的 disque 模块
+                ActiveMQ RocketMQ RabbitMQ ZeroMQ OpenMQ
+                Kafka Artemis Apollo Distributedlog
+        数据库
+            关系型 mysql mariadb PostgreSQL
+            文档型 MongoDB
+            图
+            时序
+        日志
+            elk loki
         内部文档
             入职用的文档，让新成员能迅速地熟悉工作流程，最好有纸质版（最好过塑或者套个塑料封套，因为会多次使用），因为电脑的配置可能需要一些时间
             公司的一些规章制度，例如 员工手册 之类的
@@ -1712,7 +1741,7 @@ magento2 配置 paypal
             搞分布式数据库，或者搞数据库集群
             适当使用nosql或new sql
                 根据数据结构和业务来选择数据持久化的方案，不用把全部数据都存进关系型数据库里的
-                例如 momgo 和 es
+                例如 MongoDB 和 es
             通过系统拆分或微服务来达到分库
             极端情况下，如果一个表确定不会有修改操作，在遇到性能瓶颈时可以使用MyISAM 
             使用单独的数据库
