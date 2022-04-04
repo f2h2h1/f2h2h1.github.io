@@ -12,7 +12,7 @@ function createUrl($title, $type) {
             break;
         case 'html':
         default:
-            $url = 'https://f2h2h1.github.io/articles/' . $title . '.html';
+            $url = 'https://f2h2h1.github.io/article/' . $title . '.html';
             // $url = 'https://f2h2h1.github.io/#title=' . urlencode($title);
     }
     return $url;
