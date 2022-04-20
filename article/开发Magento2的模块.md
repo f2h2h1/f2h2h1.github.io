@@ -580,6 +580,260 @@ crontab -l
 
 自己写 crontab 配置或用其它方式（例如 supervisor ）让 cron:run 一直运行也是可以的
 
+## 新建一个插件 Plugins (Interceptors)
+
+1. 新建 Plugins 类
+2. 修改 di.xml
+3. 运行 php bin/magento setup:di:compile
+
+## 事件和观察者 (Events and Observers)
+
+## 新建一个后台视图
+
+## 在后台视图里新建一个表格
+
+## 添加后台日志
+
+## 后台 acl
+
+## 新建一个后台菜单
+
+## 一些调试技巧
+
+### 获取某一个对象
+
+```php
+// 从已存在的对象中获取
+$logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
+// 新建一个
+$logger = \Magento\Framework\App\ObjectManager::getInstance()->create(\Psr\Log\LoggerInterface::class);
+```
+
+### 在某一个位置写日志
+
+```php
+/** @var \Psr\Log\LoggerInterface */
+$logger = \Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface');
+$logger->warning('=======wishlist debug=======', ['trace' => $a]);
+```
+
+### 在某一个位置通过拼接的 sql 查询数据库
+
+```php
+$conn = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ResourceConnection::class);
+$select = $conn->select()
+    ->from(['so' => $conn->getTableName('sales_order')], [
+        'so.entity_id',
+        'so.customer_id',
+        'soi.fulfilment_end_at',
+    ])
+    ->joinLeft(
+        ['soi' => $conn->getTableName('sales_order_item')],
+        'so.entity_id=soi.order_id',
+    );
+$select->where("so.status = ?", \Magento\Sales\Model\Order::STATE_PROCESSING)
+    ->where("soi.qty_fulfilled + soi.qty_disabled + soi.qty_markoff < soi.qty_invoiced")
+    ->where("soi.fulfilment_start_at <= ? <= soi.fulfilment_end_at", time());
+$result = $conn->fetchAll($select);
+```
+
+通过某一个模型的 collection 对象
+```php
+/** @var \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection */
+$collection = $collectionFactory->create();
+$collection->addFieldToSelect(
+    '*'
+)->addFieldToFilter('customer_id', $customer->getId());
+```
+
+### 输出原始的 sql 语句
+
+```php
+/** @var \Magento\Framework\DB\Select $select */
+echo $select->__toString();
+
+/** @var \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection $collection */
+echo $collection->getSelect()->__toString();
+echo $collection->getSelectSql(true);
+```
+
+### sql 语句最终的执行位置
+
+```
+vendor\magento\zendframework1\library\Zend\Db\Adapter\Abstract.php query
+```
+
+### 写日志，并记录调用栈堆
+
+```php
+# region logsql
+$logOpen = false;
+// $logOpen = true;
+$trace = debug_backtrace();
+$basePath = BP . DIRECTORY_SEPARATOR;
+if (!defined('DEBUG_TRACE_LOG')) {
+    $logpath = $basePath . 'var' . DIRECTORY_SEPARATOR . 'log' . DIRECTORY_SEPARATOR . 'debug_trace_sql';
+    if (!is_dir($logpath)) {
+        mkdir($logpath, 0755, true);
+    }
+    define('DEBUG_TRACE_LOG', $logpath . DIRECTORY_SEPARATOR . date('ymdHis') . '.log');
+    $data = [
+        '_POST' => $_POST ?? null,
+        '_GET' => $_GET ?? null,
+        '_FILES' => $_FILES ?? null,
+        '_SERVER' => $_SERVER ?? null,
+        '_SESSION' => $_SESSION ?? null,
+        '_input' => file_get_contents("php://input"),
+        // '_stdin' => file_get_contents("php://stdin") // 这一句在命令行里会等待输入
+    ];
+    $msg = print_r($data, true) . '========' . PHP_EOL;
+    if ($logOpen) {
+        file_put_contents(
+            DEBUG_TRACE_LOG,
+            $msg,
+            FILE_APPEND
+        );
+    }
+}
+$ignore = [ // 忽略 ObjectManager 的文件， Interceptor 的文件， Factory 的文件
+    'vendor' . DIRECTORY_SEPARATOR . 'magento' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'Interception' . DIRECTORY_SEPARATOR . 'Interceptor.php',
+    'generated',
+    'vendor' . DIRECTORY_SEPARATOR . 'magento' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'ObjectManager' . DIRECTORY_SEPARATOR . 'Factory',
+    'vendor' . DIRECTORY_SEPARATOR . 'magento' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'ObjectManager' . DIRECTORY_SEPARATOR . 'ObjectManager.php',
+];
+$pattern = array_map(function($item) use ($basePath) {
+    return '(' . preg_quote($basePath . $item, '/') . ')';
+}, $ignore);
+$pattern = '/' . implode('|', $pattern) . '/im';
+$max = 200;
+$traceRecord = [];
+// $traceRecord[] = __FILE__ . ':' . __LINE__;
+for ($i = 0, $len = count($trace); $i < $max && $i < $len; $i++) {
+    if (isset($trace[$i]['file'])) {
+        if (!preg_match($pattern, $trace[$i]['file'])) {
+            $file = $trace[$i]['file'];
+            $line = $trace[$i]['line'] ?? '1';
+            $class = $trace[$i]['class'] ?? '';
+            $func = $trace[$i]['function'] ?? '';
+            $record = $file . ':' . $line . ' ' . $class . ' ' . $func;
+            $traceRecord[] = $record;
+        }
+    }
+}
+$msg = print_r([
+    $sql,
+    count($bind) < 1 ? null : $bind,
+    $traceRecord,
+], true) . '========' . PHP_EOL;
+if ($logOpen) {
+    $filer = [ // 通过正则表达式只记录某些语句
+        // '`customer_entity`',
+        // '`customer_address_entity`',
+        // '`quote_address`',
+        // '`salesrule`',
+        // '`salesrule_coupon`',
+        // '`salesrule_customer`',
+        // '^SELECT'
+        // 'customer_is_guest',
+    ];
+    $regexp = '';
+    if (is_array($filer) && count($filer) > 0) {
+        $filer = implode('|', $filer);
+        $regexp = '/' . $filer . '/';
+    }
+    if (empty($regexp) || filter_var($sql, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => $regexp)))) {
+        file_put_contents(
+            DEBUG_TRACE_LOG,
+            $msg,
+            FILE_APPEND
+        );
+    }
+}
+# endregion logsql
+```
+
+这一段是硬写在这个方法里的，也可以硬写到其它方法里
+```
+vendor\magento\zendframework1\library\Zend\Db\Adapter\Abstract.php query
+```
+
+### 文件搜索
+
+通过正则表达式搜索某个接口的实现类或某个对象的继承类
+```
+implements(?:.*)ObjectManagerInterface\n
+extends(?:.*)AbstractResource\n
+```
+
+搜索时的排除选项
+```
+.js,.css,.md,.txt,.json,.csv,.html,.less,.phtml,**/tests,**/test,**/Test,**/setup,**/view,**/magento2-functional-testing-framework,.wsdl,**/module-signifyd,**/Block
+```
+
+```
+app/code/HKT/**/*.php
+app/**/*Test.php
+magento/**/*.php
+```
+
+### 通过命令行运行一些测试的代码
+
+修改这个文件的 execute 方法，用 exit(0); 来结束
+```
+vendor/magento/module-indexer/Console/Command/IndexerInfoCommand.php
+```
+
+例子
+```php
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $objectMamager = \Magento\Framework\App\ObjectManager::getInstance();
+
+        /** @var \Magento\Framework\App\ResourceConnection */
+        $connection = $objectMamager->get(\Magento\Framework\App\ResourceConnection::class);
+        $conn = $connection->getConnection();
+
+        /** @var \Mageplaza\SocialLogin\Model\Social */
+        $social = $objectMamager->get(\Mageplaza\SocialLogin\Model\Social::class);
+        $customer = $social->getCustomerByEmail('qwe@asd.com');
+
+        /** @var \Magento\Quote\Model\QuoteFactory */
+        $quoteFactory = $objectMamager->get(\Magento\Quote\Model\QuoteFactory::class);
+        $quote = $quoteFactory->create();
+        $quote->setCustomer($customer->getDataModel());
+        $address = $quote->getShippingAddress();
+        var_dump($address->getCity());
+
+        exit(0);
+
+        $indexers = $this->getAllIndexers();
+        foreach ($indexers as $indexer) {
+            $output->writeln(sprintf('%-40s %s', $indexer->getId(), $indexer->getTitle()));
+        }
+    }
+```
+
+运行命令
+```
+php bin/magento indexer:info
+php -d xdebug.remote_autostart=on bin/magento indexer:info
+```
+
+通过命令行运行测试代码，可以不加载前端资源，反馈的速度更快。
+修改原本的命令行是为了不运行构建的命令就能生效。
+一些对象可以通过 \Magento\Framework\App\ObjectManager::getInstance()->get() 的方法获得。
+
+### 其它
+
+sales_order 表的两个状态
+- state 是 magento 内部的状态
+- status 可以是二次开发时自定义的状态
+
+可以这样在浏览器查看前端模块的数据
+```js
+require('Magento_Checkout/js/model/quote');
+```
+
 ### 参考
 
 https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-cron.html
