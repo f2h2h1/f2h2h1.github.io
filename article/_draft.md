@@ -362,6 +362,10 @@ git仓库
         firefox
         vscode
 vscode的使用技巧
+    下载 vscode 安装包的墙内加速
+        先直接下载 vscode
+        复制下载链接
+        把链接里的域名改成这个 vscode.cdn.azure.cn
     常用的拓展
         git
             Git History
@@ -512,6 +516,7 @@ vscode的使用技巧
             工作经历
                 时间 公司名 公司规模 工资
                 工作内容
+                    STAR Situation（背景）、Task（任务）、Action(行动)、Result(结果)
             个人技能
                 各种证书也可以放在这里
             自我评价，内容太多了就不要这段
@@ -1864,7 +1869,8 @@ magento2 配置 paypal
             避免图片的src为空
             图片要显式声明宽度
             使用媒体查询加载不同尺寸的图片
-            页面的动画效果尽可能用用css完成
+                https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/picture
+            页面的动画效果尽可能用css完成
                 因为要减少重排
             避免使用table做布局
                 table及其内部元素除外，它可能需要多次 计算才能确定好其在渲染树中节点的属性
@@ -1877,7 +1883,8 @@ magento2 配置 paypal
                 查看优化建议
                 https://developers.google.com/speed/pagespeed/insights
             提高加载速度
-        图片懒加载 
+        图片懒加载
+            img 标签加上 lazy 属性
         加入友好的等待动画
     并发
         使用负载均衡
@@ -2386,17 +2393,17 @@ composer
     早期的解决方式
         闭包
             moduleA = function（） {
-            var a,b;
-            return {
-                add: function (c){
-                    return a + b + c;
-                };
-            }
+                var a,b;
+                return {
+                    add: function (c){
+                        return a + b + c;
+                    };
+                }
             }()
         命名空间
             Yahoo的YUI早期的做法
             app.tools.moduleA.add = function(c){
-            return app.tools.moduleA.a + c;
+                return app.tools.moduleA.a + c;
             }
     commonJS
         nodejs的模块规范
@@ -2430,6 +2437,14 @@ composer
         Range
         Content-Range
     实现例子 php 和 js
+淘宝的镜像
+    https://registry.npmmirror.com/binary.html
+    可以用来下载各种开发的软件 git for windows, selenium, node, python, ...
+如何不登录微软帐号安装uwp应用
+    找到应用网页链接，在 微软商店里选择，分享，复制链接
+    在这个网站里搜索 https://store.rg-adguard.net/
+    下载一个带有 .appxbundle 或者 .appx 后缀的文件即可 (版本区别)
+    安装 uwp 应用时可能需要管理员权限
 中文文案排版指北 https://github.com/sparanoid/chinese-copywriting-guidelines
 中文技术文档的写作规范 https://github.com/ruanyf/document-style-guide
 让长文章更容易阅读的十项原则 https://www.uisdc.com/10-typeset-make-article-readable
@@ -2437,6 +2452,7 @@ composer
 微软的写作风格指南
     https://docs.microsoft.com/zh-cn/contribute/style-quick-start
     https://docs.microsoft.com/zh-cn/style-guide/welcome/
+程序员延寿指南 https://github.com/geekan/HowToLiveLonger
 版本控制软件比较
     git
         github

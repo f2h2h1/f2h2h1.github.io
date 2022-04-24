@@ -583,10 +583,36 @@ crontab -l
 ## 新建一个插件 Plugins (Interceptors)
 
 1. 新建 Plugins 类
-2. 修改 di.xml
-3. 运行 php bin/magento setup:di:compile
+1. 修改模块的 etc 文件夹下的 di.xml
+1. 运行 php bin/magento setup:di:compile
+1. 参考 https://devdocs.magento.com/guides/v2.4/extension-dev-guide/plugins.html
 
 ## 事件和观察者 (Events and Observers)
+
+1. 在配置文件里声明一个事件
+    - 在模块的 etc 文件夹下的 events.xml ，加上类似于这样的一段
+        ```xml
+        <?xml version="1.0"?>
+        <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+            <event name="customer_save_after_data_object">
+                <observer name="upgrade_order_customer_email" instance="Magento\Customer\Observer\UpgradeOrderCustomerEmailObserver"/>
+                <observer name="upgrade_quote_customer_email" instance="Magento\Customer\Observer\UpgradeQuoteCustomerEmailObserver"/>
+            </event>
+        </config>
+        ```
+1. 新建一个观察者类
+    - 新建的观察者类的完整类名需要和配置文件里的对应
+    - 需要实现这个接口 `Magento\Framework\Event\ObserverInterface`
+1. 在需要的位置触发事件，类似于这样
+    ```php
+    // 第一个参数是事件名；第二个参数是一个数组，用于传递参数给观察者
+    // $this->_eventManager 的类型 \Magento\Framework\Event\ManagerInterface
+    $this->_eventManager->dispatch(
+        'admin_user_authenticate_after',
+        ['username' => $username, 'password' => $password, 'user' => $this, 'result' => $result]
+    );
+    ```
+1. 参考 https://devdocs.magento.com/guides/v2.4/extension-dev-guide/events-and-observers.html
 
 ## 新建一个后台视图
 
@@ -594,7 +620,75 @@ crontab -l
 
 ## 添加后台日志
 
+在模块的 etc 文件夹下的 logging.xml 里加上类似这样的一段
+
+```xml
+<group name="order_retrievepayment">
+    <label translate="true">Order Retrieve Payment</label>
+    <expected_models>
+        <expected_model class="Magento\Sales\Model\Order"></expected_model>
+    </expected_models>
+    <events>
+        <event controller_action="adminportal_order_retrievepayment" action_alias="save" />
+    </events>
+</group>
+```
+
+controller_action 是全都是小写，
+模块名_控制器名_方法名
+
+然后在后台里勾选对应的选项，按着这样的路径寻找
+```
+Stores
+    Settings
+        Configuration
+            Advanced
+                Admin
+                    Admin Actions Logging
+                        在配置文件里的 label
+```
+
+可以在后台里的这个位置查看日志
+```
+system -> action logs -> report
+```
+
 ## 后台 acl
+
+1. 修改在模块的 etc 文件夹下的 acl.xml
+    ```xml
+    <?xml version="1.0"?>
+    <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+        <acl>
+            <resources>
+                <resource id="Magento_Backend::admin">
+                    <resource id="Magento_Sales::sales">
+                        <resource id="Magento_Sales::sales_operation">
+                            <resource id="Magento_Sales::sales_order">
+                                <resource id="HKT_AdminPortal::cs_portal" title="CS Portal" sortOrder="10" />
+                                <resource id="Magento_Sales::create_new_order" title="Create New Order" sortOrder="20" />
+                                <resource id="Magento_Sales::view_order" title="View Order" sortOrder="30" />
+                                <resource id="Magento_Sales::order_actions" title="Order Actions" sortOrder="40" />
+                                <resource id="Magento_Sales::go_to_archive" title="Go To Order Archive" sortOrder="50" />
+                            </resource>
+                        </resource>
+                    </resource>
+            </resources>
+        </acl>
+    </config>
+    ```
+    - resource 可以嵌套
+    - resource id（模块::操作），这个 resource id 要和控制器定义的 ADMIN_RESOURCE 一致
+    - 控制器里有一个常量
+        ```php
+        class Save extends Action
+        {
+            public const ADMIN_RESOURCE = 'Magento_Customer::save';
+        }
+        ```
+1. 修改完后要清除缓存才能生效 php bin/magento cache:clean
+1. 权限的调整在这个位置 System > Permissions > User Roles
+1. 参考 https://devdocs.magento.com/guides/v2.4/ext-best-practices/tutorials/create-access-control-list-rule.html
 
 ## 新建一个后台菜单
 
