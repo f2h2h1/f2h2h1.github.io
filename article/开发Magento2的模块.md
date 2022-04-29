@@ -587,6 +587,8 @@ crontab -l
 1. 运行 php bin/magento setup:di:compile
 1. 参考 https://devdocs.magento.com/guides/v2.4/extension-dev-guide/plugins.html
 
+## 替换其它模块里的类
+
 ## 事件和观察者 (Events and Observers)
 
 1. 在配置文件里声明一个事件
@@ -692,6 +694,35 @@ system -> action logs -> report
 
 ## 新建一个后台菜单
 
+1. 在模块目录下的 etc 文件里新建一个文件
+    ```
+    module/etc/adminhtml/menu.xml
+    ```
+1. 在 menu.xml 里加入一段
+    ```xml
+    <?xml version="1.0"?>
+    <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+        <menu>
+            <add id="Silk_Test::job_head" title="Test" module="Silk_Test" sortOrder="100" parent="Magento_Backend::stores" resource="Silk_Test::job_head" />
+            <add id="Silk_Test::job" title="Test" module="Silk_Test" sortOrder="20" parent="Silk_Test::job_head" action="test/job" resource="Silk_Test::job" />
+        </menu>
+    </config>
+    ```
+1. 一些参数的解释
+    - parent 上级的id
+    - title 菜单名称
+    - id 唯一识别的id
+    - action 转跳的 action ，不填这个就是菜单里的一个分类
+    - resource 用于 acl 的
+    - module 模块名
+1. 参考 https://devdocs.magento.com/guides/v2.4/ext-best-practices/tutorials/create-access-control-list-rule.html
+
+## 一些自定义配置
+
+### 写在模块的 config.xml 文件里
+
+### 写在 core_config_data 表里
+
 ## 一些调试技巧
 
 ### 获取某一个对象
@@ -729,6 +760,10 @@ $select->where("so.status = ?", \Magento\Sales\Model\Order::STATE_PROCESSING)
     ->where("soi.qty_fulfilled + soi.qty_disabled + soi.qty_markoff < soi.qty_invoiced")
     ->where("soi.fulfilment_start_at <= ? <= soi.fulfilment_end_at", time());
 $result = $conn->fetchAll($select);
+
+// 直接运行 sql 语句
+$conn = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ResourceConnection::class);
+$result = $conn->getConnection()->query('SELECT TIMEDIFF(NOW(), UTC_TIMESTAMP);')->fetchAll();
 ```
 
 通过某一个模型的 collection 对象
@@ -750,6 +785,20 @@ echo $select->__toString();
 echo $collection->getSelect()->__toString();
 echo $collection->getSelectSql(true);
 ```
+
+### sql 的执行记录
+
+加在这个文件里 app/etc/env.php 加上这段
+```
+'db_logger' => [
+    'output' => 'file',
+    'log_everything' => 1,
+    'query_time_threshold' => '0.001',
+    'include_stacktrace' => 0
+],
+```
+
+日志会输出到这个文件里 var/debug/db.log
 
 ### sql 语句最终的执行位置
 
@@ -917,16 +966,43 @@ php -d xdebug.remote_autostart=on bin/magento indexer:info
 修改原本的命令行是为了不运行构建的命令就能生效。
 一些对象可以通过 \Magento\Framework\App\ObjectManager::getInstance()->get() 的方法获得。
 
+### 前端的调试
+
+- 可以这样在浏览器查看前端模块的数据
+    ```js
+    require('Magento_Checkout/js/model/quote');
+    ```
+
+- 通过浏览器的断点来实现前端的调试
+- 一些情况下可以使用使用鼠标点击的事件作为断点，如果是火狐浏览器可以直接查看节点绑定的事件
+- 忽略一些 js 文件，把这些 js 文件标记为库文件
+- 使用浏览器的覆盖功能，直接在前端修改 js 代码，这样做的好处是不用运行 setup:static-content:deploy 这种命令
+
+
 ### 其它
 
 sales_order 表的两个状态
 - state 是 magento 内部的状态
 - status 可以是二次开发时自定义的状态
 
-可以这样在浏览器查看前端模块的数据
-```js
-require('Magento_Checkout/js/model/quote');
-```
+遇到问题，可以先搜索一下 github 的 iusses ，同样的问题可能已经出了补丁，不用自己修改。
+- 可以在这个站点里找到对应的补丁
+    - https://devdocs.magento.com/quality-patches/tool.html
+- 关于 Quality Patches Tool (QPT) 工具的使用
+    - https://devdocs.magento.com/quality-patches/usage.html
+    - https://support.magento.com/hc/en-us/articles/360047125252
+    - https://support.magento.com/hc/en-us/articles/360047139492
+- 也可以把下载的 patch 文件单独复制出来，然后用 cweagans/composer-patches 打补丁
+
+从 marketplace.magento.com 下载和安装拓展
+1. 登录
+1. 购买
+1. 获取包名和版本
+1. 修改 composer.json 加上 仓库地址和帐号密码
+1. 运行 composer require
+1. 修改 app/etc/config.php
+1. 运行 bin/magento setup:upgrade
+1. 参考 https://devdocs.magento.com/extensions/install
 
 ### 参考
 

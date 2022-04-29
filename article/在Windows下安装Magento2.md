@@ -292,6 +292,15 @@
 
 除了可以通过 compoer 安装外，还可以通过 github 的仓库安装。
 - 通过 github 安装就可以不申请 magento 的帐号了。
+- clone 的命令
+    ```
+    clone 整个仓库后再切换分支
+    git clone https://github.com/magento/magento2.git .
+    git pull
+    git switch 2.4.2-p1
+    只 clone 一个分支
+    git clone -b 2.4.2-p1 https://github.com/magento/magento2.git .
+    ```
 - 通过 composer 安装的 magento 的框架文件在这个目录里 `vendor/magento/framework` 。
 - 通过 github 源码安装的 magento 的框架文件在这个目录里 `lib/internal/Magento/Framework` 。
 - github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块 。

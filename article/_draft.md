@@ -252,6 +252,7 @@ frp的使用
     美团技术团队 https://tech.meituan.com/
     360奇舞团 https://75.team/
     小米信息部技术团队 https://xiaomi-info.github.io/
+    京东零售官方设计共享平台 https://jelly.jd.com/
     阮一峰 https://www.ruanyifeng.com/blog/
     廖雪峰 https://www.liaoxuefeng.com/
     并发编程网 https://ifeve.com/
@@ -2277,6 +2278,27 @@ composer
             但 git for windows 的 bash 里有这个命令
         另一个补丁库 https://github.com/vaimo/composer-patches
         git diff 命令也可以生成 patch 文件
+    可以通过硬改 composer.lock 里的 url 和 shasum 的 方式来安装一些需要登录的包
+        先从一个已经有对应包的项目里打包
+            composer archive vendor-name/component-name version --format=zip
+        然后生成 shasum
+        把对应的包上传到可以下载的位置
+            需要 https 和 不是自签证书，也可以让 composer 允许 http
+        修改 url 和 shasum
+    composer.lock 里的 shasum 是 sha1
+        可以用 sha1sum 或 openssl 生成
+            sha1sum 文件路径
+            openssl dgst -sha1 文件路径
+    让 composer 允许 http 下载
+        composer 安装包里的路径有 http 会安装失败
+        现在的 composer 会默认 https
+        需要在 composer.json 的 config 加上这样一句
+            "secure-http": false,
+        例如象这样
+            "config": {
+                "secure-http": false,
+                ...
+            },
 最简单的 pwa
     准备两张用于图标（icons）的图片，png格式的，一张512x512，一张192x192 
     在页面的head标签里加上这三行，具体参数要按照实际情况来修改
