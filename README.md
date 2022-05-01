@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- articleList -->
+- [nginx+ffmpeg+websocket实现的直播例子](article/nginx+ffmpeg+websocket实现的直播例子.md)
 - [kind相关经验](article/kind相关经验.md)
 - [使用shell实现的kv数据库](article/使用shell实现的kv数据库.md)
 - [对JS原型链的理解](article/对JS原型链的理解.md)
@@ -67,6 +68,7 @@
 |[炎忍的博客](https://blog.imyan.ren/)|<img alt="炎忍的博客" src="https://blog.imyan.ren/media/avatar.png" width="119" />|https://blog.imyan.ren/|心之所愿，无所不成。|
 |[土木坛子](https://tumutanzi.com/)||https://tumutanzi.com/||
 |[澪同学](https://blog.ihomura.cn/)||https://blog.ihomura.cn/||
+|[Eric](https://ericclose.github.io/)|<img alt="Eric" src="https://cdn.jsdelivr.net/gh/ericclose/cdn-assets/img/avatar.jpeg" width="119" />|https://ericclose.github.io/|To be completed...|
 <!-- exchangeList -->
 
 ## 在本地运行

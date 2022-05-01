@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+    <loc>https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html</loc>
+    <lastmod>2022-05-01</lastmod>
+    <priority>0.5</priority>
+</url>
 <url>
     <loc>https://f2h2h1.github.io/article/kind相关经验.html</loc>
     <lastmod>2022-04-04</lastmod>
@@ -42,7 +47,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</loc>
-    <lastmod>2022-04-04</lastmod>
+    <lastmod>2022-04-29</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -62,7 +67,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/开发Magento2的模块.html</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-04-29</lastmod>
     <priority>0.5</priority>
 </url>
 <url>

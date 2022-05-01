@@ -64,5 +64,11 @@
         "href": "https://blog.ihomura.cn/",
         "desc": "",
         "avatar": ""
+    },
+    {
+        "name": "Eric",
+        "href": "https://ericclose.github.io/",
+        "desc": "To be completed...",
+        "avatar": "https://cdn.jsdelivr.net/gh/ericclose/cdn-assets/img/avatar.jpeg"
     }
 ]

@@ -4,10 +4,17 @@
     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
     <link href="https://f2h2h1.github.io/" />
     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    <updated>2022-04-04T17:14:04+08:00</updated>
+    <updated>2022-05-01T15:06:04+08:00</updated>
     <author>
         <name>f2h2h1's blog</name>
     </author>
+<entry>
+    <title>nginx+ffmpeg+websocket实现的直播例子</title>
+    <link href="https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html" />
+    <id>https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html</id>
+    <updated>2022-05-01T15:05:54+08:00</updated>
+    <summary>nginx+ffmpeg+websocket实现的直播例子</summary>
+</entry>
 <entry>
     <title>kind相关经验</title>
     <link href="https://f2h2h1.github.io/article/kind相关经验.html" />
@@ -68,7 +75,7 @@
     <title>在Windows下安装Magento2</title>
     <link href="https://f2h2h1.github.io/article/在Windows下安装Magento2.html" />
     <id>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</id>
-    <updated>2022-04-04T16:32:31+08:00</updated>
+    <updated>2022-04-29T13:09:12+08:00</updated>
     <summary>在Windows下安装Magento2</summary>
 </entry>
 <entry>
@@ -96,7 +103,7 @@
     <title>开发Magento2的模块</title>
     <link href="https://f2h2h1.github.io/article/开发Magento2的模块.html" />
     <id>https://f2h2h1.github.io/article/开发Magento2的模块.html</id>
-    <updated>2022-02-10T13:04:36+08:00</updated>
+    <updated>2022-04-29T13:09:12+08:00</updated>
     <summary>开发Magento2的模块</summary>
 </entry>
 <entry>
