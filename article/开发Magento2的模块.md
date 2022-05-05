@@ -636,8 +636,17 @@ crontab -l
 </group>
 ```
 
-controller_action 是全都是小写，
-模块名_控制器名_方法名
+如果是 post 请求，那么需要在 event 节点里再加一个属性 post_dispatch="postDispatchSimpleSave"
+```xml
+<event controller_action="adminportal_order_retrievepayment" action_alias="save" post_dispatch="postDispatchSimpleSave"/>
+```
+
+controller_action 是 模块名_控制器名_方法名
+可以在这两个位置加断点，然后再运行一次请求，就知道具体的 controller_action 是什么了
+```
+vendor\magento\module-logging\Observer\ControllerPostdispatchObserver.php:52
+vendor\magento\module-logging\Model\Processor.php:363
+```
 
 然后在后台里勾选对应的选项，按着这样的路径寻找
 ```
@@ -739,7 +748,9 @@ $logger = \Magento\Framework\App\ObjectManager::getInstance()->create(\Psr\Log\L
 ```php
 /** @var \Psr\Log\LoggerInterface */
 $logger = \Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface');
-$logger->warning('=======wishlist debug=======', ['trace' => $a]);
+$logger->warning('=======flg debug=======', ['trace' => $a]);
+$logger->warning('=======flg debug=======', ['trace' => $exception->getTrace(), 'msg' => $exception->getMessage()]);
+$logger->warning('=======flg debug=======', ['trace' => debug_backtrace()];
 ```
 
 ### 在某一个位置通过拼接的 sql 查询数据库
