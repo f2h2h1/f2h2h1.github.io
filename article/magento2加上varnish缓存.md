@@ -34,6 +34,7 @@
         docker cp `pwd`/var/default.vcl varnishd:etc/varnish/default.vcl
         docker exec varnishd varnishreload
         ```
+    - 要注意容器的端口映射
 1. 修改 nginx 或 apahce 的配置
     - 通常情况下 varnish 会部署在 http 服务的前面，如果 varnish 和 http 服务部署在同一个服务器里，可能需要修改 http 服务的端口，然后由 varnish 监听 80 端口。
     - 又因为 varnish 不支持 https 所以，在 varnish 前面还需要有一个 tls 的代理。
@@ -50,8 +51,24 @@
         X-Magento-Cache-Debug: HIT
         ```
     - varnish 生效时， var/page_cache 里应该是没有文件的
-
-要注意容器的端口映射
-
-原生的安装方式可以参考官方文档
-https://devdocs.magento.com/guides/v2.4/config-guide/varnish/config-varnish-magento.html
+1. 清除缓存
+    <!-- - varnish 清理缓存的策略比想象中的要复杂不少 -->
+    - varnish 可以用 命令行 telnet http 三种方式发送清除缓存的命令
+    - varnish 清理缓存 purge 和 ban
+        - purge 是使缓存失效
+            - --access-list 的地址就是用在这里的
+            - 如果要是某个 url 的缓存失效，可以这样访问
+                ```
+                假设原本的 url 是 magento.localhost/test1
+                假设 access-list 的地址是 purge.localhost
+                那么删除 /test1 的缓存，就只需要请求一次 purge.localhost/test1
+                ```
+        - ban 是忽略缓存直接访问后端
+    - 参考 https://varnish-cache.org/docs/6.0/users-guide/purging.html
+1. 其它
+    - varnish 配置文件模板的路径
+        ```
+        vendor\magento\module-page-cache\etc\varnish6.vcl
+        ```
+    - 原生的安装方式可以参考 magento 文档
+        https://devdocs.magento.com/guides/v2.4/config-guide/varnish/config-varnish-magento.html
