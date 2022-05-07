@@ -2459,6 +2459,11 @@ composer
         Range
         Content-Range
     实现例子 php 和 js
+如何用 history 和 hash 做一个路由
+    初始化
+    监听路由的变化
+    匹配路由并渲染对应的内容
+    放行不匹配的路由
 淘宝的镜像
     https://registry.npmmirror.com/binary.html
     可以用来下载各种开发的软件 git for windows, selenium, node, python, ...

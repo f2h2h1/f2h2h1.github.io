@@ -11,10 +11,12 @@
 ## 安装
 
 1. 从 http://nginx-win.ecsds.eu/download/ 下载的 nginx 1.7.11.3
+    - 这个版本的 nginx 需要 vc 2010 ，32位和64位版本都要装上
 1. 从 github 下载 nginx-rtmp-module 的源码
 1. 把 nginx-rtmp-module 的源码解压后复制进 nginx 的根目录，并重命名为 nginx-rtmp-module
     - 要确保证 stat.xls 的路径是 nginx根目录\nginx-rtmp-module\stat.xsl
 1. 下载 ffmpeg 并把 ffmpeg 加入到环境变量
+    - 在 Windows server 上运行 ffmpeg 需要安装桌面体验，直接运行可能会提示这种错误 缺失 mfplat.dll
 1. 在 nginx 的 etc 目录下新建一个文件 nginx-win-rtmp.conf ，配置文件里的 hls 和 vod 的路径要提前新建好
     ```
     #user  nobody;
@@ -134,10 +136,12 @@ ffmpeg -list_options true -f dshow -i video="e2eSoft iVCam"
 ffmpeg -list_options true -f dshow -i audio="麦克风 (e2eSoft iVCam)"
 ```
 
-ffmpeg 的推流，视频不能循环播放
+ffmpeg 的推流
 ```
 ffmpeg.exe -re -i C:\Users\a\Downloads\movie.mp4 -vcodec libx264 -acodec aac -f flv rtmp://127.0.0.1:1935/hls/movie
 ffmpeg.exe -re -i C:\Users\a\Downloads\movie.mp4 -vcodec libx264 -acodec aac -f flv rtmp://127.0.0.1:1935/live/movie
+循环无限次
+ffmpeg.exe -re -stream_loop -1 -i C:\Users\a\Downloads\movie.mp4 -vcodec libx264 -acodec aac -f flv rtmp://127.0.0.1:1935/hls/loop
 ```
 
 obs 的推流
