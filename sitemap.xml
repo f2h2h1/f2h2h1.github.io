@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+    <loc>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</loc>
+    <lastmod>2022-05-08</lastmod>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html</loc>
-    <lastmod>2022-05-01</lastmod>
+    <lastmod>2022-05-05</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -22,7 +27,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/magento2加上varnish缓存.html</loc>
-    <lastmod>2022-01-02</lastmod>
+    <lastmod>2022-05-07</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -67,7 +72,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/开发Magento2的模块.html</loc>
-    <lastmod>2022-04-29</lastmod>
+    <lastmod>2022-05-05</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -101,12 +106,12 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</loc>
+    <loc>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</loc>
     <lastmod>2021-07-10</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</loc>
+    <loc>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</loc>
     <lastmod>2021-07-10</lastmod>
     <priority>0.5</priority>
 </url>
@@ -152,7 +157,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/一些开发笔记.html</loc>
-    <lastmod>2022-04-04</lastmod>
+    <lastmod>2022-05-07</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -187,7 +192,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</loc>
-    <lastmod>2022-04-04</lastmod>
+    <lastmod>2022-05-07</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
