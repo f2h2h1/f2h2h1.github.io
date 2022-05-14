@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- articleList -->
+- [使用PowerShell实现的http服务器](article/使用PowerShell实现的http服务器.md)
 - [MySQL的时间类型和时间相关的函数](article/MySQL的时间类型和时间相关的函数.md)
 - [nginx+ffmpeg+websocket实现的直播例子](article/nginx+ffmpeg+websocket实现的直播例子.md)
 - [kind相关经验](article/kind相关经验.md)
