@@ -286,7 +286,8 @@ var Application = (function(){
             let dt = document.createElement('dt');
             dt.innerText = 'Article list';
             content.appendChild(dt);
-            for (let i = 0, len = articleList.length ; i < len; i++) {
+            let i = 0;
+            for (let len = articleList.length ; i < len; i++) {
                 let dd = document.createElement("dd");
                 let a = document.createElement("a");
                 let articleTitle = articleList[i].title;
@@ -295,6 +296,9 @@ var Application = (function(){
                 dd.appendChild(a);
                 content.appendChild(dd);
             }
+            let dd = document.createElement("dd");
+            dd.innerText = '共计 ' + i + ' 篇文章';
+            content.appendChild(dd);
         }
         return ArticleList;
     })();
