@@ -44,7 +44,12 @@ foreach (glob('article/*.md') as $item) {
 
 // 文章列表按创建时间排序
 usort($articleList, function ($a, $b) {
-    return ($a['createTime'] > $b['createTime']) ? -1 : 1;
+    if ($a['createTime'] > $b['createTime']) {
+        return -1;
+    } else if ($a['createTime'] < $b['createTime']) {
+        return 1;
+    }
+    return (strcmp($a['title'], $b['title'])) ? -1 : 1;
 });
 
 // 用于页面的 articleList.json
