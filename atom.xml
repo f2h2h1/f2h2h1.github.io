@@ -4,7 +4,7 @@
     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
     <link href="https://f2h2h1.github.io/" />
     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    <updated>2022-05-14T19:43:16+08:00</updated>
+    <updated>2022-05-21T16:35:25+08:00</updated>
     <author>
         <name>f2h2h1's blog</name>
     </author>
@@ -236,7 +236,7 @@
     <title>一些开发笔记</title>
     <link href="https://f2h2h1.github.io/article/一些开发笔记.html" />
     <id>https://f2h2h1.github.io/article/一些开发笔记.html</id>
-    <updated>2022-05-07T13:53:20+08:00</updated>
+    <updated>2022-05-21T15:05:06+08:00</updated>
     <summary>一些开发笔记</summary>
 </entry>
 <entry>
@@ -261,20 +261,6 @@
     <summary>在VSCode里使用Xdebug远程调试PHP</summary>
 </entry>
 <entry>
-    <title>下载AcFun视频</title>
-    <link href="https://f2h2h1.github.io/article/下载AcFun视频.html" />
-    <id>https://f2h2h1.github.io/article/下载AcFun视频.html</id>
-    <updated>2019-02-17T21:11:44+08:00</updated>
-    <summary>下载AcFun视频</summary>
-</entry>
-<entry>
-    <title>在Windows下配置Tomcat服务器</title>
-    <link href="https://f2h2h1.github.io/article/在Windows下配置Tomcat服务器.html" />
-    <id>https://f2h2h1.github.io/article/在Windows下配置Tomcat服务器.html</id>
-    <updated>2019-02-13T01:42:35+08:00</updated>
-    <summary>在Windows下配置Tomcat服务器</summary>
-</entry>
-<entry>
     <title>在Windows下配置PHP服务器</title>
     <link href="https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html" />
     <id>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</id>
@@ -294,13 +280,6 @@
     <id>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</id>
     <updated>2021-12-23T13:20:01+08:00</updated>
     <summary>在VSCode里调试PHP</summary>
-</entry>
-<entry>
-    <title>安装PHP7的GUI扩展</title>
-    <link href="https://f2h2h1.github.io/article/安装PHP7的GUI扩展.html" />
-    <id>https://f2h2h1.github.io/article/安装PHP7的GUI扩展.html</id>
-    <updated>2019-02-02T12:22:07+08:00</updated>
-    <summary>安装PHP7的GUI扩展</summary>
 </entry>
 <entry>
     <title>关于</title>
