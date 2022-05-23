@@ -46,5 +46,23 @@
         "href": "https://www.liuxinggang.com/",
         "desc": "刘兴刚的博客 | 关注Web开发,记录自己成长点滴",
         "avatar": "https://www.liuxinggang.com/favicon.ico"
+    },
+    {
+        "name": "Zifan的小站",
+        "href": "https://zifan.site/",
+        "desc": "个人编程技术学习与分享",
+        "avatar": "https://zifan.site/img/py.PNG"
+    },
+    {
+        "name": "Wade的学习笔记",
+        "href": "https://www.wadesays.xyz",
+        "desc": "什么都不会的初始化站长，分享一些学习到的技能。",
+        "avatar": "https://www.wadesays.xyz/wp-content/uploads/avatar.png"
+    },
+    {
+        "name": "Rookie_L’s Blog",
+        "href": "https://icu007.work",
+        "desc": "记录我的日常生活&学习笔记",
+        "avatar": "https://icu007.work/wp-content/uploads/2022/03/head-1.jpeg"
     }
 ]
