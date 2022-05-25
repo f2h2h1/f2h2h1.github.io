@@ -287,6 +287,7 @@ frp的使用
         http://rogerdudler.github.io/git-guide/index.zh.html
         http://marklodato.github.io/visual-git-guide/index-zh-cn.html
     由 hulu 赞助的 oi wiki https://github.com/OI-wiki/OI-wiki/
+    云原生资料库 https://jimmysong.io/docs/
     除了这些文档外，更应该关注各项技术的官方文档
     现在网络上的教程真的非常多，问题不在于寻找教程，而在于选择哪一个去看
 社区
@@ -295,6 +296,7 @@ frp的使用
     v2ex
     知乎
     掘金
+    learnku.com
     w3ctech
     简书
     StackOverflow
@@ -333,12 +335,13 @@ git仓库
         https://github.com/EbookFoundation/free-programming-books
         https://github.com/EbookFoundation/free-programming-books/blob/main/books/free-programming-books-zh.md
 浏览器数据持久化缓存技术
+    back/forward cache
     HTTP文件缓存
     cookie
     localStorage
     sessionStorage
     Application Cache 和 pwa 相关
-    CacheStorage 和 service worker 相关
+    Cache Storage 和 service worker 相关
     WebSQL 关系型数据库，火狐不支持
     IndexedDB 非关系型数据库
     一些浏览器会对 favicon.ico 有特殊的缓存
@@ -846,6 +849,11 @@ vscode的使用技巧
             定时任务
             守护进程
             各类中间件的监控
+            日志记录要完整
+                要有完整的调用链路
+                要有完整的栈堆
+                遇到 mysql 的死锁异常要记录死锁日志 show engine innodb status
+                要尽可能地多记录一些信息
             等等。。。
         发现异常要及时警报
             短信 邮件
@@ -857,7 +865,7 @@ vscode的使用技巧
                 注册 登录 浏览商品 下单 支付 之类的
             出现问题之前都进行了哪些操作
             问题是由谁发现的
-                开发者 测试 运营 用户 上级 之类的
+                开发者 测试 运营 用户 上级同事 之类的
             发现问题的人是如何描述问题的
         尽量收集问题相关的信息
             有没有错误输出
@@ -917,7 +925,7 @@ vscode的使用技巧
     把关键词替换成其它字符
     一般文本
         渲染文本->orc->tts->语音识别->识别后的文本->语义分析->判断是否违规
-            即使是一般文本也要渲染一次，因为 unicode 有组合字有控制文本方向的字符
+            即使是一般文本也要渲染一次，因为 unicode 有组合字，有控制文本方向的字符，还有各种不可见的空格
             可以通过控制文本方向来规避检测，例如这样
                 rlo词键关 渲染后就是 关键词
     富文本
@@ -1125,6 +1133,10 @@ git的一般使用指南
 一般的项目开发流程
     工具
         注册域名
+        tls 证书
+            自动申请 tls 证书的脚本 https://github.com/acmesh-official/acme.sh
+            windows 需要用 git bash 或者用这个库 https://github.com/win-acme/win-acme
+            其实不少域名注册商都能根据域名提供一个免费的证书
         LDAP
             openldap
             PhpLDAPAdmin
@@ -1160,7 +1172,7 @@ git的一般使用指南
             企业邮箱
             通讯录
                 CardDAV
-                ad 域或 ladp 的组织架构
+                ad 域或 ldap 的组织架构
         项目管理
             Redmine
             开发新功能

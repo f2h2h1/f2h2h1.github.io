@@ -426,6 +426,14 @@ https://github.com/MicrosoftArchive/redis/releases
 ```
 这里推荐下载 zip 版
 
+redis 的 windows 版已经很久没更新了。
+redis 的官方好像是推荐用 wsl2 在 windows 里安装 redis
+- https://redis.com/blog/redis-on-windows-10/
+- https://redis.io/docs/getting-started/installation/install-redis-on-windows/
+
+据说 redis 无法支持 windows 的原因是 windows 没有 fork 系统调用（和 fpm 不支持 windows 的原因是一样的）。
+好像是没有 fork 功能，redis 就无法执行某些必要的数据库保存方法。
+
 ### 运行 redis
 下载完后解压，然后 cd 进目录，然后运行这段
 ```
@@ -481,6 +489,8 @@ https 自签证书的生成，可以参考这篇文章 《密码学入门简明�
     https://github.com/ErikDubbelboer/phpRedisAdmin
     ```
 1. 解压后，配置好站点就可以直接运行了，当然也可以在根目录里用 php 的内置服务器运行
+
+1. 现在的 redis 也提供 gui 工具了 https://redis.com/redis-enterprise/redis-insight/
 
 ### hosts
 
