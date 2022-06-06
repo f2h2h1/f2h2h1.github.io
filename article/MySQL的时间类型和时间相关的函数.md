@@ -4,7 +4,7 @@
 
 | |日期时间类型|占用空间|日期格式|最小值|最大值|零值表示|描述|
 |-|-|-|-|-|-|-|-|
-|DATETIME|8|bytes|YYYY-MM-DD HH:MM:SS|1000-01-01 00:00:00|9999-12-31 23:59:59|0000-00-00 00:00:00|有时区的年月日时分秒毫秒|
+|DATETIME|8|bytes|YYYY-MM-DD HH:MM:SS|1000-01-01 00:00:00|9999-12-31 23:59:59|0000-00-00 00:00:00|年月日时分秒毫秒|
 |TIMESTAMP|4|bytes|YYYY-MM-DD HH:MM:SS|1970-01-01 08:00:01|2038-01-19 03:14:07|00000000000000|年月日时分秒毫秒|
 |DATE|4|bytes|YYYY-MM-DD|1000-01-01|9999-12-31|0000-00-00|年月日|
 |TIME|3|bytes|HH:MM:SS|-838:59:59|838:59:59|00:00:00|时分秒|
@@ -18,60 +18,75 @@
 - 但用整型或字符串保存时间就用不了 mysql 里时间处理的函数
     - 又或者需要转换一次才能使用 mysql 里时间处理的函数
 - 内置的变量 CURRENT_TIMESTAMP
+- 对于 TIMESTAMP ，在插入数据时会根据当前的时区设置，转换对应的 utc 时间，查询时也会根据当前的时间进行转换
+    - 例如
+        - 插入时的值是 2021-06-01 08:00 ，时区是 utc+8
+        - 如果查询时的时区也是 utc+8 ，那么查询的值也是 2021-06-01 08:00 ；如果查询时的时区是 utc+0 ，那么查询的值是 2021-06-01 00:00
+- 对于 DATETIME ，则不会受时区的影响
 
 ## 函数
 ### 获取当前时间
 
 ```sql
-select NOW();
-select CURDATE();
-select CurTime();
-select CURRENT_DATE();
-select CURRENT_TIME();
-select CURRENT_TIMESTAMP();
-select DATE(NOW());
-select TIME(NOW());
-select YEAR(NOW());
-select month(NOW());
-select DAY(NOW());
-select Hour(NOW());
-select Minute(NOW());
-select second(NOW());
-select unix_timestamp();
+select NOW(); # 当前的年月日时分秒，当前时区的
+select CURDATE(); # 当前的年月日，当前时区的
+select CURTIME(); # 当前的时分秒，当前时区的
+select UTC_TIMESTAMP(); # 当前的年月日时分秒，utc时区的
+select UTC_DATE(); # 当前的年月日，utc时区的
+select UTC_TIME(); # 当前的时分秒，utc时区的
+select UNIX_TIMESTAMP(); # 当前的10位时间戳
+
+select DATE(NOW()); # 当前的年月日
+select TIME(NOW()); # 当前的时分秒
+select YEAR(NOW()); # 当前的年
+select MONTH(NOW()); # 当前的月
+select DAY(NOW()); # 当前的日
+select HOUR(NOW()); # 当前的时
+select MINUTE(NOW()); # 当前的分
+select SECOND(NOW()); # 当前的秒
+
 ```
+
+CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP,
+LOCALTIME(), LOCALTIME,
+LOCALTIMESTAMP(), LOCALTIMESTAMP,
+这些都是 NOW() 的别名
+
+CURRENT_DATE(), CURRENT_DATE 这两个是 CURDATE() 的别名
+CURRENT_TIME(), CURRENT_TIME 这两个是 CURTIME() 的别名
 
 ### 转换
 
 在这个章节的语境下，时间戳是指 10 位长度的类型为整型的时间戳
 
-- 字符串 -> 时间戳 unix_timestamp
+- 字符串 -> 时间戳 UNIX_TIMESTAMP
     ```sql
-    select unix_timestamp('2022-04-07T00:00:00+08:00');
+    select UNIX_TIMESTAMP('2022-04-07T00:00:00+08:00');
     ```
 
-- 字符串 -> 时间类型 str_to_date
+- 字符串 -> 时间类型 DATE_FORMAT
     ```sql
-    date_format('2022-04-07T00:00:00+08:00', "%Y-%m-%d %H:%i");
+    DATE_FORMAT('2022-04-07T00:00:00+08:00', "%Y-%m-%d %H:%i");
     ```
 
-- 时间类型 -> 字符串 date_format
+- 时间类型 -> 字符串 DATE_FORMAT
     ```sql
-    date_format(now(), "%Y-%m-%d %H:%i:%s");
+    DATE_FORMAT(NOW(), "%Y-%m-%d %H:%i:%s");
     ```
 
-- 时间类型 -> 时间戳 unix_timestamp
+- 时间类型 -> 时间戳 UNIX_TIMESTAMP
     ```sql
-    select unix_timestamp(now());
+    select UNIX_TIMESTAMP(NOW());
     ```
 
-<!-- - 时间戳 -> 字符串 from_unixtime -->
-- 时间戳 -> 时间类型 from_unixtime
+<!-- - 时间戳 -> 字符串 FROM_UNIXTIME -->
+- 时间戳 -> 时间类型 FROM_UNIXTIME
     ```sql
-    from_unixtime(1649260800);
-    from_unixtime(1649260800, "%Y-%m-%d %H:%i:%s");
+    FROM_UNIXTIME(1649260800);
+    FROM_UNIXTIME(1649260800, "%Y-%m-%d %H:%i:%s");
     ```
 
-- date_format 和 from_unixtime 会根据 format 转换成不同的类型，例如 %Y-%m-%d 会转换成 date 类型， %Y-%m-%d %H:%i 会转换成 datetime 类型
+- DATE_FORMAT 和 FROM_UNIXTIME 会根据 format 转换成不同的类型，例如 %Y-%m-%d 会转换成 date 类型， %Y-%m-%d %H:%i 会转换成 datetime 类型
 
 ### 计算
 
@@ -95,16 +110,63 @@ select unix_timestamp();
         - quarter 季度
         - year
     - 例子
-        - 后一天
         ```
-        select date_add(now(), interval 1 day);
-        select date_sub(now(), interval -1 day);
+        # 后一天
+        select date_add(CURDATE(), interval 1 day);
+        select date_sub(CURDATE(), interval -1 day);
+        # 前一天
+        select date_sub(CURDATE(), interval 1 day);
+        select date_add(CURDATE(), interval -1 day);
+        # 前24小时
+        select date_sub(NOW(), interval 1 day);
+        select date_add(NOW(), interval -1 day);
         ```
-        - 前一天
-        ```
-        select date_sub(now(), interval 1 day);
-        select date_add(now(), interval -1 day);
-        ```
+
+### 和星期相关的
+
+|函数|描述|
+|-|-|
+|week(date [,mode]); | 一年中的第几周，礼拜日是第一天，索引从 0 开始 |
+|weekofyear(date); | 一年中的第几周，索引从 1 开始，相当于 week(date, 3) |
+|dayofweek(date); | 一周中的第几天，礼拜日是第一天，索引从 1 开始 |
+|weekday(date); | 一周中的第几天，礼拜一是第一天，索引从 0 开始 |
+|yearweek(date [,mode]); | 返回年份和周数，例如 2022-04-21 会返回 202216 ，表示 2022 年和当年的第16周 |
+
+week 和 yearweek 的 mode 是一样的。
+mode 的默认值来自系统变量 default_week_format 。
+可以这样查看 SHOW VARIABLES LIKE 'default_week_format';
+一般情况下 default_week_format 的值是 0 。
+
+mode|一周的第一天|范围|第一周是怎么计算的
+-|-|-|-
+0|星期日|0-53|从本年的第一个星期日开始，是第一周。前面的计算为第0周
+1|星期一|0-53|假如1月1日到第一个周一的天数超过3天，则计算为本年的第一周。否则为第0周
+2|星期日|1-53|从本年的第一个星期日开始，是第一周。前面的计算为上年度的第5x周
+3|星期一|1-53|假如1月1日到第一个周日天数超过3天，则计算为本年的第一周。否则为上年度的第5x周
+4|星期日|0-53|假如1月1日到第一个周日的天数超过3天，则计算为本年的第一周。否则为第0周
+5|星期一|0-53|从本年的第一个星期一开始，是第一周。前面的计算为第0周。
+6|星期日|1-53|假如1月1日到第一个周日的天数超过3天，则计算为本年的第一周。否则为上年度的第5x周
+7|星期一|1-53|从本年的第一个星期一开始，是第一周。前面的计算为上年度的第5x周
+
+### sysdate 和 now 的区别
+sysdate() 日期时间函数跟 now() 类似，不同之处在于：
+now() 在执行开始时值就得到了，
+sysdate() 在函数执行时动态得到值。
+
+例子
+```
+select now(), sleep(3), now(), sysdate();
+# sleep 会返回 0
+# 两个 now 是一样的
+# sysdate 会比 now 慢 3 秒
+```
+
+### mysql 时间的格式
+
+https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-format
+
+这几个函数都通用
+DATE_FORMAT(), FROM_UNIXTIME(), STR_TO_DATE(), TIME_FORMAT(), UNIX_TIMESTAMP().
 
 ### 还有更多
 
@@ -124,20 +186,17 @@ sysdate
 sleep
 ```
 
-```
-week(now()), weekofyear(now()); -- 一年中的第几周
-dayofweek(now()); -- 一周中的第几天，礼拜日是第一天
-weekday(now()); -- 一周中的第几天，礼拜一是第一天，索引从 0 开始
-yearweek(now()); -- 返回年份和周数，例如 2022-04-21 会返回 202216 ，表示 2022 年和当年的第16周
-```
+各个函数的输入和输出好像都有一点混乱
+- 例如 可以输入 时间戳 时间字符串 时间类型，然后又可以输出 时间戳 时间字符串 时间类型
+- 大致的规律
+    - 如果是格式化的函数怎会返回字符串 varchar
+    - 如果是没有小数的时间戳会返回 integer
+    - 如果是有小数的时间戳会返回  decimal
+    - 如果是有 年月日时分秒 的时间会返回 datetime
+    - 其它情况会返回对应的时间类型
+    - 好像 timeatmp 这种类型没有函数会返回
 
-```
-sysdate() 日期时间函数跟 now() 类似，不同之处在于：now() 在执行开始时值就得到了， sysdate() 在函数执行时动态得到值
-select now(), sleep(3), now(), sysdate();
-sleep 会返回 0
-两个 now 是一样的
-sysdate 会比 now 慢 3 秒
-```
+因为 mysql 的文档里函数名都是大写的，所以自己写的代码最好还是都是大写吧，虽然都是大小写不敏感。
 
 ## MySQL 的时区
 
