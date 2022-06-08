@@ -499,7 +499,7 @@ http://aqrun.oicnp.com/2019/11/10/12.magento2-indexing-reindex.html
     <?xml version="1.0"?>
     <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
         <group id="default">
-            <job name="order_complete_fulfillment_end_date_expire" instance="HKT\PartnerCode\Cron\Order\FulfillmentEndDateExpireCron" method="execute">
+            <job name="order_complete_fulfillment_end_date_expire" instance="Vendor\Extension\Cron\Order\FulfillmentEndDateExpireCron" method="execute">
                 <schedule>0 2 * * *</schedule>
             </job>
         </group>
@@ -676,7 +676,7 @@ system -> action logs -> report
                     <resource id="Magento_Sales::sales">
                         <resource id="Magento_Sales::sales_operation">
                             <resource id="Magento_Sales::sales_order">
-                                <resource id="HKT_AdminPortal::cs_portal" title="CS Portal" sortOrder="10" />
+                                <resource id="Vendor_Extension_AdminPortal::cs_portal" title="CS Portal" sortOrder="10" />
                                 <resource id="Magento_Sales::create_new_order" title="Create New Order" sortOrder="20" />
                                 <resource id="Magento_Sales::view_order" title="View Order" sortOrder="30" />
                                 <resource id="Magento_Sales::order_actions" title="Order Actions" sortOrder="40" />
@@ -728,9 +728,38 @@ system -> action logs -> report
 
 ## 一些自定义配置
 
-### 写在模块的 config.xml 文件里
+写在模块的 etc/config.xml 文件里
 
-### 写在 core_config_data 表里
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <general>
+            <file>
+                <bunch_size>1000</bunch_size>
+            </file>
+        </general>
+    </default>
+</config>
+```
+
+写在 core_config_data 表里
+
+```sql
+INSERT INTO core_config_data (`scope`,scope_id,`path`,value,updated_at) VALUES ('default',0,'general/file/bunch_size','1000', NOW());
+```
+
+上面两种写法效果是一样的，
+可以这样获取配置的值
+```php
+/** @var \Magento\Framework\App\Config\ScopeConfigInterface */
+$scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(Magento\Framework\App\Config\ScopeConfigInterface::class);
+ $scopeConfig->getValue('general/file/bunch_size');
+```
+
+数据库的优先级会更高。
+
+修改过配置项的值后，需要清空或刷新缓存才会生效（不论是 config.xml 的配置还是数据库里的配置）。
 
 ## 一些调试技巧
 
@@ -925,7 +954,7 @@ extends(?:.*)AbstractResource\n
 ```
 
 ```
-app/code/HKT/**/*.php
+app/code/Vendor/**/*.php
 app/**/*Test.php
 magento/**/*.php
 ```
