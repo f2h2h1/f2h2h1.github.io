@@ -618,6 +618,44 @@ crontab -l
 
 ## 新建一个后台视图
 
+1. 视图是一个 xml 文件
+    - 视图的命名是根据路由来的
+    - 例如 这样的视图名 partnercode_couponquota_index.xml 对应的路由就是 partnercode/couponquota/index
+    - 视图文件一般放在这几个位置
+        - 后台的视图 模块/view/adminhtml/layout/视图名.xml
+        - 前台的视图 模块/view/frontend/layout/视图名.xml
+        - 通用的视图 模块/view/base/layout/视图名.xml
+    - 这是一个视图的例子
+        ```xml
+        <?xml version="1.0"?>
+        <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+            <body>
+                <referenceContainer name="content">
+                    <block class="Magento\Backend\Block\Template" name="extension.coupon_quota.grid.container" template="Vendor_Extension::coupon_quota/index.phtml"/>
+                </referenceContainer>
+            </body>
+        </page>
+        ```
+    - block 节点参数的解释
+        - block 要填完整的类名，如果不是自定义的 block ，就填 \Magento\Backend\Block\Template 或 \Magento\Framework\View\Element\Template
+        - name 可以随便填，但最好全局唯一
+        - template 填模板的路径，是 模块名::模板的相对路径，可以参考下面的例子
+            - 如果视图的绝对路径是 app\code\Vendor\Extension\view\adminhtml\layout\partnercode_couponquota_index.phtml
+            - 如果模板的绝对路径是 app\code\Vendor\Extension\view\adminhtml\templates\coupon_quota\index.phtml
+            - 那么在 template 里的值就填 Vendor_Extension::coupon_quota/index.phtml
+1. 视图由 block 组成
+    - blcok 是 php 对象
+    - 自定义的 block 一般放在 模块/block 这个文件夹里
+        - 后台的 block 就要继承这个类 \Magento\Backend\Block\Template
+        - 前台的 block 就要继承这个类 \Magento\Framework\View\Element\Template
+1. 每个 block 会有一个模板对应，也就是 phtml 后缀的文件。
+    - 这是一个模板的例子
+        ```php
+        <?php
+        /** @var \Magento\Framework\View\Element\Template $block */
+        <p><?=$block->getBaseUrl()?></p>
+        ```
+
 ## 在后台视图里新建一个表格
 
 ## 添加后台日志
