@@ -64,6 +64,9 @@
 |[Eric](https://ericclose.github.io/)|<img alt="Eric" src="https://cdn.jsdelivr.net/gh/ericclose/cdn-assets/img/avatar.jpeg" width="119" />|https://ericclose.github.io/|To be completed...|
 |[荣豪Blog](https://blog.roco.work)|<img alt="荣豪Blog" src="https://roco.work/img/avatar-archives/0.png" width="119" />|https://blog.roco.work|鸽子的博客肯定啥也没有(doge)|
 |[刘兴刚博客](https://www.liuxinggang.com/)|<img alt="刘兴刚博客" src="https://www.liuxinggang.com/favicon.ico" width="119" />|https://www.liuxinggang.com/|刘兴刚的博客 | 关注Web开发,记录自己成长点滴|
+|[Zifan的小站](https://zifan.site/)|<img alt="Zifan的小站" src="https://zifan.site/img/py.PNG" width="119" />|https://zifan.site/|个人编程技术学习与分享|
+|[Wade的学习笔记](https://www.wadesays.xyz)|<img alt="Wade的学习笔记" src="https://www.wadesays.xyz/wp-content/uploads/avatar.png" width="119" />|https://www.wadesays.xyz|什么都不会的初始化站长，分享一些学习到的技能。|
+|[Rookie_L’s Blog](https://icu007.work)|<img alt="Rookie_L’s Blog" src="https://icu007.work/wp-content/uploads/2022/03/head-1.jpeg" width="119" />|https://icu007.work|记录我的日常生活&学习笔记|
 <!-- exchangeList -->
 
 <!--
