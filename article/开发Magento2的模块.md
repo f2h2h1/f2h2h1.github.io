@@ -108,7 +108,7 @@ app
         </table>
     </schema>
     ```
-    - setup 脚本将会被淘汰， https://devdocs.magento.com/guides/v2.4/extension-dev-guide/declarative-schema/db-schema.html
+    - setup 脚本将会被淘汰， https://developer.adobe.com/commerce/php/development/components/declarative-schema/configuration/
 0. 新建 resource model
     - 在模块目录 model/ResourceModel 文件夹下新建 TestModel.php
 
@@ -237,7 +237,7 @@ app
 0. 可以尝试运行这条命令 `php bin/magento list` ，看看能不能找到新加的命令
 0. 最后运行上面新加的命令 `php bin/magento example:sayhello`
 
-参考 https://devdocs.magento.com/guides/v2.4/extension-dev-guide/cli-cmds/cli-howto.html
+参考 https://developer.adobe.com/commerce/php/development/cli-commands/custom/
 
 ## 新建 GraphQl 的接口
 
@@ -486,7 +486,7 @@ app
 
 ### 参考
 
-https://devdocs.magento.com/guides/v2.4/extension-dev-guide/indexing-custom.html
+https://developer.adobe.com/commerce/php/development/components/indexing/custom-indexer/
 
 http://aqrun.oicnp.com/2019/11/10/12.magento2-indexing-reindex.html
 
@@ -585,7 +585,7 @@ crontab -l
 1. 新建 Plugins 类
 1. 修改模块的 etc 文件夹下的 di.xml
 1. 运行 php bin/magento setup:di:compile
-1. 参考 https://devdocs.magento.com/guides/v2.4/extension-dev-guide/plugins.html
+1. 参考 https://developer.adobe.com/commerce/php/development/components/plugins/
 
 ## 替换其它模块里的类
 
@@ -614,7 +614,7 @@ crontab -l
         ['username' => $username, 'password' => $password, 'user' => $this, 'result' => $result]
     );
     ```
-1. 参考 https://devdocs.magento.com/guides/v2.4/extension-dev-guide/events-and-observers.html
+1. 参考 https://developer.adobe.com/commerce/php/development/components/events-and-observers/
 
 ## 新建一个后台视图
 
@@ -737,7 +737,7 @@ system -> action logs -> report
         ```
 1. 修改完后要清除缓存才能生效 php bin/magento cache:clean
 1. 权限的调整在这个位置 System > Permissions > User Roles
-1. 参考 https://devdocs.magento.com/guides/v2.4/ext-best-practices/tutorials/create-access-control-list-rule.html
+1. 参考 https://developer.adobe.com/commerce/php/best-practices/tutorials/create-access-control-list-rule/
 
 ## 新建一个后台菜单
 
@@ -762,7 +762,7 @@ system -> action logs -> report
     - action 转跳的 action ，不填这个就是菜单里的一个分类
     - resource 用于 acl 的
     - module 模块名
-1. 参考 https://devdocs.magento.com/guides/v2.4/ext-best-practices/tutorials/create-access-control-list-rule.html
+1. 参考 https://developer.adobe.com/commerce/php/best-practices/tutorials/create-access-control-list-rule/
 
 ## 一些自定义配置
 

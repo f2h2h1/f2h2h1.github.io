@@ -96,6 +96,9 @@
                 雅思（LETLS） 3.5 分 或
                 欧洲语言共同参考框架（CEFR） A2
             在没有翻译的帮助下达到 A2 的水平，加上翻译达到 B1 的水平（所以熟练地使用各类翻译工具也是一种重要的能力）
+            专为程序员编写的英语学习指南
+                https://github.com/yujiangshui/A-Programmers-Guide-to-English
+                https://a-programmers-guide-to-english.harryyu.me/
         抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
     ## 计算机学科的相关概念
         图灵机
@@ -313,6 +316,7 @@ frp的使用
         开源中国 https://www.oschina.net/news
 git仓库
     github中文社区，一些github仓库的索引 https://www.githubs.cn
+    分享 GitHub 上入门级、有趣的开源项目 https://hellogithub.com
 书籍
     鸟哥私房菜
     穿越计算机的迷雾
@@ -2492,6 +2496,9 @@ composer
     https://docs.microsoft.com/zh-cn/contribute/style-quick-start
     https://docs.microsoft.com/zh-cn/style-guide/welcome/
 程序员延寿指南 https://github.com/geekan/HowToLiveLonger
+开源软件指南
+    https://github.com/github/opensource.guide
+    https://opensource.guide/zh-hans/
 版本控制软件比较
     git
         github
