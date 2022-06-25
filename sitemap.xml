@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+    <loc>https://f2h2h1.github.io/article/各种标记语言.html</loc>
+    <lastmod>2022-06-25</lastmod>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html</loc>
     <lastmod>2022-05-25</lastmod>
     <priority>0.5</priority>
@@ -52,7 +57,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/DNSSEC简介.html</loc>
-    <lastmod>2021-11-15</lastmod>
+    <lastmod>2022-06-22</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -77,7 +82,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/开发Magento2的模块.html</loc>
-    <lastmod>2022-06-10</lastmod>
+    <lastmod>2022-06-20</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -187,7 +192,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</loc>
-    <lastmod>2022-05-14</lastmod>
+    <lastmod>2022-06-20</lastmod>
     <priority>0.5</priority>
 </url>
 <url>

@@ -4,10 +4,17 @@
     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
     <link href="https://f2h2h1.github.io/" />
     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    <updated>2022-06-11T14:46:37+08:00</updated>
+    <updated>2022-06-25T16:05:43+08:00</updated>
     <author>
         <name>f2h2h1's blog</name>
     </author>
+<entry>
+    <title>各种标记语言</title>
+    <link href="https://f2h2h1.github.io/article/各种标记语言.html" />
+    <id>https://f2h2h1.github.io/article/各种标记语言.html</id>
+    <updated>2022-06-25T16:05:16+08:00</updated>
+    <summary>各种标记语言</summary>
+</entry>
 <entry>
     <title>使用PowerShell实现的http服务器</title>
     <link href="https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html" />
@@ -82,7 +89,7 @@
     <title>DNSSEC简介</title>
     <link href="https://f2h2h1.github.io/article/DNSSEC简介.html" />
     <id>https://f2h2h1.github.io/article/DNSSEC简介.html</id>
-    <updated>2021-11-15T23:15:56+08:00</updated>
+    <updated>2022-06-22T18:53:13+08:00</updated>
     <summary>DNSSEC简介</summary>
 </entry>
 <entry>
@@ -117,7 +124,7 @@
     <title>开发Magento2的模块</title>
     <link href="https://f2h2h1.github.io/article/开发Magento2的模块.html" />
     <id>https://f2h2h1.github.io/article/开发Magento2的模块.html</id>
-    <updated>2022-06-10T18:12:28+08:00</updated>
+    <updated>2022-06-20T18:40:59+08:00</updated>
     <summary>开发Magento2的模块</summary>
 </entry>
 <entry>
@@ -271,7 +278,7 @@
     <title>关于字符编码的一些坑</title>
     <link href="https://f2h2h1.github.io/article/关于字符编码的一些坑.html" />
     <id>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</id>
-    <updated>2022-05-14T16:48:36+08:00</updated>
+    <updated>2022-06-20T18:40:59+08:00</updated>
     <summary>关于字符编码的一些坑</summary>
 </entry>
 <entry>
