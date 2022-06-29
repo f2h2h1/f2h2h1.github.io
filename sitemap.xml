@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+    <loc>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</loc>
+    <lastmod>2022-06-28</lastmod>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://f2h2h1.github.io/article/各种标记语言.html</loc>
     <lastmod>2022-06-25</lastmod>
     <priority>0.5</priority>
@@ -116,12 +121,12 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</loc>
+    <loc>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</loc>
     <lastmod>2021-07-10</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</loc>
+    <loc>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</loc>
     <lastmod>2021-07-10</lastmod>
     <priority>0.5</priority>
 </url>
@@ -137,7 +142,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/密码学入门简明指南.html</loc>
-    <lastmod>2022-06-11</lastmod>
+    <lastmod>2022-06-29</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -167,7 +172,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/一些开发笔记.html</loc>
-    <lastmod>2022-06-11</lastmod>
+    <lastmod>2022-06-29</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -197,7 +202,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</loc>
-    <lastmod>2021-12-23</lastmod>
+    <lastmod>2022-06-29</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
