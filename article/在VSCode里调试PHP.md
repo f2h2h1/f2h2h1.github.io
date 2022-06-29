@@ -4,6 +4,8 @@
 1. 在命令行里运行
     ```
     php -i
+    // 又或者运行这句
+    php -r 'phpinof();'
     ```
 2. 打开这个网址 https://xdebug.org/wizard.php 把第一步输出的结果复制进去，然后获得对应版本 Xdebug 的下载地址，当然如果你知道熟悉 PHP 的版本也可以直接选择相应的版本下载
 3. 解压下载后的压缩包，把 Xdebug 的拓展复制进 PHP 的拓展目录里，PHP 的拓展目录一般是安装目录里的 ext 文件夹
@@ -18,14 +20,8 @@
     zend_extension = path/to/xdebug
     ; 日志路径
     ; xdebug.remote_log = ""
-    ; 跟踪输出路径
-    ; xdebug.trace_output_dir = ""
     ; 是否开启远程调试
     xdebug.remote_enable = on
-    ; 是否开启分析器
-    ; xdebug.profiler_enable = on
-    ; 分析器文件路径
-    ; profiler_output_dir = ""
     ; 允许调试的客户端IP
     xdebug.remote_host = 127.0.0.1
     ; 远程调试的端口
@@ -38,6 +34,22 @@
     xdebug.default_enable = on
     ; ide key
     xdebug.idekey = "vscode"
+    ; 是否开启分析器
+    ; xdebug.profiler_enable = on
+    ; 分析器文件路径
+    ; profiler_output_dir = ""
+    ; 启用 trace
+    ; xdebug.auto_trace = 1
+    ; 跟踪输出路径
+    ; xdebug.trace_output_dir = ""
+    ; 当这个设置设为其他不等于 0 的值时，Xdebug 会生成易于人类阅读的跟踪文件
+    ; xdebug.show_mem_delta = 1
+    ; trace 输出的格式 0 文本文件， 1 有格式的文本文件， 2 html
+    ; xdebug.trace_format = 0
+    ; 参数信息显示 0 不记录， 1 类型和数量， 2 类型和数量并附带提示信息， 3 完整变量内容， 4 完整变量内容和名称， 5 序列化变量内容
+    ; xdebug.collect_params = 1
+    ; 是否应该将函数调用的返回值写入跟踪文件
+    ; xdebug.collect_return = On
     ```
 - xdebug 3.0
     ```plaintext
@@ -49,6 +61,10 @@
     xdebug.client_port = 9003
     xdebug.connect_timeout_ms = 2000
     ```
+
+2.9 配置参考文档
+- http://www.xdebug.org.cn/docs/profiler
+- http://www.xdebug.org.cn/docs/execution_trace
 
 ## 3 安装 VSCode 的 PHP 拓展包
 
@@ -102,6 +118,9 @@ IntelliSense 的插件有两个， IntelliSense 只需要装一个就可以的�
     ```
 
 ## 6. 使用分析工具
+
+profiler 文件可以用 QCacheGrind 查看；
+trace 的文件是纯文本的，可以直接打开的。
 
 ### QCacheGrind
 0. QCacheGrind 不支持 xdebug 3.0
