@@ -2461,6 +2461,41 @@ composer
         通常能兼容浏览器或服务器环境
         无导入导出规范，只有一个常规写法
     ES6 module
+浏览器相关的经验
+    启动参数
+        --no-sandbox
+        --headless
+        --disable-gpu
+        输出 pdf ， 输出 html ，截图
+        --print-to-pdf --dump-dom --screenshot
+        使用默认设置，通常和 --user-data-dir 一起使用，因为第一次启动时会询问各种设置
+        --profile-directory=Default
+        --auto-open-devtools-for-tabs
+        --user-agent=
+        自定义用户数据的存储目录
+        --user-data-dir=
+        --disk-cache-dir=
+        --app
+        --disable-javascript
+        --proxy-pac-url
+        不使用图片
+        --blink-settings=imagesEnabled=false
+        忽略证书错误
+        --ignore-certificate-errors
+        允许不安全内容
+        --allow-running-insecure-content
+        允许从本地主机加载的资源使用无效证书
+        --allow-insecure-localhost
+    清空 dns
+        edge://net-internals/#dns
+        chrome://net-internals/#dns
+    火狐不显示图片
+        about:config
+        permissions.default.image 把这个值由 1 改成 2
+    火狐输出命令行帮助
+        在 git bash 里运行 firefox --help
+        只有在 git bash 里有效，在 bat powershell 里都没有效果
+        https://wiki.mozilla.org/Firefox/CommandLineOptions
 分片上传 和 断点下载
     分片上传
         计算md5

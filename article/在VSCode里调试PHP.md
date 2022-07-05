@@ -5,7 +5,7 @@
     ```
     php -i
     // 又或者运行这句
-    php -r 'phpinof();'
+    php -r 'phpinfo();'
     ```
 2. 打开这个网址 https://xdebug.org/wizard.php 把第一步输出的结果复制进去，然后获得对应版本 Xdebug 的下载地址，当然如果你知道熟悉 PHP 的版本也可以直接选择相应的版本下载
 3. 解压下载后的压缩包，把 Xdebug 的拓展复制进 PHP 的拓展目录里，PHP 的拓展目录一般是安装目录里的 ext 文件夹

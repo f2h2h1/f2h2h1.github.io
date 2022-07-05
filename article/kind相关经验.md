@@ -133,8 +133,47 @@ kind delete cluster
 
 - 查看命令空间下的 pods
     ```
-    kubectl -n namespaces get pods
+    kubectl -n <namespaces> get pods
     ```
+
+- 查看 pod 信息
+    ```
+    kubectl -n <namespaces> describe pod <pod-name>
+    ```
+    - 可以通过这个命令获取 pod 里的容器信息
+
+- 复制文件进 pod 的容器里
+    ```
+    kubectl -n <namespaces> cp <local-path> <pod-name>:<container-path>
+    如果 pod 里有多个容器，就需要指定容器名
+    kubectl -n <namespaces> -c <container-name> cp <local-path> <pod-name>:<container-path>
+    ```
+
+- 复制 pod 的文件到本地
+    ```
+    kubectl -n <namespaces> cp <pod-name>:<container-path> <local-path>
+    如果 pod 里有多个容器，就需要指定容器名
+    kubectl -n <namespaces> -c <container-name> cp <pod-name>:<container-path> <local-path>
+    ```
+
+- 在 pod 的容器里执行命令
+    ```
+    kubectl -n <namespaces> exec <pod-name> -- <command>
+    如果 pod 里有多个容器，就需要指定容器名
+    kubectl -n <namespaces> -c <container-name> exec <pod-name> -- <command>
+    ```
+
+- 进入 pod 的容器里
+    ```
+    kubectl -n <namespaces> exec -it <pod-name> -- bash
+    如果 pod 里有多个容器，就需要指定容器名
+    kubectl -n <namespaces> -c <container-name> exec -it <pod-name> -- bash
+    ```
+    - 其实就是在容器里执行 bash 命令，有些容器可能会没有 bash ，可以试试 sh 或用绝对路径 /bin/bash /bin/sh 这类
+    - -it 是这两个参数的合并 --interactive --tty
+    - --interactive 交互式的，保持 stdin 开启，即使未连接
+    - --tty 分配一个伪终端设备
+    - 其实就是 --interactive 负责输入， --tty 负责输出，这两个参数的含义，应该和 docker 里一样的
 
 ## 安装 kubernetes-dashboard
 
@@ -196,7 +235,7 @@ kind delete cluster
         namespace: kubernetes-dashboard
     ```
 
-1. 上面那个 yaml 文件，是新建老一个 ServiceAccount ，并给这个用户绑定了一个角色
+1. 上面那个 yaml 文件，是新建一个 ServiceAccount ，并给这个用户绑定了一个角色
 1. 运行配置文件
     ```
     kubectl apply -f dashboard-adminuser.yaml

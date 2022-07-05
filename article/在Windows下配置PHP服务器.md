@@ -237,15 +237,25 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
 1. 把 Apache 添加进环境变量
 2. 把 php 目录下的 php7apache2_4.dll 复制到 Apache 目录下的 modules
 3. 打开 Apache 的配置文件 httpd.conf，往 httpd.conf 里添加 php 的模块，httpd.conf 这个文件在 Apache 安装目录的 conf 文件夹里
-
     ```plaintext
     LoadModule php7_module modules/php7apache2_4.dll
 
     AddHandler application/x-httpd-php .php
     PHPIniDir "C:/php"
     ```
-
-这段配置，加在 httpd.conf 的 179 行左右，就是加载模块那部分的尾部
+    - 这段配置，加在 httpd.conf 的 179 行左右，就是加载模块那部分的尾部
+    - 如果遇到这种错误
+        ```
+        httpd.exe: Syntax error on line 187 of Apache24/conf/httpd.conf: Cannot load modules/php8apache2_4.dll into server:
+        ```
+    - 可以尝试这样解决
+        - 检查 httpd.conf 里的 SRVROOT 不否有填好
+        - 检查 Apache 与 PHP 版本的位数是否一致
+            - 必须是 都是 32 位或都是 64 位
+        - 试试 模块名由 php8_module 改成没有版本号的 php_module
+        - 试试 模块的路径填绝对路径
+            - 例如 这样 C:/php/php8apache2_4.dll
+            - 但 这样的路径却不行 C:/apache/modules/php8apache2_4.dll ，虽然不知道为什么
 
 4. 打开 httpd.conf，将里面的 #ServerName localhost:80 注释去掉。
 
@@ -287,6 +297,16 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
 ```
 注意，这里的站点目录和日志目录需要在自己新建
 
+测试配置文件
+```
+httpd -t
+```
+
+查看帮助
+```
+httpd -h
+```
+
 9. 启动 Apache，在命令行里运行
 ```plaintext
 httpd
@@ -308,6 +328,11 @@ httpd -k start
 ```plaintext
 httpd -k stop
 ```
+- 重启服务
+```plaintext
+httpd -k restart
+```
+
 注意，在调用 httpd 注册 Apache 的服务时，弹出这句话
 ```
 Errors reported here must be corrected before the service can be started
@@ -416,6 +441,7 @@ http://nginx.org/download/nginx-1.21.1.zip
     - 停止 nginx `nginx -s stop`
     - 重载配置 `nginx -s reload`
     - 测试配置文件 `nginx -T`
+    - 查看帮助 `nginx -h`
 4. 退出 nginx 最好使用信号的方式退出，直接关掉 nginx 的进程，可能会有 nginx 子进程残留
 
 ## redis
