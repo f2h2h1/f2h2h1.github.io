@@ -1,9 +1,16 @@
 'use strict';
 var Application = (function(){
-    let application = function(params){};
     var articleList = {};
     var indexList;
     var article;
+    var appData = {
+        hostname: '',
+        sitename: '',
+    };
+    var application = function(params) {
+        appData.hostname = params.hostname;
+        appData.sitename = params.sitename;
+    };
     function ajax(options) {
         options = options || {};
         options.type = (options.type || 'GET').toUpperCase();
@@ -79,10 +86,10 @@ var Application = (function(){
         };
         urlManager.prototype.routeMode = RouteMode.HASH;
         urlManager.prototype.init = function(indexList, article) {
-            if (window.location.hostname == 'f2h2h1.github.io') {
+            if (window.location.hostname == appData.hostname) {
                 urlManager.prototype.routeMode = RouteMode.HISTORY;
                 let handleUrl = function (href, target, popstate) {
-                    let title = 'f2h2h1\'s blog';
+                    let title =  appData.sitename;
                     let url = new URL(href);
                     // console.log(url);
                     let homepage = window.location.protocol + '//' + window.location.host + '/';
@@ -249,12 +256,12 @@ var Application = (function(){
         IndexList.prototype.render = function() {
             let content = DOM;
             let articleList = DATA;
+            let divIndexList = document.createElement("div");
             content.innerHTML = '';
             for (let i = 0, len = articleList.length ; i < len; i++) {
                 let div = document.createElement("div");
                 let a = document.createElement("a");
                 let h2 = document.createElement("h2");
-                let hr = document.createElement("hr");
                 let articleTitle = articleList[i].title;
 
                 // h2.innerHTML = articleTitle;
@@ -265,10 +272,10 @@ var Application = (function(){
                 div.appendChild(h2);
                 // div.appendChild(a);
                 div.appendChild(timespan(articleList[i]));
-                div.appendChild(hr);
-                content.appendChild(div);
+                divIndexList.appendChild(div);
             }
-            document.querySelector('title').innerText = 'f2h2h1\'s blog';
+            content.appendChild(divIndexList);
+            document.querySelector('title').innerText = appData.sitename;
         }
         return IndexList;
     })();
@@ -330,17 +337,26 @@ var Application = (function(){
                     }
                     title = decodeURIComponent(title);
                     let articleInfo = findArticleInfo(articleList, title);
-                    let span = document.createElement("span");
-                    let hr = document.createElement("hr");
-                    content.appendChild(hr);
-                    content.appendChild(timespan(articleInfo));
+                    let createdAt = timetostr(articleInfo.createTime);
+                    let updatedAt = timetostr(articleInfo.updateTime);
+                    let aside = document.createElement("aside");
+                    aside.setAttribute('id', 'article_footer');
+                    aside.innerHTML = `
+                        <p><a target="_blank" rel="noreferrer" href="https://github.com/f2h2h1/f2h2h1.github.io/blob/master/article/${title}.md">原文链接</a></p>
+                        <p>created at: ${createdAt}</p>
+                        <p>updated at: ${updatedAt}</p>
+                        <p>如果文章内容有什么错误的地方，恳请各位大佬能通过 issues 或 邮件 的方式告诉作者</p>
+                        <p><img alt="知识共享许可协议" width="87" height="30" src="/static/cc4.0.webp">
+                            本作品采用
+                            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+                            进行许可。</p>`;
+                    content.appendChild(aside);
                     document.querySelector('title').innerText = title;
                     if (new Date().getTime() / 1000 - articleInfo.updateTime > 15552000) {
                         let h1 = content.querySelector('h1');
                         let newElement = document.createElement("p");
                         newElement.innerText = "这篇文章最后更新的时间在六个月之前，文章所叙述的内容可能已经失效，请谨慎参考！";
-                        newElement.style.backgroundColor = '#b5b53b';
-                        newElement.style.color = 'black';
+                        newElement.classList.add('expired-prompt');
                         if (h1) {
                             insertAfter(newElement, h1);
                         } else {
@@ -362,11 +378,6 @@ var Application = (function(){
             DOM = initDOM;
         }
         LinkExchange.prototype.render = function() {
-            DOM.appendChild((function() {
-                let dt = document.createElement('dt');
-                dt.innerHTML = 'Link exchange';
-                return dt;
-            })());
             ajax({
                 type: 'GET',
                 url: '/exchangeList.json',
@@ -375,7 +386,7 @@ var Application = (function(){
                     let linkExchangeList = result;
                     for (let i in linkExchangeList) {
                         DOM.appendChild((function(item) {
-                            let dd = document.createElement('dd');
+                            let span = document.createElement('span');
                             let a = document.createElement('a');
                             let desc = item.name;
                             if (item.desc && item.desc != '') {
@@ -386,19 +397,13 @@ var Application = (function(){
                             a.setAttribute('href', item.href);
                             a.setAttribute('title', desc);
                             a.innerText = item.name;
-                            dd.appendChild(a);
-                            return dd;
+                            span.appendChild(a);
+                            return span;
                         })(linkExchangeList[i]));
                     }
                 },
                 error: function () {},
-                complete: function () {
-                    DOM.appendChild((function() {
-                        let dd = document.createElement('dd');
-                        dd.innerText = '可以通过 issues 或 邮件 的方式提交你的站点';
-                        return dd;
-                    })());
-                }
+                complete: function () {}
             });
         }
         return LinkExchange;
@@ -454,7 +459,7 @@ var Application = (function(){
             indexList = new IndexList(content, articleList);
             article = new Article(content, articleList);
             urlManager.init(indexList, article);
-            
+
             (new ArticleList(document.getElementById('article_list'), articleList)).render();
         } catch (e) {
             console.log(e);
@@ -462,8 +467,8 @@ var Application = (function(){
             content.innerHTML = '<div class="jumbotron"><h1>500</h1><button onclick="window.location.reload()">reload</button></div>';
             return;
         }
-        
-    }    
+
+    }
     application.prototype.run = function() {
         console.log('application.run');
         scriptManager.addScriptList([
@@ -487,5 +492,9 @@ var Application = (function(){
     return application;
 })();
 window.addEventListener('load', function() {
-    (new Application({})).run();
+    (new Application({
+        hostname: 'f2h2h1.github.io',
+        // hostname: '127.0.0.1',
+        sitename: 'f2h2h1\'s blog',
+    })).run();
 });

@@ -32,35 +32,101 @@
         grid-template-columns: 100%;
     }
 
-    @media screen and (min-width: 768px) { /* >=768的设备 */
-        main {
-            grid-template-columns: 68% 32%;
+    footer {
+        margin-top: 25px;
+        margin-bottom: 15px;
+        width: 100%;
+        /* display: grid; */
+        /* grid-template-columns: 50% 50%; */
+        /* grid-template-columns: 100%; */
+        border-top: solid;
+        /* padding-left: 15px; */
+    }
+
+    #article_footer {
+        font-size: small;
+        margin-top: 60px;
+    }
+    #article_footer p {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    #page_footer {
+        font-size: small;
+        text-align: center;
+    }
+    footer details {
+        font-size: small;
+    }
+    #link_exchange {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+    #link_exchange span {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    @media screen and (min-width: 576px) {
+        /* >=576的设备 */
+        #link_exchange {
+            flex-direction: row;
+            /* justify-content: center; */
+        }
+        #link_exchange span {
+            /* padding-left: 10px; */
+            padding-right: 20px;
         }
     }
 
-    @media screen and (min-width: 992px) { /* >=992的设备 */
+    @media screen and (min-width: 768px) {
+
+        /* >=768的设备 */
+        main {
+            grid-template-columns: 68% 32%;
+        }
+
+        /* footer {
+            grid-template-columns: 50% 50%;
+            padding-left: 5px;
+        } */
+    }
+
+    @media screen and (min-width: 992px) {
+
+        /* >=992的设备 */
         body {
             padding: 0 20px;
         }
+
         main {
             grid-template-columns: 70% 30%;
         }
     }
 
-    @media screen and (min-width: 1200px) { /* >=1200的设备 */
+    @media screen and (min-width: 1200px) {
+
+        /* >=1200的设备 */
         body {
             padding: 0 120px;
         }
+
         main {
             grid-template-columns: 80% 20%;
         }
     }
 
-    @media screen and (min-width: 1600px) { /* >=1600的设备 */
+    @media screen and (min-width: 1600px) {
+
+        /* >=1600的设备 */
         body {
             margin: 0 auto;
             max-width: 1440px;
         }
+
         main {
             grid-template-columns: 80% 20%;
         }
@@ -88,10 +154,8 @@
         display: inline-block;
     }
 
-    hr {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        border: 1px inset;
+    #index_list h2 {
+        margin-bottom: 8px;
     }
 
     #content blockquote {
@@ -119,6 +183,7 @@
         padding-top: 8px;
         font-weight: bold;
     }
+
     dd {
         margin-top: 12px;
         margin-left: 0px;
@@ -127,18 +192,13 @@
 
     .timespan {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
+        font-size: small;
     }
 
     .timespan div {
-        margin: auto 5px;
-    }
-
-    footer {
-        margin-top: 25px;
-        margin-bottom: 15px;
-        width: 100%;
+        margin: auto 10px;
     }
 
     table {
@@ -158,22 +218,32 @@
         margin: 2rem;
     }
 
+    .expired-prompt {
+        background-color: rgb(181, 181, 59);
+        color: black;
+    }
+
     @keyframes d2l {
         0% {
             background-color: rgb(0, 0, 0);
         }
+
         20% {
             background-color: rgb(68, 68, 68);
         }
+
         40% {
             background-color: rgb(136, 136, 136);
         }
+
         60% {
             background-color: rgb(195, 195, 195);
         }
+
         80% {
             background-color: rgb(225, 225, 225);
         }
+
         100% {
             background-color: rgb(255, 255, 255);
             color: rgb(0, 0, 0);
@@ -184,18 +254,23 @@
         0% {
             background-color: rgb(255, 255, 255);
         }
+
         20% {
             background-color: rgb(225, 225, 225);
         }
+
         40% {
             background-color: rgb(195, 195, 195);
         }
+
         60% {
             background-color: rgb(136, 136, 136);
         }
+
         80% {
             background-color: rgb(68, 68, 68);
         }
+
         100% {
             background-color: rgb(0, 0, 0);
             color: rgb(204, 204, 204);
@@ -213,6 +288,10 @@
 
         main {
             display: block;
+        }
+
+        footer details {
+            display: none;
         }
 
         pre code {
@@ -236,31 +315,29 @@
     <nav>
         <dl id="article_list">
         </dl>
-        <dl id="link_exchange">
-        </dl>
-        <dl>
-            <dt>About</dt>
-            <dd>名称: f2h2h1's blog</dd>
-            <dd>地址: https://f2h2h1.github.io/</dd>
-            <dd>描述: 这是一个程序员记录开发经验的博客</dd>
-            <dd>头像: https://f2h2h1.github.io/avatar.png</dd>
-            <dd>
-                <a target="_blank" rel="noreferrer" href="https://github.com/f2h2h1/f2h2h1.github.io">github</a>
-            </dd>
-            <dd><img alt="GitHub readme stats" src="https://github-readme-stats.vercel.app/api?username=f2h2h1&theme=dark&show_icons=true&include_all_commits=true" style="max-width:100%" /></dd>
-            <dd><img alt="Top Langs" src="https://github-readme-stats.vercel.app/api/top-langs/?username=f2h2h1&theme=dark"  style="max-width:100%" /></dd>            
-            <dd><a target="_blank" href="/SUMMARY.html">SUMMARY</a></dd>
-            <dd><a target="_blank" href="/sitemap.xml">sitemap</a></dd>
-            <dd><a target="_blank" href="/rss.xml">rss</a></dd>
-            <dd><a target="_blank" href="/atom.xml">atom</a></dd>
-        </dl>
     </nav>
 </main>
 <footer>
-    <p>如果文章内容有什么错误的地方，恳请各位大佬能通过 issues 或 邮件 的方式告诉作者</p>
-    <p>Copyright ©2022 f2h2h1 | All Rights Reserved</p>
-    <img alt="知识共享许可协议" width="87" height="30" src="/static/cc4.0.webp" />
-    本作品采用
-    <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
-    进行许可。
+    <div id="link_exchange">
+        <span><strong>友链:</strong></span>
+    </div>
+    <details>
+        <summary>你可以通过 issues 或 邮件 的方式提交你的站点。这个博客十分需要友链。可以参考这样的格式，提交你的站点</summary>
+        <p>名称: f2h2h1's blog</p>
+        <p>地址: https://f2h2h1.github.io/</p>
+        <p>描述: 这是一个程序员记录开发经验的博客</p>
+        <p>头像: https://f2h2h1.github.io/avatar.png</p>
+    </details>
+    <div id="page_footer">
+        <p>
+            <a target="_blank" rel="noreferrer" href="https://github.com/f2h2h1/f2h2h1.github.io">GitHub</a> |
+            <a target="_blank" href="/SUMMARY.html">SUMMARY</a> |
+            <a target="_blank" href="/sitemap.xml">sitemap</a> |
+            <a target="_blank" href="/rss.xml">rss</a> |
+            <a target="_blank" href="/atom.xml">atom</a>
+        </p>
+        <p>Copyright ©2022 f2h2h1 | All Rights Reserved
+            <!-- | <a target="_blank" rel="noreferrer" href="https://beian.miit.gov.cn/"></a> -->
+        </p>
+    </div>
 </footer>
