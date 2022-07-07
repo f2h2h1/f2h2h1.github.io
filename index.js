@@ -225,10 +225,10 @@ var Application = (function(){
             return col;
         }
         if (articleInfo.createTime) {
-            div.appendChild(createCol('create time: ' + timetostr(articleInfo.createTime)));
+            div.appendChild(createCol('created at: ' + timetostr(articleInfo.createTime)));
         }
         if (articleInfo.updateTime) {
-            div.appendChild(createCol('update time: ' + timetostr(articleInfo.updateTime)));
+            div.appendChild(createCol('updated at: ' + timetostr(articleInfo.updateTime)));
         }
         return div;
         // return 'create time: ' + timetostr(articleInfo.createTime) + '&nbsp&nbsp update time: ' + timetostr(articleInfo.updateTime);
@@ -257,6 +257,7 @@ var Application = (function(){
             let content = DOM;
             let articleList = DATA;
             let divIndexList = document.createElement("div");
+            divIndexList.setAttribute('id', 'index_list');
             content.innerHTML = '';
             for (let i = 0, len = articleList.length ; i < len; i++) {
                 let div = document.createElement("div");
@@ -446,7 +447,7 @@ var Application = (function(){
         } else {
             themeBtn.checked = false;
         }
-        mql.addListener(function(e) {
+        mql.addEventListener('change', function(e) {
             changeTheme(e.matches);
         });
         themeBtn.addEventListener('click', function() {

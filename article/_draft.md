@@ -2486,6 +2486,13 @@ composer
         --allow-running-insecure-content
         允许从本地主机加载的资源使用无效证书
         --allow-insecure-localhost
+        允许访问本地文件，这样chrome就能通过file协议加载文件
+        --allow-file-access-from-files
+        允许跨域，新版的 chrome 除了 --disable-web-security 设置还需要单独设置 --user-data-dir
+        --disable-web-security
+        --args --disable-web-security
+        --args --disable-web-security --user-data-dir=C:\MyChromeDevUserData
+        --args --disable-web-security --user-data-dir=C:\MyChromeDevUserData --profile-directory=Default
     清空 dns
         edge://net-internals/#dns
         chrome://net-internals/#dns
