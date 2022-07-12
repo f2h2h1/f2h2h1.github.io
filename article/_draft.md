@@ -34,6 +34,8 @@
         各层常用的协议
             应用层
                 http
+                    0.9 1.0 1.1 2 3
+                mqtt
                 telnet
                 ftp
                 dns
@@ -47,13 +49,20 @@
                 imap
             传输层
                 tcp
+                    建立连接 三次握手
+                    断开连接 四次挥手
+                    流量控制
+                        滑动窗口
+                    拥堵控制
+                        慢开始 与 拥塞避免
+                        快重传 与 快恢复
                 dup
+                icmp
             网际层
                 ip v4 v6
-                icmp
                 IPsec
             数据链路层
-                以太网
+                以太网 (Ethernet)
         各层对应的硬件
             网关 (gateway)
             路由 (route)
@@ -83,7 +92,7 @@
     websocket
 
 以开发软件为目标的计算机入门简明指南
-    ## 计算机入门的前置知识
+    计算机入门的前置知识
         如果只做业务相关，需要 初等数学 外加一点 数理逻辑
         如果涉及数据库的，还需要一点 集合论
         如果涉及到一些高深的算法，可能还需要 图论 和 组合数学
@@ -100,10 +109,10 @@
                 https://github.com/yujiangshui/A-Programmers-Guide-to-English
                 https://a-programmers-guide-to-english.harryyu.me/
         抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
-    ## 计算机学科的相关概念
+    计算机学科的相关概念
         图灵机
         冯诺依曼结构
-    ## 计算机的发展历史
+    计算机的发展历史
         早期工具
             算盘
             计算尺
@@ -115,9 +124,9 @@
             真空管
             晶体管
             集成电路
-    ## 逻辑门的底层
-    ## 从与或非逻辑门到指令集和汇编语言的抽象
-    ## 计算机的组成
+    逻辑门的底层
+    从与或非逻辑门到指令集和汇编语言的抽象
+    计算机的组成
         抽象的计算机组成
             输入设备
             输出设备
@@ -135,7 +144,7 @@
             鼠标 - 输入设备
             屏幕 - 输出设备
             音箱 - 输出设备
-    ## 操作系统
+    操作系统
         环境变量
         抽象的操作系统
             组成
@@ -152,14 +161,14 @@
                 微内核 仅包括了创建一个系统必需的几个部分 进程调度 内存分配 文件系统
                 宏内核 在 微内核的基础上加上 驱动 和 系统调用
         linux 系统的一般使用
-    ## 计算机语言
+    计算机语言
         机器语言
             指令集（机器指令的集合）
             机器指令
             微程序
             微指令
             微命令和微操作
-        汇编
+        汇编 assembly
             汇编指令
             伪指令
             符号
@@ -172,7 +181,8 @@
                 javascript
                 python
                 php
-                lisp
+                更多
+                    lisp go rust ruby lua bash powershell bat vbs
                 ...
             标记语言
                 xml
@@ -204,23 +214,34 @@
                 解释 ini yaml json xml
                 一个简单的脚本语言
                 正则表达式
-    ## 数据库
+    数据库
         抽象的数据库
             树型
             网状？
             关系型
                 集合论和谓词逻辑
+                各种范式
                 sql
-        mysql 的一般使用
+        OLAP OLTP HTAP
+        ACID CAP BASE
         nosql 和 newsql
-    ## 计算机网络
-    ## 软件工程
-    ## 一些工具
+        mysql 的一般使用
+    计算机网络
+        网络模型
+        各层中的协议
+        使用系统api来读写网卡中的数据
+    软件工程
+    中间件
+        定时任务
+        缓存
+        队列
+        全文搜索引擎
+    一些工具
         git 的一般使用
             github gitlab gitee 其它的 git 服务
         vscode 的一般使用
         chrome 和 firefox 开发者工具的使用
-    ## 参考
+    参考
 
 frp的使用
     下载和安装
@@ -351,6 +372,11 @@ git仓库
     一些浏览器会对 favicon.ico 有特殊的缓存
 使用 debian 作为日常用机的系统
     各类硬件驱动
+        网卡
+        声卡
+        显卡
+        摄像头
+        无线鼠标、键盘
     网卡的配置
     apt源
     桌面环境
@@ -819,6 +845,7 @@ vscode的使用技巧
             man
             info
         在 github 寻找相关仓库并阅读源码
+            特别是各种协议的实现，有时候 rfc 文档也未能会写清除，去看一下对应的开源实现是一个好的选择
         要主动地实践
         要记录经验
     如何发现问题
@@ -2503,6 +2530,91 @@ composer
         在 git bash 里运行 firefox --help
         只有在 git bash 里有效，在 bat powershell 里都没有效果
         https://wiki.mozilla.org/Firefox/CommandLineOptions
+DNS
+    域名
+        FQDN(fully qualified domain name 完全限定域名)
+            可以简单但不严谨地理解为 带有主机名的域名
+        根域
+        顶级域 TLD
+        二级域 2LD
+        三级域 3LD
+        主机名
+    DNS系统可以分为三层
+        根 DNS 服务器
+        顶级域 DNS 服务器
+        权威域名服务器
+    查询的流程
+        迭代查询
+        递归查询
+    dns 客户端和服务器类型
+        dns 客户端
+        权威DNS
+        递归DNS
+        转发DNS
+    请求报文 和 响应报文
+        DNS报文格式，不论是请求报文还是DNS服务器返回的应答报文，都使用统一的格式
+        Header 报文头
+        Question 查询的问题
+        Answer 应答
+        Authority 授权应答
+        Additional 附加信息
+    domain 和 zone
+        对应的翻译
+            域名 domain name
+            域 domain
+            区域 zone
+        domain 这个比较容易理解
+            就是直接用域名来区分
+            例如
+                com 是一个域
+                cloudflare.com 是一个域
+                www.cloudflare.com 是一个域
+                cloudflare.com 是 com 的子域
+                www.cloudflare.com 是 cloudflare.com 的子域
+        zone 比较难理解，起码不能直接通过域名区分
+        domain 是以域名进行分界的，而 zone 是以授权范围来定界的。
+            例子
+                com 是一个 zone
+                cloudflare.com 是一个 zone
+                blog.cloudflare.com 是一个 zone
+                cloudflare.com 由 com 授权
+                blog.cloudflare.com 由 cloudflare.com 授权
+                community.cloudflare.com 和 sopport.cloudflare.com 则不是一个 zone
+                community.cloudflare.com 和 sopport.cloudflare.com 包含在 cloudflare.com 里
+            参考 https://www.cloudflare.com/zh-cn/learning/dns/glossary/dns-zone/
+    EDNS
+    DNSSEC
+    BIND
+        BIND（Berkeley Internet Name Domain）是现今互联网上最常使用的DNS软件
+        bind-utils
+            host
+            nslookup (name server lookup)
+            dig (Domain Information Groper)
+            bind
+    DNSCrypt
+    DoH 和 DoT
+    powershell 的 Resolve-DnsName
+    dns服务
+        由isp提供的
+        公共的
+        自建的
+    相关的 rfc
+        1034
+        1035
+        2606
+        7871
+        8484 DoH
+        2065 DNSSEC
+        2535 DNSSEC
+        3225 DNSSEC
+        4033 DNSSEC
+        4034 DNSSEC
+        4035 DNSSEC
+        2671 EDNS
+        2673 EDNS
+        6891 EDNS
+        3490 IDNA
+        4431 DLV DNSSEC
 分片上传 和 断点下载
     分片上传
         计算md5
