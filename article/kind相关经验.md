@@ -140,7 +140,23 @@ kind delete cluster
     ```
     kubectl -n <namespaces> describe pod <pod-name>
     ```
-    - 可以通过这个命令获取 pod 里的容器信息
+    - 可以通过这个命令获取 pod 里的容器信息，例如 容器名
+
+- 输出所有 pod 的信息
+    ```
+    kubectl get pods --all-namespaces -o json > pod.json
+    ```
+    - 这个命令会输出非常多的信息，最好重定向到文件里
+
+- 使用 jsonpath
+    ```
+    输出所有 pod
+    kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{"pod: "}{.metadata.name}{"\n"}{end}'
+    输出所有 命令空间 pod 容器 和镜像
+    kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\n"}{range .spec.containers[*]}{"\t"}{.name}{"\t"}{.image}{"\n"}{end}{end}'
+    ```
+    - jsonpath 十分有用。可以筛选数据和按格式输出（虽然作用有限）
+    - kubectl 的 jsonpath 和一般的 jsonpath 有一点的差别，例如不支持正则表达式
 
 - 复制文件进 pod 的容器里
     ```

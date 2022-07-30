@@ -894,6 +894,8 @@ vscode的使用技巧
             等等。。。
         发现异常要及时警报
             短信 邮件
+        通过 xdebug 的 profiler 和 trace
+            但 xdebug 肯定不能用在生产环境
     如何定位问题
         判断问题是什么
             问题出现的环境
@@ -1832,6 +1834,7 @@ magento2 配置 paypal
             因为少了一个判断
         那堆数组的函数性能都不怎么高，使用时要注意性能和可读性维护性的取舍
         curl请求要设置超时
+        日志记录使用专门的时序数据库（例如 InfluxDB 这类），而不是写文件或写mysql
         对日志进行分级
             详细的记录
             一般的记录
@@ -2508,7 +2511,9 @@ composer
         自定义用户数据的存储目录
         --user-data-dir=
         --disk-cache-dir=
-        --app
+        --app 以 app 形式启动浏览器
+            --app=http://www.baidu.com
+        --new-window 在一个新窗口打开
         --disable-javascript
         --proxy-pac-url
         不使用图片

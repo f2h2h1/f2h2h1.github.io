@@ -8,6 +8,8 @@
 - System.Web
 - System.Diagnostics.Process
 
+PSVersion 5.1
+
 可以像这样运行
 ```
 .\http-server.ps1
@@ -149,7 +151,7 @@ while ($http.IsListening) {
         }
 
         $title = "Directory listing for " + $dir
-        $html = "<!DOCTYPE html><html><head><meta charset="utf-8"> <title>$title</title></head><body><h1>$title</h1><hr><ul>$li</ul><hr></body></html>"
+        $html = "<!DOCTYPE html><html><head><meta charset=""utf-8""> <title>$title</title></head><body><h1>$title</h1><hr><ul>$li</ul><hr></body></html>"
 
         #resposed to the request
         $buffer = [System.Text.Encoding]::UTF8.GetBytes($html) # convert htmtl to bytes

@@ -92,3 +92,4 @@ https://community.adobe.com/t5/framemaker-discussions/quot-save-as-pdf-quot-vs-q
 
 https://answers.microsoft.com/en-us/msoffice/forum/all/save-as-pdf-vs-print-to-pdf-quality-issues/28c536c6-6fb2-4484-b28b-1e15ce4aac75
 
+thead 标签可以在表格被分页时，每一页都保持一个表头
