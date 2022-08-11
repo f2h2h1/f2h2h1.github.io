@@ -4,29 +4,36 @@
     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
     <link href="https://f2h2h1.github.io/" />
     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    <updated>2022-06-29T09:22:00+08:00</updated>
+    <updated>2022-08-11T18:32:22+08:00</updated>
     <author>
         <name>f2h2h1's blog</name>
     </author>
 <entry>
+    <title>Windows下通过PEB读取进程的环境变量</title>
+    <link href="https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html" />
+    <id>https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html</id>
+    <updated>2022-08-11T18:24:55+08:00</updated>
+    <summary>Windows下通过PEB读取进程的环境变量</summary>
+</entry>
+<entry>
     <title>关于环境变量的不完整总结</title>
     <link href="https://f2h2h1.github.io/article/关于环境变量的不完整总结.html" />
     <id>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</id>
-    <updated>2022-06-28T18:19:27+08:00</updated>
+    <updated>2022-08-04T13:44:17+08:00</updated>
     <summary>关于环境变量的不完整总结</summary>
 </entry>
 <entry>
     <title>各种标记语言</title>
     <link href="https://f2h2h1.github.io/article/各种标记语言.html" />
     <id>https://f2h2h1.github.io/article/各种标记语言.html</id>
-    <updated>2022-06-25T16:05:16+08:00</updated>
+    <updated>2022-07-30T21:01:39+08:00</updated>
     <summary>各种标记语言</summary>
 </entry>
 <entry>
     <title>使用PowerShell实现的http服务器</title>
     <link href="https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html" />
     <id>https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html</id>
-    <updated>2022-05-25T20:55:24+08:00</updated>
+    <updated>2022-07-30T21:01:39+08:00</updated>
     <summary>使用PowerShell实现的http服务器</summary>
 </entry>
 <entry>
@@ -47,7 +54,7 @@
     <title>kind相关经验</title>
     <link href="https://f2h2h1.github.io/article/kind相关经验.html" />
     <id>https://f2h2h1.github.io/article/kind相关经验.html</id>
-    <updated>2022-04-04T16:32:31+08:00</updated>
+    <updated>2022-07-30T21:01:39+08:00</updated>
     <summary>kind相关经验</summary>
 </entry>
 <entry>
@@ -159,7 +166,7 @@
     <title>把网页导出成PDF</title>
     <link href="https://f2h2h1.github.io/article/把网页导出成PDF.html" />
     <id>https://f2h2h1.github.io/article/把网页导出成PDF.html</id>
-    <updated>2022-03-05T20:29:08+08:00</updated>
+    <updated>2022-07-30T21:01:39+08:00</updated>
     <summary>把网页导出成PDF</summary>
 </entry>
 <entry>
@@ -177,13 +184,6 @@
     <summary>SEO的经验</summary>
 </entry>
 <entry>
-    <title>paypal，firtdata，支付宝的不完整接入指南</title>
-    <link href="https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html" />
-    <id>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</id>
-    <updated>2021-07-10T23:47:47+08:00</updated>
-    <summary>paypal，firtdata，支付宝的不完整接入指南</summary>
-</entry>
-<entry>
     <title>微信支付的不完整接入指南</title>
     <link href="https://f2h2h1.github.io/article/微信支付的不完整接入指南.html" />
     <id>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</id>
@@ -191,10 +191,17 @@
     <summary>微信支付的不完整接入指南</summary>
 </entry>
 <entry>
+    <title>paypal，firtdata，支付宝的不完整接入指南</title>
+    <link href="https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html" />
+    <id>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</id>
+    <updated>2021-07-10T23:47:47+08:00</updated>
+    <summary>paypal，firtdata，支付宝的不完整接入指南</summary>
+</entry>
+<entry>
     <title>观察网站性能</title>
     <link href="https://f2h2h1.github.io/article/观察网站性能.html" />
     <id>https://f2h2h1.github.io/article/观察网站性能.html</id>
-    <updated>2021-12-30T18:33:46+08:00</updated>
+    <updated>2022-07-30T21:01:39+08:00</updated>
     <summary>观察网站性能</summary>
 </entry>
 <entry>
@@ -208,7 +215,7 @@
     <title>密码学入门简明指南</title>
     <link href="https://f2h2h1.github.io/article/密码学入门简明指南.html" />
     <id>https://f2h2h1.github.io/article/密码学入门简明指南.html</id>
-    <updated>2022-06-29T09:21:42+08:00</updated>
+    <updated>2022-07-30T21:01:39+08:00</updated>
     <summary>密码学入门简明指南</summary>
 </entry>
 <entry>
@@ -250,7 +257,7 @@
     <title>一些开发笔记</title>
     <link href="https://f2h2h1.github.io/article/一些开发笔记.html" />
     <id>https://f2h2h1.github.io/article/一些开发笔记.html</id>
-    <updated>2022-06-29T09:21:42+08:00</updated>
+    <updated>2022-07-19T18:43:17+08:00</updated>
     <summary>一些开发笔记</summary>
 </entry>
 <entry>
@@ -278,28 +285,28 @@
     <title>在Windows下配置PHP服务器</title>
     <link href="https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html" />
     <id>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</id>
-    <updated>2022-05-25T20:55:24+08:00</updated>
+    <updated>2022-07-05T13:29:52+08:00</updated>
     <summary>在Windows下配置PHP服务器</summary>
 </entry>
 <entry>
     <title>关于字符编码的一些坑</title>
     <link href="https://f2h2h1.github.io/article/关于字符编码的一些坑.html" />
     <id>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</id>
-    <updated>2022-06-20T18:40:59+08:00</updated>
+    <updated>2022-08-04T13:44:17+08:00</updated>
     <summary>关于字符编码的一些坑</summary>
 </entry>
 <entry>
     <title>在VSCode里调试PHP</title>
     <link href="https://f2h2h1.github.io/article/在VSCode里调试PHP.html" />
     <id>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</id>
-    <updated>2022-06-29T09:21:42+08:00</updated>
+    <updated>2022-07-05T13:29:52+08:00</updated>
     <summary>在VSCode里调试PHP</summary>
 </entry>
 <entry>
     <title>关于</title>
     <link href="https://f2h2h1.github.io/article/关于.html" />
     <id>https://f2h2h1.github.io/article/关于.html</id>
-    <updated>2021-10-23T13:53:44+08:00</updated>
+    <updated>2022-07-19T18:43:17+08:00</updated>
     <summary>关于</summary>
 </entry>
 

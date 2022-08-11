@@ -48,6 +48,8 @@ usort($articleList, function ($a, $b) {
         return -1;
     } else if ($a['createTime'] < $b['createTime']) {
         return 1;
+    } else if (strlen($a['title']) > strlen($b['title'])) {
+        return -1;
     }
     return (strcmp($a['title'], $b['title'])) ? -1 : 1;
 });
