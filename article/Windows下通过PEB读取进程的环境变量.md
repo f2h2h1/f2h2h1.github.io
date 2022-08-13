@@ -23,7 +23,7 @@ http://terminus.rewolf.pl/terminus
     - 获取进程id的方式有非常多，最简单的方式就是通过任务管理器
 1. 获取进程的句柄（Handle）
     - 可以通过这个 `OpenProcess` api 来获取
-1. 根据 Handle 获取 PBI
+1. 根据 Handle 获取 PBI (PROCESS_BASIC_INFORMATION)
     - 可以通过这个 `NtQueryInformationProcess` api 来获取
 1. 从 PBI 中获取 PEB
     - 在结构体 PROCESS_BASIC_INFORMATION 中的 PebBaseAddress
@@ -33,6 +33,7 @@ http://terminus.rewolf.pl/terminus
     - 通过这个 `ReadProcessMemory` api 来获取
     - 在 win10 下，可以通过 ProcessParameters 中的 EnvironmentSize 获取环境变量具体的长度
     - win10 以下的版本只能通过逐个读取字符和空字符判断环境变量的长度
+    - 读取的结果是一个连续的字符串，使用 `\0` 字符来分隔环境变量，使用连续的两个 `\0` 字符表示结束
 
 相关的 结构体 和 api
 - PEB
@@ -53,7 +54,19 @@ http://terminus.rewolf.pl/terminus
 ## 读取进程环境变量的脚本
 
 这是一段使用 powershell 通过 win32api 读取进程 PEB 中的环境变量的脚本。
-这段脚本没有做太多的兼容性处理，估计只能运行在 64位win10 上，且只能查询 64位的进程。
+
+这段脚本没有做太多的兼容性处理，估计只能运行在 64 位 win10 上，且只能用 64 位的 powershell 查询 64 位的进程。
+
+PEB 的结构每个版本的 Windows 都有一点差异， 32位和64位也有明显的差异，还有考虑 WoW64 的环境，还要考虑各个版本的 powershell 的语法差异。
+要写一段兼容性好的脚本是一件麻烦的事，各种环境下都测试一次，笔者没有这样的条件~（笔者已经理解了大概的原理，没有动力完善了）~
+笔者在网上找到的脚本大多不能直接使用，就是兼容性的问题。
+
+note
+- 要先确认当前的 Windows 版本，然后再查找对应 PEB 的结构
+- 进程的数据要用 ReadProcessMemory 读取，即使是字符串
+- 可以用 IsWow64Process 判断是不是 WoW64 的环境。
+- WoW64 的环境的 PBI 要用这个结构体 PROCESS_BASIC_INFORMATION_WOW64
+
 ```powershell
 function Get-ProcessEnvironmentVariables {
 
@@ -205,7 +218,22 @@ function Get-ProcessEnvironmentVariables {
             [ref]$BytesRead
         )
         $ProcessEnvironmentVariables = [System.Runtime.InteropServices.Marshal]::PtrToStringAnsi($lpBuffer, $EnvironmentSize)
-        Write-Host $ProcessEnvironmentVariables
+
+        # Convert string to hashTable
+        $ProcessEnvironmentVariables = [System.Convert]::ToString($ProcessEnvironmentVariables)
+        $ProcessEnvironmentVariables = $ProcessEnvironmentVariables.Replace("`0`0", "`n")
+        $ProcessEnvironmentVariables = $ProcessEnvironmentVariables.Replace("`0", "")
+        if ($ProcessEnvironmentVariables[0] -eq '=') {
+            $ProcessEnvironmentVariables = $ProcessEnvironmentVariables.Split("`n")
+            $ProcessEnvironmentVariables = [System.Collections.ArrayList]::new($ProcessEnvironmentVariables)
+            $ProcessEnvironmentVariables.RemoveAt(0)
+            $ProcessEnvironmentVariables = $ProcessEnvironmentVariables.ToArray()
+            $ProcessEnvironmentVariables = $ProcessEnvironmentVariables -join "`n"
+        }
+        $ProcessEnvironmentVariables = $ProcessEnvironmentVariables.Replace("\", "\\")
+        $ProcessEnvironmentVariables = ConvertFrom-StringData -StringData $ProcessEnvironmentVariables
+
+        return $ProcessEnvironmentVariables
 
     }
 }

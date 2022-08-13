@@ -351,6 +351,39 @@ app
 
 ### magento 索引的运行原理
 
+magento 的索引器有两种类型
+- update on save
+    - 原始数据更新时会直接调用 indexer 的对象，更新缓存
+- update by schedule
+    - 原始数据更新会通过触发器更新 view_id_cl 表，然后再通过定时任务来更新缓存
+    - view_id_cl 表和触发器都是 magento 自动生成的
+    - view_id_cl 的表的 view_id 就是 mview.xml 中的 id
+    - view_id_cl 这类表只有两个字段 version_id 和 entity_id
+    - version_id 是自动递增的
+
+两个和索引器相关的表
+- indexer_state
+    - state_id
+    - indexer_id
+    - status
+        - valid 有效的
+        - invalid 无效的，原数据有修改，索引应该更新
+        - working 工作中
+    - updated
+    - hash_config
+- mview_state
+    - state_id
+    - view_id
+    - mode
+        - enabled 启用，表示这个索引器的类型是 update on schedule
+        - disabled 禁用，表示这个索引器的类型是 update on save
+    - status
+        - idle 空闲的
+        - suspended 暂停
+        - working 工作中
+    - updated
+    - version_id
+
 ### 新建索引的步骤
 
 0. 在模块目录 etc 新建 inderx.xml
@@ -394,41 +427,41 @@ app
     class Test implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
     {
         /**
-        * @inheritdoc
-        */
+         * @inheritdoc
+         */
         public function executeFull()
         {
             $this->reindex();
         }
 
         /**
-        * @inheritdoc
-        */
+         * @inheritdoc
+         */
         public function executeList(array $ids)
         {
             $this->execute($ids);
         }
 
         /**
-        * @inheritdoc
-        */
+         * @inheritdoc
+         */
         public function executeRow($id)
         {
             $this->execute([$id]);
         }
 
         /**
-        * @inheritdoc
-        */
+         * @inheritdoc
+         */
         public function execute($ids)
         {
             $this->reindex($ids);
         }
 
         /**
-        * @param int[] $ids
-        * @return void
-        */
+         * @param int[] $ids
+         * @return void
+         */
         protected function reindex($ids = null)
         {
             if ($ids === null) { // 更新全部索引
@@ -1043,6 +1076,7 @@ php -d xdebug.remote_autostart=on bin/magento indexer:info
 通过命令行运行测试代码，可以不加载前端资源，反馈的速度更快。
 修改原本的命令行是为了不运行构建的命令就能生效。
 一些对象可以通过 \Magento\Framework\App\ObjectManager::getInstance()->get() 的方法获得。
+indexer:status 的输出就包含了 indexer:info 的输出。
 
 ### 前端的调试
 
