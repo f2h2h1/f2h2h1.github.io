@@ -65,11 +65,12 @@
 |[I Am I](https://5ime.cn/)||https://5ime.cn/||
 |[FlyingSky's Blog](https://blog.fsky7.com/)|<img alt="FlyingSky\'s Blog" src="https://static.fsky7.com/images/9c1d35960f638f3f34fcae0c2d8e9da1.jpg" width="119" />|https://blog.fsky7.com/|回忆化成一场长的梦。|
 |[Eric](https://ericclose.github.io/)|<img alt="Eric" src="https://cdn.jsdelivr.net/gh/ericclose/cdn-assets/img/avatar.jpeg" width="119" />|https://ericclose.github.io/|To be completed...|
-|[荣豪Blog](https://blog.roco.work)|<img alt="荣豪Blog" src="https://roco.work/img/avatar-archives/0.png" width="119" />|https://blog.roco.work|鸽子的博客肯定啥也没有(doge)|
-|[刘兴刚博客](https://www.liuxinggang.com/)|<img alt="刘兴刚博客" src="https://www.liuxinggang.com/favicon.ico" width="119" />|https://www.liuxinggang.com/|刘兴刚的博客 | 关注Web开发,记录自己成长点滴|
 |[Zifan的小站](https://zifan.site/)|<img alt="Zifan的小站" src="https://zifan.site/img/py.PNG" width="119" />|https://zifan.site/|个人编程技术学习与分享|
 |[Wade的学习笔记](https://www.wadesays.xyz)|<img alt="Wade的学习笔记" src="https://www.wadesays.xyz/wp-content/uploads/avatar.png" width="119" />|https://www.wadesays.xyz|什么都不会的初始化站长，分享一些学习到的技能。|
 |[Rookie_L’s Blog](https://icu007.work)|<img alt="Rookie_L’s Blog" src="https://icu007.work/wp-content/uploads/2022/03/head-1.jpeg" width="119" />|https://icu007.work|记录我的日常生活&学习笔记|
+|[Finisky Garden](https://finisky.github.io/)|<img alt="Finisky Garden" src="https://finisky.github.io/images/avatar.png" width="119" />|https://finisky.github.io/|Easy doesn’t enter into grown-up life.|
+|[Lazy_V's Blog](http://blog.zhangkexuan.cn/)|<img alt="Lazy_V\'s Blog" src="http://blog.zhangkexuan.cn/favicon.png" width="119" />|http://blog.zhangkexuan.cn/|TALK IS CHEAP, SHOW ME THE CODE.|
+|[林海草原](https://lhcy.org/)|<img alt="林海草原" src="https://gravatar.loli.net/avatar/8391fb097fff7eec5ff0a8877b94967b" width="119" />|https://lhcy.org/|愿我经历的苦难你不要经历，愿我已有的幸福你触手可及|
 <!-- exchangeList -->
 
 <!--
@@ -80,6 +81,8 @@ https://www.emin.ink/
 https://blog.imyan.ren/
 https://tumutanzi.com/
 https://blog.ihomura.cn/
+https://blog.roco.work/
+https://www.liuxinggang.com/
 -->
 
 ## 在本地运行
