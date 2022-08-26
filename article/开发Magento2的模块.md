@@ -239,6 +239,8 @@ app
 
 参考 https://developer.adobe.com/commerce/php/development/cli-commands/custom/
 
+## 新建 rest 的接口
+
 ## 新建 GraphQl 的接口
 
 0. 在模块目录 etc 下新建一个文件 schema.graphqls 并写入以下内容
@@ -340,6 +342,24 @@ app
     --data-raw '{"query":"\n    query IntrospectionQuery {\n      __schema {\n        \n        queryType { name }\n        mutationType { name }\n        subscriptionType { name }\n        types {\n          ...FullType\n        }\n        directives {\n          name\n          description\n          \n          locations\n          args {\n            ...InputValue\n          }\n        }\n      }\n    }\n\n    fragment FullType on __Type {\n      kind\n      name\n      description\n      \n      fields(includeDeprecated: true) {\n        name\n        description\n        args {\n          ...InputValue\n        }\n        type {\n          ...TypeRef\n        }\n        isDeprecated\n        deprecationReason\n      }\n      inputFields {\n        ...InputValue\n      }\n      interfaces {\n        ...TypeRef\n      }\n      enumValues(includeDeprecated: true) {\n        name\n        description\n        isDeprecated\n        deprecationReason\n      }\n      possibleTypes {\n        ...TypeRef\n      }\n    }\n\n    fragment InputValue on __InputValue {\n      name\n      description\n      type { ...TypeRef }\n      defaultValue\n      \n      \n    }\n\n    fragment TypeRef on __Type {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                  ofType {\n                    kind\n                    name\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  ","variables":{},"operationName":"IntrospectionQuery"}' \
     --compressed -s -k
     ```
+
+0. graphql 里只有这个文件夹下的异常能显示出来，其它的异常都是显示 server error
+    - vendor\magento\framework\GraphQl\Exception
+0. 如果要自定义异常，最好继承 grapqhl 里原本的异常，或实现这个接口 \GraphQL\Error\ClientAware
+    - 关键还是这个接口 \GraphQL\Error\ClientAware
+0. graphql 接口大概的执行位置
+    - vendor\magento\module-graph-ql\Controller\GraphQl.php
+    - vendor\webonyx\graphql-php\src\Executor\ReferenceExecutor.php doExecute
+    - vendor\webonyx\graphql-php\src\Executor\ReferenceExecutor.php executeOperation
+    - vendor\webonyx\graphql-php\src\Executor\ReferenceExecutor.php resolveField
+    - vendor\webonyx\graphql-php\src\Executor\ReferenceExecutor.php resolveOrError
+
+<!--
+graphql 要留意输入的类型，输出的类型
+在哪个位置检测输入类型
+在哪个位置执行 resolve
+在哪个位置检测输出类型
+-->
 
 浏览器可以安装这个拓展 https://github.com/altair-graphql/altair
 
@@ -616,8 +636,59 @@ crontab -l
 ## 新建一个插件 Plugins (Interceptors)
 
 1. 新建 Plugins 类
+    - 通常在模块里的 Plugins 文件下新建
+    - 拦截器就是一个普通的类
+    - 拦截器的方法就是被拦截的方法前面加上 before around after 这三个关键词
+        - 拦截器的方法名始终以小驼峰命名
+    - 在原本的类里，只有 public 方法才可以被拦截
 1. 修改模块的 etc 文件夹下的 di.xml
-1. 运行 php bin/magento setup:di:compile
+    - 例子
+        ```xml
+        <config>
+            <type name="需要拦截的类名（要填完整的类名）">
+            <plugin name="拦截器名称" type="拦截器的类名（要填完整的类名）" sortOrder="排序" disabled="false" />
+            </type>
+        </config>
+        ```
+    - 如果要禁用拦截器 disabled 填 true 就可以了
+    - sortOrder 和 disabled 都不是必填的
+    - sortOrder 是升序排序
+    - sortOrder 未指定时会按加载顺序排序，先加载的在前面执行
+1. 运行 php bin/magento setup:di:compile 或 php bin/magento setup:upgrade
+    1. 拦截器必须通过编译才能生效
+    1. 编译后的拦截器会在 generate 文件夹里生成一个对应的 Interceptor 类
+    1. 在开发者模式时可以不通过编译，拦截器在运行时生成
+    1. 生成的 Interceptor 类，通过 use 的方式继承 \Magento\Framework\Interception\Interceptor
+    1. \Magento\Framework\Interception\Interceptor 的 ___callPlugins 方法是拦截器实现的核心
+1. 拦截器的运行顺序
+    1. before -> around -> after
+    1. 会先统一执行完一类拦截器再执行下一类拦截器
+    1. 拦截器的顺序，就是配置文件里的那个 sortOrder 参数是用在同类拦截器的排序的
+1. 三种方法的入参和出参
+    - before
+        - 入参
+            - 原本的对象 $subject
+            - 原本的入参（这是一个可变长参数 ...array_values($arguments)）
+        - 出参
+            - null 或 一个数组
+            - 如果是 null 那么 原本的入参不会变
+            - 如果是一个数组，那么数组会替代原本的入参
+    - around
+        - 入参
+            - 原本的对象 $subject
+            - 匿名函数proceed(拦截器运行的匿名方法)
+                - proceed 在拦截器的around方法里运行
+            - 原本的入参（这是一个可变长参数 ...array_values($arguments)）
+        - 出参
+            - 和执行结果类型一样的$result
+    - after
+        - 入参
+            - 原本的对象 $subject
+            - 执行的结果 $result
+            - 原本的入参（这是一个可变长参数 ...array_values($arguments)）
+        - 出参
+            - 和执行结果类型一样的 $result
+
 1. 参考 https://developer.adobe.com/commerce/php/development/components/plugins/
 
 ## 替换其它模块里的类
@@ -734,6 +805,8 @@ Stores
 ```
 system -> action logs -> report
 ```
+
+日志会插入到这个表里 magento_logging_event
 
 ## 后台 acl
 
