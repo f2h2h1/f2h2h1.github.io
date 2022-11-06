@@ -1048,6 +1048,10 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
                      = 2 * 1.024
                      = 2.024
     Kbps
+        bps
+            bit per second
+            位  每   秒
+            每秒能传输的位
         1 Kbps = 1 Kilo per second = 1000 per second
         1 Mbps = 1 Mega per second = 1000000 per second
         1M 带宽是指 1Mbps
@@ -1075,6 +1079,21 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             特别是口语里只会说 xxK 或 xxM 很少会说 xxKiB 这种
         在编程开发中，尽量使用 KiB
         http://www.elecfans.com/tools/zijiehuansuan.html
+带宽 和 宽带 和 位宽 的联系与区别
+    带宽（Bandwidth）一开始的意思是电磁波频率的范围，最高频率和最低频率之间的差值
+    在计算机领域中的带宽一般是指数据传输的速度，包括但不限于，网速，内存速度，接口速度
+    计算机领域的带宽，其实是在描述理论上的最高速度
+        例如 512Kbps 的带宽，是指最高速度达到 512Kbps ，实际上的速度应该是会小于等于 512Kbps 的
+    带宽的单位是 bps
+    宽带（Broadband）是指较宽的带宽，一般是指比较快的网速
+        最开始是把 56Kbps 以上的带宽称为宽带，56kbps 以下的称为窄带（Narrowband）
+        后来又变成了 512Kbps 以上的带宽才能称为宽带
+        再后来又变成了 4Mbps 以上的带宽才能称为宽带
+        感觉宽带就是一个营销术语
+        ps 墙内的运营商的家用宽带一般都是指下行速度
+    位宽是指一次能传输的数据量，就是一次能传输的比特位数
+        例如， 64位的位宽就是指一次能传输64个比特位，通常位简称为 64位（64bit）
+        内存带宽一般是 内存频率*内存位宽 ，显存带宽也是一样的计算
 如何做一个npm库
     去npm官方文档注册账号,并验证邮箱 官网地址:https://www.npmjs.com/
     在github新建一个空仓库，并克隆到本地
@@ -1370,6 +1389,7 @@ magento2 配置 paypal
             YUV
             Alpha
     色彩空间 Color Space
+        色彩空间至少包含 色域 和 伽马值
         CIE 1931 所有的人类可见色彩
         DCI-P3 一种应用于数字影院的色域
         Adobe RGB
