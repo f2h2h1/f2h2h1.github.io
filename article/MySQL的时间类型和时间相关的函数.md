@@ -214,9 +214,20 @@ MySQL 的时区分为三部分，系统时区，服务器时区，会话时区�
 select @@global.system_time_zone, @@global.time_zone, @@session.time_zone;
 ```
 
-可以在系统的命令行里用这样的命令来查看时区
-```
+可以在 linux 的命令行里用这样的命令来查看时区
+```bash
 date +"%z"
+# git for windows 的 bash 也支持这个命令
+```
+
+可以在 windows 的命令行里用这样的命令来查看时区
+```powershell
+tzutil /g
+# 或
+w32tm /tz
+# 或
+systeminfo
+# 似乎只有 win10 及之后的系统能用 tzutil /g 或 w32tm /tz
 ```
 
 修改会话时区
