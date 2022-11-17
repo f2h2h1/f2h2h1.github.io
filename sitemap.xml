@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+    <loc>https://f2h2h1.github.io/article/终端，控制台和外壳.html</loc>
+    <lastmod>2022-11-17</lastmod>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://f2h2h1.github.io/article/和颜色相关的笔记.html</loc>
+    <lastmod>2022-11-17</lastmod>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html</loc>
-    <lastmod>2022-08-11</lastmod>
+    <lastmod>2022-11-07</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</loc>
-    <lastmod>2022-08-04</lastmod>
+    <lastmod>2022-08-13</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -22,7 +32,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</loc>
-    <lastmod>2022-06-06</lastmod>
+    <lastmod>2022-11-16</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -92,7 +102,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/开发Magento2的模块.html</loc>
-    <lastmod>2022-06-20</lastmod>
+    <lastmod>2022-08-26</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -126,12 +136,12 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</loc>
+    <loc>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</loc>
     <lastmod>2021-07-10</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</loc>
+    <loc>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</loc>
     <lastmod>2021-07-10</lastmod>
     <priority>0.5</priority>
 </url>
@@ -177,7 +187,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/一些开发笔记.html</loc>
-    <lastmod>2022-07-19</lastmod>
+    <lastmod>2022-11-16</lastmod>
     <priority>0.5</priority>
 </url>
 <url>
@@ -212,7 +222,7 @@
 </url>
 <url>
     <loc>https://f2h2h1.github.io/article/关于.html</loc>
-    <lastmod>2022-07-19</lastmod>
+    <lastmod>2022-09-30</lastmod>
     <priority>0.5</priority>
 </url>
 

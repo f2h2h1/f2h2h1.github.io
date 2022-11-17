@@ -9,6 +9,8 @@
 ## 列表
 
 <!-- articleList -->
+- [终端，控制台和外壳](article/终端，控制台和外壳.md)
+- [和颜色相关的笔记](article/和颜色相关的笔记.md)
 - [Windows下通过PEB读取进程的环境变量](article/Windows下通过PEB读取进程的环境变量.md)
 - [关于环境变量的不完整总结](article/关于环境变量的不完整总结.md)
 - [各种标记语言](article/各种标记语言.md)
@@ -34,8 +36,8 @@
 - [把网页导出成PDF](article/把网页导出成PDF.md)
 - [FirstData后台的设置](article/FirstData后台的设置.md)
 - [SEO的经验](article/SEO的经验.md)
-- [微信支付的不完整接入指南](article/微信支付的不完整接入指南.md)
 - [paypal，firtdata，支付宝的不完整接入指南](article/paypal，firtdata，支付宝的不完整接入指南.md)
+- [微信支付的不完整接入指南](article/微信支付的不完整接入指南.md)
 - [观察网站性能](article/观察网站性能.md)
 - [git的笔记](article/git的笔记.md)
 - [密码学入门简明指南](article/密码学入门简明指南.md)
@@ -71,6 +73,7 @@
 |[Finisky Garden](https://finisky.github.io/)|<img alt="Finisky Garden" src="https://finisky.github.io/images/avatar.png" width="119" />|https://finisky.github.io/|Easy doesn’t enter into grown-up life.|
 |[Lazy_V's Blog](http://blog.zhangkexuan.cn/)|<img alt="Lazy_V\'s Blog" src="http://blog.zhangkexuan.cn/favicon.png" width="119" />|http://blog.zhangkexuan.cn/|TALK IS CHEAP, SHOW ME THE CODE.|
 |[林海草原](https://lhcy.org/)|<img alt="林海草原" src="https://gravatar.loli.net/avatar/8391fb097fff7eec5ff0a8877b94967b" width="119" />|https://lhcy.org/|愿我经历的苦难你不要经历，愿我已有的幸福你触手可及|
+|[涛叔](https://taoshu.in)||https://taoshu.in||
 <!-- exchangeList -->
 
 <!--

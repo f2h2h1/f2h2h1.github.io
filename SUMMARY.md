@@ -1,6 +1,8 @@
 # Summary
 
 * [Introduction](README.md)
+* [终端，控制台和外壳](article/终端，控制台和外壳.md)
+* [和颜色相关的笔记](article/和颜色相关的笔记.md)
 * [Windows下通过PEB读取进程的环境变量](article/Windows下通过PEB读取进程的环境变量.md)
 * [关于环境变量的不完整总结](article/关于环境变量的不完整总结.md)
 * [各种标记语言](article/各种标记语言.md)
@@ -26,8 +28,8 @@
 * [把网页导出成PDF](article/把网页导出成PDF.md)
 * [FirstData后台的设置](article/FirstData后台的设置.md)
 * [SEO的经验](article/SEO的经验.md)
-* [微信支付的不完整接入指南](article/微信支付的不完整接入指南.md)
 * [paypal，firtdata，支付宝的不完整接入指南](article/paypal，firtdata，支付宝的不完整接入指南.md)
+* [微信支付的不完整接入指南](article/微信支付的不完整接入指南.md)
 * [观察网站性能](article/观察网站性能.md)
 * [git的笔记](article/git的笔记.md)
 * [密码学入门简明指南](article/密码学入门简明指南.md)
