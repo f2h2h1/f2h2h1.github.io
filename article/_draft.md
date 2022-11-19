@@ -2755,6 +2755,8 @@ git add articleList.json sitemap.xml rss.xml README.md; git commit -m "update au
 
 git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
 
+php updateMetadata.php
+
 不要同时提交两篇文章
 
 新增一篇文章
