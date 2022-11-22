@@ -929,7 +929,11 @@ $logger->warning('=======flg debug=======', ['trace' => debug_backtrace()];
 ### 在某一个位置通过拼接的 sql 查询数据库
 
 ```php
+/**
+ * @var \Magento\Framework\App\ResourceConnection
+ */
 $conn = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ResourceConnection::class);
+$conn = $conn->getConnection();
 $select = $conn->select()
     ->from(['so' => $conn->getTableName('sales_order')], [
         'so.entity_id',

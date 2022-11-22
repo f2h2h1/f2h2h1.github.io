@@ -345,6 +345,11 @@ Wayland 和 X 的区别是什么
         打开单个gui
 
 远程的 X 和 vnc 有什么区别
+    远程的 X 的 xerver 运行在远程
+    vnc 的 xerver 运行在本地
+
+vnc 传输的是图像和控制信号
+
 
 和 X 相关的配置文件有哪些
 
