@@ -74,7 +74,7 @@
 |[Lazy_V's Blog](http://blog.zhangkexuan.cn/)|<img alt="Lazy_V\'s Blog" src="http://blog.zhangkexuan.cn/favicon.png" width="119" />|http://blog.zhangkexuan.cn/|TALK IS CHEAP, SHOW ME THE CODE.|
 |[林海草原](https://lhcy.org/)|<img alt="林海草原" src="https://gravatar.loli.net/avatar/8391fb097fff7eec5ff0a8877b94967b" width="119" />|https://lhcy.org/|愿我经历的苦难你不要经历，愿我已有的幸福你触手可及|
 |[涛叔](https://taoshu.in)||https://taoshu.in||
-|[仙士可博客](https://www.php20.cn/tag/37)||https://www.php20.cn/tag/37||
+|[仙士可博客](https://www.php20.cn/)||https://www.php20.cn/||
 <!-- exchangeList -->
 
 <!--
