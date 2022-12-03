@@ -1,0 +1,15 @@
+name: GitHub Actions Build and Deploy GitHub Page
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Build and Deploy
+      run: |
+        echo -e "#testgithubaction\ntestgithubaction" > ./article/testgithubaction.md
