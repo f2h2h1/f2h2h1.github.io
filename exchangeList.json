@@ -82,5 +82,11 @@
         "href": "https://www.php20.cn/",
         "desc": "",
         "avatar": ""
+    },
+    {
+        "name": "Barney’s Blog",
+        "href": "https://hugo.bnblogs.cc/",
+        "desc": "All the truth is simple",
+        "avatar": "https://hugo.bnblogs.cc/images/img/20220215001349.png"
     }
 ]

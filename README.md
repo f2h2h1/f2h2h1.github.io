@@ -75,6 +75,7 @@
 |[林海草原](https://lhcy.org/)|<img alt="林海草原" src="https://gravatar.loli.net/avatar/8391fb097fff7eec5ff0a8877b94967b" width="119" />|https://lhcy.org/|愿我经历的苦难你不要经历，愿我已有的幸福你触手可及|
 |[涛叔](https://taoshu.in)||https://taoshu.in||
 |[仙士可博客](https://www.php20.cn/)||https://www.php20.cn/||
+|[Barney’s Blog](https://hugo.bnblogs.cc/)|<img alt="Barney’s Blog" src="https://hugo.bnblogs.cc/images/img/20220215001349.png" width="119" />|https://hugo.bnblogs.cc/|All the truth is simple|
 <!-- exchangeList -->
 
 <!--
