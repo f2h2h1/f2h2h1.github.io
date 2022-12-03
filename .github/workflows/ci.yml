@@ -11,6 +11,8 @@ jobs:
       uses: actions/checkout@master
     - name: Build
       run: |
-        echo -e "#testgithubaction\ntestgithubaction" > ./article/testgithubaction.md
-    - name: Deploy
-      uses: actions/upload-pages-artifact
+        echo -e "# testgithubaction\ntestgithubaction" > ./article/testgithubaction.md
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: .
