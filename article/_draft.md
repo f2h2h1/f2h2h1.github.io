@@ -70,6 +70,16 @@
             网桥 (bridge)
             集线器 (ethernet hub 又或者 简称 hub)
             中继器 (repeater)
+            和安全相关的硬件
+                IPS (Intrusion Prevention System) 入侵检测（旁路部署）
+                IDS (Intrusion Detection System) 入侵防御（串行部署）
+                FW (FireWall) 防火墙
+                WAF (Web Application FireWall) 网页应用防火墙
+                UTM (Unified Threat Management) 统一威胁管理
+    路由表和路由算法
+        静态路由
+        动态路由
+            迪达拉算法
     tcp 和 udp
     什么是socket
     从socket里读写内容
@@ -80,16 +90,48 @@
         一次只能接受一个客户端的 echo 服务器
         能接受多个客户端的 echo 服务器 rfc 862
         最简单的聊天室
-    http 静态服务
-        mime
-    http + cgi
-    select poll epoll
-    多线程
-    多进程
-    socket 双写
-    proxy
-    fastcgi
-    websocket
+    http 服务器
+        http 协议
+            0.9 1.0 1.1 2 3
+            请求码 和 响应码
+            mime
+            缓存
+        基本套路
+            建立连接
+            接收数据
+            解释请求
+                请求行
+                请求头
+                请求体
+            处理数据
+            构造响应
+                响应行
+                响应头
+                响应体
+            输出响应
+            根据实际情况决定 关闭连接 或 保持连接
+        进程模型
+            单进程单线程
+            单进程多线程
+            多进程单线程
+            多进程多线程
+            select poll epoll
+        具体类型
+            静态
+            动态
+                cgi
+                fastcgi
+            代理
+                socket 双写
+                反向代理
+                正向代理
+                    RFC 2616
+                    RFC 7230
+                    RFC 7231
+                    RFC 1928 SOCKS5
+                    pac
+            websocket
+        TLS
 
 以开发软件为目标的计算机入门简明指南
     计算机入门的前置知识
@@ -245,6 +287,8 @@
         缓存
         队列
         全文搜索引擎
+    虚拟机和容器
+    集群和分布式
     一些工具
         git 的一般使用
             github gitlab gitee 其它的 git 服务
@@ -604,13 +648,28 @@ vscode的使用技巧
                 解决x问题还有更好的方法吗
                 解决方法a和解决方法b有什么区别，什么时候用解决方法a，什么时候用解决方法b
             根据某一技术的提问
-                基本使用
                 应用场景
+                如何使用
+                    如何安装
+                    基本使用
+                    配置文件
+                    api调用
+                    在各种场景下的使用方式
+                出现的背景
+                    解决了什么问题
                 常见问题及应对方法
-                底层原理
+                和其它同类软件的比较
+                    有什么优势
+                    有什么劣势
+                底层实现原理
             递归式提问
                 如何实现 x 功能
                 实现 x 功能要注意些什么
+            一些基础的问题
+                tcp握手
+                线程和进程
+                cookie和session
+                ...
             递归式寻找答案
             技术的边界
             小公司会问前端相关的
@@ -679,7 +738,9 @@ vscode的使用技巧
             常见的问题
                 个人职业规划
                 有什么缺点
+                    至少描述一个缺点，但这个缺点不会影响工作
                 有什么优点
+                    至少描述一个缺点，但这个优点会促进工作
                 上一份工作离职的原因是什么
                 你遇到的最大问题或者是困难是什么
                 记忆深刻的事情
@@ -1301,6 +1362,7 @@ git的一般使用指南
             文档型 MongoDB
             图
             时序
+            列
         日志
             elk loki
         内部文档

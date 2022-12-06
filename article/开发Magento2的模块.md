@@ -914,6 +914,13 @@ $scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(Magento\
 $logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
 // 新建一个
 $logger = \Magento\Framework\App\ObjectManager::getInstance()->create(\Psr\Log\LoggerInterface::class);
+// 获取一个普通的对象
+/** @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory */
+$orderCollectionFactory = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Sales\Model\ResourceModel\Order\CollectionFactory::class);
+$orderId = 3068;
+$orderCollection = $orderCollectionFactory->create();
+$orderCollection->addFieldToFilter('entity_id', $orderId); // 可以修改条件
+$order = $orderCollection->getFirstItem(); // $orderCollection->getItems(); // 获取集合
 ```
 
 ### 在某一个位置写日志
