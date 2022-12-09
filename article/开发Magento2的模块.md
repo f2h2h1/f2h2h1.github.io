@@ -92,6 +92,11 @@ app
 
 启用模块和刷新缓存后，访问这样的链接 `http://localhost-magento/local_dev/hello/world` ，应该就能看到 `hello world` 的输出
 
+## 目录结构
+
+```
+```
+
 ## 新建模型
 
 0. 新建或在 db_schema.xml 文件里添加
@@ -179,6 +184,11 @@ app
 - 模型是一个抽象的对象
 - 资源模型会对应数据库里的表，模型的增删查改通过资源模型进行，例如 资源模型->save(模型)
 - 集合就是模型的集合，一些查询操作也是在集合里进行
+
+## EAV
+
+EAV（实体 - 属性 - 值）
+entity attribute value
 
 ## 新建命令
 
@@ -377,9 +387,16 @@ magento 的索引器有两种类型
 - update by schedule
     - 原始数据更新会通过触发器更新 view_id_cl 表，然后再通过定时任务来更新缓存
     - view_id_cl 表和触发器都是 magento 自动生成的
+        - 触发器会根据表名成三个，只要表有更新，触发器就会运行
+            - trg_表名_after_insert
+            - trg_表名_after_update
+            - trg_表名_after_delete
+        - 触发器运行时会更新 view_id_cl 表
+        - 这些触发器里可能会关联多个索引器，也就是说 indexer 的触发器是共用的
     - view_id_cl 的表的 view_id 就是 mview.xml 中的 id
     - view_id_cl 这类表只有两个字段 version_id 和 entity_id
     - version_id 是自动递增的
+        - 只要和 mview_state 的 version_id 不一致，就会被认为时有索引需要更新
 
 两个和索引器相关的表
 - indexer_state
@@ -537,6 +554,58 @@ magento 的索引器有两种类型
 
 - 上面的命令提及到的 [indexer] 是 inderx.xml 文件里的 indexer 节点的 id 属性
 
+### 在定时任务中运行的 indexer
+
+多数情况下 indexer 是以定时任务的形式运行的
+（虽然也可以使用其它方式运行，但文档里的里的例子就是用定时任务的）
+```
+* * * * * php bin/magento cron:run --group=index
+```
+
+定时任务的配置文件在这个位置
+```
+vendor\magento\module-indexer\etc\crontab.xml
+```
+
+这个 crontab.xml 文件里有三个任务
+- indexer_reindex_all_invalid
+    - 重建索引，类似于 php bin/magento indexer:reindex 的效果
+- indexer_update_all_views
+    - 更新索引，根据 view_id_cl 表中的记录，更新索引
+- indexer_clean_all_changelogs
+    - 删除 view_id_cl 表中过时的记录
+
+因为是定时任务，所以可以用这样的 sql 观察到 indexer 的运行记录
+```sql
+SELECT * from cron_schedule
+WHERE job_code in ('indexer_reindex_all_invalid', 'indexer_update_all_views', 'indexer_clean_all_changelogs')
+order by schedule_id desc;
+```
+
+也可以往 cron_schedule 插入记录，让定时任务中的 indexer 尽快运行。定时任务有可能会 miss ，所以可以多插入几条记录。
+```sql
+INSERT INTO cron_schedule (job_code,status,created_at,scheduled_at)
+VALUES
+('indexer_update_all_views','pending',CURRENT_TIMESTAMP(), date_add(CURRENT_TIMESTAMP(), interval 1 minute)),
+('indexer_update_all_views','pending',CURRENT_TIMESTAMP(), date_add(CURRENT_TIMESTAMP(), interval 2 minute)),
+('indexer_update_all_views','pending',CURRENT_TIMESTAMP(), date_add(CURRENT_TIMESTAMP(), interval 3 minute)),
+('indexer_reindex_all_invalid','pending',CURRENT_TIMESTAMP(), date_add(CURRENT_TIMESTAMP(), interval 5 minute)),
+('indexer_clean_all_changelogs','pending',CURRENT_TIMESTAMP(), date_add(CURRENT_TIMESTAMP(), interval 10 minute));
+```
+
+可以用这样的 sql 来观察 indexer 的状态。直接运行 sql 语句比运行 命令行会快不少
+```sql
+select * from indexer_state where indexer_id = 'hkt_unused_code_gen_indexer';
+select * from mview_state where view_id = 'hkt_unused_code_gen_indexer';
+select * from view_id_cl; -- view_id 就是 mview.xml 中的 id
+```
+
+笔者在本地开发时，会用这样的命令确保定时任务一直在运行，
+然后再往 cron_schedule 插入记录，让对应的 indexer 尽快执行。
+```bash
+php -r "while(true){exec('php bin/magento cron:run --group=index');sleep(3);}"
+```
+
 ### 参考
 
 https://developer.adobe.com/commerce/php/development/components/indexing/custom-indexer/
@@ -626,12 +695,18 @@ crontab -l
 #~ MAGENTO END c5f9e5ed71cceaabc4d4fd9b3e827a2b
 ```
 
+不同的 group 可以使用不同的 cron 表达式
+```
+* * * * * /usr/bin/php /var/www/html/magento2/bin/magento cron:run --group=default 2>&1 | grep -v "Ran jobs by schedule" >> /var/www/html/magento2/var/log/magento.cron.log
+*/10 * * * * /usr/bin/php /var/www/html/magento2/bin/magento cron:run --group=index 2>&1 | grep -v "Ran jobs by schedule" >> /var/www/html/magento2/var/log/magento.cron.log
+```
+
 这是 crontab 配置的解释
 - 2>&1 是把标准错误重定向到标准输出
 - grep -v "Ran jobs by schedule" 是忽略执行成功的日志
 - /var/www/html/var/log/magento.cron.log 是 cron 的日志文件
 
-自己写 crontab 配置或用其它方式（例如 supervisor ）让 cron:run 一直运行也是可以的
+自己写 crontab 配置或用其它方式（例如 supervisor ）让 cron:run 一直运行也是可以的了
 
 ## 新建一个插件 Plugins (Interceptors)
 
@@ -646,7 +721,7 @@ crontab -l
         ```xml
         <config>
             <type name="需要拦截的类名（要填完整的类名）">
-            <plugin name="拦截器名称" type="拦截器的类名（要填完整的类名）" sortOrder="排序" disabled="false" />
+                <plugin name="拦截器名称" type="拦截器的类名（要填完整的类名）" sortOrder="排序" disabled="false" />
             </type>
         </config>
         ```
@@ -905,6 +980,91 @@ $scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(Magento\
 
 修改过配置项的值后，需要清空或刷新缓存才会生效（不论是 config.xml 的配置还是数据库里的配置）。
 
+## 前端
+
+<!--
+AMD 和 require
+jQuery
+underscore
+knockoutjs
+
+
+
+vendor\magento\module-ui\view\base\web\js\lib\core\class.js
+vendor\magento\module-ui\view\base\web\js\lib\core\collection.js
+vendor\magento\module-ui\view\base\web\js\lib\core\element\element.js
+
+uiComponent 和 uiCollection 是一样的
+uiComponent 继承自 uiElement
+uiElement 继承自 uiClass
+
+uiElement:      'Magento_Ui/js/lib/core/element/element',
+uiCollection:   'Magento_Ui/js/lib/core/collection',
+uiComponent:    'Magento_Ui/js/lib/core/collection',
+uiClass:        'Magento_Ui/js/lib/core/class',
+
+uiRegistry
+vendor\magento\module-ui\view\base\web\js\lib\registry\registry.js
+
+
+
+
+
+mageUtils   lib\web\mage\utils\main.js
+mage/utils/wrapper   lib\web\mage\utils\wrapper.js
+mage/translate lib\web\mage\utils\template.js
+
+
+uiClass 好像也是继承自 mageUtils 和 mage/utils/wrapper
+而 mageUtils 和 mage/utils/wrapper 则是来自 underscore
+
+
+knockoutjs 这个的视图是怎么实现的？
+
+
+全局 global
+网站 website
+商店 store
+商店视图 store view
+
+global website store 这三个是一个树形的结构
+global -> website -> store
+
+store view 是相对独立的，
+store view 应用在 store 里
+store view 类似于皮肤或主题的概念
+切换语言的时候就是在切换 store view
+
+https://docs.magento.com/user-guide/stores/stores-all-stores.html
+
+还有这两个
+scope
+store_groups
+
+scope n. 范围
+
+
+pub\static\frontend\HKT\standard\en_US\requirejs-config.js
+pub\static\area\开发商\主题\语言包\前端的文件
+
+areaCode
+    frontend
+    backend
+    base
+    cron
+    webrest_api
+    graphql
+    webapi_soap
+
+https://developer.adobe.com/commerce/php/architecture/modules/areas/
+
+
+后台的渲染逻辑会不会和前台不一样？
+
+-->
+
+## 缓存
+
 ## 一些调试技巧
 
 ### 获取某一个对象
@@ -930,7 +1090,7 @@ $order = $orderCollection->getFirstItem(); // $orderCollection->getItems(); // �
 $logger = \Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface');
 $logger->warning('=======flg debug=======', ['trace' => $a]);
 $logger->warning('=======flg debug=======', ['trace' => $exception->getTrace(), 'msg' => $exception->getMessage()]);
-$logger->warning('=======flg debug=======', ['trace' => debug_backtrace()];
+$logger->warning('=======flg debug=======', ['trace' => debug_backtrace()]);
 ```
 
 ### 在某一个位置通过拼接的 sql 查询数据库
@@ -953,7 +1113,7 @@ $select = $conn->select()
     );
 $select->where("so.status = ?", \Magento\Sales\Model\Order::STATE_PROCESSING)
     ->where("soi.qty_fulfilled + soi.qty_disabled + soi.qty_markoff < soi.qty_invoiced")
-    ->where("soi.fulfilment_start_at <= ? <= soi.fulfilment_end_at", time());
+    ->where("soi.fulfilment_start_at <= ? ", time());
 $result = $conn->fetchAll($select);
 
 // 直接运行 sql 语句
@@ -1240,6 +1400,8 @@ php bin/magento cache:flush 刷新缓存
 github 里 magento2 的模块例子
 - https://github.com/magento/magento2-samples
 - sample-module-minimal 是最简单的模块例子
+
+https://developer.adobe.com/commerce/php/architecture/
 
 生成 magento 模块 https://cedcommerce.com/magento-2-module-creator/
 

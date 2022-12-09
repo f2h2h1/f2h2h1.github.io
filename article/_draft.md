@@ -341,6 +341,12 @@ frp的使用
     halfrost https://halfrost.com/
     blackglory https://blackglory.me/
     黄玄的博客 http://huangxuan.me/
+微信公众号
+    腾讯技术工程
+    哔哩哔哩技术
+    数据库开发
+    InfoQ
+    人人都是产品经理
 一些网址
 文档
     mdn
