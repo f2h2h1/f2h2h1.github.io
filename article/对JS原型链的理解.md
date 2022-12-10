@@ -343,4 +343,9 @@ js 的事件循环
     https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop
 js 的各种循环方法
     https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Loops_and_iteration
+    数组的遍历
+    对象的遍历
+如何判断变量的类型
+如何判断对象是否有某个属性
+如何判断数组是否包含某个值
 -->
