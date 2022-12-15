@@ -595,8 +595,8 @@ VALUES
 
 可以用这样的 sql 来观察 indexer 的状态。直接运行 sql 语句比运行 命令行会快不少
 ```sql
-select * from indexer_state where indexer_id = 'hkt_unused_code_gen_indexer';
-select * from mview_state where view_id = 'hkt_unused_code_gen_indexer';
+select * from indexer_state where indexer_id = 'example_indexer';
+select * from mview_state where view_id = 'example_indexer';
 select * from view_id_cl; -- view_id 就是 mview.xml 中的 id
 ```
 
@@ -1044,7 +1044,7 @@ store_groups
 scope n. 范围
 
 
-pub\static\frontend\HKT\standard\en_US\requirejs-config.js
+pub\static\frontend\LocalDev\standard\en_US\requirejs-config.js
 pub\static\area\开发商\主题\语言包\前端的文件
 
 areaCode
