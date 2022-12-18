@@ -12,10 +12,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Build
+    - name: Set up built environment
       uses: actions/setup-node@v3
       with:
         node-version: '16.x'
+    - name: Build
       run: |
         node -e "console.log('# testgithubaction\ntestgithubaction\nnode2')" > ./article/testgithubaction.md
     - name: Upload artifact
