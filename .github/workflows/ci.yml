@@ -9,12 +9,15 @@ jobs:
       pages: write      # to deploy to Pages
       id-token: write   # to verify the deployment originates from an appropriate source
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
     steps:
     - name: Checkout
       uses: actions/checkout@master
     - name: Build
       run: |
-        echo -e "# testgithubaction\ntestgithubaction" > ./article/testgithubaction.md
+        node -e "console.log('# testgithubaction\ntestgithubaction\nnode')" > ./article/testgithubaction.md
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
