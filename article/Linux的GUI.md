@@ -8,10 +8,10 @@ Linux 的 GUI
 - 一些 GNU 程序库和工具
 - 桌面环境
 
-一个 Linux 桌面环境通常包含
-- 窗口管理器
-- 显示管理器
-- 会话管理器
+一个 Linux 桌面环境 (DE, Desktop Environment) 通常包含
+- 窗口管理器 (WM, Window Manager)
+- 显示管理器 (DM, Display Manager)
+- 会话管理器 (Session Manager)
 - 一系列配套软件
     - 文件管理器
     - 终端模拟器
@@ -314,7 +314,8 @@ xinit [X客户端参数] -- [X服务端参数]
 是的，这两个命令的参数是一致的，参数各有优先级，
 如下(顺序排列)：
 X服务器：
-    命令后接的参数；~/.xserverrc；
+    命令后接的参数；
+    ~/.xserverrc；
     /etc/X11/xinit/xserverrc；
     无参数则直接执行X。
 
@@ -367,5 +368,32 @@ x11-apps 包含了一系列的 X11 的程序
 xterm 是 虚拟终端， 是 X客户端 。
 虽然不是 Xorg 发布的，但也包含在 x11-apps 里。
 
+
+Display Manager完成三个任务：
+1, X Server的启动;
+2, X session的初始化;
+3, X session的管理
+
+
+Xfce 这个词的发音为X-f-c-e(即四个字母一个一个的读）
+“Xfce”项目起源于1996年，"Xfce" 的名字最初是代表的是"XForms Common Environment"，这是因为起初开发使用XForms作为工具包。 但是之后Xfce被重写了两次并且放弃了使用XForms工具包。这个名字虽然仍被保留下来，但是它的全名英文缩写不再是 "XFCE"，而变成了"Xfce"。
+
+XForms 是一个基于 Xlib 的 GUI 工具包
+
+Widget toolkit
+部件 工具包
+
+
+
+窗口管理器根据管理窗口的方式不同，被分为几个门类。
+    合成式窗口管理器(compositing window manager)
+    堆叠式窗口管理器(stacking window manager)
+    瓷砖式窗口管理器(tiling window manager)
+    动态窗口管理器(dynamic window manager)
+
+
+
+X Window System core protocol
+X Window 系统核心协议
 
 -->

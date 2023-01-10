@@ -1,7 +1,9 @@
 开发 Magento2 的模块
 ================================
 
-- 这是在 magento2.3 上开发的
+- 这是在 magento2.4 上开发的
+
+## 新建模块的代码
 
 0. 假设已经安装好 magento2
 1. 新建模块的代码
@@ -16,8 +18,6 @@ app/code/开发商名称/模块名称
 ```
 routeid/controller/action
 ```
-
-## 新建模块的代码
 
 ### 最简单的例子
 
@@ -92,9 +92,133 @@ app
 
 启用模块和刷新缓存后，访问这样的链接 `http://localhost-magento/local_dev/hello/world` ，应该就能看到 `hello world` 的输出
 
+### 启用模块 和 刷新缓存
+
+查看启用的模块
+```
+php bin/magento module:status
+```
+
+启用模块
+```
+php bin/magento module:enable 模块名
+```
+
+禁用模块
+```
+php bin/magento module:disable 模块名
+```
+
+刷新缓存
+```
+php bin/magento cache:clean 清除缓存
+php bin/magento indexer:reindex 刷新全部索引
+php bin/magento setup:upgrade 更新数据 Upgrades the Magento application, DB data, and schema
+php bin/magento setup:di:compile 编译
+php bin/magento setup:static-content:deploy -f 部署静态视图文件
+php bin/magento cache:flush 刷新缓存
+```
+
+模块的代码修改后也要刷新缓存
+
 ## 目录结构
 
 ```
+app
+    code 模块
+        metapackage 开发商
+            module 模块
+                Api
+                Block
+                Console
+                Controller
+                Cron
+                etc
+                    di.xml
+                    events.xml
+                    view.xml
+                    cron_groups.xml
+                    crontab.xml
+                    logging.xml
+                    module.xml
+                    acl.xml
+                    config.xml
+                    routes.xml
+                    system.xml
+                    db_schema_whitelist.json
+                    db_schema.xml
+                    menu.xml
+                    resources.xml
+                    widget.xml
+                Helper
+                Model
+                    Indexer
+                Observer
+                Plugin
+                Setup
+                Test
+                Ui
+                view
+                    areaCode 区域代码 就是 frontend adminhtml 这种
+                        layout
+                            xml
+                            这些 xml 的文件名是对应路由的，也就是和路由名称一样
+                        page_layout
+                        ui_component 也是放 xml 文件，但还不知道有什么用
+                            这里的 xml 文件可以在 layout 里引用
+                        template
+                            **.phtml
+                        web
+                            css
+                            fonts
+                            images
+                            js
+                            template 这里放的是 html 文件
+                        requirejs-config.js 用来声明 requirejs 的配置，例如 js 的加载顺序
+                i18n
+                其它的文件夹
+                    ViewModel
+                    CustomerData
+                composer.json
+                registration.php
+    design 主题
+        areaCode 区域代码， frontend 是前台， adminhtml 是后台
+            开发商
+                主题
+                    开发商_模块名 -> 和 模块里的 view 文件夹是一样的
+                    etc
+                    view
+                    web
+                        css
+                        fonts
+                        images
+                        js
+                        template
+                    media
+                    composer.json
+                    registration.php
+                    theme.xml
+    etc 全局配置
+    i18n 语言包
+bin
+    magento
+dev
+generated
+lib
+    internal
+    web
+phpserver
+pub
+    static
+    cron.php
+    get.php
+    health_check.php
+    index.php
+    static.php
+setup
+var
+vendor
+composer.json
 ```
 
 ## 新建模型
@@ -983,10 +1107,16 @@ $scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(Magento\
 ## 前端
 
 <!--
-AMD 和 require
-jQuery
-underscore
-knockoutjs
+用到的前端框架或库
+    AMD 和 require
+    jquery
+    jquery-ui
+        jquery-ui 的 widget
+    underscore
+    knockoutjs
+        knockoutjs 的模板又是怎样的？
+    LESS (Leaner Style Sheets)
+    来自 magento2 的 uiComponent
 
 
 
@@ -1087,7 +1217,7 @@ $order = $orderCollection->getFirstItem(); // $orderCollection->getItems(); // �
 
 ```php
 /** @var \Psr\Log\LoggerInterface */
-$logger = \Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface');
+$logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
 $logger->warning('=======flg debug=======', ['trace' => $a]);
 $logger->warning('=======flg debug=======', ['trace' => $exception->getTrace(), 'msg' => $exception->getMessage()]);
 $logger->warning('=======flg debug=======', ['trace' => debug_backtrace()]);
@@ -1339,7 +1469,13 @@ indexer:status 的输出就包含了 indexer:info 的输出。
 
 sales_order 表的两个状态
 - state 是 magento 内部的状态
+    - 写死在文件
+    - vendor\magento\module-sales\Model\Order.php
 - status 可以是二次开发时自定义的状态
+    - 写在数据库里的表
+    - vendor\magento\module-sales\Model\ResourceModel\Order\Status.php
+    - sales_order_status
+- status 和 state 的对应关系在这个表里 sales_order_status_state
 
 遇到问题，可以先搜索一下 github 的 iusses ，同样的问题可能已经出了补丁，不用自己修改。
 - 可以在这个站点里找到对应的补丁
@@ -1366,36 +1502,9 @@ https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-
 
 https://devdocs.magento.com/guides/v2.4/config-guide/cron/custom-cron.html
 
-## 启用模块 和 刷新缓存
-
-查看启用的模块
-```
-php bin/magento module:status
-```
-
-启用模块
-```
-php bin/magento module:enable 模块名
-```
-
-禁用模块
-```
-php bin/magento module:disable 模块名
-```
-
-刷新缓存
-```
-php bin/magento cache:clean 清楚缓存
-php bin/magento indexer:reindex 刷新全部索引
-php bin/magento setup:upgrade 更新数据 Upgrades the Magento application, DB data, and schema
-php bin/magento setup:di:compile 编译
-php bin/magento setup:static-content:deploy -f 部署静态视图文件
-php bin/magento cache:flush 刷新缓存
-```
-
-模块的代码修改后也要刷新缓存
-
 ## 参考
+
+中文文档 https://experienceleague.adobe.com/docs/commerce.html?lang=zh-Hans
 
 github 里 magento2 的模块例子
 - https://github.com/magento/magento2-samples
