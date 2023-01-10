@@ -62,7 +62,7 @@
 |站点|头像|网址|描述|
 |-|-|-|-|
 |[中文独立博客列表](https://github.com/timqian/chinese-independent-blogs)||https://github.com/timqian/chinese-independent-blogs||
-|[开往](https://travellings.link)|<img alt="开往" src="https://travellings.link/assets/w.png" width="119" />|https://travellings.link|开往-友链接力|
+|[开往](https://www.travellings.cn/go.html)|<img alt="开往" src="https://www.travellings.cn/assets/logo.svg" width="119" />|https://www.travellings.cn/go.html|开往-友链接力|
 |[虫洞](https://www.foreverblog.cn/go.html)|<img alt="虫洞" src="https://img.foreverblog.cn/logo_en_default.png" width="119" />|https://www.foreverblog.cn/go.html|穿梭虫洞-随机访问十年之约友链博客|
 |[I Am I](https://5ime.cn/)||https://5ime.cn/||
 |[FlyingSky's Blog](https://blog.fsky7.com/)|<img alt="FlyingSky\'s Blog" src="https://static.fsky7.com/images/9c1d35960f638f3f34fcae0c2d8e9da1.jpg" width="119" />|https://blog.fsky7.com/|回忆化成一场长的梦。|

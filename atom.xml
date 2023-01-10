@@ -4,7 +4,7 @@
     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
     <link href="https://f2h2h1.github.io/" />
     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    <updated>2022-11-30T12:57:25+08:00</updated>
+    <updated>2023-01-10T13:59:01+08:00</updated>
     <author>
         <name>f2h2h1's blog</name>
     </author>
@@ -12,14 +12,14 @@
     <title>终端，控制台和外壳</title>
     <link href="https://f2h2h1.github.io/article/终端，控制台和外壳.html" />
     <id>https://f2h2h1.github.io/article/终端，控制台和外壳.html</id>
-    <updated>2022-11-25T18:36:12+08:00</updated>
+    <updated>2023-01-10T13:54:48+08:00</updated>
     <summary>终端，控制台和外壳</summary>
 </entry>
 <entry>
     <title>和颜色相关的笔记</title>
     <link href="https://f2h2h1.github.io/article/和颜色相关的笔记.html" />
     <id>https://f2h2h1.github.io/article/和颜色相关的笔记.html</id>
-    <updated>2022-11-22T22:12:55+08:00</updated>
+    <updated>2022-12-16T18:03:36+08:00</updated>
     <summary>和颜色相关的笔记</summary>
 </entry>
 <entry>
@@ -33,7 +33,7 @@
     <title>关于环境变量的不完整总结</title>
     <link href="https://f2h2h1.github.io/article/关于环境变量的不完整总结.html" />
     <id>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</id>
-    <updated>2022-08-13T16:49:57+08:00</updated>
+    <updated>2022-12-15T18:33:43+08:00</updated>
     <summary>关于环境变量的不完整总结</summary>
 </entry>
 <entry>
@@ -82,7 +82,7 @@
     <title>对JS原型链的理解</title>
     <link href="https://f2h2h1.github.io/article/对JS原型链的理解.html" />
     <id>https://f2h2h1.github.io/article/对JS原型链的理解.html</id>
-    <updated>2022-01-11T18:30:20+08:00</updated>
+    <updated>2022-12-10T21:43:54+08:00</updated>
     <summary>对JS原型链的理解</summary>
 </entry>
 <entry>
@@ -138,7 +138,7 @@
     <title>Linux的GUI</title>
     <link href="https://f2h2h1.github.io/article/Linux的GUI.html" />
     <id>https://f2h2h1.github.io/article/Linux的GUI.html</id>
-    <updated>2022-11-22T22:12:55+08:00</updated>
+    <updated>2023-01-10T13:54:48+08:00</updated>
     <summary>Linux的GUI</summary>
 </entry>
 <entry>
@@ -152,7 +152,7 @@
     <title>开发Magento2的模块</title>
     <link href="https://f2h2h1.github.io/article/开发Magento2的模块.html" />
     <id>https://f2h2h1.github.io/article/开发Magento2的模块.html</id>
-    <updated>2022-11-22T22:12:55+08:00</updated>
+    <updated>2023-01-10T13:54:48+08:00</updated>
     <summary>开发Magento2的模块</summary>
 </entry>
 <entry>
@@ -229,7 +229,7 @@
     <title>密码学入门简明指南</title>
     <link href="https://f2h2h1.github.io/article/密码学入门简明指南.html" />
     <id>https://f2h2h1.github.io/article/密码学入门简明指南.html</id>
-    <updated>2022-11-25T18:36:12+08:00</updated>
+    <updated>2023-01-10T13:54:48+08:00</updated>
     <summary>密码学入门简明指南</summary>
 </entry>
 <entry>
@@ -271,7 +271,7 @@
     <title>一些开发笔记</title>
     <link href="https://f2h2h1.github.io/article/一些开发笔记.html" />
     <id>https://f2h2h1.github.io/article/一些开发笔记.html</id>
-    <updated>2022-11-25T18:36:12+08:00</updated>
+    <updated>2022-12-16T18:03:36+08:00</updated>
     <summary>一些开发笔记</summary>
 </entry>
 <entry>
@@ -306,7 +306,7 @@
     <title>关于字符编码的一些坑</title>
     <link href="https://f2h2h1.github.io/article/关于字符编码的一些坑.html" />
     <id>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</id>
-    <updated>2022-08-04T13:44:17+08:00</updated>
+    <updated>2023-01-10T13:54:48+08:00</updated>
     <summary>关于字符编码的一些坑</summary>
 </entry>
 <entry>
