@@ -134,6 +134,8 @@ app
                 Controller
                 Cron
                 etc
+                    areaCode
+                        ... 直接写在 etc 目录下的配置是全局的，写在 areaCode 文件下的配置只在对应的 areaCode 下生效
                     di.xml
                     events.xml
                     view.xml
@@ -150,6 +152,7 @@ app
                     menu.xml
                     resources.xml
                     widget.xml
+                    schema.graphqls
                 Helper
                 Model
                     Indexer
@@ -173,7 +176,16 @@ app
                             fonts
                             images
                             js
-                            template 这里放的是 html 文件
+                                action
+                                model
+                                view
+                                    这个文件夹下的 js 就是前端的 component ，继承自 magento2 的 uiComponent
+                                    这个文件夹下的 js 应该实和 template 里的 html 文件一一对应的，
+                                    但也可以在 js 里修改模板的路径
+                            template
+                                这里放的是 html 文件
+                                这些 html 文件通常是 ko 的模板
+                                component 通过 ajax 获取这些模板
                         requirejs-config.js 用来声明 requirejs 的配置，例如 js 的加载顺序
                 i18n
                 其它的文件夹
@@ -184,7 +196,7 @@ app
     design 主题
         areaCode 区域代码， frontend 是前台， adminhtml 是后台
             开发商
-                主题
+                主题 -> 优先级是高于 模块 里的文件
                     开发商_模块名 -> 和 模块里的 view 文件夹是一样的
                     etc
                     view
@@ -1107,6 +1119,21 @@ $scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(Magento\
 ## 前端
 
 <!--
+
+
+vendor\magento\framework\View\Result\Page.php render
+这个页面会大致分成这几个部分
+requireJs
+headContent
+headAdditional
+htmlAttributes
+headAttributes
+bodyAttributes
+loaderIcon
+layoutContent
+其中 layoutContent 是最重要的部分
+
+
 用到的前端框架或库
     AMD 和 require
     jquery
@@ -1137,7 +1164,9 @@ uiRegistry
 vendor\magento\module-ui\view\base\web\js\lib\registry\registry.js
 
 
+define 和 require 这两个函数是不一样的。。。
 
+requirejs 模块加载(require)及定义(define)
 
 
 mageUtils   lib\web\mage\utils\main.js
@@ -1150,6 +1179,20 @@ uiClass 好像也是继承自 mageUtils 和 mage/utils/wrapper
 
 
 knockoutjs 这个的视图是怎么实现的？
+
+ko 的文档里提到了三种模板引擎
+    ko 自身的
+        大致分成三部分
+            html代码 -> 通常写在 phtml 文件里
+            js模板 -> 通常写在 views/web/template
+            js代码
+        模板可以嵌套
+        模板可以都写在一个文件里
+    jQuery-tmpl
+        这是一个 jq 的插件，已经停止更新， magento2 里也没有用到
+        可以用 JsRender 替代
+            JsRender 也是 jq 的插件
+    underscore 的 模板引擎
 
 
 全局 global
@@ -1173,6 +1216,16 @@ store_groups
 
 scope n. 范围
 
+scope 在 magento2 里通常是指配置的作用范围
+就是获取哪一级的配置
+设置哪一级的配置这类
+https://experienceleague.adobe.com/docs/commerce-admin/config/scope-change.html
+
+store_groups 是一个表名
+Web Site is mapped to the store_website table in the database.
+Store is mapped to the store_group table in the database.
+Store View is mapped to the store table in the database.
+https://magento.stackexchange.com/questions/318044/magento-2-whats-the-difference-between-store-and-group
 
 pub\static\frontend\LocalDev\standard\en_US\requirejs-config.js
 pub\static\area\开发商\主题\语言包\前端的文件
@@ -1191,9 +1244,73 @@ https://developer.adobe.com/commerce/php/architecture/modules/areas/
 
 后台的渲染逻辑会不会和前台不一样？
 
+
+在 phtml 文件中，可以像这样获得前端资源的路径
+$iconHeart = $block->getViewFileUrl('Magento_Catalog::images/icons/icon-heart.svg');
+
+    css 是怎么加载的？
+        除了写在 layout.xml 这种。。。
+    如何把 参数 传递进 block ?
+        setData 这类方法
+        在 block 中查数据库
+    block 之间的嵌套式如何实现的?
+        xml 文件要有对应的声明
+        在 phtml 文件里这样调用
+            <?= $block->getChildHtml('checkout_cart_empty_widget') ?>
+
+一个block可以对应多个模板，在 block 的这个方法里修改模板
+vendor\magento\framework\View\Element\Template.php
+    public function setTemplate($template)
+    {
+        $this->_template = $template;
+        return $this;
+    }
+
+
+/** @var \Magento\Framework\View\TemplateEngine\Php $this */
+
+
+
+magento2 的分层
+表示层 -> 就是前端 + 控制器
+服务层 -> 就是 Api 里的文件，还有就是 rest soap graphql
+域层 -> 就是业务逻辑？散落在模块的各个位置？
+持久层 -> Model 里的文件？
+https://developer.adobe.com/commerce/php/architecture/layers/
+
+
+
+在加载 lib\web\requirejs\require.js 之前，会有这一段 js 是用来指示 js 的加载路径的
+<script>
+var BASE_URL = 'https\u003A\u002F\u002Fshop\u002Ddev.theclub.com.hk\u002F';
+var require = {
+    'baseUrl': 'https\u003A\u002F\u002Fshop\u002Ddev.theclub.com.hk\u002Fstatic\u002Fversion1669169968\u002Ffrontend\u002FHKT\u002Fstandard\u002Fen_US'
+};
+</script>
+
+这是第一个引入的 js 文件
+lib\web\requirejs\require.js
+pub\static\frontend\HKT\standard\en_US\requirejs\require.js
+
+
+
 -->
 
 ## 缓存
+
+<!--
+
+### 构建的缓存
+
+generated
+pub
+
+### 运行时的缓存
+
+cache
+varnish
+
+-->
 
 ## 一些调试技巧
 

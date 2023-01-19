@@ -396,4 +396,7 @@ Widget toolkit
 X Window System core protocol
 X Window 系统核心协议
 
+如何把 gui 程序塞进 docker 里？
+真的可以这样吗？
+
 -->
