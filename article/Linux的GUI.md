@@ -8,10 +8,10 @@ Linux 的 GUI
 - 一些 GNU 程序库和工具
 - 桌面环境
 
-一个 Linux 桌面环境 (DE, Desktop Environment) 通常包含
-- 窗口管理器 (WM, Window Manager)
-- 显示管理器 (DM, Display Manager)
-- 会话管理器 (Session Manager)
+一个 Linux 桌面环境 (DE, Desktop Environment)  (DE, Desktop Environment) 通常包含
+- 窗口管理器 (WM, Window Manager) (WM, Window Manager)
+- 显示管理器 (DM, Display Manager) (DM, Display Manager)
+- 会话管理器 (Session Manager) (Session Manager)
 - 一系列配套软件
     - 文件管理器
     - 终端模拟器
