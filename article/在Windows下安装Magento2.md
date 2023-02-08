@@ -275,6 +275,24 @@
         ]
     ],
     ```
+- 为了开发方便，可以关掉 merge_files 和 minify_files ， css 和 js 的都关掉，但加载一大堆小文件也会拖慢速度，在 app/etc/config.php 里配置
+    ```
+    'system' => [
+        'default' => [
+            'dev' => [
+                'js' => [
+                    'merge_files' => '0',
+                    'minify_files' => '0',
+                    'enable_js_bundling' => '0'
+                ],
+                'css' => [
+                    'minify_files' => '0',
+                    'merge_css_files' => '0'
+                ],
+            ]
+        ]
+    ],
+    ```
 - 在 php 的配置文件启用命令行的 opcace `opcache.enable_cli=1`
 - 使用开发者模式可以不用编译，但运行速度会变得更慢
 - 关掉 xdebug 后速度也有提升

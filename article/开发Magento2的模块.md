@@ -1267,6 +1267,10 @@ vendor\magento\framework\View\Element\Template.php
     }
 
 
+像这类标签里的内容，是有什么作用的？
+<script type="text/x-magento-init">
+
+
 /** @var \Magento\Framework\View\TemplateEngine\Php $this */
 
 
@@ -1309,6 +1313,18 @@ pub
 
 cache
 varnish
+
+这些文件都分别有哪些作用？
+var/di/*
+var/generation/
+var/cache/
+var/page_cache/
+var/view_preprocessed/
+var/composer_home/cache/
+var/tmp/
+generated/code/
+generated/metadata/
+pub/static/*
 
 -->
 
