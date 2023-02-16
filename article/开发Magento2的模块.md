@@ -326,6 +326,39 @@ composer.json
 EAV（实体 - 属性 - 值）
 entity attribute value
 
+保存 eav 属性的表
+```
+eav_attribute
+eav_entity_type
+```
+
+eav 的五种属性
+```
+varchar
+int
+text
+datetime
+decimal
+```
+
+常见的 eav 类
+```
+catalog_category_entity
+catalog_product_entity
+customer_entity
+customer_address_entity
+```
+
+eav 的值保存在这类表中
+```
+类名_entity
+类名_varchar
+类名_int
+类名_text
+类名_datetime
+类名_decimal
+```
+
 ## 新建命令
 
 0. 在模块目录下 etc/di.xml 加上以下内容
@@ -557,6 +590,66 @@ magento 的索引器有两种类型
     - updated
     - version_id
 
+
+<!--
+
+    还要留意这两个方法 
+    vendor\magento\framework\Model\AbstractModel.php
+        afterSave
+        afterCommitCallback
+
+    indexer 的 callblack 是在模型的 save 方法执行时加上去的
+    然后在 save 方法中会执行 commit 方法
+    然后就是在 afterCommit 中执行 callback
+    vendor\magento\framework\Model\ResourceModel\AbstractResource.php commit 这个方法里本身也会调用回调函数，但似乎没有什么作用
+        vendor\magento\framework\Model\ExecuteCommitCallbacks.php afterCommit
+            然后就是 indexer 的 reindex 方法
+            callback 的方法不单有 indexer
+
+        callblack 用类似这样的代码来执行 indexer
+        /** @var \Magento\Framework\Indexer\IndexerRegistry */
+        $this->indexerRegistry->get($indexer_id)->reindexRow($model->getId());
+
+    几个关键的对象都是显式调用的。。。
+    vendor\magento\module-catalog\Model\Product.php afterSave
+    $this->_getResource()->addCommitCallback([$this, 'reindex']);
+
+    但我还没找到通用的方法。。。
+    又或者有没有一种可能，只有那关键的几个对象能用索引器。。。
+
+vendor\magento\framework\Model\ExecuteCommitCallbacks.php afterCommit 这个是拦截器
+    vendor\magento\framework\Model\AbstractModel.php afterCommitCallback 这个是回调函数
+
+好像和这两个包有关，但这两个包不是来自magento官方
+amasty/mostviewed
+amasty/ogrid
+
+
+vendor\magento\framework\EntityManager\Observer\AfterEntitySave.php
+afterCommitCallback
+
+我自己写的 indexer 好像也没有在 on save 时更新
+实际上整个项目只有三个自定义的索引器，其中两个还是我写的，而且也写得不好。
+
+第一个不是我写的自定义索引器也没有生效
+
+会不会是因为 indexer.xml 里没有设置 saveHandler ，虽然文档里没有明确说明要设置这个
+但 catalog_product_attribute 也没有设置 saveHandler ，同样也有效果
+
+会不会是因为我从命令行运行所以没执行到索引？
+好像也不是，我从web运行一次也同样没有效果
+
+手动更新
+    admin
+    命令行
+自动更新
+    on save
+    update by schedule
+
+magento2 的 indexer 看上去更像是数据库中的物化视图，只是mysql不支持物化视图
+
+-->
+
 ### 新建索引的步骤
 
 0. 在模块目录 etc 新建 inderx.xml
@@ -590,7 +683,7 @@ magento 的索引器有两种类型
     - view 节点的 id 对应 indexer.xml 里 indexer 节点的 view_id
     - view 节点的 class 和 indexer.xml 里 indexer 节点的 class 是一致的
     - subscriptions 是传递给 indexer class 的参数，是某一个表的某一列，可以是多个表
-    - mview 可能是 materialize view 的缩写
+    - mview 是 materialized view 的缩写
 
 0. 在模块目录 model/indexer 新建 TestIndexer.php
     ```php
@@ -786,6 +879,11 @@ http://aqrun.oicnp.com/2019/11/10/12.magento2-indexing-reindex.html
 
 group 节点的 id 对应 crontab.xml 里 config group 的 id
 
+在后台的这个位置可以查看任务组
+```
+Stores > Settings > Configuration > ADVANCED > System -> Cron (Scheduled Tasks)
+```
+
 ### 运行定时任务
 
 修改过 cron 和 cron_groups 需要重新编译并清空缓存才会生效
@@ -843,6 +941,32 @@ crontab -l
 - /var/www/html/var/log/magento.cron.log 是 cron 的日志文件
 
 自己写 crontab 配置或用其它方式（例如 supervisor ）让 cron:run 一直运行也是可以的了
+
+## 队列
+
+<!--
+
+php bin/magento queue:consumers:start sales_rule.codegenerator
+php bin/magento queue:consumers:list
+
+php bin/magento queue:consumers:start [--max-messages=<value>] [--batch-size=<value>] [--single-thread] [--area-code=<value>] <consumer_name>
+
+https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/message-queues/manage-message-queues.html
+
+无法查看定时任务的组？
+
+
+consumers
+消费者
+
+
+vendor\magento\module-message-queue\etc\crontab.xml
+vendor\magento\module-message-queue\etc\cron_groups.xml
+
+这是通过 cron 来运行 队列
+php bin/magento cron:run --group=consumers
+
+-->
 
 ## 新建一个插件 Plugins (Interceptors)
 
@@ -1597,6 +1721,148 @@ indexer:status 的输出就包含了 indexer:info 的输出。
 - 忽略一些 js 文件，把这些 js 文件标记为库文件
 - 使用浏览器的覆盖功能，直接在前端修改 js 代码，这样做的好处是不用运行 setup:static-content:deploy 这种命令
 
+### 修改后台的帐号密码
+
+笔者在二次开发 magento2 的过程中，登录后台时总是失败， magento2 似乎有一套很 ~~混乱~~ 很 ~~复杂~~ 的规则来限制后台的登录。
+
+这里记录一下通过修改数据库里对应的表来完成登录。
+~~这些记录可能会随着magento的更新而失效~~
+
+和后台登录相关的表
+```
+admin_passwords
+admin_user
+admin_user_expiration
+```
+
+顺利登录时各个字段的状态
+- admin_user
+    - is_active 设为 1
+    - failures_num 设为 0
+    - lock_expires 设为 小于当前的时间，至少是 2 天前，避免受到时区的影响 `date_add(now(), interval -2 day)`
+    - first_failure 设为 NULL
+- admin_passwords
+    - last_updated 设为当前的时间
+    - expires 设为 0
+- admin_user_expiration
+    - 这个表里不能有对应的记录
+- 这两个字段的值需要一致
+   - admin_user.password
+   - admin_passwords.password_hash
+
+用于观察的 sql
+```sql
+select
+	admin_user.user_id,
+	admin_user.firstname,
+	admin_user.lastname,
+	admin_user.email,
+	admin_user.username,
+	admin_user.is_active,
+	admin_user.lognum,
+	admin_user.failures_num,
+	admin_user.first_failure,
+	admin_user.lock_expires,
+	admin_user.password,
+	admin_passwords.password_id,
+	admin_passwords.password_hash,
+	admin_passwords.expires,
+	FROM_UNIXTIME(admin_passwords.expires),
+	admin_passwords.last_updated,
+	FROM_UNIXTIME(admin_passwords.last_updated)
+from admin_user
+left join admin_passwords on admin_user.user_id = admin_passwords.user_id
+WHERE admin_user.email = 'ricardo.qt.lu@pccw.com'
+order by admin_passwords.password_id desc limit 1;
+```
+
+用于更新的 sql
+```sql
+-- 更新 admin_user
+UPDATE admin_user
+SET
+	is_active=1,
+	failures_num=0,
+	first_failure=NULL,
+	-- lock_expires=NULL,
+	lock_expires=date_add(now(), interval -3 day),
+	modified=current_timestamp()
+where admin_user.email = 'admin@example.com';
+
+-- 更新 admin_passwords
+UPDATE admin_passwords
+SET
+	expires=0,
+	last_updated=unix_timestamp(now())
+where password_id = (
+	select * from (
+		select password_id
+		from admin_passwords
+		left join admin_user on admin_user.user_id = admin_passwords.user_id
+		where admin_user.email = 'admin@example.com'
+		order by admin_passwords.password_id desc
+		limit 1
+	) as t
+);
+
+-- 删除 admin_user_expiration 里对应的记录
+DELETE FROM admin_user_expiration
+WHERE user_id = (
+    select user_id
+    from admin_user
+    where email = 'admin@example.com'
+    limit 1
+);
+```
+
+生成新的密码
+```php
+// 直接生成一个密码，在命令行里是用，只运行一次，因为重置了key，可能会使其他逻辑混乱
+// 输出的值，填到 admin_user.password 和 admin_passwords.password_hash
+/** @var \Magento\Framework\App\ObjectManager */
+$objectMamager = \Magento\Framework\App\ObjectManager::getInstance();
+/** @var \Magento\Framework\Encryption\Encryptor */
+$encryptor = $objectMamager->get(\Magento\Framework\Encryption\Encryptor::class);
+/** @var \Magento\Framework\App\DeploymentConfig */
+$deploymentConfig = $objectMamager->get(\Magento\Framework\App\DeploymentConfig::class);
+$cryptkey = preg_split('/\s+/s', trim((string)$deploymentConfig->get('crypt/key')))[0]; // 本地的 key
+$cryptkey = '4oyi2yvpl8kx3sh9e4u05vnql41kn8fa'; // crypt/key ，其它的 key ，可能会在本地生成用于线上环境的 password
+$encryptor->setNewKey($cryptkey);
+$password = 'password#12345678'; // 新的密码
+echo $encryptor->getHash($password, true, $encryptor::HASH_VERSION_ARGON2ID13_AGNOSTIC);
+exit(0);
+```
+
+通过命令行新建管理员
+```
+php bin/magento admin:user:create --admin-user="360magento" --admin-password="Admin@123" --admin-email="admin@360magento.com" --admin-firstname="MyFirstName" --admin-lastname="MyLastName"
+```
+
+分配角色给刚刚新建的用户
+```sql
+INSERT INTO magento_preprod.authorization_role
+(parent_id,tree_level,sort_order,role_type,user_id,user_type,role_name,gws_is_all,gws_websites,gws_store_groups)
+select
+    1,2,0,'U',user_id,'2',username,1,NULL,NULL
+from admin_user
+where admin_user.username = '360magento';
+```
+
+通过在数据库里插入记录来新建管理员
+```
+其实就是在这三表表插入对应的记录
+admin_user
+admin_passwords
+authorization_role
+```
+
+在后台新建客户(customer)
+
+和权限相关的表
+```
+authorization_role
+authorization_rule
+```
 
 ### 其它
 

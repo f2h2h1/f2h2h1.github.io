@@ -156,12 +156,18 @@
             1.3
     其它
         带宽 和 宽带 和 位宽 的联系与区别
-        代理 网关 隧道 的区别
+        代理 网关 隧道 的区别，还有 VPN 和 端口转发
             代理 proxy
                 「代为处理」
+                代理的类型和作用域
+                在各种系统上的代理设置
+                    windows
+                    linux
+                    安卓
             网关 gateway
                 「网络关口」「网络海关」
             隧道 tunnel
+            透明 transparent
 
 以开发软件为目标的计算机入门简明指南
     计算机入门的前置知识
@@ -557,6 +563,8 @@ vscode的使用技巧
         内容里混杂不可见的无用的字符，例如 随机地插入零宽字符
         部分文本使用 css 的伪元素或 svg 显示，例如 数字和英文字母
         禁止爬虫的 ua
+        使用 tls 指纹识别爬虫
+            指纹和 ua 要互相对比
         内容需要认证才能显示
         限制请求频率
         内容需要执行 js 才能显示，类似于 spa
@@ -593,7 +601,7 @@ vscode的使用技巧
             js 的代码要判断当前的运行环境是否在 nodejs ，如果是就清空页面的内容
             禁用鼠标右键，禁止f12，ctrl+f10，ctrl+shift+i，禁止选中和复制
         最终目标
-            只允许人访问，频率不能太高，限制的内容不能被抓取
+            只允许人访问，访问频率不能太高，限制的内容不能被抓取
             完全杜绝爬虫是很难的，但可以尽量地提高爬虫的成本
         反爬虫的措施太猛可能会使搜索引擎也抓取不了内容
             通过搜索引擎爬虫的ua和ip地址的反查，单独做一个供搜索引擎抓取的版本
@@ -2908,6 +2916,88 @@ ELF格式
     查看文件格式 `file 文件路径`
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
+定时任务
+    cron
+        安装
+            centos
+                yum install vixie-cron crontabs
+            debian
+                apt-get install cron
+            大多数发行版都会自带 cron
+        cron 通常分为三部分
+            crond 是 cron 在系统内的守护进程，
+            crontab 是管理 cron 任务的工具
+            配置文件
+                配置文件的位置？
+        cron 表达式
+            * * * * *
+            分 时 日 月 星期
+            特别的
+                @yearly 0 0 1 1 * 每年运行一次
+                @monthly 0 0 1 * * 每月运行一次
+                @weekly 0 0 * * 0 每星期运行一次
+                @daily 0 0 * * * 每日运行一次
+                @hourly 0 * * * * 每小时运行一次
+                        * * * * * 每分钟运行一次 这个就没有特殊的名称了
+                @reboot
+                    将作业配置为在守护程序启动时运行一次。
+                    由于 cron 通常永远不会重新启动，因此这通常用于系统启动时运行的任务
+        常用的命令
+            crontab -l
+            crontab -e
+        cron 的实现
+            vixie cron
+                这个应该是现在最流行的 cron 版本了
+                https://github.com/vixie/cron
+            busybox 版的 cron
+                https://github.com/mirror/busybox/blob/HEAD/miscutils/crond.c
+                https://github.com/mirror/busybox/blob/HEAD/miscutils/crontab.c
+            其他流行的实现包括 anacron dcron mcron cronie
+            cron 的实现要比想象中的简单不少
+            对于大多数发行版的 cron 而言
+                cron 是无状态的，
+                cron 在代码里写死了60秒扫描一次配置文件，
+                    为什么是60秒？为什么cron没有秒级的任务？
+                扫描配置文件时，遇到符合规则的任务就会运行，
+                对于单个任务的状态， cron 是不会判断的，不判断上次任务的成功或失败，不判断上次任务运行的时间
+        使用bash脚本实现的隔秒运行和单例运行
+            隔秒运行
+                * * * * * cron.sh
+                #!/bin/bash
+                step=1 #间隔的秒数，不能大于60
+                for (( i = 0; i < 60; i=(i+step) )); do
+                    $(php test.php)
+                    sleep $step
+                done
+                exit 0
+            单例运行
+                要使用文件锁确保当前只有一个脚本在运行
+                flock命令
+        其实现在的 cron 也是通过 systemd 运行的
+            crond.service
+            systemctl status crond.service
+    systemd 的 timer
+        创建一个 service
+        然后创建一个 timer
+        最后把 timer 加入到开机启动中
+    在 linux 下的一次性任务用 at 和 atq 命令
+    windows 的计划任务 包括了 开机启动 和 定时任务
+        以前用 at 命令操作
+        现在用 schtasks 命令操作
+        当然啦，用图形界面也是可以的
+            https://learn.microsoft.com/zh-cn/windows/win32/taskschd/task-scheduler-start-page
+        schtasks
+            查询任务
+                schtasks /Query
+                schtasks /Query /TN "\Microsoft\Windows\WwanSvc\NotificationTask"
+                schtasks /Query /V /TN "\Microsoft\Windows\WwanSvc\NotificationTask"
+            删除任务
+                schtasks /Delete /TN taskname /F
+                taskname 是任务名
+                /F 是强制执行
+            创建任务
+                schtasks /Create /TN taskname /TR taskrun
+                定时任务的表达式有一点混乱，最好还是去看文档
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收
