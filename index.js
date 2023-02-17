@@ -1,3 +1,4 @@
+import {marked} from '/static/marked.esm.js';
 'use strict';
 var Application = (function(){
     var articleList = {};
@@ -217,21 +218,32 @@ var Application = (function(){
         return new Date(parseInt(timestamp + '000')).toLocaleString();
     }
     function timespan(articleInfo) {
-        let div = document.createElement('div');
-        div.classList.add('timespan');
-        function createCol(str) {
-            let col = document.createElement('div');
-            col.innerHTML = str;
-            return col;
-        }
+        // let div = document.createElement('div');
+        // div.classList.add('timespan');
+        // function createCol(str) {
+        //     let col = document.createElement('div');
+        //     col.innerHTML = str;
+        //     return col;
+        // }
+        // if (articleInfo.createTime) {
+        //     div.appendChild(createCol('created at: ' + timetostr(articleInfo.createTime)));
+        // }
+        // if (articleInfo.updateTime) {
+        //     div.appendChild(createCol('updated at: ' + timetostr(articleInfo.updateTime)));
+        // }
+        // return div;
+        // return 'create time: ' + timetostr(articleInfo.createTime) + '&nbsp&nbsp update time: ' + timetostr(articleInfo.updateTime);
+        let div = '';
+        let createTime = '';
+        let updateTime = '';
         if (articleInfo.createTime) {
-            div.appendChild(createCol('created at: ' + timetostr(articleInfo.createTime)));
+            createTime = `<div>created at: ${timetostr(articleInfo.createTime)}</div>`;
         }
         if (articleInfo.updateTime) {
-            div.appendChild(createCol('updated at: ' + timetostr(articleInfo.updateTime)));
+            updateTime = `<div>'updated at: ${timetostr(articleInfo.updateTime)}</div>`;
         }
+        div = `<div class="timespan">${createTime}${updateTime}</div>`;
         return div;
-        // return 'create time: ' + timetostr(articleInfo.createTime) + '&nbsp&nbsp update time: ' + timetostr(articleInfo.updateTime);
     }
     function topFunction() {
         document.body.scrollTop = 0;
@@ -256,26 +268,35 @@ var Application = (function(){
         IndexList.prototype.render = function() {
             let content = DOM;
             let articleList = DATA;
-            let divIndexList = document.createElement("div");
-            divIndexList.setAttribute('id', 'index_list');
-            content.innerHTML = '';
+            let indexList = '';
             for (let i = 0, len = articleList.length ; i < len; i++) {
-                let div = document.createElement("div");
-                let a = document.createElement("a");
-                let h2 = document.createElement("h2");
                 let articleTitle = articleList[i].title;
-
-                // h2.innerHTML = articleTitle;
-                // a.appendChild(h2);
-                a.href = urlManager.createUrl(articleTitle);
-                a.innerHTML = articleTitle;
-                h2.appendChild(a);
-                div.appendChild(h2);
-                // div.appendChild(a);
-                div.appendChild(timespan(articleList[i]));
-                divIndexList.appendChild(div);
+                let articleUrl = urlManager.createUrl(articleTitle);
+                let timestamp = timespan(articleList[i]);
+                indexList += `<div><h2><a href="${articleUrl}">${articleTitle}</a></h2>${timestamp}</div>`;
             }
-            content.appendChild(divIndexList);
+            let html = `<div id="index_list">${indexList}</div>`;
+            content.innerHTML = html;
+            // let divIndexList = document.createElement("div");
+            // divIndexList.setAttribute('id', 'index_list');
+            // content.innerHTML = '';
+            // for (let i = 0, len = articleList.length ; i < len; i++) {
+            //     let div = document.createElement("div");
+            //     let a = document.createElement("a");
+            //     let h2 = document.createElement("h2");
+            //     let articleTitle = articleList[i].title;
+
+            //     // h2.innerHTML = articleTitle;
+            //     // a.appendChild(h2);
+            //     a.href = urlManager.createUrl(articleTitle);
+            //     a.innerHTML = articleTitle;
+            //     h2.appendChild(a);
+            //     div.appendChild(h2);
+            //     // div.appendChild(a);
+            //     div.appendChild(timespan(articleList[i]));
+            //     divIndexList.appendChild(div);
+            // }
+            // content.appendChild(divIndexList);
             document.querySelector('title').innerText = appData.sitename;
         }
         return IndexList;
@@ -291,22 +312,29 @@ var Application = (function(){
             let content = DOM;
             let articleList = DATA;
             content.innerHTML = '';
-            let dt = document.createElement('dt');
-            dt.innerText = 'Article list';
-            content.appendChild(dt);
+            let html = '';
+            // let dt = document.createElement('dt');
+            // dt.innerText = 'Article list';
+            // content.appendChild(dt);
+            html += "<dt>Article list</dt>";
             let i = 0;
             for (let len = articleList.length ; i < len; i++) {
-                let dd = document.createElement("dd");
-                let a = document.createElement("a");
+                // let dd = document.createElement("dd");
+                // let a = document.createElement("a");
+                // let articleTitle = articleList[i].title;
+                // a.innerHTML = articleTitle;
+                // a.href = urlManager.createUrl(articleTitle);
+                // dd.appendChild(a);
+                // content.appendChild(dd);
                 let articleTitle = articleList[i].title;
-                a.innerHTML = articleTitle;
-                a.href = urlManager.createUrl(articleTitle);
-                dd.appendChild(a);
-                content.appendChild(dd);
+                let articleUrl = urlManager.createUrl(articleTitle);
+                html += `<dd><a href="${articleUrl}">${articleTitle}</a></dd>`;
             }
-            let dd = document.createElement("dd");
-            dd.innerText = '共计 ' + i + ' 篇文章';
-            content.appendChild(dd);
+            // let dd = document.createElement("dd");
+            // dd.innerText = '共计 ' + i + ' 篇文章';
+            html += `<dd>共计 ${i} 篇文章</dd>`;
+            content.innerHTML = html;
+            // content.appendChild(dd);
         }
         return ArticleList;
     })();
@@ -330,7 +358,7 @@ var Application = (function(){
                 url: url,
                 dataType: "text",
                 success: function (result) {
-                    content.innerHTML = marked(result);
+                    let articleHtml = marked.parse(result);
                     topFunction();
                     let tableList = document.getElementsByTagName('table');
                     for (let i = 0, len = tableList.length; i < len; i++) {
@@ -340,9 +368,7 @@ var Application = (function(){
                     let articleInfo = findArticleInfo(articleList, title);
                     let createdAt = timetostr(articleInfo.createTime);
                     let updatedAt = timetostr(articleInfo.updateTime);
-                    let aside = document.createElement("aside");
-                    aside.setAttribute('id', 'article_footer');
-                    aside.innerHTML = `
+                    articleHtml += `<aside id="article_footer">
                         <p><a target="_blank" rel="noreferrer" href="https://github.com/f2h2h1/f2h2h1.github.io/blob/master/article/${title}.md">原文链接</a></p>
                         <p>created at: ${createdAt}</p>
                         <p>updated at: ${updatedAt}</p>
@@ -350,20 +376,24 @@ var Application = (function(){
                         <p><img alt="知识共享许可协议" width="87" height="30" src="/static/cc4.0.webp">
                             本作品采用
                             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
-                            进行许可。</p>`;
-                    content.appendChild(aside);
-                    document.querySelector('title').innerText = title;
+                            进行许可。</p>
+                            </aside>`;
+                    content.innerHTML = articleHtml;
                     if (new Date().getTime() / 1000 - articleInfo.updateTime > 15552000) {
                         let h1 = content.querySelector('h1');
                         let newElement = document.createElement("p");
                         newElement.innerText = "这篇文章最后更新的时间在六个月之前，文章所叙述的内容可能已经失效，请谨慎参考！";
                         newElement.classList.add('expired-prompt');
+                        let tips = '<p class="expired-prompt">这篇文章最后更新的时间在六个月之前，文章所叙述的内容可能已经失效，请谨慎参考！</p>';
+
                         if (h1) {
                             insertAfter(newElement, h1);
                         } else {
                             content.insertBefore(newElement, content.firstChild);
                         }
                     }
+
+                    document.querySelector('title').innerText = title;
                 },
                 error: function () {
                     document.querySelector('title').innerText = '404';
@@ -385,23 +415,34 @@ var Application = (function(){
                 dataType: "json",
                 success: function (result) {
                     let linkExchangeList = result;
+                    let LinkExchangeListHtml = '';
                     for (let i in linkExchangeList) {
-                        DOM.appendChild((function(item) {
-                            let span = document.createElement('span');
-                            let a = document.createElement('a');
-                            let desc = item.name;
-                            if (item.desc && item.desc != '') {
-                                desc = item.desc;
-                            }
-                            a.setAttribute('target', '_blank');
-                            a.setAttribute('rel', 'noreferrer');
-                            a.setAttribute('href', item.href);
-                            a.setAttribute('title', desc);
-                            a.innerText = item.name;
-                            span.appendChild(a);
-                            return span;
-                        })(linkExchangeList[i]));
+                        // DOM.appendChild((function(item) {
+                        //     let span = document.createElement('span');
+                        //     let a = document.createElement('a');
+                        //     let desc = item.name;
+                        //     if (item.desc && item.desc != '') {
+                        //         desc = item.desc;
+                        //     }
+                        //     a.setAttribute('target', '_blank');
+                        //     a.setAttribute('rel', 'noreferrer');
+                        //     a.setAttribute('href', item.href);
+                        //     a.setAttribute('title', desc);
+                        //     a.innerText = item.name;
+                        //     span.appendChild(a);
+                        //     return span;
+                        // })(linkExchangeList[i]));
+                        let item = linkExchangeList[i];
+                        let desc = item.name;
+                        if (item.desc && item.desc != '') {
+                            desc = item.desc;
+                        }
+                        LinkExchangeListHtml += `<span>
+                        <a target="_blank" rel="noreferrer" href="${item.href}" title="${desc}">${item.name}</a>
+                        </span>
+                        `;
                     }
+                    DOM.innerHTML += LinkExchangeListHtml;
                 },
                 error: function () {},
                 complete: function () {}
@@ -472,30 +513,69 @@ var Application = (function(){
     }
     application.prototype.run = function() {
         console.log('application.run');
-        scriptManager.addScriptList([
-            '/static/marked.min.js',
-        ]);
-        ajax({
-            type: "GET",
-            url: "/template.html",
-            dataType: "html",
-            success: (data, XMLHttpRequest) => {
-                let div = document.createElement('div');
-                div.innerHTML = data;
-                document.body.appendChild(div);
-                setTimeout(init, 1000);
-            },
-            error: (XMLHttpRequest, textStatus, errorThrown) => {
-                // reject(errorThrown);
-            }
-        });
+        var delay = 1000;
+        if (document.body.querySelector('main')) {
+            setTimeout(init, delay);
+        } else {
+            ajax({
+                type: "GET",
+                url: "/template.html",
+                dataType: "html",
+                success: (data, XMLHttpRequest) => {
+                    // let div = document.createElement('div');
+                    // div.innerHTML = data;
+                    // document.body.appendChild(div);
+                    document.body.innerHTML = data;
+                    setTimeout(init, delay);
+                },
+                error: (XMLHttpRequest, textStatus, errorThrown) => {
+                    // reject(errorThrown);
+                }
+            });
+        }
+        // scriptManager.addScriptList([
+        //     '/static/marked.min.js',
+        // ]);
     };
     return application;
 })();
+
+let config = {
+    hostname: 'f2h2h1.github.io',
+    // hostname: '127.0.0.1',
+    sitename: 'f2h2h1\'s blog',
+};
 window.addEventListener('load', function() {
-    (new Application({
-        hostname: 'f2h2h1.github.io',
-        // hostname: '127.0.0.1',
-        sitename: 'f2h2h1\'s blog',
-    })).run();
+    (new Application(config)).run();
 });
+
+/*
+
+判断环境
+    预渲染环境
+        主页
+        文章页
+    前端渲染环境
+        主页
+        文章页
+let config = {
+    hostname: 'f2h2h1.github.io',
+    // hostname: '127.0.0.1',
+    sitename: 'f2h2h1\'s blog',
+};
+if (this === window) {
+    window.addEventListener('load', function() {
+        (new Application(config)).run();
+    });
+} else {
+    (new Application(config)).run();
+}
+
+
+a = a.replace(/<article id="content">[ |\t]*<h1.*>.*<\/h1>/i, "$& asd");
+console.log(a);
+
+要有一个重建标题的过程
+
+
+*/

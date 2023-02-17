@@ -12,6 +12,314 @@
 	<link rel="manifest" href="/manifest.webmanifest">
 	<meta name="theme-color" content="gray">
 	<link rel="apple-touch-icon" href="/icons-512.png">
+	<style>
+		@media (prefers-color-scheme: dark) {
+			body {
+				background-color: rgb(0, 0, 0);
+				color: rgb(204, 204, 204);
+			}
+		}
+	
+		a {
+			color: #2278c2;
+			text-decoration: none;
+		}
+	
+		a:focus, a:hover {
+			color: #068472;
+			text-decoration: underline;
+		}
+	
+		.navbar-header {
+			padding: 9px;
+			border-bottom: solid;
+			display: flex;
+			justify-content: space-between;
+		}
+	
+		.navbar-header a {
+			font-weight: bold;
+		}
+	
+		main {
+			display: grid;
+			grid-template-columns: 100%;
+		}
+	
+		footer {
+			margin-top: 25px;
+			margin-bottom: 15px;
+			width: 100%;
+			/* display: grid; */
+			/* grid-template-columns: 50% 50%; */
+			/* grid-template-columns: 100%; */
+			border-top: solid;
+			/* padding-left: 15px; */
+		}
+	
+		#article_footer {
+			font-size: small;
+			margin-top: 60px;
+		}
+		#article_footer p {
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+	
+		#page_footer {
+			font-size: small;
+			text-align: center;
+		}
+		#page_footer p {
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+		footer details {
+			font-size: small;
+		}
+		#link_exchange {
+			margin-top: 10px;
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: column;
+		}
+		#link_exchange span {
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+	
+		@media screen and (min-width: 576px) {
+			/* >=576的设备 */
+			#link_exchange {
+				flex-direction: row;
+				/* justify-content: center; */
+			}
+			#link_exchange span {
+				/* padding-left: 10px; */
+				padding-right: 20px;
+			}
+		}
+	
+		@media screen and (min-width: 768px) {
+	
+			/* >=768的设备 */
+			main {
+				grid-template-columns: 68% 32%;
+			}
+	
+			/* footer {
+				grid-template-columns: 50% 50%;
+				padding-left: 5px;
+			} */
+		}
+	
+		@media screen and (min-width: 992px) {
+	
+			/* >=992的设备 */
+			body {
+				padding: 0 20px;
+			}
+	
+			main {
+				grid-template-columns: 70% 30%;
+			}
+		}
+	
+		@media screen and (min-width: 1200px) {
+	
+			/* >=1200的设备 */
+			body {
+				padding: 0 120px;
+			}
+	
+			main {
+				grid-template-columns: 80% 20%;
+			}
+		}
+	
+		@media screen and (min-width: 1600px) {
+	
+			/* >=1600的设备 */
+			body {
+				margin: 0 auto;
+				max-width: 1440px;
+			}
+	
+			main {
+				grid-template-columns: 80% 20%;
+			}
+		}
+	
+		pre {
+			background-color: #363434;
+			color: #f5f5f5;
+			padding: 8px;
+			width: 98%;
+		}
+	
+		code {
+			word-break: break-all;
+			overflow-wrap: anywhere;
+			white-space: pre-wrap;
+		}
+	
+		pre code {
+			width: 100%;
+			word-break: normal;
+			white-space: pre;
+			overflow-wrap: normal;
+			overflow: auto;
+			display: inline-block;
+		}
+	
+		#index_list h2 {
+			margin-bottom: 8px;
+		}
+	
+		#content blockquote {
+			font-size: 15px;
+			padding: 6px 10px;
+			border-width: 0px;
+			border-left: 3px solid #6e6666;
+			margin: 5px 0px;
+		}
+	
+		#content blockquote p {
+			margin: 5px 0px;
+		}
+	
+		nav {
+			margin-left: 15px;
+		}
+	
+		ul,
+		ol {
+			padding-left: 25px;
+		}
+	
+		dt {
+			padding-top: 8px;
+			font-weight: bold;
+		}
+	
+		dd {
+			margin-top: 12px;
+			margin-left: 0px;
+			overflow-wrap: anywhere;
+		}
+	
+		.timespan {
+			display: flex;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+			font-size: small;
+		}
+	
+		.timespan div {
+			margin: auto 10px;
+		}
+	
+		table {
+			border-top: 1px solid #999;
+			border-left: 1px solid #999;
+			border-spacing: 0;
+		}
+	
+		td, th {
+			padding: 5px;
+			border-bottom: 1px solid #999;
+			border-right: 1px solid #999;
+		}
+	
+		.jumbotron {
+			padding: 4rem 2rem;
+			margin: 2rem;
+		}
+	
+		.expired-prompt {
+			background-color: rgb(181, 181, 59);
+			color: black;
+		}
+	
+		@keyframes d2l {
+			0% {
+				background-color: rgb(0, 0, 0);
+			}
+	
+			20% {
+				background-color: rgb(68, 68, 68);
+			}
+	
+			40% {
+				background-color: rgb(136, 136, 136);
+			}
+	
+			60% {
+				background-color: rgb(195, 195, 195);
+			}
+	
+			80% {
+				background-color: rgb(225, 225, 225);
+			}
+	
+			100% {
+				background-color: rgb(255, 255, 255);
+				color: rgb(0, 0, 0);
+			}
+		}
+	
+		@keyframes l2d {
+			0% {
+				background-color: rgb(255, 255, 255);
+			}
+	
+			20% {
+				background-color: rgb(225, 225, 225);
+			}
+	
+			40% {
+				background-color: rgb(195, 195, 195);
+			}
+	
+			60% {
+				background-color: rgb(136, 136, 136);
+			}
+	
+			80% {
+				background-color: rgb(68, 68, 68);
+			}
+	
+			100% {
+				background-color: rgb(0, 0, 0);
+				color: rgb(204, 204, 204);
+			}
+		}
+	
+		@media print {
+			header {
+				display: none;
+			}
+	
+			#content {
+				width: 100%;
+			}
+	
+			main {
+				display: block;
+			}
+	
+			footer details {
+				display: none;
+			}
+	
+			pre code {
+				width: 100%;
+				word-break: break-all;
+				overflow-wrap: anywhere;
+				white-space: pre-wrap;
+			}
+		}
+	</style>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-42Z0Q0TP8B"></script>
 	<script>
@@ -21,10 +329,9 @@
 		gtag('config', 'G-42Z0Q0TP8B');
 	</script>
 	<script data-ad-client="ca-pub-5681660286360577" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script type="module" src="/index.js"></script>
 </head>
 
-<body>
-	<script src="/index.js"></script>
-</body>
+<body></body>
 
 </html>
