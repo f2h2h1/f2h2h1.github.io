@@ -324,6 +324,22 @@
 - github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块 。
 - 如果 clone 速度太慢，可以在 releases 那里下载源码的压缩包（如果还是太慢就用一些下载工具来下载 releases 的压缩包）
 
+配置 vscode 的 xml 文件语法高亮
+1. 在项目根目录运行这句命令
+    ```bash
+    php bin/magento dev:urn-catalog:generate --ide vscode -- .vscode/misc.xml
+    ```
+1. 在 vscode 的配置文件 `.vscode/settings.json` 里加上这几句
+    ```
+    {
+        "xml.catalogs": [
+            ".vscode\\misc.xml"
+        ],
+        "xml.validation.resolveExternalEntities": true,
+        "xml.codeLens.enabled": true,
+    }
+    ```
+
 ## 安装 2.4
 
 笔者发现 magento2 的每个小版本的系统依赖都有一点不一样

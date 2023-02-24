@@ -478,9 +478,9 @@ eav 的值保存在这类表中
                 throw new GraphQlInputException(__('Invalid parameter list.'));
             }
             $output = [];
-            $output['customer_id'] = 1;
+            $output['customer_id'] = 123;
             $output['type'] = 'type';
-            $output['type_id'] = 1;
+            $output['type_id'] = 321;
         
             return $output ;
         }
@@ -489,6 +489,7 @@ eav 的值保存在这类表中
     - $output 的内容需要和 schema.graphqls 里定义的返回参数一致
 
 0. 运行这句命令 `php bin/magento setup:upgrade` 更新数据
+    - 在开发模式下 `php bin/magento c:c` 就能使 schema.graphqls 的修改生效
 
 0. 用这句 curl 命令尝试请求
     ```
@@ -504,10 +505,9 @@ eav 的值保存在这类表中
     {
         "data": {
             "CustomGraphqlOutput": {
-            "customer_id": 123,
-            "type": "asd",
-            "type_id": 321,
-            "end_date": 456
+                "customer_id": 123,
+                "type": "asd",
+                "type_id": 321
             }
         }
     }
@@ -538,6 +538,11 @@ graphql 要留意输入的类型，输出的类型
 在哪个位置检测输入类型
 在哪个位置执行 resolve
 在哪个位置检测输出类型
+
+如何在原有的接口中 增加 修改 或 删除 字段？
+直接修改 schema.graphqls 文件就可以了， magento 会把全部 schema.graphqls 合并，类似于合并 xml 文件一样
+https://devdocs.magento.com/guides/v2.3/graphql/develop/extend-existing-schema.html
+
 -->
 
 浏览器可以安装这个拓展 https://github.com/altair-graphql/altair
@@ -1028,6 +1033,13 @@ php bin/magento cron:run --group=consumers
 
 ## 替换其它模块里的类
 
+<!--
+
+di.xml
+
+<preference for="Magento\Banner\Model\Banner\Validator" type="LocalDev\HomeBanner\Model\Banner\Validator" />
+-->
+
 ## 事件和观察者 (Events and Observers)
 
 1. 在配置文件里声明一个事件
@@ -1236,6 +1248,15 @@ $scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(Magento\
  $scopeConfig->getValue('general/file/bunch_size');
 ```
 
+还可以用命令行来修改配置，这种修改会保存在数据库里
+https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/cli/configuration-management/set-configuration-values.html
+```
+# 设置某个配置
+php bin/magento config:set path value
+# 查看某个配置
+php bin/magento config:show path
+```
+
 数据库的优先级会更高。
 
 修改过配置项的值后，需要清空或刷新缓存才会生效（不论是 config.xml 的配置还是数据库里的配置）。
@@ -1261,6 +1282,7 @@ layoutContent
 用到的前端框架或库
     AMD 和 require
     jquery
+        jQuery.Deferred
     jquery-ui
         jquery-ui 的 widget
     underscore
@@ -1410,16 +1432,42 @@ https://developer.adobe.com/commerce/php/architecture/layers/
 
 在加载 lib\web\requirejs\require.js 之前，会有这一段 js 是用来指示 js 的加载路径的
 <script>
-var BASE_URL = 'https\u003A\u002F\u002Fshop\u002Ddev.theclub.com.hk\u002F';
+var BASE_URL = 'https\u003A\u002F\u002Fshop\u002Ddev.magento.com\u002F';
 var require = {
-    'baseUrl': 'https\u003A\u002F\u002Fshop\u002Ddev.theclub.com.hk\u002Fstatic\u002Fversion1669169968\u002Ffrontend\u002FHKT\u002Fstandard\u002Fen_US'
+    'baseUrl': 'https\u003A\u002F\u002Fshop\u002Ddev.magento.com\u002Fstatic\u002Fversion1669169968\u002Ffrontend\u002FMagento\u002Fstandard\u002Fen_US'
 };
 </script>
 
 这是第一个引入的 js 文件
 lib\web\requirejs\require.js
-pub\static\frontend\HKT\standard\en_US\requirejs\require.js
+pub\static\frontend\Magento\standard\en_US\requirejs\require.js
 
+
+
+// 确保 customerData 加载完后执行的方法
+require([
+    'jquery',
+    'Magento_Customer/js/customer-data'
+], function($, customerData) {
+    $(document).ready(function() {
+        var cacheKey = 'wishlist';
+        var cData = customerData.get(cacheKey);
+        customerData.getInitCustomerData().done(function() { // 加载完后执行
+            let wishlist = cData();
+            if (wishlist && Object.keys(wishlist).length > 0) { // 加载了有数据
+                if (wishlist.wishlist_itemIds) {
+                    if ($('.wishlist .item').length != wishlist.wishlist_itemIds.length) {
+                        customerData.reload(cacheKey);
+                    }
+                } else {
+                    customerData.reload(cacheKey);
+                }
+            } else {
+                customerData.reload(cacheKey);
+            }
+        });
+    });
+});
 
 
 -->
@@ -1772,7 +1820,7 @@ select
 	FROM_UNIXTIME(admin_passwords.last_updated)
 from admin_user
 left join admin_passwords on admin_user.user_id = admin_passwords.user_id
-WHERE admin_user.email = 'ricardo.qt.lu@pccw.com'
+WHERE admin_user.email = 'admin@example.com'
 order by admin_passwords.password_id desc limit 1;
 ```
 
@@ -1920,4 +1968,29 @@ http://www.wps.team/book/magento2/
 <!--
 这是一个收费的文档
 https://www.kancloud.cn/zouhongzhao/magento2-in-action
+
+盲点还有很多盲点
+    magento2 的 xml 是如何合并的？
+    indexer 的 on save 是怎么运行的？
+    队列是怎么运行的？
+    css 是怎么加载的？
+        除了写在 layout.xml 这种。。。
+        在 block 里加载也可以。。。
+    如何把 参数 传递进 block
+        setData 这类方法
+        在 block 中查数据库
+    block 之间的嵌套式如何实现的
+        xml 文件要有对应的声明
+        在 phtml 文件里这样调用
+            <?= $block->getChildHtml('checkout_cart_empty_widget') ?>
+其实还有很多
+
+一个block可以对应多个模板，在 block 的这个方法里修改模板
+vendor\magento\framework\View\Element\Template.php
+    public function setTemplate($template)
+    {
+        $this->_template = $template;
+        return $this;
+    }
+
 -->

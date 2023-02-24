@@ -7,7 +7,9 @@
 - apache 2.4
 - nginx 1.12
 - redis 3.2.1 (redis 的 windows 版已经很久没更新了，虽然还是能用)
-- git for windows 2.33 (虽然 git 和运行 php 没有关系，但用 composer 安装依赖时有些时候会直接从 github 里拉取代码，如果这时系统里没有安装 git 可能会报错)
+- git for windows 2.33 
+    - 虽然 git 和运行 php 没有关系，但用 composer 安装依赖时有些时候会直接从 github 里拉取代码，如果这时系统里没有安装 git 可能会报错
+    - git 也要加到环境变量里（一般安装完后重启一次环境变量里就有 git 的了）
 
 ## php
 
@@ -87,13 +89,21 @@ composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
 6. 在 PHP 的文件夹下新建一个名为 composer.bat 的文件，把以下内容复制进去，然后保存
 ```
-@php "%~dp0composer.phar" %*
+@"%~dp0php.exe" "%~dp0composer.phar" %*
 ```
 
 7. 在 PHP 的文件夹下新建一个名为 composer 的文件，把以下内容复制进去，然后保存，这样在 git bash 里也可以直接用 composer 的命令了
 ```
 #!/usr/bin/env sh
-php "$(dirname "$0")"/composer.phar $*
+"$(dirname "$0")"/php.exe "$(dirname "$0")"/composer.phar $*
+```
+
+composer 的脚本文件使用绝对路径是为了方便安装多个版本的 php
+```
+bat 下的绝对路径
+"%~dp0php.exe"
+sh 下的绝对路径
+"$(dirname "$0")"/php.exe
 ```
 
 ### xdebug
@@ -546,6 +556,8 @@ notepad $env:windir\system32\drivers\etc\hosts
 hosts 修改后，可以用这个命令 `nslookup 域名` 来判断有没有生效
 
 hosts 修改后如果沒有生效，可以用这个命令刷新 DNS `ipconfig /flushdns`
+
+windows 的 hosts 文件需要是 ascii 编码或 ansi 编码，用其它编码 hosts 可能会无效
 
 ### 一些实用的命令
 
