@@ -18,11 +18,34 @@ let main = async function () {
         }
         return url;
     }
-
-    var clearLeadSpace = function (template) {
-        let leadSpaceCount = template.length - template.trimStart().length - 1;
-        let regex = new RegExp(' {' + leadSpaceCount + '}', 'g');
-        return template.replaceAll(regex, '').trim();
+    var setleadingZero = function(num) {
+        num = num.toString();
+        while (num.length < 2) num = "0" + num;
+        return num;
+    };
+    var getTimeZone = function(separate) {
+        if (!separate) {
+            separate = '';
+        }
+        let timezoneOffset = (new Date()).getTimezoneOffset();
+        let leadSymbol = '-';
+        if (timezoneOffset <= 0) {
+            timezoneOffset = timezoneOffset * -1;
+            leadSymbol = '+';
+        }
+        let hours = setleadingZero(Math.floor(timezoneOffset/60));
+        let minutes = setleadingZero(timezoneOffset%60);
+        return leadSymbol + hours + separate + minutes;
+    }
+    var getTimeFormat = function(timestamp) {
+        let timer = new Date(timestamp * 1000);
+        return timer.getFullYear() + '-' +
+            setleadingZero(timer.getMonth() + 1) + '-' +
+            setleadingZero(timer.getDate()) + 'T' +
+            setleadingZero(timer.getHours()) + ':' +
+            setleadingZero(timer.getMinutes()) + ':' +
+            setleadingZero(timer.getSeconds()) +
+            getTimeZone(':');
     }
 
     // 获取文章列表
@@ -86,7 +109,7 @@ let main = async function () {
 
     // 用于页面的 articleList.json
     let articleListJson = JSON.stringify(articleList, null, '    ');
-    // fs.writeFileSync('articleList.json', articleListJson);
+    fs.writeFileSync('articleList.json', articleListJson);
     
     // README 里的文章列表
     let readme = fs.readFileSync('README.md', {encoding:'utf8', flag:'r'});
@@ -95,7 +118,7 @@ let main = async function () {
         }, '');
     readme = (/(?<=<!-- articleList -->).*(?=<!-- articleList -->)/ims)[Symbol.replace](readme, '\n' + listStr);
     // console.log(listStr, readme);
-    // fs.writeFileSync('README.md', readme);
+    fs.writeFileSync('README.md', readme);
 
     // README 里的友链列表
     let exchangeListJson = fs.readFileSync('exchangeList.json', {encoding:'utf8', flag:'r'});
@@ -115,98 +138,125 @@ let main = async function () {
         return carry += tr + '\n';
         }, '');
     readme = (/(?<=<!-- exchangeList -->).*(?=<!-- exchangeList -->)/ims)[Symbol.replace](readme, '\n' + exchange);
-    // fs.writeFileSync('README.md', readme);
+    fs.writeFileSync('README.md', readme);
 
     // SUMMARY
     fs.writeFileSync('SUMMARY.md', '# Summary\n\n* [Introduction](README.md)\n' + articleList.reduce((carry, item) => {
         return carry += '* [' + item['title'] + '](' + createUrl(item['title'], 'md') + ')\n';
     }, ''));
 
-    var xmlProcess = function (mainTemplate, articleList, itemProcess) {
+    var clearLeadSpace = function (template) {
+        let leadSpaceCount = template.length - template.trimStart().length - 1;
+        let regex = new RegExp('^ {' + leadSpaceCount + '}', 'gm');
+        return template.replaceAll(regex, '').trim();
+    }
+    var xmlProcess = function (mainTemplate, articleList, spaceLen, itemProcess) {
         let xmlHead = '<?xml version="1.0" encoding="UTF-8"?>\n';
         let items = articleList.reduce(itemProcess, '');
-        return xmlHead + mainTemplate.trim().replace('%s', items.trim().replaceAll('\n', '\n    '));
+        let space = '';
+        while (spaceLen > 0) {
+            space += ' ';
+            spaceLen--;
+        }
+        return xmlHead + mainTemplate.trim().replace('%s', items.trim().replaceAll('\n', '\n' + space));
     }
-    fs.writeFileSync('sitemap.xml', xmlProcess(
-        clearLeadSpace(`
+    let mainTemplate = '';
+    let xmlstr = '';
+    let spaceLen = 4;
+
+    mainTemplate = `
         <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
             %s
-        </urlset>`),
-        articleList,
-        function(carry, item) {
-            let itemTemplate = `
-            <url>
-                <loc>%s</loc>
-                <lastmod>%s</lastmod>
-                <priority>0.5</priority>
-            </url>
-            `;
-            itemTemplate = clearLeadSpace(itemTemplate);
-            let updateTime = item['updateTime'];
-            updateTime = new Date(updateTime * 1000);
-            let date = updateTime.getFullYear() + '-' + (updateTime.getMonth() + 1) + '-' + updateTime.getDate();
-            let i = '';
-            i = itemTemplate.trim().replace('%s', createUrl(item['title']));
-            i = i.replace('%s', date);
-            return carry += i + '\n';
-        }
-    ));
-    // fs.writeFileSync('atom.xml', xmlProcess(
-    //     `<feed xmlns="http://www.w3.org/2005/Atom">
-    //     <title>f2h2h1's blog</title>
-    //     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
-    //     <link href="https://f2h2h1.github.io/" />
-    //     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    //     <updated>${date('c')}</updated>
-    //     <author>
-    //         <name>f2h2h1's blog</name>
-    //     </author>
-    //     %s
-    //     </feed>`,
-    //     articleList,
-    //     function(carry, item) {
-    //         let itemTemplate = `
-    //         <entry>
-    //             <title>%s</title>
-    //             <link href="https://f2h2h1.github.io/article/关于.html" />
-    //             <id>https://f2h2h1.github.io/article/关于.html</id>
-    //             <updated>2022-09-30T23:57:19+08:00</updated>
-    //             <summary>关于</summary>
-    //         </entry>
-    //         `;
-    //         let i = '';
-    //         i = itemTemplate.trim().replace('%s', createUrl(item['title']));
-    //         i = i.replace('%s', item['updateTime']);
-    //         return carry += i + '\n';
-    //     }
-    // ));
-    // fs.writeFileSync('atom.xml', xmlp());
-    // fs.writeFileSync('rss.xml', xmlp());
-
-
-    // rss
-    // atom
-    // sitemap
-    let xmlHead = '<?xml version="1.0" encoding="UTF-8"?>';
-    let mainTemplate = `
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    %s
-    </urlset>`;
-    let items = articleList.reduce((carry, item) => {
+        </urlset>
+        `;
+    xmlstr = xmlProcess(clearLeadSpace(mainTemplate), articleList, spaceLen, function(carry, item) {
+        let updateTime = item['updateTime'];
+        updateTime = new Date(updateTime * 1000);
+        let date = updateTime.getFullYear() + '-' + (updateTime.getMonth() + 1) + '-' + updateTime.getDate();
+        let url = createUrl(item['title']);
         let itemTemplate = `
         <url>
-            <loc>%s</loc>
-            <lastmod>%s</lastmod>
+            <loc>${url}</loc>
+            <lastmod>${date}</lastmod>
             <priority>0.5</priority>
         </url>
         `;
-        let i = '';
-        i = itemTemplate.trim().replace('%s', createUrl(item['title']));
-        i = i.replace('%s', item['updateTime']);
-        return carry += i + '\n';
-    }, '')
-    // console.log(mainTemplate.trim().replace('%s', items));
-    let itemTemplate = '';
+        itemTemplate = clearLeadSpace(itemTemplate);
+        return carry += itemTemplate + '\n';
+    });
+    fs.writeFileSync('sitemap.xml', xmlstr);
+
+    mainTemplate = `
+        <feed xmlns="http://www.w3.org/2005/Atom">
+            <title>f2h2h1's blog</title>
+            <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
+            <link href="https://f2h2h1.github.io/" />
+            <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
+            <updated>${getTimeFormat(Date.parse(new Date())/1000)}</updated>
+            <author>
+                <name>f2h2h1's blog</name>
+            </author>
+            %s
+        </feed>
+        `;
+    xmlstr = xmlProcess(clearLeadSpace(mainTemplate), articleList, spaceLen, function(carry, item) {
+        let updateTime = getTimeFormat(item['updateTime']);
+        let title = item['title'];
+        let url = createUrl(item['title']);
+        let itemTemplate = `
+        <entry>
+            <title>${title}</title>
+            <link href="${url}" />
+            <id>${url}</id>
+            <updated>${updateTime}</updated>
+            <summary>${title}</summary>
+        </entry>
+        `;
+        itemTemplate = clearLeadSpace(itemTemplate);
+        return carry += itemTemplate + '\n';
+    });
+    fs.writeFileSync('atom.xml', xmlstr);
+
+    mainTemplate = `
+        <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+            <channel>
+                <title>f2h2h1's blog</title>
+                <link>https://f2h2h1.github.io/</link>
+                <description>f2h2h1's blog</description>
+                <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
+                %s
+            </channel>
+        </rss>
+        `;
+    spaceLen = 8;
+    xmlstr = xmlProcess(clearLeadSpace(mainTemplate), articleList, spaceLen, function(carry, item) {
+        let updateTime = item['updateTime'];
+        let timer = new Date(updateTime * 1000);
+        let weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        let monthArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        updateTime = weekArr[timer.getDay()] + ', '+
+            setleadingZero(timer.getDate()) + ' ' +
+            monthArr[timer.getMonth()] + ' ' +
+            timer.getFullYear() + ' ' +
+            setleadingZero(timer.getHours()) + ':' +
+            setleadingZero(timer.getMinutes()) + ':' +
+            setleadingZero(timer.getSeconds()) + ' ' +
+            getTimeZone('');
+        let title = item['title'];
+        let url = createUrl(item['title']);
+        let itemTemplate = `
+        <item>
+            <title>${title}</title>
+            <link>${url}</link>
+            <description>${title}</description>
+            <pubDate>${updateTime}</pubDate>
+            <guid>${url}</guid>
+        </item>
+        `;
+        itemTemplate = clearLeadSpace(itemTemplate);
+        return carry += itemTemplate + '\n';
+    });
+    fs.writeFileSync('rss.xml', xmlstr);
 
 /*
     <?xml version="1.0" encoding="UTF-8"?>
