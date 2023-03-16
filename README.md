@@ -76,6 +76,7 @@
 |[涛叔](https://taoshu.in)||https://taoshu.in||
 |[仙士可博客](https://www.php20.cn/)||https://www.php20.cn/||
 |[Barney’s Blog](https://hugo.bnblogs.cc/)|<img alt="Barney’s Blog" src="https://hugo.bnblogs.cc/images/img/20220215001349.png" width="119" />|https://hugo.bnblogs.cc/|All the truth is simple|
+|[Sky Blog](https://www.wanglingyue.com)|<img alt="Sky Blog" src="https://cdn.wanglingyue.com/me-1.jpg" width="119" />|https://www.wanglingyue.com|Sky Blog，技术博客|
 <!-- exchangeList -->
 
 <!--

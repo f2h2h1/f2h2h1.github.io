@@ -1,327 +1,326 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>f2h2h1's blog</title>
     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
     <link href="https://f2h2h1.github.io/" />
     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    <updated>2023-01-10T13:59:01+08:00</updated>
+    <updated>2023-03-16T18:43:24+08:00</updated>
     <author>
         <name>f2h2h1's blog</name>
     </author>
-<entry>
-    <title>终端，控制台和外壳</title>
-    <link href="https://f2h2h1.github.io/article/终端，控制台和外壳.html" />
-    <id>https://f2h2h1.github.io/article/终端，控制台和外壳.html</id>
-    <updated>2023-01-10T13:54:48+08:00</updated>
-    <summary>终端，控制台和外壳</summary>
-</entry>
-<entry>
-    <title>和颜色相关的笔记</title>
-    <link href="https://f2h2h1.github.io/article/和颜色相关的笔记.html" />
-    <id>https://f2h2h1.github.io/article/和颜色相关的笔记.html</id>
-    <updated>2022-12-16T18:03:36+08:00</updated>
-    <summary>和颜色相关的笔记</summary>
-</entry>
-<entry>
-    <title>Windows下通过PEB读取进程的环境变量</title>
-    <link href="https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html" />
-    <id>https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html</id>
-    <updated>2022-11-07T01:55:15+08:00</updated>
-    <summary>Windows下通过PEB读取进程的环境变量</summary>
-</entry>
-<entry>
-    <title>关于环境变量的不完整总结</title>
-    <link href="https://f2h2h1.github.io/article/关于环境变量的不完整总结.html" />
-    <id>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</id>
-    <updated>2022-12-15T18:33:43+08:00</updated>
-    <summary>关于环境变量的不完整总结</summary>
-</entry>
-<entry>
-    <title>各种标记语言</title>
-    <link href="https://f2h2h1.github.io/article/各种标记语言.html" />
-    <id>https://f2h2h1.github.io/article/各种标记语言.html</id>
-    <updated>2022-07-30T21:01:39+08:00</updated>
-    <summary>各种标记语言</summary>
-</entry>
-<entry>
-    <title>使用PowerShell实现的http服务器</title>
-    <link href="https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html" />
-    <id>https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html</id>
-    <updated>2022-07-30T21:01:39+08:00</updated>
-    <summary>使用PowerShell实现的http服务器</summary>
-</entry>
-<entry>
-    <title>MySQL的时间类型和时间相关的函数</title>
-    <link href="https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html" />
-    <id>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</id>
-    <updated>2022-11-16T18:35:09+08:00</updated>
-    <summary>MySQL的时间类型和时间相关的函数</summary>
-</entry>
-<entry>
-    <title>nginx+ffmpeg+websocket实现的直播例子</title>
-    <link href="https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html" />
-    <id>https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html</id>
-    <updated>2022-05-05T21:01:11+08:00</updated>
-    <summary>nginx+ffmpeg+websocket实现的直播例子</summary>
-</entry>
-<entry>
-    <title>kind相关经验</title>
-    <link href="https://f2h2h1.github.io/article/kind相关经验.html" />
-    <id>https://f2h2h1.github.io/article/kind相关经验.html</id>
-    <updated>2022-07-30T21:01:39+08:00</updated>
-    <summary>kind相关经验</summary>
-</entry>
-<entry>
-    <title>使用shell实现的kv数据库</title>
-    <link href="https://f2h2h1.github.io/article/使用shell实现的kv数据库.html" />
-    <id>https://f2h2h1.github.io/article/使用shell实现的kv数据库.html</id>
-    <updated>2022-03-05T20:29:08+08:00</updated>
-    <summary>使用shell实现的kv数据库</summary>
-</entry>
-<entry>
-    <title>对JS原型链的理解</title>
-    <link href="https://f2h2h1.github.io/article/对JS原型链的理解.html" />
-    <id>https://f2h2h1.github.io/article/对JS原型链的理解.html</id>
-    <updated>2022-12-10T21:43:54+08:00</updated>
-    <summary>对JS原型链的理解</summary>
-</entry>
-<entry>
-    <title>magento2加上varnish缓存</title>
-    <link href="https://f2h2h1.github.io/article/magento2加上varnish缓存.html" />
-    <id>https://f2h2h1.github.io/article/magento2加上varnish缓存.html</id>
-    <updated>2022-05-07T13:53:20+08:00</updated>
-    <summary>magento2加上varnish缓存</summary>
-</entry>
-<entry>
-    <title>数字号码资源</title>
-    <link href="https://f2h2h1.github.io/article/数字号码资源.html" />
-    <id>https://f2h2h1.github.io/article/数字号码资源.html</id>
-    <updated>2021-12-28T21:55:19+08:00</updated>
-    <summary>数字号码资源</summary>
-</entry>
-<entry>
-    <title>使用docker-compose部署magento2</title>
-    <link href="https://f2h2h1.github.io/article/使用docker-compose部署magento2.html" />
-    <id>https://f2h2h1.github.io/article/使用docker-compose部署magento2.html</id>
-    <updated>2022-03-05T20:29:08+08:00</updated>
-    <summary>使用docker-compose部署magento2</summary>
-</entry>
-<entry>
-    <title>如何完成以xx管理系统为选题的毕业设计</title>
-    <link href="https://f2h2h1.github.io/article/如何完成以xx管理系统为选题的毕业设计.html" />
-    <id>https://f2h2h1.github.io/article/如何完成以xx管理系统为选题的毕业设计.html</id>
-    <updated>2022-05-25T20:55:24+08:00</updated>
-    <summary>如何完成以xx管理系统为选题的毕业设计</summary>
-</entry>
-<entry>
-    <title>DNSSEC简介</title>
-    <link href="https://f2h2h1.github.io/article/DNSSEC简介.html" />
-    <id>https://f2h2h1.github.io/article/DNSSEC简介.html</id>
-    <updated>2022-06-22T18:53:13+08:00</updated>
-    <summary>DNSSEC简介</summary>
-</entry>
-<entry>
-    <title>在Windows下安装Magento2</title>
-    <link href="https://f2h2h1.github.io/article/在Windows下安装Magento2.html" />
-    <id>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</id>
-    <updated>2022-04-29T13:09:12+08:00</updated>
-    <summary>在Windows下安装Magento2</summary>
-</entry>
-<entry>
-    <title>用纯CSS3实现的滑动按钮</title>
-    <link href="https://f2h2h1.github.io/article/用纯CSS3实现的滑动按钮.html" />
-    <id>https://f2h2h1.github.io/article/用纯CSS3实现的滑动按钮.html</id>
-    <updated>2021-11-04T13:33:47+08:00</updated>
-    <summary>用纯CSS3实现的滑动按钮</summary>
-</entry>
-<entry>
-    <title>Linux的GUI</title>
-    <link href="https://f2h2h1.github.io/article/Linux的GUI.html" />
-    <id>https://f2h2h1.github.io/article/Linux的GUI.html</id>
-    <updated>2023-01-10T13:54:48+08:00</updated>
-    <summary>Linux的GUI</summary>
-</entry>
-<entry>
-    <title>使用Tesseract识别字符验证码</title>
-    <link href="https://f2h2h1.github.io/article/使用Tesseract识别字符验证码.html" />
-    <id>https://f2h2h1.github.io/article/使用Tesseract识别字符验证码.html</id>
-    <updated>2021-10-15T13:28:51+08:00</updated>
-    <summary>使用Tesseract识别字符验证码</summary>
-</entry>
-<entry>
-    <title>开发Magento2的模块</title>
-    <link href="https://f2h2h1.github.io/article/开发Magento2的模块.html" />
-    <id>https://f2h2h1.github.io/article/开发Magento2的模块.html</id>
-    <updated>2023-01-10T13:54:48+08:00</updated>
-    <summary>开发Magento2的模块</summary>
-</entry>
-<entry>
-    <title>浏览器和服务器通讯方式的不完整总结</title>
-    <link href="https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html" />
-    <id>https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html</id>
-    <updated>2022-11-22T22:12:55+08:00</updated>
-    <summary>浏览器和服务器通讯方式的不完整总结</summary>
-</entry>
-<entry>
-    <title>HTTP认证方式的不完整总结</title>
-    <link href="https://f2h2h1.github.io/article/HTTP认证方式的不完整总结.html" />
-    <id>https://f2h2h1.github.io/article/HTTP认证方式的不完整总结.html</id>
-    <updated>2021-09-02T13:24:59+08:00</updated>
-    <summary>HTTP认证方式的不完整总结</summary>
-</entry>
-<entry>
-    <title>PHP各种运行方式的不完整总结</title>
-    <link href="https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html" />
-    <id>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</id>
-    <updated>2021-11-26T18:07:54+08:00</updated>
-    <summary>PHP各种运行方式的不完整总结</summary>
-</entry>
-<entry>
-    <title>把网页导出成PDF</title>
-    <link href="https://f2h2h1.github.io/article/把网页导出成PDF.html" />
-    <id>https://f2h2h1.github.io/article/把网页导出成PDF.html</id>
-    <updated>2022-07-30T21:01:39+08:00</updated>
-    <summary>把网页导出成PDF</summary>
-</entry>
-<entry>
-    <title>FirstData后台的设置</title>
-    <link href="https://f2h2h1.github.io/article/FirstData后台的设置.html" />
-    <id>https://f2h2h1.github.io/article/FirstData后台的设置.html</id>
-    <updated>2021-07-15T22:36:31+08:00</updated>
-    <summary>FirstData后台的设置</summary>
-</entry>
-<entry>
-    <title>SEO的经验</title>
-    <link href="https://f2h2h1.github.io/article/SEO的经验.html" />
-    <id>https://f2h2h1.github.io/article/SEO的经验.html</id>
-    <updated>2022-02-11T23:58:58+08:00</updated>
-    <summary>SEO的经验</summary>
-</entry>
-<entry>
-    <title>paypal，firtdata，支付宝的不完整接入指南</title>
-    <link href="https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html" />
-    <id>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</id>
-    <updated>2021-07-10T23:47:47+08:00</updated>
-    <summary>paypal，firtdata，支付宝的不完整接入指南</summary>
-</entry>
-<entry>
-    <title>微信支付的不完整接入指南</title>
-    <link href="https://f2h2h1.github.io/article/微信支付的不完整接入指南.html" />
-    <id>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</id>
-    <updated>2021-07-10T23:44:05+08:00</updated>
-    <summary>微信支付的不完整接入指南</summary>
-</entry>
-<entry>
-    <title>观察网站性能</title>
-    <link href="https://f2h2h1.github.io/article/观察网站性能.html" />
-    <id>https://f2h2h1.github.io/article/观察网站性能.html</id>
-    <updated>2022-07-30T21:01:39+08:00</updated>
-    <summary>观察网站性能</summary>
-</entry>
-<entry>
-    <title>git的笔记</title>
-    <link href="https://f2h2h1.github.io/article/git的笔记.html" />
-    <id>https://f2h2h1.github.io/article/git的笔记.html</id>
-    <updated>2021-07-19T23:31:14+08:00</updated>
-    <summary>git的笔记</summary>
-</entry>
-<entry>
-    <title>密码学入门简明指南</title>
-    <link href="https://f2h2h1.github.io/article/密码学入门简明指南.html" />
-    <id>https://f2h2h1.github.io/article/密码学入门简明指南.html</id>
-    <updated>2023-01-10T13:54:48+08:00</updated>
-    <summary>密码学入门简明指南</summary>
-</entry>
-<entry>
-    <title>使用docker部署nuxt</title>
-    <link href="https://f2h2h1.github.io/article/使用docker部署nuxt.html" />
-    <id>https://f2h2h1.github.io/article/使用docker部署nuxt.html</id>
-    <updated>2021-09-10T21:24:55+08:00</updated>
-    <summary>使用docker部署nuxt</summary>
-</entry>
-<entry>
-    <title>在Windows下搭建git服务</title>
-    <link href="https://f2h2h1.github.io/article/在Windows下搭建git服务.html" />
-    <id>https://f2h2h1.github.io/article/在Windows下搭建git服务.html</id>
-    <updated>2022-05-25T20:55:24+08:00</updated>
-    <summary>在Windows下搭建git服务</summary>
-</entry>
-<entry>
-    <title>用docker-compose部署lnmp环境</title>
-    <link href="https://f2h2h1.github.io/article/用docker-compose部署lnmp环境.html" />
-    <id>https://f2h2h1.github.io/article/用docker-compose部署lnmp环境.html</id>
-    <updated>2020-06-22T21:47:08+08:00</updated>
-    <summary>用docker-compose部署lnmp环境</summary>
-</entry>
-<entry>
-    <title>mongodb分片</title>
-    <link href="https://f2h2h1.github.io/article/mongodb分片.html" />
-    <id>https://f2h2h1.github.io/article/mongodb分片.html</id>
-    <updated>2020-06-20T00:45:57+08:00</updated>
-    <summary>mongodb分片</summary>
-</entry>
-<entry>
-    <title>练习</title>
-    <link href="https://f2h2h1.github.io/article/练习.html" />
-    <id>https://f2h2h1.github.io/article/练习.html</id>
-    <updated>2020-01-06T00:32:21+08:00</updated>
-    <summary>练习</summary>
-</entry>
-<entry>
-    <title>一些开发笔记</title>
-    <link href="https://f2h2h1.github.io/article/一些开发笔记.html" />
-    <id>https://f2h2h1.github.io/article/一些开发笔记.html</id>
-    <updated>2022-12-16T18:03:36+08:00</updated>
-    <summary>一些开发笔记</summary>
-</entry>
-<entry>
-    <title>一些关于Linux的笔记</title>
-    <link href="https://f2h2h1.github.io/article/一些关于Linux的笔记.html" />
-    <id>https://f2h2h1.github.io/article/一些关于Linux的笔记.html</id>
-    <updated>2021-06-27T23:27:54+08:00</updated>
-    <summary>一些关于Linux的笔记</summary>
-</entry>
-<entry>
-    <title>在Windows下安装pear</title>
-    <link href="https://f2h2h1.github.io/article/在Windows下安装pear.html" />
-    <id>https://f2h2h1.github.io/article/在Windows下安装pear.html</id>
-    <updated>2021-10-28T23:57:55+08:00</updated>
-    <summary>在Windows下安装pear</summary>
-</entry>
-<entry>
-    <title>在VSCode里使用Xdebug远程调试PHP</title>
-    <link href="https://f2h2h1.github.io/article/在VSCode里使用Xdebug远程调试PHP.html" />
-    <id>https://f2h2h1.github.io/article/在VSCode里使用Xdebug远程调试PHP.html</id>
-    <updated>2021-12-30T18:33:46+08:00</updated>
-    <summary>在VSCode里使用Xdebug远程调试PHP</summary>
-</entry>
-<entry>
-    <title>在Windows下配置PHP服务器</title>
-    <link href="https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html" />
-    <id>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</id>
-    <updated>2022-07-05T13:29:52+08:00</updated>
-    <summary>在Windows下配置PHP服务器</summary>
-</entry>
-<entry>
-    <title>关于字符编码的一些坑</title>
-    <link href="https://f2h2h1.github.io/article/关于字符编码的一些坑.html" />
-    <id>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</id>
-    <updated>2023-01-10T13:54:48+08:00</updated>
-    <summary>关于字符编码的一些坑</summary>
-</entry>
-<entry>
-    <title>在VSCode里调试PHP</title>
-    <link href="https://f2h2h1.github.io/article/在VSCode里调试PHP.html" />
-    <id>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</id>
-    <updated>2022-07-05T13:29:52+08:00</updated>
-    <summary>在VSCode里调试PHP</summary>
-</entry>
-<entry>
-    <title>关于</title>
-    <link href="https://f2h2h1.github.io/article/关于.html" />
-    <id>https://f2h2h1.github.io/article/关于.html</id>
-    <updated>2022-09-30T23:57:19+08:00</updated>
-    <summary>关于</summary>
-</entry>
-
+    <entry>
+        <title>终端，控制台和外壳</title>
+        <link href="https://f2h2h1.github.io/article/终端，控制台和外壳.html" />
+        <id>https://f2h2h1.github.io/article/终端，控制台和外壳.html</id>
+        <updated>2023-02-16T18:12:38+08:00</updated>
+        <summary>终端，控制台和外壳</summary>
+    </entry>
+    <entry>
+        <title>和颜色相关的笔记</title>
+        <link href="https://f2h2h1.github.io/article/和颜色相关的笔记.html" />
+        <id>https://f2h2h1.github.io/article/和颜色相关的笔记.html</id>
+        <updated>2023-01-19T18:43:45+08:00</updated>
+        <summary>和颜色相关的笔记</summary>
+    </entry>
+    <entry>
+        <title>Windows下通过PEB读取进程的环境变量</title>
+        <link href="https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html" />
+        <id>https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html</id>
+        <updated>2023-01-31T23:55:40+08:00</updated>
+        <summary>Windows下通过PEB读取进程的环境变量</summary>
+    </entry>
+    <entry>
+        <title>关于环境变量的不完整总结</title>
+        <link href="https://f2h2h1.github.io/article/关于环境变量的不完整总结.html" />
+        <id>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</id>
+        <updated>2023-01-19T18:43:45+08:00</updated>
+        <summary>关于环境变量的不完整总结</summary>
+    </entry>
+    <entry>
+        <title>各种标记语言</title>
+        <link href="https://f2h2h1.github.io/article/各种标记语言.html" />
+        <id>https://f2h2h1.github.io/article/各种标记语言.html</id>
+        <updated>2022-07-30T21:01:39+08:00</updated>
+        <summary>各种标记语言</summary>
+    </entry>
+    <entry>
+        <title>使用PowerShell实现的http服务器</title>
+        <link href="https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html" />
+        <id>https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html</id>
+        <updated>2022-07-30T21:01:39+08:00</updated>
+        <summary>使用PowerShell实现的http服务器</summary>
+    </entry>
+    <entry>
+        <title>MySQL的时间类型和时间相关的函数</title>
+        <link href="https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html" />
+        <id>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</id>
+        <updated>2022-11-16T18:35:09+08:00</updated>
+        <summary>MySQL的时间类型和时间相关的函数</summary>
+    </entry>
+    <entry>
+        <title>nginx+ffmpeg+websocket实现的直播例子</title>
+        <link href="https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html" />
+        <id>https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html</id>
+        <updated>2022-05-05T21:01:11+08:00</updated>
+        <summary>nginx+ffmpeg+websocket实现的直播例子</summary>
+    </entry>
+    <entry>
+        <title>kind相关经验</title>
+        <link href="https://f2h2h1.github.io/article/kind相关经验.html" />
+        <id>https://f2h2h1.github.io/article/kind相关经验.html</id>
+        <updated>2022-07-30T21:01:39+08:00</updated>
+        <summary>kind相关经验</summary>
+    </entry>
+    <entry>
+        <title>使用shell实现的kv数据库</title>
+        <link href="https://f2h2h1.github.io/article/使用shell实现的kv数据库.html" />
+        <id>https://f2h2h1.github.io/article/使用shell实现的kv数据库.html</id>
+        <updated>2022-03-05T20:29:08+08:00</updated>
+        <summary>使用shell实现的kv数据库</summary>
+    </entry>
+    <entry>
+        <title>对JS原型链的理解</title>
+        <link href="https://f2h2h1.github.io/article/对JS原型链的理解.html" />
+        <id>https://f2h2h1.github.io/article/对JS原型链的理解.html</id>
+        <updated>2022-12-10T21:43:54+08:00</updated>
+        <summary>对JS原型链的理解</summary>
+    </entry>
+    <entry>
+        <title>magento2加上varnish缓存</title>
+        <link href="https://f2h2h1.github.io/article/magento2加上varnish缓存.html" />
+        <id>https://f2h2h1.github.io/article/magento2加上varnish缓存.html</id>
+        <updated>2022-05-07T13:53:20+08:00</updated>
+        <summary>magento2加上varnish缓存</summary>
+    </entry>
+    <entry>
+        <title>数字号码资源</title>
+        <link href="https://f2h2h1.github.io/article/数字号码资源.html" />
+        <id>https://f2h2h1.github.io/article/数字号码资源.html</id>
+        <updated>2023-02-08T18:06:53+08:00</updated>
+        <summary>数字号码资源</summary>
+    </entry>
+    <entry>
+        <title>使用docker-compose部署magento2</title>
+        <link href="https://f2h2h1.github.io/article/使用docker-compose部署magento2.html" />
+        <id>https://f2h2h1.github.io/article/使用docker-compose部署magento2.html</id>
+        <updated>2022-03-05T20:29:08+08:00</updated>
+        <summary>使用docker-compose部署magento2</summary>
+    </entry>
+    <entry>
+        <title>如何完成以xx管理系统为选题的毕业设计</title>
+        <link href="https://f2h2h1.github.io/article/如何完成以xx管理系统为选题的毕业设计.html" />
+        <id>https://f2h2h1.github.io/article/如何完成以xx管理系统为选题的毕业设计.html</id>
+        <updated>2023-02-16T18:12:38+08:00</updated>
+        <summary>如何完成以xx管理系统为选题的毕业设计</summary>
+    </entry>
+    <entry>
+        <title>DNSSEC简介</title>
+        <link href="https://f2h2h1.github.io/article/DNSSEC简介.html" />
+        <id>https://f2h2h1.github.io/article/DNSSEC简介.html</id>
+        <updated>2022-06-22T18:53:13+08:00</updated>
+        <summary>DNSSEC简介</summary>
+    </entry>
+    <entry>
+        <title>在Windows下安装Magento2</title>
+        <link href="https://f2h2h1.github.io/article/在Windows下安装Magento2.html" />
+        <id>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</id>
+        <updated>2023-02-24T18:07:36+08:00</updated>
+        <summary>在Windows下安装Magento2</summary>
+    </entry>
+    <entry>
+        <title>用纯CSS3实现的滑动按钮</title>
+        <link href="https://f2h2h1.github.io/article/用纯CSS3实现的滑动按钮.html" />
+        <id>https://f2h2h1.github.io/article/用纯CSS3实现的滑动按钮.html</id>
+        <updated>2021-11-04T13:33:47+08:00</updated>
+        <summary>用纯CSS3实现的滑动按钮</summary>
+    </entry>
+    <entry>
+        <title>Linux的GUI</title>
+        <link href="https://f2h2h1.github.io/article/Linux的GUI.html" />
+        <id>https://f2h2h1.github.io/article/Linux的GUI.html</id>
+        <updated>2023-01-31T23:55:40+08:00</updated>
+        <summary>Linux的GUI</summary>
+    </entry>
+    <entry>
+        <title>使用Tesseract识别字符验证码</title>
+        <link href="https://f2h2h1.github.io/article/使用Tesseract识别字符验证码.html" />
+        <id>https://f2h2h1.github.io/article/使用Tesseract识别字符验证码.html</id>
+        <updated>2021-10-15T13:28:51+08:00</updated>
+        <summary>使用Tesseract识别字符验证码</summary>
+    </entry>
+    <entry>
+        <title>开发Magento2的模块</title>
+        <link href="https://f2h2h1.github.io/article/开发Magento2的模块.html" />
+        <id>https://f2h2h1.github.io/article/开发Magento2的模块.html</id>
+        <updated>2023-02-24T18:07:36+08:00</updated>
+        <summary>开发Magento2的模块</summary>
+    </entry>
+    <entry>
+        <title>浏览器和服务器通讯方式的不完整总结</title>
+        <link href="https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html" />
+        <id>https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html</id>
+        <updated>2023-01-19T18:43:45+08:00</updated>
+        <summary>浏览器和服务器通讯方式的不完整总结</summary>
+    </entry>
+    <entry>
+        <title>HTTP认证方式的不完整总结</title>
+        <link href="https://f2h2h1.github.io/article/HTTP认证方式的不完整总结.html" />
+        <id>https://f2h2h1.github.io/article/HTTP认证方式的不完整总结.html</id>
+        <updated>2021-09-02T13:24:59+08:00</updated>
+        <summary>HTTP认证方式的不完整总结</summary>
+    </entry>
+    <entry>
+        <title>PHP各种运行方式的不完整总结</title>
+        <link href="https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html" />
+        <id>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</id>
+        <updated>2021-11-26T18:07:54+08:00</updated>
+        <summary>PHP各种运行方式的不完整总结</summary>
+    </entry>
+    <entry>
+        <title>把网页导出成PDF</title>
+        <link href="https://f2h2h1.github.io/article/把网页导出成PDF.html" />
+        <id>https://f2h2h1.github.io/article/把网页导出成PDF.html</id>
+        <updated>2022-07-30T21:01:39+08:00</updated>
+        <summary>把网页导出成PDF</summary>
+    </entry>
+    <entry>
+        <title>FirstData后台的设置</title>
+        <link href="https://f2h2h1.github.io/article/FirstData后台的设置.html" />
+        <id>https://f2h2h1.github.io/article/FirstData后台的设置.html</id>
+        <updated>2021-07-15T22:36:31+08:00</updated>
+        <summary>FirstData后台的设置</summary>
+    </entry>
+    <entry>
+        <title>SEO的经验</title>
+        <link href="https://f2h2h1.github.io/article/SEO的经验.html" />
+        <id>https://f2h2h1.github.io/article/SEO的经验.html</id>
+        <updated>2022-02-11T23:58:58+08:00</updated>
+        <summary>SEO的经验</summary>
+    </entry>
+    <entry>
+        <title>paypal，firtdata，支付宝的不完整接入指南</title>
+        <link href="https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html" />
+        <id>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</id>
+        <updated>2021-07-10T23:47:47+08:00</updated>
+        <summary>paypal，firtdata，支付宝的不完整接入指南</summary>
+    </entry>
+    <entry>
+        <title>微信支付的不完整接入指南</title>
+        <link href="https://f2h2h1.github.io/article/微信支付的不完整接入指南.html" />
+        <id>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</id>
+        <updated>2021-07-10T23:44:05+08:00</updated>
+        <summary>微信支付的不完整接入指南</summary>
+    </entry>
+    <entry>
+        <title>观察网站性能</title>
+        <link href="https://f2h2h1.github.io/article/观察网站性能.html" />
+        <id>https://f2h2h1.github.io/article/观察网站性能.html</id>
+        <updated>2022-07-30T21:01:39+08:00</updated>
+        <summary>观察网站性能</summary>
+    </entry>
+    <entry>
+        <title>git的笔记</title>
+        <link href="https://f2h2h1.github.io/article/git的笔记.html" />
+        <id>https://f2h2h1.github.io/article/git的笔记.html</id>
+        <updated>2021-07-19T23:31:14+08:00</updated>
+        <summary>git的笔记</summary>
+    </entry>
+    <entry>
+        <title>密码学入门简明指南</title>
+        <link href="https://f2h2h1.github.io/article/密码学入门简明指南.html" />
+        <id>https://f2h2h1.github.io/article/密码学入门简明指南.html</id>
+        <updated>2023-02-24T18:07:36+08:00</updated>
+        <summary>密码学入门简明指南</summary>
+    </entry>
+    <entry>
+        <title>使用docker部署nuxt</title>
+        <link href="https://f2h2h1.github.io/article/使用docker部署nuxt.html" />
+        <id>https://f2h2h1.github.io/article/使用docker部署nuxt.html</id>
+        <updated>2021-09-10T21:24:55+08:00</updated>
+        <summary>使用docker部署nuxt</summary>
+    </entry>
+    <entry>
+        <title>在Windows下搭建git服务</title>
+        <link href="https://f2h2h1.github.io/article/在Windows下搭建git服务.html" />
+        <id>https://f2h2h1.github.io/article/在Windows下搭建git服务.html</id>
+        <updated>2022-05-25T20:55:24+08:00</updated>
+        <summary>在Windows下搭建git服务</summary>
+    </entry>
+    <entry>
+        <title>用docker-compose部署lnmp环境</title>
+        <link href="https://f2h2h1.github.io/article/用docker-compose部署lnmp环境.html" />
+        <id>https://f2h2h1.github.io/article/用docker-compose部署lnmp环境.html</id>
+        <updated>2020-06-22T21:47:08+08:00</updated>
+        <summary>用docker-compose部署lnmp环境</summary>
+    </entry>
+    <entry>
+        <title>mongodb分片</title>
+        <link href="https://f2h2h1.github.io/article/mongodb分片.html" />
+        <id>https://f2h2h1.github.io/article/mongodb分片.html</id>
+        <updated>2020-06-20T00:45:57+08:00</updated>
+        <summary>mongodb分片</summary>
+    </entry>
+    <entry>
+        <title>练习</title>
+        <link href="https://f2h2h1.github.io/article/练习.html" />
+        <id>https://f2h2h1.github.io/article/练习.html</id>
+        <updated>2020-01-06T00:32:21+08:00</updated>
+        <summary>练习</summary>
+    </entry>
+    <entry>
+        <title>一些开发笔记</title>
+        <link href="https://f2h2h1.github.io/article/一些开发笔记.html" />
+        <id>https://f2h2h1.github.io/article/一些开发笔记.html</id>
+        <updated>2023-02-08T18:06:53+08:00</updated>
+        <summary>一些开发笔记</summary>
+    </entry>
+    <entry>
+        <title>一些关于Linux的笔记</title>
+        <link href="https://f2h2h1.github.io/article/一些关于Linux的笔记.html" />
+        <id>https://f2h2h1.github.io/article/一些关于Linux的笔记.html</id>
+        <updated>2021-06-27T23:27:54+08:00</updated>
+        <summary>一些关于Linux的笔记</summary>
+    </entry>
+    <entry>
+        <title>在Windows下安装pear</title>
+        <link href="https://f2h2h1.github.io/article/在Windows下安装pear.html" />
+        <id>https://f2h2h1.github.io/article/在Windows下安装pear.html</id>
+        <updated>2021-10-28T23:57:55+08:00</updated>
+        <summary>在Windows下安装pear</summary>
+    </entry>
+    <entry>
+        <title>在VSCode里使用Xdebug远程调试PHP</title>
+        <link href="https://f2h2h1.github.io/article/在VSCode里使用Xdebug远程调试PHP.html" />
+        <id>https://f2h2h1.github.io/article/在VSCode里使用Xdebug远程调试PHP.html</id>
+        <updated>2023-02-08T18:06:53+08:00</updated>
+        <summary>在VSCode里使用Xdebug远程调试PHP</summary>
+    </entry>
+    <entry>
+        <title>在Windows下配置PHP服务器</title>
+        <link href="https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html" />
+        <id>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</id>
+        <updated>2023-02-24T18:07:36+08:00</updated>
+        <summary>在Windows下配置PHP服务器</summary>
+    </entry>
+    <entry>
+        <title>关于字符编码的一些坑</title>
+        <link href="https://f2h2h1.github.io/article/关于字符编码的一些坑.html" />
+        <id>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</id>
+        <updated>2023-01-31T23:55:40+08:00</updated>
+        <summary>关于字符编码的一些坑</summary>
+    </entry>
+    <entry>
+        <title>在VSCode里调试PHP</title>
+        <link href="https://f2h2h1.github.io/article/在VSCode里调试PHP.html" />
+        <id>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</id>
+        <updated>2022-07-05T13:29:52+08:00</updated>
+        <summary>在VSCode里调试PHP</summary>
+    </entry>
+    <entry>
+        <title>关于</title>
+        <link href="https://f2h2h1.github.io/article/关于.html" />
+        <id>https://f2h2h1.github.io/article/关于.html</id>
+        <updated>2022-09-30T23:57:19+08:00</updated>
+        <summary>关于</summary>
+    </entry>
 </feed>
