@@ -88,5 +88,11 @@
         "href": "https://hugo.bnblogs.cc/",
         "desc": "All the truth is simple",
         "avatar": "https://hugo.bnblogs.cc/images/img/20220215001349.png"
+    },
+    {
+        "name": "Sky Blog",
+        "href": "https://www.wanglingyue.com",
+        "desc": "Sky Blog，技术博客",
+        "avatar": "https://cdn.wanglingyue.com/me-1.jpg"
     }
 ]
