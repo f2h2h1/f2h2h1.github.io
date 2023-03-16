@@ -19,6 +19,7 @@ jobs:
     - name: Build
       run: |
         npm run build
+        node -e "console.log(new Date('Fri, 14 Jan 2022 13:02:12 +0800').getTime()/1000)" > > ./article/testgithubaction.html
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
