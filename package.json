@@ -1,0 +1,21 @@
+{
+  "name": "f2h2h1.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cli.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/f2h2h1/f2h2h1.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/f2h2h1/f2h2h1.github.io/issues"
+  },
+  "homepage": "https://github.com/f2h2h1/f2h2h1.github.io"
+}
