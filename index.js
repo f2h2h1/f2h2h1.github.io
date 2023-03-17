@@ -38,7 +38,8 @@ class Application {
     template = '';
     templateInit = '';
     appData = {
-        URLprefix: '',
+        host: '',
+        articlePath: '/article/',
         sitename: 'blog',
         runningtime: '',
     };
@@ -67,11 +68,12 @@ class Application {
         let url = '';
         switch (type) {
             case 'md':
-                url = 'article/' + title + '.md';
+                url = this.appData.articlePath + title + '.md';
                 break;
             case 'html':
             default:
-                url = this.appData.URLprefix + title + '.html';
+                let URLprefix = this.appData.host + this.appData.articlePath;
+                url = URLprefix + title + '.html';
                 // $url = 'https://f2h2h1.github.io/#title=' . urlencode($title);
         }
         return url;
@@ -248,6 +250,10 @@ class Application {
             </script>
             `
             templateInit = (/(?<=<\/script>)(.*?)(?=<\/body>)/s)[Symbol.replace](templateInit, '$1' + initData);
+
+            if (!this.appData.thirdPartyCode) {
+                templateInit = (/(?<=<!-- third party code -->).*?(?=<!-- third party code -->)/s)[Symbol.replace](templateInit, '');
+            }
         }
 
         return templateInit;

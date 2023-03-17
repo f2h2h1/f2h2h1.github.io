@@ -1,10 +1,14 @@
 import { Application } from './index.js';
 
 var appData = {
-    URLprefix: 'https://f2h2h1.github.io/article/',
-    // URLprefix: 'http://127.0.0.1:9012/article/',
-    sitename: 'f2h2h1\'s blog',
+    // host: 'https://f2h2h1.github.io',
+    // articlePath: '/article/',
+    // sitename: 'f2h2h1\'s blog',
+    host: 'http://localhost:8016',
+    articlePath: '/article/',
+    sitename: 'blog',
     runningtime: Application.RT_NODEJS,
+    thirdPartyCode: false,
 };
 
 if (typeof window != "undefined" && Object.prototype.toString.call(window) == "[object Window]") { // browser

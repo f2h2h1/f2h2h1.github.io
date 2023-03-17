@@ -18,8 +18,7 @@ jobs:
         node-version: '16.x'
     - name: Build
       run: |
-        npm run build
-        node -e "console.log(new Date('Fri, 14 Jan 2022 13:02:12 +0800').getTime()/1000)" > ./article/testgithubaction.html
+        node cli.js --build="createPage" --config-host="https://f2h2h1.github.io" --config-sitename="f2h2h1\'s blog" --config-thirdPartyCode=true
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
