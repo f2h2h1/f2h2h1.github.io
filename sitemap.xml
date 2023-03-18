@@ -2,227 +2,227 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://f2h2h1.github.io/article/终端，控制台和外壳.html</loc>
-        <lastmod>55097-7-6</lastmod>
+        <lastmod>2023-2-16</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/和颜色相关的笔记.html</loc>
-        <lastmod>55020-11-29</lastmod>
+        <lastmod>2023-1-19</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html</loc>
-        <lastmod>55054-5-11</lastmod>
+        <lastmod>2023-1-31</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</loc>
-        <lastmod>55020-11-29</lastmod>
+        <lastmod>2023-1-19</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/各种标记语言.html</loc>
-        <lastmod>54547-7-8</lastmod>
+        <lastmod>2022-7-30</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html</loc>
-        <lastmod>54547-7-8</lastmod>
+        <lastmod>2022-7-30</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</loc>
-        <lastmod>54845-9-1</lastmod>
+        <lastmod>2022-11-16</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html</loc>
-        <lastmod>54312-1-21</lastmod>
+        <lastmod>2022-5-5</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/kind相关经验.html</loc>
-        <lastmod>54547-7-8</lastmod>
+        <lastmod>2022-7-30</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/使用shell实现的kv数据库.html</loc>
-        <lastmod>54144-12-24</lastmod>
+        <lastmod>2022-3-5</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/对JS原型链的理解.html</loc>
-        <lastmod>54911-9-27</lastmod>
+        <lastmod>2022-12-10</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/magento2加上varnish缓存.html</loc>
-        <lastmod>54316-9-19</lastmod>
+        <lastmod>2022-5-7</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/数字号码资源.html</loc>
-        <lastmod>55075-8-7</lastmod>
+        <lastmod>2023-2-8</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/使用docker-compose部署magento2.html</loc>
-        <lastmod>54144-12-24</lastmod>
+        <lastmod>2022-3-5</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/如何完成以xx管理系统为选题的毕业设计.html</loc>
-        <lastmod>55097-7-6</lastmod>
+        <lastmod>2023-2-16</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/DNSSEC简介.html</loc>
-        <lastmod>54443-3-25</lastmod>
+        <lastmod>2022-6-22</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</loc>
-        <lastmod>55119-5-30</lastmod>
+        <lastmod>2023-2-24</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/用纯CSS3实现的滑动按钮.html</loc>
-        <lastmod>53812-11-27</lastmod>
+        <lastmod>2021-11-4</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/Linux的GUI.html</loc>
-        <lastmod>55054-5-11</lastmod>
+        <lastmod>2023-1-31</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/使用Tesseract识别字符验证码.html</loc>
-        <lastmod>53758-2-19</lastmod>
+        <lastmod>2021-10-15</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/开发Magento2的模块.html</loc>
-        <lastmod>55119-5-30</lastmod>
+        <lastmod>2023-2-24</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html</loc>
-        <lastmod>55020-11-29</lastmod>
+        <lastmod>2023-1-19</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/HTTP认证方式的不完整总结.html</loc>
-        <lastmod>53640-5-26</lastmod>
+        <lastmod>2021-9-2</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</loc>
-        <lastmod>53873-8-29</lastmod>
+        <lastmod>2021-11-26</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/把网页导出成PDF.html</loc>
-        <lastmod>54547-7-8</lastmod>
+        <lastmod>2022-7-30</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/FirstData后台的设置.html</loc>
-        <lastmod>53507-4-18</lastmod>
+        <lastmod>2021-7-15</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/SEO的经验.html</loc>
-        <lastmod>54085-2-22</lastmod>
+        <lastmod>2022-2-11</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</loc>
-        <lastmod>53493-9-26</lastmod>
+        <lastmod>2021-7-10</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</loc>
-        <lastmod>53493-9-23</lastmod>
+        <lastmod>2021-7-10</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/观察网站性能.html</loc>
-        <lastmod>54547-7-8</lastmod>
+        <lastmod>2022-7-30</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/git的笔记.html</loc>
-        <lastmod>53518-5-8</lastmod>
+        <lastmod>2021-7-19</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/密码学入门简明指南.html</loc>
-        <lastmod>55119-5-30</lastmod>
+        <lastmod>2023-2-24</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/使用docker部署nuxt.html</loc>
-        <lastmod>53663-3-20</lastmod>
+        <lastmod>2021-9-10</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下搭建git服务.html</loc>
-        <lastmod>54366-10-20</lastmod>
+        <lastmod>2022-5-25</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/用docker-compose部署lnmp环境.html</loc>
-        <lastmod>52444-11-20</lastmod>
+        <lastmod>2020-6-22</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/mongodb分片.html</loc>
-        <lastmod>52437-1-5</lastmod>
+        <lastmod>2020-6-20</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/练习.html</loc>
-        <lastmod>51982-7-1</lastmod>
+        <lastmod>2020-1-6</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/一些开发笔记.html</loc>
-        <lastmod>55075-8-7</lastmod>
+        <lastmod>2023-2-8</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/一些关于Linux的笔记.html</loc>
-        <lastmod>53458-2-8</lastmod>
+        <lastmod>2021-6-27</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下安装pear.html</loc>
-        <lastmod>53794-12-4</lastmod>
+        <lastmod>2021-10-28</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在VSCode里使用Xdebug远程调试PHP.html</loc>
-        <lastmod>55075-8-7</lastmod>
+        <lastmod>2023-2-8</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</loc>
-        <lastmod>55119-5-30</lastmod>
+        <lastmod>2023-2-24</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</loc>
-        <lastmod>55054-5-11</lastmod>
+        <lastmod>2023-1-31</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</loc>
-        <lastmod>54478-3-17</lastmod>
+        <lastmod>2022-7-5</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/关于.html</loc>
-        <lastmod>54717-8-8</lastmod>
+        <lastmod>2022-9-30</lastmod>
         <priority>0.5</priority>
     </url>
 </urlset>

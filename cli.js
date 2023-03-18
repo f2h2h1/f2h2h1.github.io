@@ -141,7 +141,6 @@ let main = function () {
             `;
         xmlstr = xmlProcess(clearLeadSpace(mainTemplate), articleList, spaceLen, function(carry, item) {
             let updateTime = item['updateTime'];
-            updateTime = new Date(updateTime * 1000);
             let date = application.timeFormat(updateTime, 'sitemap');
             let url = application.createUrl(item['title']);
             let itemTemplate = `
