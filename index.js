@@ -101,9 +101,6 @@ class Application {
         let timer = new Date(timestamp * 1000);
         let format = timer.toLocaleString();
         switch(type) {
-            case 'sitemap':
-                format = timer.getFullYear() + '-' + (timer.getMonth() + 1) + '-' + timer.getDate();
-                break;
             case 'rss':
                 let weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
                 let monthArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -116,6 +113,7 @@ class Application {
                     this.setleadingZero(timer.getSeconds()) + ' ' +
                     this.getTimeZone('');
                 break;
+            case 'sitemap':
             case 'atom':
             default:
                 format = timer.getFullYear() + '-' +
