@@ -3,7 +3,7 @@
 写这份脚本的灵感来自这本书《设计数据密集型应用》 https://github.com/Vonng/ddia
 
 在这本书的第三章里提及了一个使用 shell 实现的数据库
-```sh
+```bash
 #!/bin/bash
 db_set () {
   echo "$1,$2" >> database
@@ -16,7 +16,7 @@ db_get () {
 笔者在这段小脚本的基础上进行了一些拓展。新增了一些功能，例如 del show 之类的。
 
 这份脚本依赖这几个程序，可以使用类似这样的命令 `./shdb.sh test` 来判断当前环境是否有这些程序
-- sh
+- bash
 - grep
 - sed
 - awk
@@ -30,9 +30,17 @@ db_get () {
 
 这份脚本可以在 git for windows 的 git bash 里运行
 
+<!--
+各个软件具体的版本
+bash
+    GNU bash, version 4.4.23
+
+
+-->
+
 ## 源码
 
-```sh
+```bash
 #!/bin/bash
 
 SHELL_FOLDER=""

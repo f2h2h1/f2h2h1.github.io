@@ -1932,6 +1932,7 @@ sales_order 表的两个状态
     - https://support.magento.com/hc/en-us/articles/360047125252
     - https://support.magento.com/hc/en-us/articles/360047139492
 - 也可以把下载的 patch 文件单独复制出来，然后用 cweagans/composer-patches 打补丁
+<!-- acsd mdva 补丁的前缀其实是什么的缩写？ -->
 
 从 marketplace.magento.com 下载和安装拓展
 1. 登录
