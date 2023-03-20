@@ -6,18 +6,20 @@ import fs from 'fs';
 import process from 'process';
 import child_process from 'child_process';
 
-process.env.TZ = 'Asia/Shanghai';
-// var dirPath = path.resolve('/article');
-let main = function () {
+class cli {
 
-    var application;
+    /** @type { Application } */
+    application = {};
 
-    var getJsonObj = function(jsonPath) {
+    /** 
+     * @param {string} jsonPath
+     */
+    getJsonObj(jsonPath) {
         let json = fs.readFileSync(jsonPath, {encoding:'utf8', flag:'r'});
         return JSON.parse(json);
     }
-    let updateMatedata = async function() {
 
+    async updateMatedata() {
         // 获取文章列表
         var files = fs.readdirSync('./article');
         var articleList = [];
@@ -84,14 +86,14 @@ let main = function () {
         // README 里的文章列表
         let readme = fs.readFileSync('README.md', {encoding:'utf8', flag:'r'});
         let listStr = articleList.reduce((carry, item) => {
-            return carry += '- [' + item.title + '](' + application.createUrl(item.title, 'md') + ')' + "\n";
+            return carry += '- [' + item.title + '](' + this.application.createUrl(item.title, 'md') + ')' + "\n";
             }, '');
         readme = (/(?<=<!-- articleList -->).*(?=<!-- articleList -->)/ims)[Symbol.replace](readme, '\n' + listStr);
         // console.log(listStr, readme);
         fs.writeFileSync('README.md', readme);
 
         // README 里的友链列表
-        let exchangeList = getJsonObj('exchangeList.json');
+        let exchangeList = this.getJsonObj('exchangeList.json');
         // console.log(exchangeList);
         let exchangeTh = '|站点|头像|网址|描述|\n|-|-|-|-|';
         let exchange = exchangeTh.trim() + '\n' + exchangeList.reduce((carry, item) => {
@@ -112,7 +114,7 @@ let main = function () {
 
         // SUMMARY
         fs.writeFileSync('SUMMARY.md', '# Summary\n\n* [Introduction](README.md)\n' + articleList.reduce((carry, item) => {
-            return carry += '* [' + item['title'] + '](' + application.createUrl(item['title'], 'md') + ')\n';
+            return carry += '* [' + item['title'] + '](' + this.application.createUrl(item['title'], 'md') + ')\n';
         }, ''));
 
         var clearLeadSpace = function (template) {
@@ -133,7 +135,7 @@ let main = function () {
         let mainTemplate = '';
         let xmlstr = '';
         let spaceLen = 4;
-
+        var that = this;
         mainTemplate = `
             <urlset
                 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -145,8 +147,8 @@ let main = function () {
             `;
         xmlstr = xmlProcess(clearLeadSpace(mainTemplate), articleList, spaceLen, function(carry, item) {
             let updateTime = item['updateTime'];
-            let date = application.timeFormat(updateTime, 'sitemap');
-            let url = application.createUrl(item['title']);
+            let date = that.application.timeFormat(updateTime, 'sitemap');
+            let url = that.application.createUrl(item['title']);
             let itemTemplate = `
             <url>
                 <loc>${url}</loc>
@@ -165,7 +167,7 @@ let main = function () {
                 <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
                 <link href="https://f2h2h1.github.io/" />
                 <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-                <updated>${application.timeFormat(Date.parse(new Date())/1000, 'atom')}</updated>
+                <updated>${that.application.timeFormat(Date.parse(new Date())/1000, 'atom')}</updated>
                 <author>
                     <name>f2h2h1's blog</name>
                 </author>
@@ -173,9 +175,9 @@ let main = function () {
             </feed>
             `;
         xmlstr = xmlProcess(clearLeadSpace(mainTemplate), articleList, spaceLen, function(carry, item) {
-            let updateTime = application.timeFormat(item['updateTime'], 'atom');
+            let updateTime = that.application.timeFormat(item['updateTime'], 'atom');
             let title = item['title'];
-            let url = application.createUrl(item['title']);
+            let url = that.application.createUrl(item['title']);
             let itemTemplate = `
             <entry>
                 <title>${title}</title>
@@ -204,9 +206,9 @@ let main = function () {
         spaceLen = 8;
         xmlstr = xmlProcess(clearLeadSpace(mainTemplate), articleList, spaceLen, function(carry, item) {
             let updateTime = item['updateTime'];
-            updateTime = application.timeFormat(updateTime, 'rss');
+            updateTime = that.application.timeFormat(updateTime, 'rss');
             let title = item['title'];
-            let url = application.createUrl(item['title']);
+            let url = that.application.createUrl(item['title']);
             let itemTemplate = `
             <item>
                 <title>${title}</title>
@@ -220,43 +222,53 @@ let main = function () {
             return carry += itemTemplate + '\n';
         });
         fs.writeFileSync('rss.xml', xmlstr);
+    }
 
-    };
-    let createPage = function() {
+    createPage() {
+        let articleList = this.getJsonObj('articleList.json');
+        let exchangeList = this.getJsonObj('exchangeList.json');
 
-        let articleList = getJsonObj('articleList.json');
-        let exchangeList = getJsonObj('exchangeList.json');
-
-        application.setTemplate(fs.readFileSync('template.html', {encoding:'utf8', flag:'r'}));
-        application.setArticleList(articleList);
-        application.setLinkExchangeList(exchangeList);
+        this.application.setTemplate(fs.readFileSync('template.html', {encoding:'utf8', flag:'r'}));
+        this.application.setArticleList(articleList);
+        this.application.setLinkExchangeList(exchangeList);
     
         let pageHtml = '';
         for (let i = 0, len = articleList.length; i < len; i++) {
             articleList[i]['md'] = fs.readFileSync('article/' + articleList[i]['title'] + '.md', {encoding:'utf8', flag:'r'});
-            pageHtml = application.buildConetnt(application.appData.sitename, application.buildArticle(articleList[i]));
+            pageHtml = this.application.buildConetnt(this.application.appData.sitename, this.application.buildArticle(articleList[i]));
             fs.writeFileSync('article/' + articleList[i]['title'] +'.html', pageHtml);
         }
-        pageHtml = application.buildConetnt(application.appData.sitename, application.buildIndex(articleList));
+        pageHtml = this.application.buildConetnt(this.application.appData.sitename, this.application.buildIndex(articleList));
         fs.writeFileSync('index.html', pageHtml);
+    }
 
-    };
-    let runBuildMethod = function(val) {
+    /** 
+     * @param {string} val
+     */
+    runBuildMethod(val) {
+        console.log(val);
         switch (val) {
             case 'updateMatedata':
-                updateMatedata();
+                this.updateMatedata();
                 break;
             case 'createPage':
-                createPage();
+                this.createPage();
                 break;
             default:
                 console.log('wrong type of build argument');
         }
-    };
-    let helpPrompt = function() {
+    }
+
+    helpPrompt() {
         console.log('help');
-    };
-    let parseArgv = function(argv) {
+    }
+
+    /**
+     * 
+     * @param {string[]} argv 
+     * @returns {{[key: string]: string}}
+     */
+    parseArgv(argv) {
         console.log(argv);
         let argvArr = {};
         for (let i in argv) {
@@ -283,94 +295,79 @@ let main = function () {
         }
         console.log(argvArr);
         return argvArr;
-    };
+    }
 
-    // updateMatedata();
-    // createPage();
+    /** 
+     * @param {string} msg
+     */
+    logger(msg) {}
 
-    // console.log(process.argv.slice(2));
-    let argvArr = parseArgv(process.argv.slice(2));
-    if (argvArr.length == 0 || argvArr.hasOwnProperty('help')) {
-        // --help
-        helpPrompt();
+    main() {
+        process.env.TZ = 'Asia/Shanghai';
+        let argvArr = this.parseArgv(process.argv.slice(2));
+        if (argvArr.length == 0 || argvArr.hasOwnProperty('help')) {
+            // --help
+            this.helpPrompt();
+            return;
+        }
+        for (let prop in argvArr) {
+            let prefix = 'config-';
+            if (prop.match(new RegExp(String.raw`^${prefix}`, 'g')) == null) {
+                continue;
+            }
+            let attr = prop.substring(prefix.length, prop.length);;
+            let val = argvArr[prop];
+            console.log(attr, val);
+            if (appData.hasOwnProperty(attr)) {
+                if (attr == 'thirdPartyCode') {
+                    if (val == 'false') {
+                        val = false;
+                    } else if (val == 'true') {
+                        val = true;
+                    } else {
+                        continue;
+                    }
+                }
+                appData[attr] = val;
+            }
+        }
+        console.log(appData);
+    
+        this.application = new Application(appData);
+    
+        if (argvArr.hasOwnProperty('build')) {
+            // let build = argvArr['build'];
+            // let index = build.split('|');
+            // if (index == -1) {
+            //     runBuildMethod(build);
+            // } else {
+                // first = build.substring(0, index - 2);
+                //  = build.substring(index - 1, build.length);
+    
+            // }
+            for (let BuildMethod of argvArr['build'].split('|')) {
+                this.runBuildMethod(BuildMethod);
+            }
+        }
+        if (argvArr.hasOwnProperty('server')) {
+            switch (val) {
+                case 'static':
+                    console.log('static server');
+                    break;
+                case 'backendRender':
+                    console.log('backendRender server');
+                    break;
+                default:
+                    console.log('server type of build argument');
+            }
+        }
+
         return;
     }
-    for (let prop in argvArr) {
-        let prefix = 'config-';
-        if (prop.match(new RegExp(String.raw`^${prefix}`, 'g')) == null) {
-            continue;
-        }
-        let attr = prop.substring(prefix.length, prop.length);;
-        let val = argvArr[prop];
-        console.log(attr, val);
-        if (appData.hasOwnProperty(attr)) {
-            if (attr == 'thirdPartyCode') {
-                if (val == 'false') {
-                    val = false;
-                } else if (val == 'true') {
-                    val = true;
-                } else {
-                    continue;
-                }
-            }
-            appData[attr] = val;
-        }
-    }
-    console.log(appData);
+}
 
-    application = new Application(appData);
+(new cli()).main();
 
-    if (argvArr.hasOwnProperty('build')) {
-        // let build = argvArr['build'];
-        // let index = build.split('|');
-        // if (index == -1) {
-        //     runBuildMethod(build);
-        // } else {
-            // first = build.substring(0, index - 2);
-            //  = build.substring(index - 1, build.length);
-
-        // }
-        for (let BuildMethod of argvArr['build'].split('|')) {
-            console.log(BuildMethod);
-            runBuildMethod(BuildMethod);
-        }
-    }
-    if (argvArr.hasOwnProperty('server')) {
-        switch (val) {
-            case 'static':
-                console.log('static server');
-                break;
-            case 'backendRender':
-                console.log('backendRender server');
-                break;
-            default:
-                console.log('server type of build argument');
-        }
-    }
-
-    return;
-
-
-
-    // 把 articleList 和 exchangeList 以 json 的形式加入到 index.html 中，这是用来判断预渲染的标记
-    // 纯前端的环境下就用 ajax 获得这两份文件
-    // 只有第一次打开页面时判断预渲染还是前端渲染，其它后续的页面都是前端渲染
-    /*
-        <script>
-        var articleList = {};
-        var exchangeList = {};
-        </script>
-    */
-
-    // let articleHtml = application.buildArticle(articleList[5]);
-    // let pageHtml = application.buildConetnt(articleList[5]['title'], articleHtml);
-    // console.log(pageHtml);
-    // fs.writeFileSync('test.html', pageHtml);
-
-    // application.run();
-
-};
-main();
 /*
 date('r'); // RFC 2822/RFC 5322 toUTCString
 Tue, 07 Feb 2023 13:17:02 +0000
