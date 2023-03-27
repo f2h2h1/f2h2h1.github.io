@@ -259,7 +259,7 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
         httpd.exe: Syntax error on line 187 of Apache24/conf/httpd.conf: Cannot load modules/php8apache2_4.dll into server:
         ```
     - 可以尝试这样解决
-        - 检查 httpd.conf 里的 SRVROOT 不否有填好
+        - 检查 httpd.conf 里的 SRVROOT 是否有填好
         - 检查 Apache 与 PHP 版本的位数是否一致
             - 必须是 都是 32 位或都是 64 位
         - 试试 模块名由 php8_module 改成没有版本号的 php_module

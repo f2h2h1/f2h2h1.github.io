@@ -276,6 +276,16 @@
                 设置代理
                 设置防火墙
             图形界面
+        windows
+            配置文件ini和注册表
+            策略组
+            服务
+            计划任务
+            防火墙
+            命令行，终端和脚本
+            事件查看器
+            任务管理器
+            explorer.exe
     计算机语言
         机器语言
             指令集（机器指令的集合）
@@ -1028,7 +1038,7 @@ vscode的使用技巧
             不愿意或没有勇气 润
                 不是出国才叫润，润去更好的省份，更好的城市也可以算润
             没有能力 润
-                有没有勇气润和有没有能里润是两个不一样的问题
+                有没有勇气润和有没有能力润是两个不一样的问题
             基础还是不够好
             准备不够充分
             面试时太紧张了，未能完整地向招聘的企业展示自己的能力
@@ -1365,6 +1375,162 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
     位宽是指一次能传输的数据量，就是一次能传输的比特位数
         例如， 64位的位宽就是指一次能传输64个比特位，通常位简称为 64位（64bit）
         内存带宽一般是 内存频率*内存位宽 ，显存带宽也是一样的计算
+浏览器引擎 渲染引擎 js引擎 的联系与区别
+    各种名词
+        浏览器（Browser）
+        浏览器引擎（Browser Engine）
+        浏览器内核（Browser Kernel）
+        排版引擎（Layout Engine）
+        渲染引擎（Rendering Engine）
+        JavaScript 引擎（JavaScript Engine）
+        WebView
+    理解
+        Browser = Browser Engine + 一堆外围功能
+        Browser Engine = Browser Kernel
+        Rendering Engine = Layout Engine
+        Browser Engine
+            广义的 Browser Engine = Rendering Engine + JavaScript Engine
+            狭义的 Browser Engine = Rendering Engine
+        JavaScript Engine
+            在浏览器引擎中的 JavaScript 运行时
+        WebView
+            嵌入在其它应用的浏览器 或 一个精减版的浏览器
+            webviw 通常以组件的形式出现，不能单独运行
+            现代操作系统大多会提供 webview 组件
+        Chrome Chromium Blink 之间的联系
+            Chromium 是一个基于 Blink 的开源的浏览器
+            Chrome = Chromium + 谷歌服务 类似于 安卓 = AOSP + 谷歌服务
+            新版的 Edge = Chromium + 微软服务
+            Blink 是一个派生自 Webkit 的开源的引擎
+    常见的浏览器引擎
+        Khtml -> Konqueror
+        Gecko -> firefox
+        Webkit -> safari
+            在 webkit 的文档中有明确地提及到
+            WebCore 是 Rendering Engine
+            JavaScriptCore 是 JavaScript Engine
+        Blink -> chrome, 新版的 Edge, 新版的 Opera
+        Trident -> ie
+        EdgeHTML -> 旧版的 Edge
+            EdgeHTML 是 Trident 的一个分支
+        Presto -> 旧版的 Opera
+    常见的 JavaScript引擎
+        monkey -> firefox
+        KJS -> Konqueror
+        V8 -> chrome, 新版的 Edge, 新版的 Opera
+        JavaScriptCore -> Webkit
+        Jscript -> 旧版的 ie
+        Chakra -> 新版的 ie, 旧版的 Edge
+        Carakan -> 旧版的 Opera
+程序 软件 应用 的联系与区别
+    英文
+        软件 software
+        应用 application
+        程序 progrem
+    含义的范围
+        software > application > progrem
+    具体的解释
+        application 是为最终用户设计的 software
+            application 有时会被翻译为 应用程序
+            application 是 application software 的缩写，是一种 software
+            除了 application software 还有 system software 还有 middleware
+        software 由 程序、文档、数据 组成
+        progrem 是 software 的组成部分，一个软件至少包含一个 progrem
+    更多的名词
+        软件 software
+        应用 application
+        命令行 command line
+        命令 command
+        内置命令 command builtin
+        文件 File
+        文件夹 Folder
+        目录 Directory
+        文本文件 Text File
+        二进制文件 Binary File
+        可执行文件 Executable File
+        程序 progrem
+        进程 process
+        线程 thread
+        文档 document
+        数据 data
+        配置 configuration
+        中间件 middleware
+        常量 constant
+        变量 variable
+        值 value
+        开关 switch
+        选项 option
+        代码 code
+        脚本 script
+        拓展 extension
+        插件 plugin
+        组件 component
+        模块 module
+        框架 framework
+        库 library
+        包 package
+        代码片段 code snippet
+        函数 function
+        功能 function
+        方法 method
+        对象 object
+        类 class
+        服务 service
+        平台 platform
+        产品 product
+        解决方案 solution
+        小部件 widgets
+        工具 Utils Utility
+        杂项 MISC Miscellaneous
+        加载项
+            plugins
+            addins
+            addons
+            add-ins
+            add-ons
+            plugin
+            addin
+            addon
+            加 s 是一个版本，加 - 是一个版本
+            根据现有的 api 重新组合新功能的是 拓展
+            通过增加 api 而添加新功能的是 插件
+            其实多数情况下会被混用
+        计算
+            operation
+            arithmetic
+            calculation
+            compute
+            counting
+            algorism
+        参数
+            parameter
+            argument
+        属性
+            attribute attributes
+            property properties
+            attribute 和 property 在不同的编程语言下会有不同的含义
+            通常都能翻译成 属性
+            有时会把 attribute 翻译成 特性 ， 把 property 翻译成 属性
+        解决方案=已解决问题为导向的，产品和服务的集合
+        产品=软件产品
+        服务=软件服务
+        平台=一堆服务的集合
+        系统=服务+数据存储
+        应用=面向终端用户的软件
+        软件=程序+数据
+        程序=算法+数据结构
+        算法=逻辑+控制
+        数学=逻辑+计算（计算这个词有歧义）
+        进程=运行中的程序
+        守护进程=在后台一直运行的进程
+        定时任务=一个不断判断是否有任务需要执行的守护进程
+        操作系统=一堆守护进程的集合
+        中间件=服务于其它软件的软件
+        数据结构=类型+结构
+        控制=顺序+分支+循环
+        逻辑=推理+归纳？
+        命令=可执行文件名/内置命令 + 参数
+        IT 行业中各种名词的解释？
 如何做一个npm库
     去npm官方文档注册账号,并验证邮箱 官网地址:https://www.npmjs.com/
     在github新建一个空仓库，并克隆到本地
@@ -3045,6 +3211,16 @@ ELF格式
             创建任务
                 schtasks /Create /TN taskname /TR taskrun
                 定时任务的表达式有一点混乱，最好还是去看文档
+    在 windows 下如何运行 cron ？
+        关键是要能每分钟扫描一次 cron 的配置文件，然后执行符合规则的任务
+            有一个能每分钟运行一次或持续运行的程序用来扫描 cron 的配置文件
+                直接运行一个命令行，然后不关闭窗口
+                让程序以服务的形式运行
+                    可以直接在代码里写好
+                    也可以用 nssm 或 winsw 这类工具把普通的程序封装成服务
+                使用 计划任务 ，每分钟运行一次
+            能解释 cron 表达式
+                这种库在 github 十分的多，而且各种语言实现的都有，但怎样实现 @reboot ?
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收
