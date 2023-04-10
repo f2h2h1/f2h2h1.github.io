@@ -136,7 +136,7 @@ SEO 的方法要跟随搜索引擎的规则不断调整。如果没有精力研�
 - 主动地提交网站地址给搜索引擎
 - 使用搜索引擎提供的站长工具
 - 使用一个站点分析工具
-- 除了 sitemap 和 robots.txt 之外，还可以加一个 rss
+- 除了 sitemap 和 robots.txt 之外，还可以再加上 atom 和 rss
 - 重视链接的分享
 - 不要搞 SEO 的作弊
 
@@ -249,6 +249,15 @@ https://www.google.com/advanced_search
 https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API
 
 针对社交平台的优化会被称为 SMO (Social Media Optimization 社交媒体优化)
+
+<!--
+微数据
+    https://developer.mozilla.org/en-US/docs/Web/HTML/Microdata
+    https://schema.org/
+微格式
+    https://developer.mozilla.org/en-US/docs/Web/HTML/microformats
+    https://microformats.org/
+-->
 
 ## 参考
 

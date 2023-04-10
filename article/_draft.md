@@ -133,8 +133,8 @@
                 select
                 poll
                 epoll
-                    水平触发（level trigger，LT)
-                    边缘触发 (edge trigger，ET)
+                    水平触发 (level trigger, LT)
+                    边缘触发 (edge trigger, ET)
         具体类型
             静态
             动态
@@ -171,6 +171,7 @@
             隧道 tunnel
             端口转发 port forwarding
             虚拟专用网 (Virtual Private Network , VPN)
+            虚拟私有云 (Virtual Private Cloud , VPC)
             透明 transparent
 
 以开发软件为目标的计算机入门简明指南
@@ -447,6 +448,7 @@ frp的使用
         http://rogerdudler.github.io/git-guide/index.zh.html
         http://marklodato.github.io/visual-git-guide/index-zh-cn.html
     由 hulu 赞助的 oi wiki https://github.com/OI-wiki/OI-wiki/
+    演算法笔记：台湾师范大学总结的教程 https://web.ntnu.edu.tw/~algo/
     云原生资料库 https://jimmysong.io/docs/
     除了这些文档外，更应该关注各项技术的官方文档
     现在网络上的教程真的非常多，问题不在于寻找教程，而在于选择哪一个去看
@@ -855,6 +857,10 @@ vscode的使用技巧
                             合适优于先进 > 演化优于一步到位 > 简单优于复杂
                         服务治理
                         集群和分布式
+                八股的三种类型
+                    细节
+                    底层
+                    极端
             不同类型公司的提问套路
                 小公司会问前端相关的
                 外包会问框架相关的
@@ -1402,6 +1408,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             Chrome = Chromium + 谷歌服务 类似于 安卓 = AOSP + 谷歌服务
             新版的 Edge = Chromium + 微软服务
             Blink 是一个派生自 Webkit 的开源的引擎
+            古早版本的 Chromium = Webkit + v8 ， Webkit 中的 JavaScriptCore 被 v8 替换了
     常见的浏览器引擎
         Khtml -> Konqueror
         Gecko -> firefox
@@ -1422,6 +1429,31 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         Jscript -> 旧版的 ie
         Chakra -> 新版的 ie, 旧版的 Edge
         Carakan -> 旧版的 Opera
+    安卓的浏览器
+        Chrome和Android在Google属于完全不同的两个团队，Android是收购来的项目
+        Android的原生浏览器是一个基于Webkit的实现
+        所以原生的安卓webview也是WebKit内核
+        但4.4之后，安卓的原生浏览器就换成使用 Chromium 实现的了
+        同样地现在的 webview 也是 Chromium
+        一些浏览器的实现会直接使用系统的 webview 例如 chrome lite
+        一些浏览器则会自己带着一个 webview 例如 chrome
+            可以在系统设置里修改 webview 的实现
+        ios 里的浏览器和webview全都是safari的套壳
+    无头浏览器（headless）
+        无头浏览器起码要能执行js
+        常见的无头浏览器
+            基于 Webkit 的 PhantomJS
+            基于 Gecko 的 SlimerJS
+            基于 Rhnio 的 HtmlUnit
+            基于 Webkit 的 Splash
+        浏览器的无头模式
+            chrome edge firefox 都有无头模式
+        Playwright 和 Selenium 都要配合浏览器使用，不是无头浏览器
+    文本浏览器/终端浏览器/命令行浏览器
+        能运行在 终端 中的浏览器
+        w3m
+        Lynx
+        Links
 程序 软件 应用 的联系与区别
     英文
         软件 software
@@ -1444,6 +1476,11 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         内置命令 command builtin
         文件 File
         文件夹 Folder
+            文件夹（Folder）是GUI对象,是一个逻辑概念，不一定映射到物理目录，
+            文件夹概念一般用在Windows操作系统或者Linux的图形界面。
+            目录（Directory）是文件系统对象，大部分时候可以与文件夹概念互换。
+            在命令行控制台中查看时通常称为目录，
+            但如果通过图形文件管理器访问，有时可将其称为文件夹。
         目录 Directory
         文本文件 Text File
         二进制文件 Binary File
@@ -1455,6 +1492,8 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         数据 data
         配置 configuration
         中间件 middleware
+        网页 webpage
+        网站 website
         常量 constant
         变量 variable
         值 value
@@ -1511,7 +1550,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             attribute 和 property 在不同的编程语言下会有不同的含义
             通常都能翻译成 属性
             有时会把 attribute 翻译成 特性 ， 把 property 翻译成 属性
-        解决方案=已解决问题为导向的，产品和服务的集合
+        解决方案=以解决问题为导向的，产品和服务的集合
         产品=软件产品
         服务=软件服务
         平台=一堆服务的集合
@@ -1530,6 +1569,12 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         控制=顺序+分支+循环
         逻辑=推理+归纳？
         命令=可执行文件名/内置命令 + 参数
+        站点=网站
+        网站=一堆网页的集合
+        网页=一个经过浏览器渲染的html文件
+        互联网/英特网 internet
+        以太网 Ethernet
+        万维网 World Wide Web
         IT 行业中各种名词的解释？
 如何做一个npm库
     去npm官方文档注册账号,并验证邮箱 官网地址:https://www.npmjs.com/
@@ -2995,6 +3040,8 @@ linux 中的各种 id
     多线程讲究的是数据的一致性（多个线程操作同一个变量时不要有冲突）
         通常是通过锁来实现的
     多进程 和 多线程 是通过 中断 来实现的
+    为什么进程的开销比线程大
+    为什么线程的开销比协程大
 io 模型
     阻塞和非阻塞
     同步和异步
@@ -3221,6 +3268,13 @@ ELF格式
                 使用 计划任务 ，每分钟运行一次
             能解释 cron 表达式
                 这种库在 github 十分的多，而且各种语言实现的都有，但怎样实现 @reboot ?
+                    如果是 一直运行的命令行 或 服务 的形式
+                        就一开始启动时运行一次，以后就忽略
+                    如果是 计划任务 ，每分钟运行一次
+                        通过 系统启动时间 或 系统运行时长 来判断是否需要运行 @reboot
+                            wmic path Win32_OperatingSystem get LastBootUpTime
+                            (get-date) - (gcim Win32_OperatingSystem).LastBootUpTime
+                            锁定 注销 睡眠 休眠 都 不会计入停机时间
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收
@@ -3239,6 +3293,8 @@ ELF格式
     用 ajax 上传
         上传时的并发要怎么处理？
     上传时的进度条
+        真实的 和 虚假的 进度条
+        单个文件的 和 多个文件的 进度条
     分片上传 和 断点下载
         分片上传
             计算数字摘要

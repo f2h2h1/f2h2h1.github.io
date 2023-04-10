@@ -1294,12 +1294,15 @@ layoutContent
 
 
 vendor\magento\module-ui\view\base\web\js\lib\core\class.js
-vendor\magento\module-ui\view\base\web\js\lib\core\collection.js
 vendor\magento\module-ui\view\base\web\js\lib\core\element\element.js
+vendor\magento\module-ui\view\base\web\js\lib\core\collection.js
 
 uiComponent 和 uiCollection 是一样的
 uiComponent 继承自 uiElement
 uiElement 继承自 uiClass
+
+uiClass 是普通的类
+uiElement 可以算是 knockoutjs 里的视图模型了
 
 uiElement:      'Magento_Ui/js/lib/core/element/element',
 uiCollection:   'Magento_Ui/js/lib/core/collection',
@@ -1328,10 +1331,12 @@ knockoutjs 这个的视图是怎么实现的？
 
 ko 的文档里提到了三种模板引擎
     ko 自身的
-        大致分成三部分
+        大致分成四部分
             html代码 -> 通常写在 phtml 文件里
-            js模板 -> 通常写在 views/web/template
-            js代码
+            js模板(view) -> 通常写在 views/web/template
+            js代码(model) -> 通常写在 views/web/js/model
+            js代码(view model) -> 通常写在 views/web/js/view
+                通常 view 和 view model 是一一对应的
         模板可以嵌套
         模板可以都写在一个文件里
     jQuery-tmpl
@@ -1339,6 +1344,16 @@ ko 的文档里提到了三种模板引擎
         可以用 JsRender 替代
             JsRender 也是 jq 的插件
     underscore 的 模板引擎
+
+Knockout 三大核心功能：
+    监控属性（Observables）和依赖跟踪（Dependency tracking）
+    声明式绑定（Declarative bindings）
+    模板（Templating）
+
+Knockout 使用 Model-View-View Model (MVVM) 模式
+    Model
+    View Model
+    View
 
 
 全局 global
