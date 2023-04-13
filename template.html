@@ -373,8 +373,8 @@
 </footer>
 <script type="module" defer>
 	import { Application } from '/index.js';
-	import { appData } from '/appData.js';
-	(new Application(appData)).run();
+	import { AppData } from '/appData.js';
+	(new Application(new AppData())).run();
 </script>
 </body>
 </html>

@@ -1,17 +1,91 @@
 
 import { Application } from './index.js';
-import { appData } from './appData.js';
+import { AppData } from './appData.js';
 import path from 'path';
 import fs from 'fs';
 import process from 'process';
 import child_process from 'child_process';
+import http from 'http';
+import url from 'url';
+
+/**
+ * @typedef ServerConfig
+ * @type {object}
+ * @property {string} rootDirectory
+ * @property {string[]} defaultFile
+ * @property {boolean} enableLog - description
+ * @property {{[key: string]: string}} mimeList
+ * @property {{host: string, port: int}} httpOptions
+ */
 
 class cli {
+    /** @type {AppData} */
+    appData = {};
 
-    /** @type { Application } */
+    /** @type {Application} */
     application = {};
 
-    /** 
+    /** @type {ServerConfig} */
+    serverConfig = {
+        type: '',
+        rootDirectory: '.',
+        defaultFile: [
+            'index.html',
+        ],
+        enableLog: true,
+        mimeList: {
+            '.html': 'text/html',
+            '.htm': 'text/html',
+            '.shtml': 'text/html',
+            '.shtm': 'text/html',
+            '.css': 'text/css',
+            '.xml': 'text/xml',
+            '.csv': 'text/csv',
+            '.md': 'text/plain',
+            '.js': 'text/javascript',
+            '.txt': 'text/plain',
+            '.gif': 'image/gif',
+            '.jpeg': 'image/jpeg',
+            '.jpg': 'image/jpeg',
+            '.webp': 'image/webp',
+            '.ico': 'image/x-icon',
+            '.bmp': 'image/x-ms-bmp',
+            '.png': 'image/png',
+            '.svg': 'image/svg+xml',
+            '.json': 'application/json',
+            '.pdf': 'application/pdf',
+            '.der': 'application/x-x509-ca-cert',
+            '.pem': 'application/x-x509-ca-cert',
+            '.crt': 'application/x-x509-ca-cert',
+            '.xhtml': 'application/xhtml+xml',
+            '.zip': 'application/zip',
+            '.woff': 'font/woff',
+            '.woff2': 'font/woff2',
+            '.mid': 'audio/midi',
+            '.midi': 'audio/midi',
+            '.kar': 'audio/midi',
+            '.mp3': 'audio/mpeg',
+            '.ogg': 'audio/ogg',
+            '.3gpp': 'video/3gpp',
+            '.3gp': 'video/3gpp',
+            '.mp4': 'video/mp4',
+            '.mpeg': 'video/mpeg',
+            '.mpg': 'video/mpeg',
+            '.mov': 'video/quicktime',
+            '.webm': 'video/webm',
+            '.flv': 'video/x-flv',
+            '.wmv': 'video/x-ms-wmv',
+            '.avi': 'video/x-msvideo',
+            '.bin': 'application/octet-stream',
+            '.pac': 'application/x-ns-proxy-autoconfig',
+        },
+        httpOptions: {
+            host: '127.0.0.1',
+            port: 8016,
+        },
+    }
+
+    /**
      * @param {string} jsonPath
      */
     getJsonObj(jsonPath) {
@@ -163,13 +237,13 @@ class cli {
 
         mainTemplate = `
             <feed xmlns="http://www.w3.org/2005/Atom">
-                <title>f2h2h1's blog</title>
-                <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
-                <link href="https://f2h2h1.github.io/" />
+                <title>${this.application.appData.sitename}</title>
+                <link href="${this.application.appData.host}/atom.xml" rel="self" />
+                <link href="${this.application.appData.host}/" />
                 <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
                 <updated>${that.application.timeFormat(Date.parse(new Date())/1000, 'atom')}</updated>
                 <author>
-                    <name>f2h2h1's blog</name>
+                    <name>${this.application.appData.sitename}</name>
                 </author>
                 %s
             </feed>
@@ -195,10 +269,10 @@ class cli {
         mainTemplate = `
             <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
                 <channel>
-                    <title>f2h2h1's blog</title>
-                    <link>https://f2h2h1.github.io/</link>
-                    <description>f2h2h1's blog</description>
-                    <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
+                    <title>${this.application.appData.sitename}</title>
+                    <link>${this.application.appData.host}/</link>
+                    <description>${this.application.appData.sitename}</description>
+                    <atom:link href="${this.application.appData.host}/rss.xml" rel="self" type="application/rss+xml" />
                     %s
                 </channel>
             </rss>
@@ -231,7 +305,7 @@ class cli {
         this.application.setTemplate(fs.readFileSync('template.html', {encoding:'utf8', flag:'r'}));
         this.application.setArticleList(articleList);
         this.application.setLinkExchangeList(exchangeList);
-    
+
         let pageHtml = '';
         for (let i = 0, len = articleList.length; i < len; i++) {
             articleList[i]['md'] = fs.readFileSync('article/' + articleList[i]['title'] + '.md', {encoding:'utf8', flag:'r'});
@@ -242,7 +316,7 @@ class cli {
         fs.writeFileSync('index.html', pageHtml);
     }
 
-    /** 
+    /**
      * @param {string} val
      */
     runBuildMethod(val) {
@@ -264,8 +338,7 @@ class cli {
     }
 
     /**
-     * 
-     * @param {string[]} argv 
+     * @param {string[]} argv
      * @returns {{[key: string]: string}}
      */
     parseArgv(argv) {
@@ -297,13 +370,88 @@ class cli {
         return argvArr;
     }
 
-    /** 
+    /**
+     * @param {ServerConfig} config
+     * @param {string} type
+     */
+    server(config, type) {
+        var that = this;
+        http.createServer(function (request, response) {
+
+            let pathname = url.parse(request.url).pathname;
+            let originPathname = pathname;
+            let clientAddress = request.socket.remoteAddress + ':' + request.socket.remotePort;
+            let statusCode = 500;
+            if (request.method != 'GET') {
+                statusCode = 403;
+                response.writeHead(statusCode);
+                response.end();
+                that.serverLogger(clientAddress, statusCode, originPathname);
+                return;
+            }
+            let rootDirectory = config.rootDirectory;
+            if (pathname == '/') {
+                for (let item of config.defaultFile) {
+                    item = '/' + item;
+                    if (fs.existsSync(rootDirectory + item)) {
+                        pathname = item;
+                        break;
+                    }
+                }
+            }
+            let filePath = rootDirectory + decodeURI(pathname);
+            fs.readFile(filePath, function(err, data) {
+                if (err) {
+                    // console.log(err);
+                    statusCode = 404;
+                    response.writeHead(statusCode);
+                } else {
+                    let extname = path.extname(filePath);
+                    let ContentType = 'application/octet-stream';
+                    if (extname in config.mimeList) {
+                        ContentType = config.mimeList[extname];
+                    }
+                    let head = {
+                        'Content-Type': ContentType,
+                        'Content-Length': data.length,
+                    }
+                    statusCode = 200;
+                    response.writeHead(statusCode, head);
+                    response.write(data);
+                }
+                response.end();
+                that.serverLogger(clientAddress, statusCode, originPathname);
+            });
+        }).listen(config.httpOptions);
+
+        console.log('Server running at http://' + config.httpOptions.host + ':' + config.httpOptions.port + '/');
+    }
+
+    /**
+     * @param {string} clientAddress
+     * @param {string} statusCode
+     * @param {string} originPathname
+     */
+    serverLogger(clientAddress, statusCode, originPathname) {
+        if (this.serverConfig.enableLog) {
+            let msg = `${clientAddress} ${statusCode} ${originPathname}`;
+            this.debugLogger(msg);
+        }
+    }
+
+    /**
      * @param {string} msg
      */
-    logger(msg) {}
+    debugLogger(msg) {
+        let timestamp = this.application.timeFormat(new Date().getTime() / 1000);
+        msg = `[${timestamp}] ${msg}`;
+        console.log(msg);
+    }
 
     main() {
         process.env.TZ = 'Asia/Shanghai';
+        this.appData = new AppData();
+        var appData = this.appData;
         let argvArr = this.parseArgv(process.argv.slice(2));
         if (argvArr.length == 0 || argvArr.hasOwnProperty('help')) {
             // --help
@@ -315,7 +463,7 @@ class cli {
             if (prop.match(new RegExp(String.raw`^${prefix}`, 'g')) == null) {
                 continue;
             }
-            let attr = prop.substring(prefix.length, prop.length);;
+            let attr = prop.substring(prefix.length, prop.length);
             let val = argvArr[prop];
             console.log(attr, val);
             if (appData.hasOwnProperty(attr)) {
@@ -332,9 +480,9 @@ class cli {
             }
         }
         console.log(appData);
-    
+
         this.application = new Application(appData);
-    
+
         if (argvArr.hasOwnProperty('build')) {
             // let build = argvArr['build'];
             // let index = build.split('|');
@@ -343,24 +491,82 @@ class cli {
             // } else {
                 // first = build.substring(0, index - 2);
                 //  = build.substring(index - 1, build.length);
-    
+
             // }
             for (let BuildMethod of argvArr['build'].split('|')) {
                 this.runBuildMethod(BuildMethod);
             }
         }
-        if (argvArr.hasOwnProperty('server')) {
-            switch (val) {
+        // if (argvArr.hasOwnProperty('server')) {
+            for (let prop in argvArr) {
+                let prefix = 'server-';
+                if (prop.match(new RegExp(String.raw`^${prefix}`, 'g')) == null) {
+                    continue;
+                }
+                let attr = prop.substring(prefix.length, prop.length);
+                let val = argvArr[prop];
+
+                // serverType
+                // host
+                // port
+                // rootDirectory
+                // defaultFile
+                // enableLog
+                // mimeList
+                // file
+                if (attr == 'file') {
+                    try {
+                        this.serverConfig = this.getJsonObj(val);
+                    } catch (e) {
+                        console.log(e);
+                        exit(1);
+                    }
+                    break;
+                }
+                switch (attr) {
+                    case 'type':
+                        this.serverConfig.type = val;
+                        break;
+                    case 'host':
+                        this.serverConfig.httpOptions.host = val;
+                        break;
+                    case 'port':
+                        this.serverConfig.httpOptions.port = val;
+                        break;
+                    case 'rootDirectory':
+                        this.serverConfig.rootDirectory = val;
+                        break;
+                    case 'defaultFile':
+                        this.serverConfig.defaultFile.push(val);
+                        break;
+                    case 'enableLog':
+                        if (val == 'false') {
+                            val = false;
+                            this.serverConfig.enableLog = val;
+                        } else if (val == 'true') {
+                            val = true;
+                            this.serverConfig.enableLog = val;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            let config = this.serverConfig;
+            switch (config.type) {
                 case 'static':
                     console.log('static server');
+                    this.server(config, config.type);
                     break;
                 case 'backendRender':
                     console.log('backendRender server');
+                    this.server(config, config.type);
                     break;
                 default:
                     console.log('server type of build argument');
             }
-        }
+        // }
 
         return;
     }
@@ -431,5 +637,7 @@ npm run build
 npm run asd
 
 ls article/*.html | xargs rm -f
+
+node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:8022" --config-sitename="f2h2h1\'s blog" --config-thirdPartyCode=false --server-type="static" --server-host="127.0.0.1" --server-port=8022 --server-type="static"
 
 */

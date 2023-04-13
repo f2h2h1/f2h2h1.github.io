@@ -4,46 +4,22 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "updateTime",
+            "label": "build matedata github",
             "type": "shell",
-            "command": "php updateMetadata.php",
+            "command": "node cli.js --build=\"updateMatedata\" --config-host=\"https://f2h2h1.github.io\" --config-sitename=\"f2h2h1's blog\" --config-thirdPartyCode=true",
             "problemMatcher": []
         },
         {
-            "label": "update matedata",
+            "label": "update matedata github",
             "type": "shell",
             "command": "git add articleList.json sitemap.xml rss.xml atom.xml README.md SUMMARY.md",
-            "dependsOn": ["updateTime"],
-            "options": {
-                "shell": {
-                    "executable": "powershell"
-                }
-            },
+            "dependsOn": ["build matedata github"],
             "problemMatcher": []
         },
         {
-            "label": "start test server",
+            "label": "start test server php",
             "type": "shell",
             "command": "php -S 127.0.0.1:9012",
-            "problemMatcher": []
-        },
-        {
-            "label": "gitbook build",
-            "type": "shell",
-            "command": "gitbook build",
-            "problemMatcher": []
-        },
-        {
-            "label": "gitbook serve",
-            "type": "shell",
-            "command": "gitbook serve",
-            "problemMatcher": []
-        },
-        {
-            "label": "gitbook run with php",
-            "type": "shell",
-            "command": "giphp -S 127.0.0.1:9012 -t _book",
-            "dependsOn": ["gitbook build"],
             "problemMatcher": []
         },
     ]

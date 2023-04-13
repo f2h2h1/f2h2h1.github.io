@@ -1,4 +1,5 @@
 import {marked} from './static/marked.esm.js';
+import {AppData} from './appData.js';
 'use strict';
 // var Application = (function(){
 //     var articleList = {};
@@ -37,26 +38,19 @@ class Application {
     linkExchangeList = [];
     template = '';
     templateInit = '';
+    /** @type {AppData} */
     appData = {
         host: '',
         articlePath: '/article/',
         sitename: 'blog',
         runningtime: '',
     };
-    static RT_BROWSER = 1;
-    static RT_NODEJS = 2;
     constructor(appData) {
         this.appData = appData;
-        // this.appData.URLprefix = params.URLprefix;
-        // this.appData.sitename = params.sitename;
-        // if (window && window === this) { // browser
-        //     this.appData.runningtime = this.RT_BROWSER;
-        // } else {
-        //     this.appData.runningtime = this.RT_NODEJS;
-        // }
     }
+
     isBowser() {
-        if (this.appData.runningtime == this.constructor.RT_BROWSER) {
+        if (this.appData.runningtime == AppData.RT_BROWSER) {
             return true;
         }
         return false;
@@ -78,6 +72,10 @@ class Application {
         }
         return url;
     }
+
+    /** 
+     * @returns {string}
+     */
     setleadingZero(num) {
         num = num.toString();
         while (num.length < 2) num = "0" + num;
@@ -199,6 +197,10 @@ class Application {
         }
         return indexList;
     }
+
+    /** 
+     * @returns {string}
+     */
     buildArticle(articleInfo) {
         let articleHtml = marked.parse(articleInfo['md']);
         let title = articleInfo['title'];
