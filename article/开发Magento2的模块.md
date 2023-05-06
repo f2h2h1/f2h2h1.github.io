@@ -420,6 +420,64 @@ eav 的值保存在这类表中
 
 ## 新建 rest 的接口
 
+新建 etc\webapi.xml
+```xml
+<route url="/V1/gtm-layer/mine/quote-item-data" method="POST">
+    <service class="Vendor\Extension\Api\GtmCartRepositoryInterface" method="getQuoteItemData"/>
+    <resources>
+        <resource ref="self" />
+    </resources>
+    <data>
+        <parameter name="itemId">%item_id%</parameter>
+        <parameter name="qty">%qty%</parameter>
+    </data>
+</route>
+```
+- data 标签里的参数是可以不要的
+- `<resource ref="self" />` 需要登录才能调用
+- `<resource ref="anonymous" />` 不用登录也能调用
+
+新建 app\code\Vendor\Extension\Api\GtmCartRepositoryInterface.php
+```php
+<?php
+namespace Vendor\Extension\Api;
+
+interface GtmCartRepositoryInterface
+{
+    /**
+     * @param string $itemId
+     * @param int $qty
+     * @return array
+     * @throws \Magento\Framework\Webapi\Exception
+     */
+    public function getQuoteItemData($itemId, $qty = 0);
+}
+```
+
+新建 app\code\Vendor\Extension\Model\GtmCartRepository.php
+```php
+<?php
+namespace Vendor\Extension\Model;
+
+class GtmCartRepository implements GtmCartRepositoryInterface
+{
+    public function getQuoteItemData($itemId, $qty = 0)
+    {
+        return [];
+    }
+}
+```
+
+如果是新模块则需要运行一次 setup:upgrade 才能生效。
+如果是旧模块则需要运行一次 cache:clear 就能生效。
+
+调用的例子
+```shell
+curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-data -k -H "Content-Type: application/json" -d '{"productIds":["3893"]}'
+
+curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-data -k -H "Content-Type: application/json" -d '{"itemId":3893,qty:1}'
+```
+
 ## 新建 GraphQl 的接口
 
 0. 在模块目录 etc 下新建一个文件 schema.graphqls 并写入以下内容
@@ -1381,12 +1439,29 @@ scope 在 magento2 里通常是指配置的作用范围
 就是获取哪一级的配置
 设置哪一级的配置这类
 https://experienceleague.adobe.com/docs/commerce-admin/config/scope-change.html
+就是这几个层级
+global
+website
+store
+store view
+就是指 core_config_data 中的 scope
+
 
 store_groups 是一个表名
 Web Site is mapped to the store_website table in the database.
 Store is mapped to the store_group table in the database.
 Store View is mapped to the store table in the database.
 https://magento.stackexchange.com/questions/318044/magento-2-whats-the-difference-between-store-and-group
+
+三个相关的表
+store_website -> website
+store_group -> store
+store -> store view
+
+store view 是根据 store 表中的 code 区分的
+
+
+
 
 pub\static\frontend\LocalDev\standard\en_US\requirejs-config.js
 pub\static\area\开发商\主题\语言包\前端的文件
@@ -1599,7 +1674,7 @@ echo $collection->getSelectSql(true);
     'output' => 'file',
     'log_everything' => 1,
     'query_time_threshold' => '0.001',
-    'include_stacktrace' => 0
+    'include_stacktrace' => 0 // 改成1可以记录代码调用栈
 ],
 ```
 
@@ -1715,7 +1790,7 @@ extends(?:.*)AbstractResource\n
 
 搜索时的排除选项
 ```
-.js,.css,.md,.txt,.json,.csv,.html,.less,.phtml,**/tests,**/test,**/Test,**/setup,**/view,**/magento2-functional-testing-framework,.wsdl,**/module-signifyd,**/Block
+.js,.css,.md,.txt,.json,.csv,.html,.less,.phtml,**/tests,**/test,**/Test,**/setup,**/view,**/magento2-functional-testing-framework,.wsdl,**/module-signifyd,**/Block,pub,generated
 ```
 
 ```
@@ -2000,6 +2075,7 @@ https://www.kancloud.cn/zouhongzhao/magento2-in-action
         在 phtml 文件里这样调用
             <?= $block->getChildHtml('checkout_cart_empty_widget') ?>
 其实还有很多
+在后台的 Content 似乎也能直接修改视图
 
 一个block可以对应多个模板，在 block 的这个方法里修改模板
 vendor\magento\framework\View\Element\Template.php
@@ -2008,5 +2084,28 @@ vendor\magento\framework\View\Element\Template.php
         $this->_template = $template;
         return $this;
     }
+
+在这个位置加上 WHERE
+vendor\magento\zendframework1\library\Zend\Db\Select.php
+_where
+
+在这个位置加上 filter
+vendor\magento\framework\Api\Filter.php
+vendor\magento\framework\Api\AbstractSimpleObject.php
+
+getData 和 setData
+一般的对象
+vendor\magento\framework\DataObject.php
+模型的对象
+vendor\magento\framework\Model\AbstractModel.php
+
+除了对应的方法还要留意构造函数
+子类的方法有可能覆盖父类的方法
+
+magento2 里用于执行单个定时任务的工具
+https://github.com/netz98/n98-magerun2
+配置文件修改后，要清除一次缓存
+php bin/magento c:c
+
 
 -->

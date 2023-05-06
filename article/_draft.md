@@ -194,6 +194,21 @@
         抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
     计算机学科的相关概念
         图灵机
+            组成
+                纸带
+                读写头
+                状态寄存器
+            通用图灵机
+            图灵完备
+            可计算性（Computability）
+                停机问题（halting problem）
+                判定问题（decision problem）
+            其它计算模型
+                λ演算
+                递归函数
+                寄存器机
+                生命游戏
+                马尔可夫算法
         冯诺依曼结构
             以运算单元为中心
             数据和指令都以二进制编码
@@ -201,6 +216,8 @@
             顺序执行程序的每一条指令
             由五个部件构成
                 运算器 控制器 存储器 输入设备 输出设备
+        计算模型 -> 架构 -> 指令集
+        图灵机 -> 冯诺依曼架构 -> x86指令集
     计算机的发展历史
         早期工具
             算盘
@@ -786,7 +803,7 @@ vscode的使用技巧
                         例子
                             并发模型 -> 函数式并发 -> 函数式编程 -> Lambda 表达式 -> λ演算 -> 数理逻辑
                             关系型数据库 -> sql -> 一阶谓词演算 -> 数理逻辑
-                    物理实现
+                    物理实现 -> 物理原理
                         关注四种硬件
                             cpu -> 数据处理
                             内存 -> 数据存储
@@ -1421,7 +1438,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         EdgeHTML -> 旧版的 Edge
             EdgeHTML 是 Trident 的一个分支
         Presto -> 旧版的 Opera
-    常见的 JavaScript引擎
+    常见的 JavaScript 引擎
         monkey -> firefox
         KJS -> Konqueror
         V8 -> chrome, 新版的 Edge, 新版的 Opera
@@ -1566,7 +1583,8 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         操作系统=一堆守护进程的集合
         中间件=服务于其它软件的软件
         数据结构=类型+结构
-        控制=顺序+分支+循环
+        控制=顺序+分支+跳转（goto）
+        循环可以用分支+跳转实现
         逻辑=推理+归纳？
         命令=可执行文件名/内置命令 + 参数
         站点=网站
@@ -2865,6 +2883,29 @@ composer
         无导入导出规范，只有一个常规写法
     ES6 module
 在 es6 之前如何写 js 的类和模块
+js 中和二进制相关的对象
+    File
+    Blob
+        Data URL
+    ArrayBuffer
+    FileReader
+    TypedArray
+    DataView
+    Buffer
+js 中的任务和微任务
+    https://developer.mozilla.org/zh-CN/docs/Web/API/queueMicrotask
+    https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_DOM_API/Microtask_guide
+    https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_DOM_API/Microtask_guide/In_depth
+MutationObserver？
+TCP 慢启动 / 14KB 规则 ？
+除了浏览器之外的 js 运行环境
+    nodejs 基于 V8
+    deno 基于 JavaScriptCore
+    bun 基于 TypeJavaScript
+    QuickJS
+    在java中的
+        Rhino
+        Nashorn
 浏览器相关的经验
     启动参数
         --no-sandbox
@@ -3241,7 +3282,7 @@ ELF格式
         然后创建一个 timer
         最后把 timer 加入到开机启动中
     在 linux 下的一次性任务用 at 和 atq 命令
-    windows 的计划任务 包括了 开机启动 和 定时任务
+    windows 的 计划任务 包括了 开机启动 和 定时任务
         以前用 at 命令操作
         现在用 schtasks 命令操作
         当然啦，用图形界面也是可以的
@@ -3274,7 +3315,9 @@ ELF格式
                         通过 系统启动时间 或 系统运行时长 来判断是否需要运行 @reboot
                             wmic path Win32_OperatingSystem get LastBootUpTime
                             (get-date) - (gcim Win32_OperatingSystem).LastBootUpTime
+                            (Get-Date (Get-CimInstance -ClassName win32_operatingsystem).LastBootUpTime -UFormat %s).ToString() // 开机时间的10位时间戳
                             锁定 注销 睡眠 休眠 都 不会计入停机时间
+    mysql 的 事件调度器(Event Scheduler) 和 PostgreSQL 的 PgAgent 也能实现定时任务
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收
@@ -3285,47 +3328,6 @@ ELF格式
         标记-清除
         三色标记
         分代收集
-前端上传文件的总结
-    http协议中关于文件上传的部分
-        RFC 7578
-    上传单个文件
-    上传多个文件
-    用 ajax 上传
-        上传时的并发要怎么处理？
-    上传时的进度条
-        真实的 和 虚假的 进度条
-        单个文件的 和 多个文件的 进度条
-    分片上传 和 断点下载
-        分片上传
-            计算数字摘要
-                使用 webapi 而不是第三方库
-                https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
-            分割文件
-            计算每个分割文件的数字摘要
-            用 ajax 上传
-            判断每个分割文件的数字摘要是否一致
-            后台按顺序合并
-            判断合并后的数字摘要是否和原本的一致
-        断点下载
-            http头
-            Range
-            Content-Range
-            为什么没有js实现的断点下载
-                因为小文件不需要
-                大文件，js无法访问本地硬盘，不知道已经下载了多少
-                而且现代浏览器本身就有这个功能
-            其实分卷压缩也可以算是一种断点下载。。。
-    拖拽上传
-    剪贴板上传
-    上传前的预览
-        文本 图片 音频 视频 PDF 其它类型的文件
-        通过文件名后缀和 mime 来判断文件的类型
-        Blob 对象 和 ArrayBuffer 对象
-        Blob 对象的 URL
-    更多的奇技淫巧
-    实现例子 php 和 js
-    其实可以写成一个 js 的模块
-    https://juejin.cn/post/6844903968338870285
 浏览器如何访问本地文件
     https://developer.mozilla.org/en-US/docs/Web/API/FileSystem
     https://developer.mozilla.org/en-US/docs/Web/API/File_and_Directory_Entries_API
@@ -3335,6 +3337,64 @@ ELF格式
     监听路由的变化
     匹配路由并渲染对应的内容
     放行不匹配的路由
+计算机科学的五次浪潮
+    大型机     1945 第一台通用的电子计算机
+    个人计算机 1975 微软成立
+    互联网     1990 互联网Internet第一个网页浏览器WorldWideWeb由提姆·柏纳-李设计面世
+    移动互联网 2007 iphone 的出现
+    ai        2012 AlexNet
+nas
+    软件
+        虚拟化
+            PVE ESXi
+        文件系统
+            磁盘阵列
+        操作系统
+        网络
+            内网穿透 和 动态代理
+        应用
+            网盘
+            笔记
+    硬件
+        就普通的服务器，然后再加上 ups
+        至少两块硬盘
+    网
+        宽带
+            双路宽带？
+        蜂窝移动通信网络
+            双卡双待？
+    电
+        市电
+        ups
+        超级电容
+    更多？
+        连接其它设备？物联网？智能家电？all in one？
+            忽略 猫 和 路由 ？
+        始终至少需要一个外网的服务器
+        更多的存储设备
+            用于冷备的硬盘
+            网盘上再放一份数据？
+        放在哪里？体积？噪声？
+        费用？
+            硬件费用，电费，网费
+收集各种镜像站点
+    大学的
+    https://mirrors.tuna.tsinghua.edu.cn/
+    https://mirrors.bfsu.edu.cn/
+    https://mirrors.ustc.edu.cn/
+    企业的
+    https://developer.aliyun.com/mirror/
+    https://mirrors.cloud.tencent.com/
+    https://mirrors.sohu.com/
+    https://mirrors.163.com/
+公共的cdn
+    百度静态资源公共库 https://cdn.code.baidu.com/
+    BootCDN开源项目加速服务 http://www.bootcdn.cn/
+    七牛云免费开放公共库 https://www.staticfile.org/
+    又拍云免费JS库 https://jscdn.upai.com/
+    新浪云计算CDN公共库 https://lib.sinaapp.com
+    jsdelivr https://www.jsdelivr.com
+    cdnjs https://cdnjs.com/
 淘宝的镜像
     https://registry.npmmirror.com/binary.html
     可以用来下载各种开发的软件 git for windows, selenium, node, python, ...

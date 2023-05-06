@@ -184,6 +184,10 @@
     ```
 1. 重启 nginx 然后在浏览器里输入 localhost-magento ，如无意外能看到 magento 的 home page
 1. 安装示例数据，这一步不是必须的
+    1. 查看当前模式
+    ```
+    php bin/magento deploy:mode:show
+    ```
     1. 调整到开发者模式，安装时的默认模式是 default
     ```
     php bin/magento deploy:mode:set developer
