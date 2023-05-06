@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- articleList -->
+- [文件的上传和下载](/article/文件的上传和下载.md)
 - [终端，控制台和外壳](/article/终端，控制台和外壳.md)
 - [和颜色相关的笔记](/article/和颜色相关的笔记.md)
 - [Windows下通过PEB读取进程的环境变量](/article/Windows下通过PEB读取进程的环境变量.md)

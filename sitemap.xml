@@ -5,13 +5,18 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
+        <loc>https://f2h2h1.github.io/article/文件的上传和下载.html</loc>
+        <lastmod>2023-05-06T18:36:51+08:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
         <loc>https://f2h2h1.github.io/article/终端，控制台和外壳.html</loc>
-        <lastmod>2023-02-16T18:12:38+08:00</lastmod>
+        <lastmod>2023-03-27T18:32:12+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/和颜色相关的笔记.html</loc>
-        <lastmod>2023-01-19T18:43:45+08:00</lastmod>
+        <lastmod>2023-05-06T18:49:41+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -51,7 +56,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/使用shell实现的kv数据库.html</loc>
-        <lastmod>2022-03-05T20:29:08+08:00</lastmod>
+        <lastmod>2023-03-20T13:00:14+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -86,7 +91,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</loc>
-        <lastmod>2023-02-24T18:07:36+08:00</lastmod>
+        <lastmod>2023-05-06T18:49:41+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -96,7 +101,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/Linux的GUI.html</loc>
-        <lastmod>2023-01-31T23:55:40+08:00</lastmod>
+        <lastmod>2023-05-06T18:49:41+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -106,7 +111,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/开发Magento2的模块.html</loc>
-        <lastmod>2023-02-24T18:07:36+08:00</lastmod>
+        <lastmod>2023-05-06T18:49:41+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -136,7 +141,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/SEO的经验.html</loc>
-        <lastmod>2022-02-11T23:58:58+08:00</lastmod>
+        <lastmod>2023-04-10T18:16:37+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -161,7 +166,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/密码学入门简明指南.html</loc>
-        <lastmod>2023-02-24T18:07:36+08:00</lastmod>
+        <lastmod>2023-05-06T18:49:41+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -171,7 +176,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下搭建git服务.html</loc>
-        <lastmod>2022-05-25T20:55:24+08:00</lastmod>
+        <lastmod>2023-03-20T13:00:14+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -191,7 +196,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/一些开发笔记.html</loc>
-        <lastmod>2023-02-08T18:06:53+08:00</lastmod>
+        <lastmod>2023-05-06T18:49:41+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -211,12 +216,12 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</loc>
-        <lastmod>2023-02-24T18:07:36+08:00</lastmod>
+        <lastmod>2023-03-27T18:32:12+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</loc>
-        <lastmod>2023-01-31T23:55:40+08:00</lastmod>
+        <lastmod>2023-04-10T18:16:37+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
