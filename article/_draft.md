@@ -225,8 +225,9 @@
         模拟计算机
             机械式
             电动式
-        电子计算机
+        机电计算机
             继电器
+        电子计算机
             真空管
             晶体管
             集成电路
@@ -1250,6 +1251,7 @@ vscode的使用技巧
         如果用中文搜不到，就把问题翻译成英文再搜一次
         如果遇到英文网站看不懂就用谷歌翻译
         问一下朋友，同事，同学，把问题发到朋友圈上
+        问一下 chatGPT newbing 这类 AI
         在 segmentfault 知乎 等网站找大佬，付费提问
         尝试一下大力奇迹
             把当前的问题特例化，不考虑通用的情况，把当前问题解决了再算
@@ -1748,6 +1750,7 @@ git的一般使用指南
                     msa
                     mra
                 opendkim
+                还有更多？ bimi RUA RUF MTA-STS TLS-RPT
             企业邮箱
             通讯录
                 CardDAV
@@ -3286,6 +3289,8 @@ ELF格式
         以前用 at 命令操作
         现在用 schtasks 命令操作
         当然啦，用图形界面也是可以的
+            taskschd.msc
+            https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks
             https://learn.microsoft.com/zh-cn/windows/win32/taskschd/task-scheduler-start-page
         schtasks
             查询任务
@@ -3299,6 +3304,34 @@ ELF格式
             创建任务
                 schtasks /Create /TN taskname /TR taskrun
                 定时任务的表达式有一点混乱，最好还是去看文档
+                    每分钟运行一次
+                        schtasks /create /sc minute /mo 1 /tn "task name" /tr "command"
+                    开机启动，设置开机启动的任务需要管理员权限
+                        schtasks /create /sc ONSTART /tn "task name onstart" /tr "command"
+        用 powershell 的 cmdlets 也能创建 windows 的定时任务
+            https://learn.microsoft.com/en-us/powershell/module/scheduledtasks
+            https://learn.microsoft.com/zh-cn/powershell/module/microsoft.powershell.utility/new-timespan
+        使用 powershell 创建定时任务
+            这是分开创建的，分开创建可以使用多个触发器
+                $Act1 = New-ScheduledTaskAction -Execute "command";
+                $Time = New-ScheduledTaskTrigger -Once -At (Get-Date)  -RepetitionInterval (New-TimeSpan -Minutes 1) ;
+                Register-ScheduledTask -TaskName "SoftwareScan" -Trigger $Time -Action $Act1;
+            这是合成一条命令
+                每分钟运行一次
+                Register-ScheduledTask -TaskName "SoftwareScan" -Trigger (New-ScheduledTaskTrigger -Once -At (Get-Date)  -RepetitionInterval (New-TimeSpan -Minutes 1)) -Action (New-ScheduledTaskAction -Execute "command");
+                开机启动
+                Register-ScheduledTask -TaskName "SoftwareScan" -Trigger (New-ScheduledTaskTrigger -AtStartup) -Action (New-ScheduledTaskAction -Execute "command");
+            使用多个触发器的例子
+                每天11:00和23:00运行一次
+                $Act1 = New-ScheduledTaskAction -Execute "command";
+                $Time1 = New-ScheduledTaskTrigger -Daily -At 11am;
+                $Time2 = New-ScheduledTaskTrigger -Daily -At 11pm;
+                Register-ScheduledTask -TaskName "SoftwareScan2" -Trigger ($Time1, $Time2) -Action $Act1;
+        计划任务一个触发器只能设定一个时间，但一个任务可以有多个触发器，schtasks命令只能设置一个触发器
+        如果计划任务运行的是 bat 或 ps 或 bash 脚本，任务运行时会弹出一个黑框
+            如果要隐藏黑框，需要以管理员权限生成任务，或者用 vbs 的方式调用脚本，但vbs的方式很容易被杀毒软件拦截
+                schtasks /create /sc minute /mo 1 /ru System /tn "acme_cron" /tr "command"
+                Register-ScheduledTask -User System -TaskName "SoftwareScan" -Trigger (New-ScheduledTaskTrigger -Once -At (Get-Date)  -RepetitionInterval (New-TimeSpan -Minutes 1)) -Action (New-ScheduledTaskAction -Execute "command");
     在 windows 下如何运行 cron ？
         关键是要能每分钟扫描一次 cron 的配置文件，然后执行符合规则的任务
             有一个能每分钟运行一次或持续运行的程序用来扫描 cron 的配置文件
@@ -3309,6 +3342,8 @@ ELF格式
                 使用 计划任务 ，每分钟运行一次
             能解释 cron 表达式
                 这种库在 github 十分的多，而且各种语言实现的都有，但怎样实现 @reboot ?
+                        https://github.com/dragonmantank/cron-expression tag
+                        https://github.com/peppeocchi/php-cron-scheduler
                     如果是 一直运行的命令行 或 服务 的形式
                         就一开始启动时运行一次，以后就忽略
                     如果是 计划任务 ，每分钟运行一次
@@ -3318,6 +3353,60 @@ ELF格式
                             (Get-Date (Get-CimInstance -ClassName win32_operatingsystem).LastBootUpTime -UFormat %s).ToString() // 开机时间的10位时间戳
                             锁定 注销 睡眠 休眠 都 不会计入停机时间
     mysql 的 事件调度器(Event Scheduler) 和 PostgreSQL 的 PgAgent 也能实现定时任务
+MySQL 和 PostgreSQL
+    比较 MySQL 和 PostgreSQL
+    MySQL 为什么比 PostgreSQL 流行
+nc netcat ncat socat
+    nc 和 netcat 都是一样的
+        nc 有两种实现
+            GNU 版本，一般系统自带
+            openbsd 版本
+        GNU 版本的包名通常为 nc-traditional
+        openbsd 版本的包名通常为 nc-openbsd
+    ncat 是 nmap 项目的组成部分。
+    socat 是一个 nc 的替代品，可以称为 nc++。是 netcat 的 N 倍 加强版。
+        socat 的官方文档描述它是 "netcat++" (extended design, new implementation)
+        socat 的包名就是 socat
+    BusyBox 里也有一个轻量版的 nc
+termux
+    下载和安装
+        https://github.com/termux/termux-app#github
+        https://github.com/termux/termux-app#f-droid
+    源
+        f-droid 的源
+        https://mirrors.tuna.tsinghua.edu.cn/help/fdroid/
+        Termux 的源
+        https://mirrors.tuna.tsinghua.edu.cn/help/termux/
+        debian 的源
+        https://mirrors.tuna.tsinghua.edu.cn/help/debian/
+    proot-distro
+        可以模拟 arm 版的linux，不是虚拟机那种模拟，性能损失比较小
+        apt install proot-distro
+        proot-distro list
+        proot-distro install debian
+        proot-distro login debian
+    qemu
+        只能运行在 root-repo 中
+        这就是完整的系统了，性能损失比较大
+        可以模拟x86linux和windows
+    docker
+        只能运行在 root-repo 或 qemu 中
+        如果运行在 root-repo 那么只支持 arm 的镜像
+            按照官网的步骤一步一步安装就可以了， arm 版的的 docker
+    gui
+        https://wiki.termux.com/wiki/Graphical_Environment
+        pkg install x11-repo
+        pkg install tigervnc
+        vncserver -localhost
+        pkg install xfce4
+        ~/.vnc/xstartup
+            #!/data/data/com.termux/files/usr/bin/sh
+            xfce4-session &
+    vnc
+        server
+            apt install tightvncserver
+        client
+            vnc view 大部分应用商店都有这个
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收
