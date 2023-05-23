@@ -272,3 +272,17 @@ iso 8601
 - https://dev.mysql.com/doc/refman/8.0/en/date-and-time-type-conversion.html
 - https://www.begtut.com/sql/sql-ref-mysql.html
 - https://www.cnblogs.com/Yunya-Cnblogs/p/13585119.html
+
+<!--
+要注意日期时间的问题
+00:00:00 23:59:59
+
+select
+    DATE_SUB(DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), interval 1 month)), interval 1 day), interval 1 second) as `一个月前的最后一天`,
+    DATE_FORMAT(DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), interval 4 month)), interval 1 day), '%Y-%m-%d %H:%i:%s') as `三个月前的第一天`,
+    DATE_SUB(DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), interval 4 month)), interval 1 day), interval 1 second) as `四个月前的最后一天`,
+    DATE_FORMAT(DATE_ADD(LAST_DAY(DATE_SUB(CURDATE(), interval 5 month)), interval 1 day), '%Y-%m-%d %H:%i:%s') as `四个月前的第一天`,
+    @@global.system_time_zone, @@global.time_zone, @@session.time_zone
+;
+
+-->

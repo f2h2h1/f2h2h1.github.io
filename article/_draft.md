@@ -897,6 +897,8 @@ vscode的使用技巧
                         例如 平时做 curd ，但面试时问到了 音视频处理
                     一些技术细节没有背到
                         例如 问 nginx 配置文件里，某个冷门的配置项的作用
+                    在缺少必要资源的情况下解决问题
+                        例如 没有mysql和其它数据库软件的情况下如何保存数据，并确保数据的acid
                     极端情况下的设计
                         例子
                             并发放大10倍甚至100倍
@@ -1596,6 +1598,32 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         以太网 Ethernet
         万维网 World Wide Web
         IT 行业中各种名词的解释？
+        IT 是 Information Technology 信息技术
+        信息 information
+        数据 data
+        信号 signal
+        知识 knowledge
+        消息 message
+        新闻 news
+        讯息 在英文里没有直接对应的单词，一般翻译成 message
+            在新文化运动时出现的新词
+            权威的消息 最新的消息
+        资讯 在英文里没有直接对应的单词，一般翻译成 news 或者 information
+            资讯是一种信息，涵盖的不只是新闻，还可以包括其他媒介。
+            资讯有时效性和地域性，它必须被消费者利用。
+            并且“提供－使用（阅读或利用）－反馈”之间能够形成一个长期稳定的消费链，
+            具有这些特点的消息才可以称之为资讯。
+        情报 在英文里没有直接对应的单词，一般翻译成 information 或者 intelligence
+        资料 在英文里没有直接对应的单词，一般翻译成 data 或者 information
+        信息 和 数据 的区别？
+            可以套用字符编码里的概念
+            信息 -> 抽象的汉字 一
+            数据 -> 具体的编码 E4B880
+        信号是指数据的电气或电磁表现
+            电磁 电气 的区别？
+            电磁 简单但不严谨地理解 就是无线信号 就是 电磁波
+            电气 简单但不严谨地理解 就是有线信号 就是 电流的高低电平
+            信号 -> 传输介质的变化？
 如何做一个npm库
     去npm官方文档注册账号,并验证邮箱 官网地址:https://www.npmjs.com/
     在github新建一个空仓库，并克隆到本地
@@ -3353,9 +3381,65 @@ ELF格式
                             (Get-Date (Get-CimInstance -ClassName win32_operatingsystem).LastBootUpTime -UFormat %s).ToString() // 开机时间的10位时间戳
                             锁定 注销 睡眠 休眠 都 不会计入停机时间
     mysql 的 事件调度器(Event Scheduler) 和 PostgreSQL 的 PgAgent 也能实现定时任务
+    除了 crod 和 window 的计划任务之外，还有哪些好用的定时任务或计划任务工具？
+    计划任务 schedule job
+        触发器
+            基于时间的
+            基于事件的
+                系统状态
+                    开机/关机
+                    用户登入/用户登出
+                自定义事件
+                    web hook 这类的
+        任务
+        任务监控
+            记录任务的状态
+                是否有出错，出错是否有错误的记录？
+                运行开始时间
+                运行时长，运行结束时间
+            失败后重试？
+            任务超时后强制关闭？
+            任务的miss？
+            失败后的日志和通知？
+        分布式的任务？distributed schedule job
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
+        pg 和 mysql 在语法有一些差异
+        mysql 可以使用多种存储引擎
+        mysql 在集群上有更成熟的方案
+        pg 更倾向于 OLAP 在 OLTP 的性能上可能追不上 mysql
+        但因为 pg 的软件协议更加宽松，使得我在情感上更加倾向于 pg
+        或许 MariaDB 是相对折中和务实的选择
     MySQL 为什么比 PostgreSQL 流行
+    mysql 全家桶
+        文档型数据
+            用json类型的字段存储
+        搜索
+            用全文索引
+        缓存
+            用内存表
+        定时任务
+            用事件调度器(Event Scheduler)
+        队列
+            也是用内存表，其实不用内存表也可以
+    PostgreSQL 全家桶
+        文档型数据
+            用这几种类型 json jsonb xml hstore
+        全文搜索
+            本来就支持，tsvector和tsquery 类型，gin索引
+            中文的全文搜索和mysql一样要装插件
+        缓存
+            pg 中没有类似于 mysql 的内存表
+            使用RAM Disk。创建一个表空间到Ram Disk上，然后建表的时候指定表空间到该 Ram Disk
+            unlogged table
+        定时任务
+            pg_cron 扩展 或 PgAgent 扩展
+        队列
+            使用 PostgreSQL 的 listen/notify 机制 或 queue_classic 扩展
+        pg 的扩展机制，使得 pg 的功能可以一直扩展
+            时序数据库
+            图数据库
+            空间数据(gis)
 nc netcat ncat socat
     nc 和 netcat 都是一样的
         nc 有两种实现
@@ -3364,10 +3448,50 @@ nc netcat ncat socat
         GNU 版本的包名通常为 nc-traditional
         openbsd 版本的包名通常为 nc-openbsd
     ncat 是 nmap 项目的组成部分。
+        https://nmap.org/ncat/
+        Nmap (“Network Mapper(网络映射器)”) 
+        Nmap（“网络映射器”）是一个免费的开源实用程序，用于 网络发现和安全审核。
+        除了经典的命令行 Nmap 可执行文件之外，Nmap 套件包括
+        高级 GUI 和结果查看器 （Zenmap），一个灵活的数据 传输、重定向和调试工具 （Ncat），一个实用程序 比较扫描结果 （Ndiff） 和数据包生成和响应分析工具 （Nping）
+        ncat 支持 tls
     socat 是一个 nc 的替代品，可以称为 nc++。是 netcat 的 N 倍 加强版。
         socat 的官方文档描述它是 "netcat++" (extended design, new implementation)
         socat 的包名就是 socat
     BusyBox 里也有一个轻量版的 nc
+    nc 的原理是什么？
+    有哪些通用的语法？
+    nc 如何模拟 telnet 客户端？
+    nc 如何模拟 http 服务器？静态的，动态的
+        nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\"";
+        这一句是可行的，无法保持运行
+        while true; do nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\""; done;
+        这一句是可行的，能保持运行，但每次只能处理一个请求，但无法退出
+        trap "{ kill $$; }" SIGINT;while true; do nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\""; sleep 1s; done;
+        这一句是可行的，能保持运行，但每次只能处理一个请求，通过连续两次 ctrl+c 退出，但个请求都要等待一秒
+        trap "{ kill $$; }" SIGINT;while true; do nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\""; sleep 0.5s; done;
+        这一句是可行的，能保持运行，但每次只能处理一个请求，通过连续两次 ctrl+c 退出，但个请求都要等待零点五秒，如果等待时间太短就无法通过连续两次 ctrl+c 退出了
+        while true; do nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\""; sleep 0.5s; done;
+        这一句是可行的
+        while true; do { echo -e 'HTTP/1.1 200 OK\r\nContent-Length: 11\r\n\r\n'; echo helloworld; } | nc -v -l -k -p 9901; sleep 0.5s; done
+        这一句是可行的
+        trap "{ kill $$; }" SIGINT;while true; do nc -v -l -k -p 9901 -e ./http.sh; sleep 0.5s; done;
+        这是运行脚本文件的例子
+        这是脚本文件的内容
+            #!/bin/bash
+            echo -n "HTTP/1.0 200 OK"
+            echo -e -n "\r\n"
+            echo -n "Content-Length: 11"
+            echo -e -n "\r\n\r\n"
+            echo "helloworld"
+        测试用的命令
+            curl -v 127.0.0.1:9901
+            nc 127.0.0.1 9901
+        已经有人做了类似的了
+            https://github.com/avleen/bashttpd
+            netcat -lp 9901 -e ./bashttpd
+            我试过了，这个是可行的
+    socat openssl-listen?
+bash 如何接收标准输入和环境变量？
 termux
     下载和安装
         https://github.com/termux/termux-app#github
@@ -3379,6 +3503,8 @@ termux
         https://mirrors.tuna.tsinghua.edu.cn/help/termux/
         debian 的源
         https://mirrors.tuna.tsinghua.edu.cn/help/debian/
+        换源之后要运行这一句
+            pkg up
     proot-distro
         可以模拟 arm 版的linux，不是虚拟机那种模拟，性能损失比较小
         apt install proot-distro
@@ -3395,11 +3521,22 @@ termux
             按照官网的步骤一步一步安装就可以了， arm 版的的 docker
     gui
         https://wiki.termux.com/wiki/Graphical_Environment
+        pkg install vim
         pkg install x11-repo
         pkg install tigervnc
         vncserver -localhost
+            这句第一次运行时要设置密码
+        查看 vnc 的守护进程
+            ps -elf | grep vnc
+        关闭 vncserver
+            vncserver -kill :1
+        查看 vncserver 的日志
+            日志一般的路径
+                /home/用户名/.vnc/localhost:端口号.log
+                /home/用户名/.vnc/*.log
+        vncserver 启动后要设置环境变量
         pkg install xfce4
-        ~/.vnc/xstartup
+        ~/.vnc/xstartup 注释掉原本的内容，写入下面的内容
             #!/data/data/com.termux/files/usr/bin/sh
             xfce4-session &
     vnc
@@ -3407,6 +3544,24 @@ termux
             apt install tightvncserver
         client
             vnc view 大部分应用商店都有这个
+            如果vnc出现灰屏，就查看 vncserver 的日志
+            似乎还差一点。现在打开vnc依然是黑屏
+linux 应用的一般启动套路
+    至少一个启动脚本
+        检测或启动一些前置依赖
+        设置一些环境变量
+    至少一个主体程序
+        主体程序启动时会依次读取配置文件
+            全局的 和 用户的
+        配置文件可以有多种方式声明
+        配置文件的声明有优先级且可以覆盖
+            默认的路径
+            环境变量
+            命令行参数
+        一些配置在运行时也可以更改
+    配置文件虽然一些有约定俗成的规定，但通常依然会散落到各个位置
+    通过包管理安装的软件和编译安装的软件往往会有一些差异
+    （现在我似乎有一点理解为什么 Gentoo 会坚持编译安装软件了）
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收

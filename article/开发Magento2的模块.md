@@ -1005,6 +1005,85 @@ crontab -l
 
 自己写 crontab 配置或用其它方式（例如 supervisor ）让 cron:run 一直运行也是可以的了
 
+<!-- 
+模块名 magento/module-cron
+模型文件 vendor\magento\module-cron\Model\Schedule.php
+定时任务可能的状态
+pending 计划中
+running 运行中
+success 运行成功
+missed 错过
+error 运行失败
+
+插入的语句如果执行的时间太迟，可能会被删掉？
+
+
+输入 magento cron:run 命令两三次。
+第一次输入命令时，它会将作业排入队列；随后，将运行cron作业。 必须输入命令 至少 两次。
+
+cron 命令的这个参数应该是用来标识 父进程 和 子进程 的
+bootstrap=
+
+vendor\magento\module-cron\Console\Command\CronCommand.php
+vendor\magento\framework\App\Cron.php
+vendor\magento\module-cron\Observer\ProcessCronQueueObserver.php
+父进程为一个组开启一个进程
+子进程中
+    先设置一个锁
+    获得锁后
+        清除过期的任务
+            删除 cron_schedule 表的记录
+        新建任务
+            在 cron_schedule 表中插入新记录
+    执行任务
+        根据 cron_schedule 表中的记录执行任务
+
+
+
+在数据库里修改 cron 的 cron expr
+path
+crontab/group_id/jobs/job_id/schedule/cron_expr
+这一段其实是自定义的
+这一段需要现在 crontab.xml 里配置
+通常这一段会覆盖 xml 文件中 schedule 的值
+这个修改好像生效了。。。
+crontab/reports/jobs/promotion_group_attribute/schedule/cron_expr
+这个可能是要重新部署才能生效，即使是改数据库，可能是一次缓存了
+
+
+/** @var \Magento\Cron\Model\Config\Data */
+$configData = $objectMamager->get(\Magento\Cron\Model\Config\Data::class);
+var_dump($configData->getJobs());
+
+
+SELECT * from cron_schedule order by schedule_id desc limit 10;
+SELECT * from cron_schedule WHERE job_code in ('promotion_group_attribute') order by schedule_id desc;
+INSERT INTO cron_schedule (job_code,status,created_at,scheduled_at) VALUES ('promotion_group_attribute','pending',CURRENT_TIMESTAMP(), date_add(CURRENT_TIMESTAMP(), interval 1 minute));
+INSERT INTO cron_schedule (job_code,status,created_at,scheduled_at) VALUES ('promotion_group_attribute','pending',CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+
+
+UPDATE cron_schedule
+	SET
+        scheduled_at=DATE_FORMAT('2023-05-18T16:51:00+08:00', "%Y-%m-%d %H:%i")
+	WHERE schedule_id=54999675;
+
+
+DELETE FROM cron_schedule
+	WHERE schedule_id=55149474;
+
+
+
+INSERT INTO core_config_data (`scope`, scope_id, `path`, value, updated_at) VALUES ('default', 0, 'crontab/reports/jobs/promotion_group_attribute/schedule/cron_expr', '0 13,17 * * *', CURRENT_TIMESTAMP());
+
+SELECT x.* FROM core_config_data x
+WHERE `path` LIKE 'crontab%'
+ORDER BY x.config_id DESC
+
+DELETE FROM core_config_data
+	WHERE config_id=2578;
+
+-->
+
 ## 队列
 
 <!--
@@ -1319,6 +1398,33 @@ php bin/magento config:show path
 
 修改过配置项的值后，需要清空或刷新缓存才会生效（不论是 config.xml 的配置还是数据库里的配置）。
 
+### 在后台加上配置项
+
+通常是写在模块的 etc/adminhtml/system.xml 文件里
+
+一个例子
+```xml
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="test_section" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="test_group" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="11">
+                <label>test group</label>
+                <field id="test_field" translate="label" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>test field</label>
+                    <comment>test comment</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+
+```
+
+参考
+https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/files/config-reference-systemxml.html
+
+<!-- select * from core_config_data where path like '%promo/promotion_group/email_address%' limit 10 -->
+
 ## 前端
 
 <!--
@@ -1590,6 +1696,8 @@ pub/static/*
 
 -->
 
+## 发送邮件
+
 ## 一些调试技巧
 
 ### 获取某一个对象
@@ -1607,6 +1715,15 @@ $orderCollection = $orderCollectionFactory->create();
 $orderCollection->addFieldToFilter('entity_id', $orderId); // 可以修改条件
 $order = $orderCollection->getFirstItem(); // $orderCollection->getItems(); // 获取集合
 ```
+
+<!--
+常用的对象
+\Magento\Sales\Model\ResourceModel\Order\CollectionFactory
+product
+\Magento\Customer\Model\CustomerFactory
+\Magento\Quote\Model\QuoteFactory
+shipment
+-->
 
 ### 在某一个位置写日志
 
@@ -1812,6 +1929,18 @@ vendor/magento/module-indexer/Console/Command/IndexerInfoCommand.php
     {
         $objectMamager = \Magento\Framework\App\ObjectManager::getInstance();
 
+        /** @var \Magento\Framework\App\State */
+        $appState = $objectMamager->get(\Magento\Framework\App\State::class);
+        try { // 没有这句很容易会出现 Area code is not set 的错误
+            $appState->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
+        } catch (\Exception $e) {
+        }
+
+        // 可以尝试这样更改 store view
+        // /** @var \Magento\Store\Model\StoreManagerInterface */
+        // $storeManager =  $objectMamager->get(\Magento\Store\Model\StoreManagerInterface::class);
+        // $storeManager->setCurrentStore('zh_Hans_CN');
+
         /** @var \Magento\Framework\App\ResourceConnection */
         $connection = $objectMamager->get(\Magento\Framework\App\ResourceConnection::class);
         $conn = $connection->getConnection();
@@ -1840,6 +1969,7 @@ vendor/magento/module-indexer/Console/Command/IndexerInfoCommand.php
 ```
 php bin/magento indexer:info
 php -d xdebug.remote_autostart=on bin/magento indexer:info
+php -d xdebug.start_with_request=yes bin/magento indexer:info
 ```
 
 通过命令行运行测试代码，可以不加载前端资源，反馈的速度更快。
@@ -2104,8 +2234,22 @@ vendor\magento\framework\Model\AbstractModel.php
 
 magento2 里用于执行单个定时任务的工具
 https://github.com/netz98/n98-magerun2
+安装这个工具可以直接跑某个指定的cron job
+n98-magerun2.phar sys:cron:run sales_clean_quotes
+其实这个工具还有很多其它功能的
+
 配置文件修改后，要清除一次缓存
 php bin/magento c:c
 
+
+
+php bin/magento setup:upgrade --keep-generated
+
+只改了前台的可以忽略后台的构建
+php bin/magento setup:static-content:deploy -f --exclude-area=adminhtml
+只改了后台的可以忽略前台的构建
+php bin/magento setup:static-content:deploy -f --exclude-area=frontend
+
+php bin/magento setup:static-content:deploy --help 还有一些技巧
 
 -->
