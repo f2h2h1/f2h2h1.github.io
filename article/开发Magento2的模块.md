@@ -2245,10 +2245,18 @@ php bin/magento c:c
 
 php bin/magento setup:upgrade --keep-generated
 
-只改了前台的可以忽略后台的构建
+构建前端时忽略后台
 php bin/magento setup:static-content:deploy -f --exclude-area=adminhtml
-只改了后台的可以忽略前台的构建
+构建前端时忽略前台
 php bin/magento setup:static-content:deploy -f --exclude-area=frontend
+
+-j 参数 使用多进程的方式构建前台
+-j 参数 windows 用不了，因为依赖了 pcntl_fork
+php bin/magento setup:static-content:deploy -f -j 8 --exclude-area=frontend
+php bin/magento setup:static-content:deploy -f -j 8 --exclude-area=adminhtml
+
+只构建英语的前台
+php bin/magento setup:static-content:deploy -f --area=frontend --language=en_US
 
 php bin/magento setup:static-content:deploy --help 还有一些技巧
 

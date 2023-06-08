@@ -1487,14 +1487,16 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             application 有时会被翻译为 应用程序
             application 是 application software 的缩写，是一种 software
             除了 application software 还有 system software 还有 middleware
-        software 由 程序、文档、数据 组成
+        software 由 程序、数据、文档 组成
         progrem 是 software 的组成部分，一个软件至少包含一个 progrem
     更多的名词
         软件 software
         应用 application
         命令行 command line
         命令 command
-        内置命令 command builtin
+        内置命令 builtin command / built-in command
+            普通的命令，shell 会 fork 一个子进程来运行
+            内置命令，shell 自己就能解释，一般不会 fork 子进程
         文件 File
         文件夹 Folder
             文件夹（Folder）是GUI对象,是一个逻辑概念，不一定映射到物理目录，
@@ -2565,6 +2567,8 @@ magento2 配置 paypal
                     过滤关键词：<!DOCTYPE和<!ENTITY，或者SYSTEM和PUBLIC。
                 把xmllib升级到2.9.0以后的版本
                     xmllib2.9.0以后，是默认不解析外部实体的
+        IDOR
+        来自业务逻辑的漏洞
     防御
         ssh不要用默认端口
         安全组和防火墙不要开放全部端口，要用端口白名单
@@ -3277,6 +3281,8 @@ ELF格式
         常用的命令
             crontab -l
             crontab -e
+                和直接修改配置文件相比
+                crontab -e 在退出时会检测一次语法
         cron 的实现
             vixie cron
                 这个应该是现在最流行的 cron 版本了
@@ -3411,6 +3417,12 @@ MySQL 和 PostgreSQL
         但因为 pg 的软件协议更加宽松，使得我在情感上更加倾向于 pg
         或许 MariaDB 是相对折中和务实的选择
     MySQL 为什么比 PostgreSQL 流行
+        pg 早期版本不支持 windows
+        lamp 的流行，还有 WordPress 这类博客
+        阿里的去 ioe 使 mysql 更流行
+        pg 的中文用户组到 2011 年才组建起来
+        pg 的集群没有MySQL简单
+        pg 的高级特性，互联网公司用不到
     mysql 全家桶
         文档型数据
             用json类型的字段存储
@@ -3559,6 +3571,8 @@ linux 应用的一般启动套路
             环境变量
             命令行参数
         一些配置在运行时也可以更改
+        配置的优先级
+            默认的 < 环境变量 < 配置文件 < 命令行参数 < 运行时修改
     配置文件虽然一些有约定俗成的规定，但通常依然会散落到各个位置
     通过包管理安装的软件和编译安装的软件往往会有一些差异
     （现在我似乎有一点理解为什么 Gentoo 会坚持编译安装软件了）
@@ -3572,6 +3586,77 @@ linux 应用的一般启动套路
         标记-清除
         三色标记
         分代收集
+打包和压缩
+    tar
+        tape archive (磁带 存档)
+        大多数linux发行版都会有 tar
+        git fow windows 里也有一个 tar
+        原版的 tar 只支持打包，新版的 tar 能自动调用压缩工具，需要系统里也包含 gzip
+        所以现在的 tar 命令能同时执行打包和压缩的操作
+        windows10 1803 及以后的版本都内置了 tar
+        unix 上有一个名为 ar 的工具，但现在已经被 tar 取代
+    压缩
+        算法 压缩格式 容器格式
+            哈夫曼编码（Huffman Coding）
+            Deflate
+            LZMA
+            LZMA2
+            压缩 和 加密 似乎有紧密的联系
+            压缩算法的专利保护，似乎只保护压缩，不保护解压
+        工具
+            lzip
+            xz
+            bzip2
+            Info-ZIP
+                zip 用于压缩
+                unzip 用于解压
+                在 windows 下是 wiz
+            gzip 和 gunzip
+                gzip 用于压缩
+                gunzip 用于解压
+                大多数 linux 发行版包含的是这两个
+            7z
+                7zfm.exe（7-zip File Manager）是7-Zip软件的GUI主程序，一般来说，只使用7zfm.exe就可以了
+                7z.exe 是纯命令行工具
+                7zg.exe 是7-Zip软件的GUI模块，也可以在命令行中使用，但会显示一个图形界面的进度窗口，7zfm实际上也是调用7zg
+            windows 下的软件
+                windows 的 explorer 能直接支持 zip ，从windows me开始
+                winzip 也是商业软件，也支持多种格式
+                winrar 支持 zip 和 rar 还有其它格式，是收费的商业软件，中国特供版有免费的但会有广告
+                Bandizip 支持多种格式，有免费版和收费版
+                国产全家桶里的压缩软件 好压 快压 速压 360压缩 2345压缩
+    分卷压缩
+        在linux环境下
+            压缩完文件直接用 split 分割就可以了。。。
+            使用cat命令合并，要注意分卷文件的顺序，要按顺序合并
+            合并完后再解压
+    自解压
+        自释放压缩包（英语：self-extracting archive，缩写为SFX或SEA）是一种可执行程序，
+        它包含一个被压缩的文件，以及一个用于提取压缩包内文件的计算机程序。
+        此类压缩包不需要使用其他压缩程序就可以直接运行并解压缩。 
+        主流的压缩软件都支持自解压，但 gzip 不支持
+        在 linux 环境下的自解压？
+        其实我觉得 自解压 可以作为软件的安装包
+    密码保护
+    压缩软件比较 https://en.wikipedia.org/wiki/Comparison_of_file_archivers
+    HTTP 协议中的数据压缩 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Compression
+        gzip
+        br
+    zlib https://github.com/madler/zlib
+    归档格式
+        仅归档
+        仅压缩
+        归档并压缩
+        软件打包和分发
+        容器文件技术
+各种帮助文件
+    man info
+    hlp chm hsx mshc h1s
+    javadoc 和 javahelp
+        javadoc 是文档生成器，生成的是 html 文件
+        javahelp 类似于 chm ，也是用 html ，最后生成的是一个 gui 程序
+    documentation generator 文档生成器
+    这类东西在维基百科里被称为 帮助系统(help system)
 浏览器如何访问本地文件
     https://developer.mozilla.org/en-US/docs/Web/API/FileSystem
     https://developer.mozilla.org/en-US/docs/Web/API/File_and_Directory_Entries_API
@@ -3621,6 +3706,18 @@ nas
         放在哪里？体积？噪声？
         费用？
             硬件费用，电费，网费
+和声音相关的笔记
+    声音
+        物体是如何发出声音的
+        人是如何发出声音的
+        人是如何感受声音的
+    音乐
+        乐谱
+        唱歌
+        乐器
+        分类方式
+        曲 和 词
+        风格 和 流派
 收集各种镜像站点
     大学的
     https://mirrors.tuna.tsinghua.edu.cn/
