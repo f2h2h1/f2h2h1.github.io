@@ -587,3 +587,93 @@ windows 的 hosts 文件需要是 ascii 编码或 ansi 编码，用其它编码 
     taskkill /T /F /FI "PID eq 9088"
     taskkill /T /F /FI "IMAGENAME eq nginx.exe"
     ```
+
+<!--
+各种启动脚本
+bat
+
+nginx.bat
+```
+title nginx
+chcp 65001
+C:
+cd C:\Users\a\dev\nginx-1.21.4
+call nginxquit.bat
+nginx -T
+nginx || echo %errorlevel% & pause
+exit
+```
+
+nginxquit.bat
+```
+C:
+cd C:\Users\a\dev\nginx-1.21.4
+nginx -s quit
+timeout 6
+taskkill /T /F /FI "IMAGENAME eq nginx.exe"
+```
+
+php-cgi.bat
+```
+title php-cgi
+chcp 65001
+C:
+cd C:\Users\a\dev\php-8.1.16-nts-Win32-vs16-x64
+set PHP_FCGI_CHILDREN=16
+set PHP_FCGI_MAX_REQUESTS=100
+php-cgi -b 127.0.0.1:9001 || echo %errorlevel% & pause
+```
+
+elasticsearch.bat
+```
+title elasticsearch
+chcp 65001
+C:
+cd C:\Users\a\dev\elasticsearch-7.9.3\bin
+elasticsearch.bat
+```
+
+mysql.bat
+```
+title mysqld
+chcp 65001
+C:
+cd C:\Users\a\dev\mysql-8.0.27-winx64\bin
+mysqld --defaults-file="C:\Users\a\dev\mysql-8.0.27-winx64\my.ini" --console || echo %errorlevel% & pause
+```
+
+redis.bat
+```
+title redis
+chcp 65001
+C:
+cd C:\Users\a\dev\Redis-x64-3.2.100
+redis-server.exe || echo %errorlevel% & pause
+```
+
+一次启动全部 startup.bat
+```
+cmd /c start php-cgi.bat
+cmd /c start nginx.bat
+cmd /c start mysql.bat
+cmd /c start redis.bat
+cmd /c start elasticsearch.bat
+```
+
+一次关闭全部 shutdown.bat
+```
+taskkill /T /F /FI "WINDOWTITLE eq php-cgi"
+taskkill /T /F /FI "WINDOWTITLE eq mysqld"
+taskkill /T /F /FI "WINDOWTITLE eq elasticsearch"
+taskkill /T /F /FI "WINDOWTITLE eq redis"
+call nginxquit.bat
+```
+
+一次重启全部 reload.bat
+```
+cmd /c shutdown.bat
+timeout 2
+cmd /c startup.bat
+```
+
+-->

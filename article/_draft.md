@@ -99,7 +99,11 @@
             一次通讯数据包最大的长度为 255 ，因为分包操作也挺麻烦的
         只输出一个 helloworld
         实现最简单的五个协议
-            echo discard chargen daytime time
+            echo (RFC 862) 7 回显服务，把收到的数据发回客户端
+            discard (RFC 863) 9 丢弃所有收到的数据
+            chargen (RFC 864) 19 服务端 accept 连接之后，不停地发送测试数据
+            daytime (RFC 867) 13 务端 accept 连接之后，以字符串形式发送当前时间，然后主动断开连接
+            time (RFC 868) 87 服务端 accept 连接之后，以二进制形式发送当前时间的32位时间戳，然后主动断开连接
             只考虑 tcp 的
             用 netcat 作为客户端
         然后是基于 telnet 的 echo
@@ -1470,6 +1474,14 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         浏览器的无头模式
             chrome edge firefox 都有无头模式
         Playwright 和 Selenium 都要配合浏览器使用，不是无头浏览器
+    除了浏览器之外的 js 运行环境
+        nodejs 基于 V8
+        deno 基于 JavaScriptCore
+        bun 基于 TypeJavaScript
+        QuickJS
+        在java中的
+            Rhino
+            Nashorn
     文本浏览器/终端浏览器/命令行浏览器
         能运行在 终端 中的浏览器
         w3m
@@ -2933,14 +2945,6 @@ js 中的任务和微任务
     https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_DOM_API/Microtask_guide/In_depth
 MutationObserver？
 TCP 慢启动 / 14KB 规则 ？
-除了浏览器之外的 js 运行环境
-    nodejs 基于 V8
-    deno 基于 JavaScriptCore
-    bun 基于 TypeJavaScript
-    QuickJS
-    在java中的
-        Rhino
-        Nashorn
 浏览器相关的经验
     启动参数
         --no-sandbox
@@ -3311,6 +3315,25 @@ ELF格式
             单例运行
                 要使用文件锁确保当前只有一个脚本在运行
                 flock命令
+                    例子1
+                    ```
+                    #!/usr/bin/env bash
+                    LOCK_FILE=/var/lock/test.lock
+                    exec 99>"$LOCK_FILE"
+                    flock -n 99
+                    if [ "$?" != 0 ]; then
+                        echo "$0 already running"
+                        exit 1
+                    fi
+                    #脚本要做的其他事情
+                    ```
+                    例子2
+                    ```
+                    #!/usr/bin/env bash
+                    [ "${FLOCKER}" != "$0" ] && exec env FLOCKER="$0" flock -en  "$0"  "$0"  "$@" || :
+                    # 如果${FLOCKER}环境变量没有设置，则尝试将脚本本身加锁，如果加锁成功，则运行当前脚本，（并且带上原有的参数），否则的话静默退出。
+                    #脚本要做的其他事情
+                    ```
         其实现在的 cron 也是通过 systemd 运行的
             crond.service
             systemctl status crond.service
@@ -3423,6 +3446,7 @@ MySQL 和 PostgreSQL
         pg 的中文用户组到 2011 年才组建起来
         pg 的集群没有MySQL简单
         pg 的高级特性，互联网公司用不到
+        据说 PostgreSQL 正在逐步超越 MySQL
     mysql 全家桶
         文档型数据
             用json类型的字段存储
@@ -3531,6 +3555,7 @@ termux
         只能运行在 root-repo 或 qemu 中
         如果运行在 root-repo 那么只支持 arm 的镜像
             按照官网的步骤一步一步安装就可以了， arm 版的的 docker
+            很多镜像都没有 arm 版
     gui
         https://wiki.termux.com/wiki/Graphical_Environment
         pkg install vim
