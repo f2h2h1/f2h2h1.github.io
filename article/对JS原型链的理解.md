@@ -344,8 +344,64 @@ js 的事件循环
 js 的各种循环方法
     https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Loops_and_iteration
     数组的遍历
+        for; while; do...while;
+        for (let key in arr) {
+            console.log(arr[key]);
+        }
+        for (let item of arr) {
+            console.log(item);
+        }
+        map;forEach;every;some;filter;reduce
+        Array.prototype.forEach.call
+        Array.prototype.map.call
+        Array.prototype.map.call
     对象的遍历
+        自身属性 继承属性
+        可枚举属性 不可枚举属性
+        for...in
+        Object.keys()
+        Object.values()
+        Object.entries()
+        Object.getOwnPropertyNames()
+        Object.getOwnPropertySymbols()
+        Reflect.ownKeys()
+        令对象可以使用 for of 遍历
+            for…of 循环是 ES6 新增的一种遍历方式，它可以直接获取可迭代对象的值，而不需要索引或键名。
+            但是，对象本身不是可迭代的，所以不能直接用 for…of 遍历对象的属性2。
+            如果想要用 for…of 遍历对象的属性，需要给对象添加一个 Symbol.iterator 属性，
+            这个属性是一个生成器函数，可以返回一个迭代器对象。
+            迭代器对象有一个 next() 方法，可以返回对象属性的键值对。
+            (function(){
+                let obj = {a: 1, b: 2, c: 3};
+                for (let key in obj) {
+                    console.log(key, obj[key]);
+                }
+                obj[Symbol.iterator] = function* () {
+                    let keys = Object.keys(this);
+                    for (let i = 0; i < keys.length; i++) {
+                        yield [keys[i], this[keys[i]]];
+                    }
+                };
+                for (let [key, value] of obj) {
+                    console.log(key, value);
+                }
+            })()
 如何判断变量的类型
+    判断数组 Array.isArray()
+    基本类型用 typeof
+        但 object array null 都是返回 object
+    用 instanceof 也可以
+        typeof适用于简单的内置类型，如字符串、布尔值、数字和函数，
+        instanceof适用于复杂的内置类型，如正则表达式、数组和对象
+    用 Object.prototype.toString 最稳
 如何判断对象是否有某个属性
+    in 和 hasOwnProperty
+    hasOwnProperty 自身的属性
+    in 自身的属性和原型链上的属性
+        例子
+            'attr' in {} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 没有 attr
+            'attr' in {attr:null} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 有 attr
+            'attr' in {attr:undefined} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 有 attr
 如何判断数组是否包含某个值
+数组和对象的区别
 -->

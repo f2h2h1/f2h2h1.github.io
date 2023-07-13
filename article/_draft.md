@@ -37,12 +37,16 @@
                     0.9 1.0 1.1 2 3
                 mqtt
                 telnet
+                    rfc 97 137 153 318 854 2217
                 ftp
                 dns
                 nntp
+                    网络新闻传输协议（Network News Transfer Protocol）
+                    USENET 和 NNTP 的关系，大概就是 网站 和 http 的关系差不多
                 irc
                 xmpp
                 ntp
+                    网络时间协议（Network Time Protocol）
                 dhcp
                 stmp
                 pop3
@@ -1695,7 +1699,7 @@ git的一般使用指南
         https://github.com/slimphp/Slim
         https://github.com/jadephp/jade
         https://github.com/silexphp/Silex 基于 Symfony2 的，现在已经不更新了
-    php的型框架
+    php的大型框架
         ci
         thinkphp
         laravel
@@ -3476,6 +3480,53 @@ MySQL 和 PostgreSQL
             时序数据库
             图数据库
             空间数据(gis)
+openbsd-inetd
+    ```
+    # 拉取镜像
+    docker pull debian:11
+    # 运行容器
+    docker run \
+        -it \
+        --rm \
+        debian:11 /bin/bash
+    # debian11 换成阿里云的源
+    cp /etc/apt/sources.list /etc/apt/sources.list_bak && \
+    sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list && \
+    apt update
+    # 安装必要的软件
+    apt install -y vim && \
+    apt install -y net-tools && \
+    apt install -y netcat && \
+    apt install -y openbsd-inetd && \
+    apt install -y procps
+    # 修改 inetd 的配置，启用相关的协议
+    vim /etc/inetd.conf
+        echo       stream  tcp     nowait  root    internal
+        daytime    stream  tcp     nowait  root    internal
+        time       stream  tcp     nowait  root    internal
+        discard    stream  tcp     nowait  root    internal
+        chargen    stream  tcp     nowait  root    internal
+    # 启动 inetd
+    /etc/init.d/openbsd-inetd start
+    # 查看 inetd 的状态
+    /etc/init.d/openbsd-inetd status
+    # 查看当前系统端口的占用情况
+    netstat -l
+    netstat -a
+    # 使用 nc 验证五个协议
+    nc 127.0.0.1 7
+    nc 127.0.0.1 9
+    nc 127.0.0.1 19
+    nc 127.0.0.1 13
+    nc 127.0.0.1 37
+    # RFC 868 输出的是二进制数据，需要经过转换才可读
+    # 转换为 10 位时间戳
+    nc 127.0.0.1 37 | od -t u4 --read-bytes=4 --endian=big --address-radix=n | awk '{print ($1-2209017600)}'
+    # 转换为时间字符串
+    nc 127.0.0.1 37 | od -t u4 --read-bytes=4 --endian=big --address-radix=n | awk '{print ($1-2209017600)}' | xargs -I{} date --date='TZ="Asia/Shanghai"' -d "@{}" +%FT%H:%M:%S%:z
+    # 修改完 /etc/inetd.conf 文件后，需要重启 openbsd-inetd 服务
+    /etc/init.d/openbsd-inetd restart
+    ```
 nc netcat ncat socat
     nc 和 netcat 都是一样的
         nc 有两种实现
@@ -3483,6 +3534,10 @@ nc netcat ncat socat
             openbsd 版本
         GNU 版本的包名通常为 nc-traditional
         openbsd 版本的包名通常为 nc-openbsd
+        判断当前系统的 nc 版本
+            先用 type nc
+            再用 realpath 或 ls -l 查看 nc 的真实路径，最好用 realpath
+            类似这样 realpath /bin/nc
     ncat 是 nmap 项目的组成部分。
         https://nmap.org/ncat/
         Nmap (“Network Mapper(网络映射器)”) 
@@ -3493,9 +3548,25 @@ nc netcat ncat socat
     socat 是一个 nc 的替代品，可以称为 nc++。是 netcat 的 N 倍 加强版。
         socat 的官方文档描述它是 "netcat++" (extended design, new implementation)
         socat 的包名就是 socat
+        socat 是 socket cat 的缩写
     BusyBox 里也有一个轻量版的 nc
+    从功能上看
+        BusyBox nc < nc-traditional < nc-openbsd < ncat < socat
     nc 的原理是什么？
     有哪些通用的语法？
+    echo
+        while read -r line; do echo "$line"; done
+    daytime
+        date -u "+%d %b %y %k:%M:%S %z"
+        date -u --rfc-2822
+        date -u --rfc-3339="seconds"
+        date -u --iso-8601="seconds"
+    time
+        date +%s | awk '{printf "%#x", $1+2209017600}' | xxd -r
+    discard
+        while read -r line; do echo "$line" > /dev/null; done
+    chargen
+        lineLimit=72;offset=0;count=0;while true; do for ((i=0; i<$lineLimit; i++)); do tag=$((($i + $offset) % 95)); printf "\x$(printf %x $(($tag + 32)))"; done; offset=$(($offset + 1)); if [ $offset -ge 95 ]; then offset=0; fi; printf "\n";count=$(($count + 1)); done;
     nc 如何模拟 telnet 客户端？
     nc 如何模拟 http 服务器？静态的，动态的
         nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\"";
@@ -3526,7 +3597,7 @@ nc netcat ncat socat
             https://github.com/avleen/bashttpd
             netcat -lp 9901 -e ./bashttpd
             我试过了，这个是可行的
-    socat openssl-listen?
+    socat openssl-listen 和  openssl-connect ?
 bash 如何接收标准输入和环境变量？
 termux
     下载和安装

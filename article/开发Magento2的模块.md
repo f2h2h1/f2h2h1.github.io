@@ -328,8 +328,15 @@ entity attribute value
 
 保存 eav 属性的表
 ```
-eav_attribute
-eav_entity_type
+eav_attribute 保存 eav 的属性
+eav_entity_type 保存 eav 的类
+
+输出某个 eav 类的全部 eav 属性
+SELECT * FROM eav_attribute
+WHERE entity_type_id  = (
+    SELECT entity_type_id FROM eav_entity_type
+    WHERE entity_table = 'catalog_product_entity' LIMIT 1
+)
 ```
 
 eav 的五种属性
@@ -341,7 +348,7 @@ datetime
 decimal
 ```
 
-常见的 eav 类
+常见的 eav 类，可以在这个表里看到 eav_entity_type
 ```
 catalog_category_entity
 catalog_product_entity
@@ -357,6 +364,91 @@ eav 的值保存在这类表中
 类名_text
 类名_datetime
 类名_decimal
+```
+
+一次输出 eav 对象全部属性的 sql ，用于一般的 eav 对象
+```php
+$entityId = '3893';
+$entityTabel = 'customer_entity';
+$eavTable = [
+    'varchar',
+    'int',
+    'text',
+    'datetime',
+    'decimal',
+];
+
+$eavTpl = <<<'EOF'
+(SELECT `t`.`value_id`,
+         `t`.`value`,
+         `t`.`attribute_id`,
+         `a`.`attribute_code`,
+         '%s' as `type`
+FROM `%s` AS `t`
+INNER JOIN `eav_attribute` AS `a`
+    ON a.attribute_id = t.attribute_id
+WHERE (entity_id = @entity_id))
+EOF;
+$eavSql = join('UNION ALL', array_map(function($item) use ($eavTpl, $entityTabel) {
+    return sprintf($eavTpl, $item, $entityTabel . '_' . $item);
+}, $eavTable));
+
+$entityTpl = <<<'EOF'
+select
+    *,
+    @entity_id := entity_id
+from %s
+where entity_id = %s
+limit 1;
+EOF;
+$entitySql = sprintf($entityTpl, $entityTabel, $entityId);
+
+$retSql = $entitySql . PHP_EOL . $eavSql . ';';
+
+echo $retSql;
+```
+
+一次输出 eav 对象全部属性的 sql ，用于 product 和 category 的
+```php
+$entityId = '3893';
+$entityTabel = 'catalog_product_entity';
+$eavTable = [
+    'varchar',
+    'int',
+    'text',
+    'datetime',
+    'decimal',
+];
+
+$eavTpl = <<<'EOF'
+(SELECT `t`.`value_id`,
+         `t`.`value`,
+         `t`.`store_id`,
+         `t`.`attribute_id`,
+         `a`.`attribute_code`,
+         '%s' as `type`
+FROM `%s` AS `t`
+INNER JOIN `eav_attribute` AS `a`
+    ON a.attribute_id = t.attribute_id
+WHERE (row_id = @row_id))
+EOF;
+$eavSql = join('UNION ALL', array_map(function($item) use ($eavTpl, $entityTabel) {
+    return sprintf($eavTpl, $item, $entityTabel . '_' . $item);
+}, $eavTable));
+
+$entityTpl = <<<'EOF'
+select
+    *,
+    @row_id := row_id
+from %s
+where entity_id = %s and UNIX_TIMESTAMP(NOW()) >= created_in AND UNIX_TIMESTAMP(NOW()) < updated_in
+order by row_id desc;
+EOF;
+$entitySql = sprintf($entityTpl, $entityTabel, $entityId);
+
+$retSql = $entitySql . PHP_EOL . $eavSql . ';';
+
+echo $retSql;
 ```
 
 ## 新建命令
@@ -1835,11 +1927,14 @@ if (!defined('DEBUG_TRACE_LOG')) {
         );
     }
 }
-$ignore = [ // 忽略 ObjectManager 的文件， Interceptor 的文件， Factory 的文件
+$ignore = [ // 忽略 ObjectManager 的文件， Interceptor 的文件， Factory 的文件， Event 的文件
     'vendor' . DIRECTORY_SEPARATOR . 'magento' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'Interception' . DIRECTORY_SEPARATOR . 'Interceptor.php',
     'generated',
     'vendor' . DIRECTORY_SEPARATOR . 'magento' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'ObjectManager' . DIRECTORY_SEPARATOR . 'Factory',
     'vendor' . DIRECTORY_SEPARATOR . 'magento' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'ObjectManager' . DIRECTORY_SEPARATOR . 'ObjectManager.php',
+    'vendor' . DIRECTORY_SEPARATOR . 'magento' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'Event' . DIRECTORY_SEPARATOR . 'Manager.php',
+    'vendor' . DIRECTORY_SEPARATOR . 'magento' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'Event' . DIRECTORY_SEPARATOR . 'Invoker' . DIRECTORY_SEPARATOR . 'InvokerDefault.php',
+    'vendor' . DIRECTORY_SEPARATOR . 'magento' . DIRECTORY_SEPARATOR . 'module-staging' . DIRECTORY_SEPARATOR . 'Model' . DIRECTORY_SEPARATOR . 'Event' . DIRECTORY_SEPARATOR . 'Manager.php',
 ];
 $pattern = array_map(function($item) use ($basePath) {
     return '(' . preg_quote($basePath . $item, '/') . ')';
@@ -2259,5 +2354,148 @@ php bin/magento setup:static-content:deploy -f -j 8 --exclude-area=adminhtml
 php bin/magento setup:static-content:deploy -f --area=frontend --language=en_US
 
 php bin/magento setup:static-content:deploy --help 还有一些技巧
+
+查看一个类的 Preference 和 Plugins
+php bin/magento dev:di:info "Magento\CatalogImportExport\Model\Import\Product\CategoryProcessor"
+
+
+
+
+magento/catalog
+    后台设置位置 Catalog -> Products -> product setting -> Related Products, Up-sells, and Cross-sells
+    相关的索引器
+        catalogrule_rule
+        catalogrule_product
+magento/module-target-rule 这个不生效，应该是索引的问题
+    后台设置位置 Marketing -> Related Products Rules
+    相关的索引器
+        targetrule_rule_product
+        targetrule_product_rule
+    相关的表
+        magento_targetrule
+        magento_targetrule_product
+        magento_targetrule_customersegment
+amasty/mostviewed
+    后台设置位置 Catalog -> Related Product Rules
+    相关的索引器
+        amasty_mostviewed_rule_product
+        amasty_mostviewed_product_rule
+
+magento/catalog 是 ce 版的功能
+magento/module-target-rule 是 ee 版的功能
+amasty/mostviewed 是第三方的模块
+
+magento/module-target-rule 是通过替换 block 的方式加上对应的产品
+    vendor\magento\module-target-rule\view\frontend\layout\catalog_product_view.xml
+amasty/mostviewed 是通过 拦截 的方式加上对应的产品
+    vendor\amasty\mostviewed\etc\frontend\di.xml
+        <type name="Magento\Catalog\Block\Product\ProductList\Related">
+            <plugin name="Amasty_Mostviewed::collectionRelated" type="Amasty\Mostviewed\Plugin\Community\Related"/>
+        </type>
+        <type name="Magento\TargetRule\Block\Product\AbstractProduct">
+            <plugin name="Amasty_Mostviewed::collection" type="Amasty\Mostviewed\Plugin\Enterprise\Product"/>
+        </type>
+
+
+
+
+
+AdminPortal
+MARKETING
+Cart Price Rules
+优惠券大概就两种
+    指定 code 的
+    自动生成 code 的
+        自动生成的优惠券是通过队列生成的
+        这是运行队列的命令 php bin/magento queue:consumers:start codegeneratorProcessor
+
+优惠券和订单相关的表
+salesrule_coupon_usage
+    coupon_id 对应 salesrule_coupon 的 coupon_id
+    customer_id
+    times_used 同一个用户消耗同一个 coupon_code 的数量
+salesrule_coupon \Magento\SalesRule\Model\Coupon
+    coupon_id
+    rule_id 对应 sequence_salesrule 的 sequence_value
+    code 这个字段就是优惠码
+    usage_limit
+    usage_per_customer
+    times_used 同一个 coupon_code 消耗的数量
+    expiration_date 到期时间
+salesrule_customer \Magento\SalesRule\Model\Rule\Customer
+    rule_id 对应 sequence_salesrule 的 sequence_value
+    customer_id
+    times_used 同一个用户消耗同一个 rule 的数量
+sequence_salesrule 这是一个奇怪的表，应该和队列有关
+    sequence_value
+salesrule 这个表的值对应 Cart Price Rules 页面的值
+    row_id 这个是主键，这个是版本
+    rule_id 对应 sequence_salesrule 的 sequence_value
+    name
+    times_used 只要 rule 的 coupon_code 有消耗就会加1
+    uses_per_customer
+    uses_per_coupon
+amasty_amrules_usage_limit
+    salesrule_id 对应 salesrule 的 row_id
+    limit 全局的数量限制？
+sales_order
+    coupon_code 对应 salesrule_coupon 的 code
+    coupon_rule_name 对应 salesrule 的 name
+    applied_rule_ids 这个订单应用了哪些 rule
+quote
+    coupon_code 对应 salesrule_coupon 的 code
+    applied_rule_ids 这个购物车应用了哪些 rule
+
+applied_rule_ids 是一个字符串
+多个值用逗号开个，单个值就是 salesrule 里的 rule_id
+
+这个是对应的索引器
+salesrule_rule
+
+salesrule salesrule_coupon 一对多
+salesrule_coupon salesrule_coupon_usage 一对多
+salesrule salesrule_customer 一对多
+
+
+check per coupon usage limit
+salesrule_coupon
+    salesrule_coupon.usage_limit 存在 且 salesrule_coupon.times_used 大于等于 salesrule_coupon.usage_limit 返回 flase
+    salesrule_coupon_usage.times_used 大于等于 salesrule_coupon.usage_per_customer 返回 flase
+
+check per rule usage limit
+salesrule
+    salesrule_customer.times_used 大于等于 salesrule.uses_per_customer 返回 false
+
+
+coupon_code 是否达到了数量上限
+这个用户使用了同一个 coupon_code 多少次
+这个用户使用了同一个 rule 多少次
+
+
+在购物车使用了，不会更新优惠券的表
+好像多个用户使用同一优惠券加入购物车都不会有影响
+
+多个用户使用同一优惠券加入购物车
+其中一个用户先结算
+如果优惠券有数量限制，那么另一个会自动失效，但没有提示
+
+
+coupon 新建界面里的
+    Uses per Coupon
+    Uses per Customer
+对应的是
+    salesrule
+        uses_per_coupon
+        uses_per_customer
+    salesrule_coupon
+        usage_limit
+        usage_per_customer
+coupon 新建界面里的
+     Global Uses Limit
+对应的是
+    amasty_amrules_usage_limit
+        limit
+
+
 
 -->
