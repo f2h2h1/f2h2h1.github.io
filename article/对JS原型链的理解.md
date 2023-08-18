@@ -393,6 +393,12 @@ js 的各种循环方法
     用 instanceof 也可以
         typeof适用于简单的内置类型，如字符串、布尔值、数字和函数，
         instanceof适用于复杂的内置类型，如正则表达式、数组和对象
+    判断对象
+        js 中判断一个变量是不是 object 的方法有几种，但是没有一种是完美的，
+        因为 js 的类型系统有一些特殊的情况，比如 null 和数组也是 object 类型。
+        typeof obj === 'object' && obj !== null; // 个人更喜欢这种方法
+        obj instanceof Object && obj !== null;
+        这两种方式都无法区分普通对象 数组 和 函数
     用 Object.prototype.toString 最稳
 如何判断对象是否有某个属性
     in 和 hasOwnProperty
@@ -402,6 +408,24 @@ js 的各种循环方法
             'attr' in {} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 没有 attr
             'attr' in {attr:null} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 有 attr
             'attr' in {attr:undefined} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 有 attr
+            'attr' in {attr:''} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 有 attr
+            'attr' in {attr:0} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 有 attr
+            'attr' in {attr:false} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 有 attr
+            'attr' in {attr:NaN} ? 'obj 有 attr' : 'obj 没有 attr'; // obj 有 attr
 如何判断数组是否包含某个值
+    array.indexOf() 返回第一次出现给定元素的下标，如果不存在则返回 -1
+    Array.includes() 如果元素存在返回true，不存在返回false
+    遍历一次就知道了。。。
 数组和对象的区别
+    在js中数组是对象的一种
+    console.log({} instanceof Object); // true
+    console.log([] instanceof Object); // true
+    Object.prototype.toString.call({}); // '[object Object]'
+    Object.prototype.toString.call([]); // '[object Array]'
+    Object.prototype.toString.call(function(){}); // '[object Function]'
+    数组的索引一定是数字
+    除了 数组 对象 外还有啊 Map 和 类型化数组（typed array）
+    Map 也是一种对象
+    类型化数组 也是一种对象
+        类型化数组不是普通数组，调用 Array.isArray() 会返回 false
 -->

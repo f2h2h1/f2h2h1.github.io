@@ -693,6 +693,117 @@ graphql 要留意输入的类型，输出的类型
 直接修改 schema.graphqls 文件就可以了， magento 会把全部 schema.graphqls 合并，类似于合并 xml 文件一样
 https://devdocs.magento.com/guides/v2.3/graphql/develop/extend-existing-schema.html
 
+可以使用这样的方式登录获取 graphql 的 token ，要注意修改帐号密码
+curl 'https://magento2.localhost.com/graphql' \
+  -H 'accept: */*' \
+  -H 'content-type: application/json' \
+  -H 'Sec-Fetch-Site: cross-site' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6' \
+  --cookie "XDEBUG_SESSION=vscode" \
+  --data-raw $'{"operationName":"Login","variables":{"email":"test.test.test@test.com","password":"passw!1234"},"query":"mutation Login($email: String\u0021, $password: String\u0021) {\\n  generateCustomerToken(email: $email, password: $password) {\\n    token\\n    __typename\\n  }\\n}\\n"}' \
+  --compressed -k --no-progress-meter
+
+在数据库里运行这三句，就能直接生成 token 了
+SELECT
+    @customer_id := entity_id
+FROM `customer_entity`
+WHERE (email = 'test.test.test@test.com');
+
+INSERT INTO oauth_token
+(consumer_id,admin_id,customer_id,`type`,token,secret,verifier,callback_url,revoked,authorized,user_type,created_at,partner_id)
+VALUES
+(NULL,NULL,@customer_id,'access',REPLACE(UUID(), '-', ''),REPLACE(UUID(), '-', ''),NULL,'',0,0,3,now(),NULL);
+
+select *
+from oauth_token
+where customer_id = @customer_id
+order by created_at desc
+limit 1;
+
+可以用这句curl验证生成的token
+curl 'https://magento2.localhost.com/graphql?query=%20%20%20%20%20%20%20%20query%20\{%20%20%20%20%20%20%20%20%20%20customer%20\{%20%20%20%20%20%20%20%20%20%20%20%20email%20%20%20%20%20%20%20%20%20%20%20%20firstname%20%20%20%20%20%20%20%20%20%20%20%20lastname%20%20%20%20%20%20%20%20%20%20\}%20%20%20%20%20%20%20%20\}%20%20%20%20%20%20%20%20' \
+  -H 'authorization: Bearer 10ed30a93cdc11ee9d3b0e4ba1986f92' \
+  -H 'accept: */*' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  --cookie "XDEBUG_SESSION=vscode" \
+  --compressed -k --no-progress-meter
+
+可以用 json_pp 来格式化 curl 的输出，前提是 curl 里的输出是 json 字符串
+像这样
+curl 'https://magento2.localhost.com/graphql?query=%20%20%20%20%20%20%20%20query%20\{%20%20%20%20%20%20%20%20%20%20customer%20\{%20%20%20%20%20%20%20%20%20%20%20%20email%20%20%20%20%20%20%20%20%20%20%20%20firstname%20%20%20%20%20%20%20%20%20%20%20%20lastname%20%20%20%20%20%20%20%20%20%20\}%20%20%20%20%20%20%20%20\}%20%20%20%20%20%20%20%20' \
+  -H 'authorization: Bearer 10ed30a93cdc11ee9d3b0e4ba1986f92' \
+  -H 'accept: */*' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  --cookie "XDEBUG_SESSION=vscode" \
+  --compressed -k --no-progress-meter | json_pp
+
+如果在网页端已经登录的前提下，可以在网页的 console 里用这样的代码发送 graphql 请求
+这一种是查询
+(function(){
+    require(['jquery'], function($) {
+        const query = `
+        query {
+          customer {
+            email
+            firstname
+            lastname
+          }
+        }
+        `;
+        // 改用 post 效果是一样的
+        $.ajax({
+            url: `${window.location.origin}/graphql`,
+            type: "POST",
+            contentType: "application/json",
+            data: `{"query":${JSON.stringify(query)}}`,
+            success: function(data){
+                console.log(data);
+            }
+        });
+        // $.ajax({
+        //     url: `${window.location.origin}/graphql`,
+        //     type: "GET",
+        //     contentType: "application/json",
+        //     data: `query=`+query,
+        //     success: function(data){
+        //         console.log(data);
+        //     }
+        // });
+    });
+})();
+
+这一种是修改
+(function(){
+const graphqlEndpoint = `${window.location.origin}/graphql`;
+const query = `
+mutation CheckoutScreenReorder {
+  reorder(increment_id: "123456789") {
+    cartID: cart_id
+  }
+}
+`;
+return fetch(`${graphqlEndpoint}`, {
+    headers: {
+        'Content-Type': 'application/json',
+        store: 'en_US'
+    },
+    method: 'POST',
+    body: `{"query":${JSON.stringify(query)}}`,
+}).then(response => {
+    console.log(response);
+    if (response.status == 200) {
+        console.log(response.text());
+    } else {
+        console.log(response.status);
+    }
+});
+})();
+
+
 -->
 
 浏览器可以安装这个拓展 https://github.com/altair-graphql/altair
@@ -764,6 +875,9 @@ magento 的索引器有两种类型
         callblack 用类似这样的代码来执行 indexer
         /** @var \Magento\Framework\Indexer\IndexerRegistry */
         $this->indexerRegistry->get($indexer_id)->reindexRow($model->getId());
+            vendor\magento\module-indexer\Model\Indexer.php reindexRow
+                具体的 indexer 的 executeRow 方法
+
 
     几个关键的对象都是显式调用的。。。
     vendor\magento\module-catalog\Model\Product.php afterSave
@@ -793,6 +907,16 @@ afterCommitCallback
 
 会不会是因为我从命令行运行所以没执行到索引？
 好像也不是，我从web运行一次也同样没有效果
+
+magento2 的 on save 索引似乎确实无法开箱即用，始终要写几行代码，类似这样，加在模型类里的 afterSave 方法里
+        /** @var \Magento\Framework\Indexer\IndexerRegistry */
+        $indexer = $this->indexerRegistry->get(static::INDEXER_ID);
+        if (!$indexer->isScheduled()) {
+            $indexer->reindexRow($model->getId());
+        }
+https://github.com/magento/devdocs/issues/1596
+https://github.com/magento/magento2/issues/8866
+
 
 手动更新
     admin
