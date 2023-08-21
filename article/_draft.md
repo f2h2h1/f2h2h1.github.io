@@ -3645,47 +3645,89 @@ nc netcat ncat socat
 bash 如何接收标准输入和环境变量？
 termux
     下载和安装
-        https://github.com/termux/termux-app#github
-        https://github.com/termux/termux-app#f-droid
-    源
-        f-droid 的源
-        https://mirrors.tuna.tsinghua.edu.cn/help/fdroid/
-        Termux 的源
-        https://mirrors.tuna.tsinghua.edu.cn/help/termux/
-        debian 的源
-        https://mirrors.tuna.tsinghua.edu.cn/help/debian/
-        换源之后要运行这一句
-            pkg up
+        要先下载和安装 f-droid https://f-droid.org/
+        然后 f-droid 换源 https://mirrors.tuna.tsinghua.edu.cn/help/fdroid/
+        然后在 f-droid 里下载和安装 termux
+            https://f-droid.org/en/packages/com.termux/
+        termux 安装参考
+            https://github.com/termux/termux-app#github
+            https://github.com/termux/termux-app#f-droid
+        termux 安装完后也要换源
+            先运行这句 termux-change-repo
+            在 tui 的界面里选 tua 的镜像源
+            选好退出后再运行这句
+            换源之后要运行这句 pkg update
+            tremux 换源参考 https://mirrors.tuna.tsinghua.edu.cn/help/termux/
+        运行这句 termux-setup-storage 获得 共享存储 和 外部存储 的访问权限
+            运行这句 termux-setup-storage 后应该会弹出授权的确认框
+            Termux 有三种不同的存储
+                Internal storage 内部存储
+                Shared storage 共享存储
+                External storage 外部存储
+            如果不运行 termux-setup-storage ，就只能访问 Internal storage
+        安装一些必要的包
+            pkg install proot 模拟 root 环境
+                安装完后，输入 termux-chroot 进入 proot 环境
+                如果没有其它特别的设置或更新，每个新的会话都要先运行 termux-chroot 才能进入 proot 环境
+            pkg install root-repo 对 root 用户有用的软件包
+            pkg install vim
+    sshd
+        安装ssh: pkg install openssh ，提示全部按回车键默认即可。
+        设置密码: passwd ，然后输入密码，第二次确认密码。
+        开启sshd服务: sshd ，只要输入了这句命令就可以了， sshd 的默认端口是 8022
+        查看IP地址：ifconfig（手机电脑在同一局域网内）
+        在远程电脑连接
+            ssh -o ServerAliveInterval=60 ip地址 -p 8022
+            远程电脑就当作普通的 sshd 连接就可以了
+        如果没有其它特别的设置或更新，每次重启都要手动启动 sshd
+        可以通过 kill 的方式结束 kill 的进程
+            通过 ps -elf 找到对应的 pid
+                ps -elf 因为只要很少进程，所以直接运行 ps 也能很容易就找到 sshd 的进程
+            通过 pid 杀掉对应的进程
+                kill pid
     proot-distro
         可以模拟 arm 版的linux，不是虚拟机那种模拟，性能损失比较小
-        apt install proot-distro
-        proot-distro list
+        pkg install proot-distro
+        proot-distro list 可以通过这条命令查看发行版的信息
         proot-distro install debian
         proot-distro login debian
+        安装完 debian 后也要记得换源 https://mirrors.tuna.tsinghua.edu.cn/help/debian/
     qemu
-        只能运行在 root-repo 中
+        只能运行在 proot-distro 中
         这就是完整的系统了，性能损失比较大
         可以模拟x86linux和windows
     docker
-        只能运行在 root-repo 或 qemu 中
-        如果运行在 root-repo 那么只支持 arm 的镜像
+        只能运行在 proot-distro 或 qemu 中
+        如果运行在 proot-distro 那么只支持 arm 的镜像
             按照官网的步骤一步一步安装就可以了， arm 版的的 docker
             很多镜像都没有 arm 版
     gui
         https://wiki.termux.com/wiki/Graphical_Environment
-        pkg install vim
         pkg install x11-repo
         pkg install tigervnc
-        vncserver -localhost
-            这句第一次运行时要设置密码
+        运行 vncserver
+            vncserver -localhost
+                仅允许 本地连接
+            vncserver -localhost no
+                允许不是本地连接
+        这句第一次运行时要设置密码
         查看 vnc 的守护进程
             ps -elf | grep vnc
         关闭 vncserver
+            通过 kill pid 的形式
+            或
             vncserver -kill :1
         查看 vncserver 的日志
             日志一般的路径
                 /home/用户名/.vnc/localhost:端口号.log
                 /home/用户名/.vnc/*.log
+            通过查看日志获得 vncserver 监听的端口
+            vncserver 监听的端口的规律
+                vncserver :1 -> 监听 5091 端口
+                vncserver :2 -> 监听 5092 端口
+                如此类推
+                vncserver -kill :1 这里的 :1 就是启动时的 :1
+        可以通过 vncserver -list 查看当前的会话数量
         vncserver 启动后要设置环境变量
         pkg install xfce4
         ~/.vnc/xstartup 注释掉原本的内容，写入下面的内容
@@ -3698,6 +3740,10 @@ termux
             vnc view 大部分应用商店都有这个
             如果vnc出现灰屏，就查看 vncserver 的日志
             似乎还差一点。现在打开vnc依然是黑屏
+            使用 proot-distro debian 的 vncserver 是成功了
+                全部工具都装在 proot-distro debian 里，分辨率应该还需要再调整一下
+        termux 不支持 snap
+    如何从外网访问 termux ？
 linux 应用的一般启动套路
     至少一个启动脚本
         检测或启动一些前置依赖
@@ -3853,6 +3899,8 @@ nas
         人是如何发出声音的
         人是如何感受声音的
             声波是通过空气传达到人的耳朵的（忽略骨传导的情况）
+        震动 的本质是什么？
+        波长 和 频率 的本质是什么？
     音乐
         乐谱
         唱歌
@@ -3860,6 +3908,7 @@ nas
         分类方式
         曲 和 词
         风格 和 流派
+和语言相关的笔记
 收集各种镜像站点
     大学的
     https://mirrors.tuna.tsinghua.edu.cn/
