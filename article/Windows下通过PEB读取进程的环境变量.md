@@ -152,7 +152,16 @@ function Get-ProcessEnvironmentVariables {
     PROCESS
     {
 
-        $hProcess = [System.Diagnostics.Process]::GetProcessById($ProcessId).SafeHandle.DangerousGetHandle()
+        try {
+            $hProcess = [System.Diagnostics.Process]::GetProcessById($ProcessId).SafeHandle.DangerousGetHandle()
+            # get process info
+            # Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $ProcessId" | Select-Object -First 1 | Format-List *
+        } catch {
+            Write-Host "Failed to get process handle"
+            Write-Host $_
+            return 1;
+        }
+
         Write-Host "[+] ProcessId " $ProcessId
         Write-Host "[+] Handle " $hProcess
 
