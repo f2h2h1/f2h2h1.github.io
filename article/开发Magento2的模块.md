@@ -1949,6 +1949,9 @@ $logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\Logg
 $logger->warning('=======flg debug=======', ['trace' => $a]);
 $logger->warning('=======flg debug=======', ['trace' => $exception->getTrace(), 'msg' => $exception->getMessage()]);
 $logger->warning('=======flg debug=======', ['trace' => debug_backtrace()]);
+
+$logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
+$logger->warning('=======flg debug=======' . PHP_EOL . __FILE__ . ':' . __LINE__ . PHP_EOL, ['trace' => $a]);
 ```
 
 ### 在某一个位置通过拼接的 sql 查询数据库
@@ -2476,6 +2479,8 @@ php bin/magento setup:static-content:deploy -f -j 8 --exclude-area=adminhtml
 
 只构建英语的前台
 php bin/magento setup:static-content:deploy -f --area=frontend --language=en_US
+只构建英语的后台
+php bin/magento setup:static-content:deploy -f --area=adminhtml --language=en_US
 
 php bin/magento setup:static-content:deploy --help 还有一些技巧
 
