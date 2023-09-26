@@ -4,7 +4,7 @@
 [TOC]
 
 - 本文所提及的所有命令都在 git bash 里运行
-- 本问提及的命令大部分也能在 liunx 里运行
+- 本文所提及的命令大部分也能在 liunx 里运行
 
 ## git for windows 和 git for windows sdk
 
@@ -266,7 +266,7 @@ gitlab 功能非常强大，但对性能的要求比较高，如果只是搞远�
 
 gitblit 这个是笔者当前在用的，后端用 java 写成，虽然功能没有 gitea 多，但速度更快。
 
-gitea 这个最近很流行，后端用 go 写成，网上比少教程都在推荐这个。
+gitea 这个最近很流行，后端用 go 写成，网上不少教程都在推荐这个。
 
 gogs 是 gitea 的原版，好像因为社区的原因，gitea 从 gogs 分裂出来，据说分裂后的 gitea 发展得更好。
 
