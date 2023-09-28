@@ -3362,6 +3362,73 @@ ELF格式
     查看文件格式 `file 文件路径`
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
+acme
+    ACME
+        Automatic Certificate Management Environment
+        自动 证书 管理 环境
+    ACME 的 rfc
+        rfc8555
+    下载和安装
+        acme.sh的GitHub仓库
+            https://github.com/acmesh-official/acme.sh
+        acme.sh 的中文说明
+            https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E
+            https://github.com/acmesh-official/acme.sh/wiki/Blogs-and-tutorials#%E4%B8%AD%E6%96%87
+        直接下载安装
+            curl https://get.acme.sh | sh -s email=my@example.com
+        从源码安装
+            git clone --depth 1 https://github.com/acmesh-official/acme.sh.git
+            cd acme.sh
+            ./acme.sh --install -m my@example.com
+        安装完后把 .acme.sh 文件夹复制到用户的根目录下，类似这样 /root/.acme.sh/
+        创建一个别名
+            在 ~/.bashrc 加入这一行
+                alias acme.sh=~/.acme.sh/acme.sh
+            然后再运行这句 source ~/.bashrc
+            如果没有 ~/.bashrc ，就新建一个 touche ~/.bashrc
+        其实把安装后的目录复制到根目录和创建别名都不是必须的，但为了贴合文档的教程和方便使用，最好还是这样做
+    申请证书
+        运行这句命令，http服务需要已经启用，并且是监听 80 端口的
+        这句命令运行后会输出证书生成的位置
+            acme.sh --issue -d example.com -d www.example.com --webroot /home/wwwroot/example.com/
+        acme.sh 临时运行一个 webserver, 临时听在80 端口，这是使用 socat 实现的，所以要先安装好 socat
+            acme.sh --issue -d example.com -d www.example.com --webroot /home/wwwroot/example.com/ --standalone
+    安装证书
+        acme.sh --install-cert -d www.example.com \
+            --cert-file      /c/nginx/crt/www.example.com/cert.pem  \
+            --key-file       /c/nginx/crt/www.example.com/blog.complexcloud.site.key \
+            --fullchain-file /c/nginx/crt/www.example.com/fullchain.cer \
+            --reloadcmd     "service nginx force-reload"
+        安装证书后 --reloadcmd 不能修改，要修改 --reloadcmd 命令，就重新安装一次证书，直接改配置文件也是可以的，但文档里不推荐这样做
+        其实安装证书这步不是必须的，可以自己手动把证书复制到 nginx 对应的目录里，但没有安装证书这一步就不能自动续签
+    自动续签证书
+        一般的命令
+            ./acme.sh/acme.sh --cron --home "/root/.acme.sh" > /dev/null
+        写成 cron 表达式
+            0 2 * * * /bin/bash /root/.acme.sh --cron --home "/root/.acme.sh" > /dev/null
+    其它命令
+        查看全部证书
+            acme.sh --list
+        产看全部证书，包括已过的
+            acme.sh --list-archive
+        查看已安装证书的信息
+            acme.sh --info -d www.example.com
+        更新
+            acme.sh --upgrade
+        开启自动更新
+            acme.sh --upgrade --auto-upgrade
+        关闭自动更新
+            acme.sh --upgrade --auto-upgrade 0
+    在 windows 里使用
+        https://github.com/acmesh-official/acme.sh/wiki#4-how-to-run-on-windows-with-cygwin-or-git-bash
+        先安装好 cygwin 环境，其实装好 git for windows 就可以了
+        然后和 linux 的步骤基本一致
+        需要注意
+            路径都要写成 linux 的格式，例如 网站根目录 ， 证书安装路径 这些
+                类似这样的 /c/nginx/crt/www.example.com/cert.pem
+            安装证书时的 reloadcmd 命令
+            自读续签证书的定时任务可以使用 windows 计划任务，但这样的写法，任务运行时会有一个黑框弹出来（我用了很多方法依然无法隐藏这个黑框，在服务器里每晚运行一次的话应该没关系的吧，即使有黑框也是一闪而过）
+                Register-ScheduledTask -TaskName "acme_cron" -AsJob -Trigger (New-ScheduledTaskTrigger -Daily -At "2:00 AM") -Action (New-ScheduledTaskAction -Execute "PowerShell" -Argument "-Nolog -NonInteractive -WindowStyle Hidden -Command `"C:\Users\a\Git\usr\bin\bash.exe -l /c/Users/a/.acme.sh/acme.sh --cron --home /c/Users/a/.acme.sh`"")
 定时任务
     cron
         安装
@@ -3448,8 +3515,45 @@ ELF格式
             systemctl status crond.service
     systemd 的 timer
         创建一个 service
+            /usr/lib/systemd/system/MyTimer.service
+                [Unit]
+                Description=MyTimer
+
+                [Service]
+                ExecStart=/bin/bash /path/to/MyTimer.sh
+            可以像这样运行一次测试是否有生效
+                systemctl start MyTimer.service
         然后创建一个 timer
+            /usr/lib/systemd/system/MyTimer.timer
+                [Unit]
+                Description=Runs mytimer every hour
+
+                [Timer]
+                # 定时器
+                OnUnitActiveSec=1h
+                # 定时器触发的任务
+                Unit=mytimer.service
+
+                [Install]
+                # 开机启动时的依赖项，大多数情况下都是填这个
+                WantedBy=multi-user.target
+            定时器的写法可以参考文档
+                https://www.freedesktop.org/software/systemd/man/systemd.time.html
         最后把 timer 加入到开机启动中
+            systemctl enable MyTimer.timer
+        定时器的相关命令
+            列出所有定时器
+                systemctl list-timers
+            systemctl 的命令也能直接用在 定时器中
+                start stop status enable disable
+            查看所有单元
+                systemctl list-unit-files
+            查看所有 Service 单元
+                systemctl list-unit-files --type service
+            查看所有 Timer 单元
+                systemctl list-unit-files --type timer
+        systemed 的 timer 可以实现 秒级 任务，但 crond 不可以
+        systemed 的 timer 比 crond 的灵活很多，基本接近 windows 的计划任务了
     在 linux 下的一次性任务用 at 和 atq 命令
     windows 的 计划任务 包括了 开机启动 和 定时任务
         以前用 at 命令操作
@@ -3458,6 +3562,7 @@ ELF格式
             taskschd.msc
             https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks
             https://learn.microsoft.com/zh-cn/windows/win32/taskschd/task-scheduler-start-page
+            https://learn.microsoft.com/zh-cn/windows/win32/taskschd/using-the-task-scheduler
         schtasks
             查询任务
                 schtasks /Query
@@ -3498,6 +3603,12 @@ ELF格式
             如果要隐藏黑框，需要以管理员权限生成任务，或者用 vbs 的方式调用脚本，但vbs的方式很容易被杀毒软件拦截
                 schtasks /create /sc minute /mo 1 /ru System /tn "acme_cron" /tr "command"
                 Register-ScheduledTask -User System -TaskName "SoftwareScan" -Trigger (New-ScheduledTaskTrigger -Once -At (Get-Date)  -RepetitionInterval (New-TimeSpan -Minutes 1)) -Action (New-ScheduledTaskAction -Execute "command");
+        通过 xml 文件你创建计划任务
+             Register-ScheduledTask -Xml test.xml -TaskName "task name"
+             schtasks /create /xml test.xml /tn "task name"
+            xml 的具体语法
+                https://learn.microsoft.com/zh-cn/windows/win32/taskschd/task-scheduler-schema
+            通过 xml 创建的计划任务能实现多个触发器，和 gui 的功能基本一致了
     在 windows 下如何运行 cron ？
         关键是要能每分钟扫描一次 cron 的配置文件，然后执行符合规则的任务
             有一个能每分钟运行一次或持续运行的程序用来扫描 cron 的配置文件
@@ -3534,7 +3645,8 @@ ELF格式
             记录任务的状态
                 是否有出错，出错是否有错误的记录？
                 运行开始时间
-                运行时长，运行结束时间
+                运行时长
+                运行结束时间
             失败后重试？
             任务超时后强制关闭？
             任务的miss？
