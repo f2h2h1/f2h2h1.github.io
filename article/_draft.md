@@ -11,15 +11,16 @@
         ...
     模型
         七层模型 (由 OSI 提出的)
-            应用层
-            表示层
+            应用层 Application
+            表示层 Presentation
                 负责转化数据格式，并处理数据加密和数据压缩。
-            会话层
+                其实 tls 这这种协议可以归类到这一层里
+            会话层 Session
                 主要是用来管理网络设备的会话连接，建立会话，保持会话，断开会话
-            传输层
-            网际层
-            数据链路层
-            物理层
+            传输层 Transport
+            网际层 Internet/Network
+            数据链路层 Link/Data link/Network interface
+            物理层 Hardware/Physical
         四层模型 ip/tcp
             应用层
             传输层
@@ -98,7 +99,7 @@
             网桥 (bridge)
             集线器 (ethernet hub 又或者 简称 hub)
             中继器 (repeater)
-            调制调解器 (modem)
+            调制解调器 (modem modulator-demodulator 调制器-解调器)
             和安全相关的硬件
                 IPS (Intrusion Prevention System) 入侵检测（旁路部署）
                 IDS (Intrusion Detection System) 入侵防御（串行部署）
@@ -1600,6 +1601,8 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         方法 method
         对象 object
         类 class
+        实体 entity
+        预装 pre-install
         服务 service
         平台 platform
         产品 product
@@ -3128,6 +3131,7 @@ IT领域战争
     编辑器之战
         vim emacs
         笔者认为，在 gui 上是 vscode 取得了最后的胜利
+        emace 的生态位似乎在被 vscode 侵占，看来还是 vim 笑到最后
     浏览器大战
     unix战争
     操作系统内核之争
@@ -3152,13 +3156,41 @@ linux 中的各种 id
     父进程ID (PPID, Parent Process ID)
     进程ID (PID, Process ID)
     会话期ID (SID, Session ID)
-    控制终端 (TTY, )
+        创建session的场景有两个：
+            （1）一次登录会形成一个session（login session）。
+            （2）系统的daemon进程会在各自的session中（daemon session）。
+        无论哪一个场景，都是通过setsid函数建立一个新的session
+    控制终端 (TT, TTY)
         ? 是没有控制终端
     进程组ID (PGID, Process Group ID)
+        进程组（process group）也是一组进程的集合，进程组id就是这个进程组中leader的进程ID
+        对大部分进程来说，它自己就是进程组的leader，并且进程组里面就只有它自己一个进程
+        shell里面执行类似 ls|more 这样的以管道连接起来的命令时，两个进程就属于同一个进程组，ls是进程组的leader。
+        shell里面启动一个进程后，一般都会将该进程放到一个单独的进程组，然后该进程fork的所有进程都会属于该进程组，
+        比如多进程的程序，它的所有进程都会属于同一个进程组，当在shell里面按下CTRL+C时，该程序的所有进程都会收到SIGINT而退出。
     终端进程组ID (TPGID, TTY Process Group ID)
+        TPGID == 在前台的进程组ID
+        如果一个进程属于后台进程组 ，那么 TPGID 为 -1
+        通过 TPGID 来判断一个进程是属于前台进程组，还是后台进程组
+        TTY Process Group ID 的作用是用来控制终端设备的输入和输出，以及发送信号给相应的进程组。
+        例如，当我们在终端上按下 Ctrl-C 时，就会发送一个 SIGINT 信号给当前的 TTY Process Group
     SPID System Process ID
+        多数情况下就是 pid
     上面几个id都可以用这个命令查看 `ps axj -T`
-    jobid ，用命令查看 jobs -l 
+        a: 显示所有
+        x: 显示没有控制终端的进程
+        j: 显示与作业有关的信息(显示的列): 包括会话期ID(SID), 进程组ID(PGID), 控制终端(TTY)和终端进程组ID(TPGID)
+        T: 显示每个进程的线程信息，包括 SPID（线程ID）和 NLWP（线程数）等字段
+    jobid ，用命令查看 jobs -l
+        进程和作业的区别也不是很理解，但在实践的过程中 一个作业（job）等同于一个进程组
+        jobid 其实是按当前的 job 来算的
+        假设当前没有 job 那么新建一个 job 那么这个 job 的 jobid 就是 1
+        然后再新建的 job 的 jobid 就是 2
+        当 1 结束时，但 2 未结束，又新建了 job 那么新建的 job 的 jobid 就是 3
+        如果 2 和 3 都结束了，再新建一个 job 那么这个新建的 job 的 jobid 就是 1
+        kill 命令也可以用 jobid
+            kill %1
+            kill jobid 为 1 的 job
 串行 并行 并发
     串行 依照顺序一次只执行一个任务
     并发 多个任务交替执行，因为交替的速度非常快，从人的主观感受看，这些任务也是同时执行
@@ -3265,13 +3297,15 @@ io 模型
             死锁
         redis锁
     分布式锁
-信号量
-事务
+信号量 (semaphore)
+管程 (monitors)
+事务 (transaction)
 中断和异常
     异常是一种中断
     现在的中断，大多最后都是 cpu 中的 apic
-    软中断和硬中断
-    内核信号
+    软中断(softirq)和硬中断(hardirq)
+    irq interrupt request 中断请求
+    Kernel signal 内核信号
     system call 系统调用
     signal 信号
     interrupt 中断
@@ -3753,7 +3787,9 @@ nc netcat ncat socat
             GNU 版本，一般系统自带
             openbsd 版本
         GNU 版本的包名通常为 nc-traditional netcat-traditional
+            https://snapshot.debian.org/package/netcat/
         openbsd 版本的包名通常为 nc-openbsd netcat-openbsd
+            https://github.com/openbsd/src/blob/master/usr.bin/nc
         判断当前系统的 nc 版本
             先用 type nc
             再用 realpath 或 ls -l 查看 nc 的真实路径，最好用 realpath
@@ -3766,11 +3802,17 @@ nc netcat ncat socat
         高级 GUI 和结果查看器 （Zenmap），一个灵活的数据 传输、重定向和调试工具 （Ncat），一个实用程序 比较扫描结果 （Ndiff） 和数据包生成和响应分析工具 （Nping）
         ncat 支持 tls
         ncat 的包名通常是 ncat nmap-ncat
+        https://github.com/nmap/nmap/tree/master/ncat
     socat 是一个 nc 的替代品，可以称为 nc++。是 netcat 的 N 倍 加强版。
         socat 的官方文档描述它是 "netcat++" (extended design, new implementation)
         socat 的包名就是 socat
         socat 是 socket cat 的缩写
+        http://www.dest-unreach.org/socat/
     BusyBox 里也有一个轻量版的 nc ，同样地 toybox 里也有一个 nc
+        https://github.com/mirror/busybox/blob/master/networking/nc.c
+    除此之外，还有一个 cryptcat
+        cryptcat 是 netcat 的变体，基本上就是多了一个 密码 的参数
+        cryptcat 好像是来自 kali linux
     从功能上看
         BusyBox nc < nc-traditional < nc-openbsd < ncat < socat
     nc 的原理是什么？
@@ -3831,6 +3873,11 @@ nc netcat ncat socat
             exec 3<>/dev/tcp/127.0.0.1/9901; exec 0>&3; exec 1<&3; /bin/bash 2>&1;
             exec 3<>/dev/tcp/127.0.0.1/9901; /bin/bash 2>&1 0>&3 1<&3; 这种写法似乎更好
     nc 如何模拟 telnet 客户端？
+    nc 也可以像 telnet 那样模拟 http 客户端
+        nc www.baidu.com 80
+        连接后，快速地输入 GET / HTTP/1.0 然后连续输入两个回车，就能返回网页内容
+        又或者直接一句命令
+            printf 'GET / HTTP/1.0\r\nHost:www.baidu.com\r\n\r\n' | nc www.baidu.com 80
     nc 如何模拟 http 服务器？静态的，动态的
         nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\"";
         这一句是可行的，无法保持运行
@@ -3869,8 +3916,8 @@ bash 如何实现并发
     模拟一个队列
     使用 fifo
     使用 xargs -P
-    使用 paralle
-        paralle 通常不预装在系统里
+    使用 parallel
+        parallel 通常不预装在系统里
 bash 如何接收标准输入和环境变量？
     接收标准输入
         我突然意识到，判断 标准输入 里有没有数据 和 完整地读取 标准输入 里的数据，似乎也是一件困难的事
@@ -3885,6 +3932,7 @@ bash 如何接收标准输入和环境变量？
         echo $PATH;
         printenv PATH;
     如果遇到需要处理二进制数据的情况，可以尝试使用 xxd od hexdump 这类命令
+bash 里如何实现多维数组？
 termux
     下载和安装
         要先下载和安装 f-droid https://f-droid.org/

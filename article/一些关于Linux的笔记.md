@@ -393,3 +393,40 @@ composer dump-autoload
 $loader = require 'vendor/autoload.php';
 $loader->add('Acme\\Test\\', __DIR__);
 ```
+
+<!--
+
+系统安装和系统启动过程
+文件系统
+    文件和目录
+    打包和压缩
+    高级文件系统
+文本处理
+进程管理
+权限管理
+    用户 和 用户组
+    读 写 执行 权限
+终端和bash
+软件安装和管理
+    编译安装
+    包管理器
+    docker
+网络相关
+    网卡
+    防火墙
+系统的运行状态
+常见的系统服务
+    sshd
+    crond
+    systemd
+    lamp/lnmp
+gui
+日志管理
+备份与恢复
+selinux
+
+https://linux.vbird.org/linux_basic/centos7/
+http://c.biancheng.net/linux_tutorial/
+http://c.biancheng.net/shell/
+
+-->

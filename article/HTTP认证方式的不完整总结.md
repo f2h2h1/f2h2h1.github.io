@@ -19,11 +19,17 @@ WWW-Authenticate: Basic realm="Access to staging site"
 username:password
 ```
 
-然后再经过 basd64 编码，最后把结果放在请求头的 Authentication 字段里，例如这样
+然后再经过 basd64 编码
+```
+echo -n "username:password" | base64
+# echo 里的 -n 参数是为了行尾不输出换行符
+```
+
+最后把结果放在请求头的 Authorization 字段里，例如这样
 ```
 GET / HTTP/1.1
 Host 127.0.0.1
-Authentication: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
 ```
 
 认证失败时，服务器可以返回 403 或 401 。
