@@ -643,10 +643,22 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
 
 0. 用这句 curl 命令尝试请求
     ```
+    graphqlquery=$(cat <<- EOF
+    query {
+        CustomGraphql(username: 123, password: "asd", websiteId: 321) {
+            customer_id
+            type
+            type_id
+        }
+    }
+    EOF
+    );
+    graphqlquery=$(echo -n $graphqlquery | php -r '$data=file_get_contents("php://stdin");print(json_encode($data));');
+    graphqlquery='{"query":'$graphqlquery',"variables":{},"operationName":null}';
     curl 'http://localhost-magento/graphql' \
     -H 'accept: application/json' \
     -H 'content-type: application/json' \
-    --data-raw '{"query":"\n    query {\n  CustomGraphql (\n    customer_id: 123\n    type: \"asd\"\n    type_id: 321\n  ) {\n    customer_id\n    type\n    type_id\n  }\n}","variables":{},"operationName":null}' \
+    --data-raw "$graphqlquery" \
     --compressed \
     --insecure -s -k
     ```
@@ -665,11 +677,113 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
 
 0. 可以用这决 curl 命令来查看当前 magento 项目的 graphql 文档
     ```
-    curl 'https://localhost-magento/graphql' \
+    graphqlquery=$(cat <<- EOF
+    query IntrospectionQuery {
+        __schema {
+            queryType {
+                name
+            }
+            mutationType {
+                name
+            }
+            subscriptionType {
+                name
+            }
+            types {
+                ...FullType
+            }
+            directives {
+                name
+                description
+                locations
+                args {
+                    ...InputValue
+                }
+            }
+        }
+    }
+    fragment FullType on __Type {
+        kind
+        name
+        description
+        fields(includeDeprecated: true) {
+            name
+            description
+            args {
+                ...InputValue
+            }
+            type {
+                ...TypeRef
+            }
+            isDeprecated
+            deprecationReason
+        }
+        inputFields {
+            ...InputValue
+        }
+        interfaces {
+            ...TypeRef
+        }
+        enumValues(includeDeprecated: true) {
+            name
+            description
+            isDeprecated
+            deprecationReason
+        }
+        possibleTypes {
+            ...TypeRef
+        }
+    }
+    fragment InputValue on __InputValue {
+        name
+        description
+        type {
+            ...TypeRef
+        }
+        defaultValue
+    }
+    fragment TypeRef on __Type {
+        kind
+        name
+        ofType {
+            kind
+            name
+            ofType {
+                kind
+                name
+                ofType {
+                    kind
+                    name
+                    ofType {
+                        kind
+                        name
+                        ofType {
+                            kind
+                            name
+                            ofType {
+                                kind
+                                name
+                                ofType {
+                                    kind
+                                    name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    EOF
+    );
+    graphqlquery=$(echo -n $graphqlquery | php -r '$data=file_get_contents("php://stdin");print(json_encode($data));');
+    graphqlquery='{"query":'$graphqlquery',"variables":{},"operationName":null}';
+    curl 'http://localhost-magento/graphql' \
     -H 'accept: application/json' \
     -H 'content-type: application/json' \
-    --data-raw '{"query":"\n    query IntrospectionQuery {\n      __schema {\n        \n        queryType { name }\n        mutationType { name }\n        subscriptionType { name }\n        types {\n          ...FullType\n        }\n        directives {\n          name\n          description\n          \n          locations\n          args {\n            ...InputValue\n          }\n        }\n      }\n    }\n\n    fragment FullType on __Type {\n      kind\n      name\n      description\n      \n      fields(includeDeprecated: true) {\n        name\n        description\n        args {\n          ...InputValue\n        }\n        type {\n          ...TypeRef\n        }\n        isDeprecated\n        deprecationReason\n      }\n      inputFields {\n        ...InputValue\n      }\n      interfaces {\n        ...TypeRef\n      }\n      enumValues(includeDeprecated: true) {\n        name\n        description\n        isDeprecated\n        deprecationReason\n      }\n      possibleTypes {\n        ...TypeRef\n      }\n    }\n\n    fragment InputValue on __InputValue {\n      name\n      description\n      type { ...TypeRef }\n      defaultValue\n      \n      \n    }\n\n    fragment TypeRef on __Type {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                  ofType {\n                    kind\n                    name\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  ","variables":{},"operationName":"IntrospectionQuery"}' \
-    --compressed -s -k
+    --data-raw "$graphqlquery" \
+    --compressed \
+    --insecure -s -k
     ```
 
 0. graphql 里只有这个文件夹下的异常能显示出来，其它的异常都是显示 server error
@@ -684,6 +798,26 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
     - vendor\webonyx\graphql-php\src\Executor\ReferenceExecutor.php resolveOrError
 
 <!--
+
+用 get 的方式，发送的 graphql 请求，get的话可以让 http 缓存，
+graphqlquery=$(cat <<- EOF
+query {
+  customer {
+    email
+    firstname
+    lastname
+  }
+}
+EOF
+);
+graphqlquery=$(echo -n $graphqlquery | php -r 'print(http_build_query(["query"=>file_get_contents("php://stdin")]));');
+curl 'http://localhost-magento/graphql?'$graphqlquery \
+    -H 'accept: application/json' \
+    -H 'content-type: application/json' \
+    --data-raw "$graphqlquery" \
+    --compressed \
+    --insecure -s -k
+
 graphql 要留意输入的类型，输出的类型
 在哪个位置检测输入类型
 在哪个位置执行 resolve
@@ -1618,6 +1752,8 @@ php bin/magento config:show path
 
 通常是写在模块的 etc/adminhtml/system.xml 文件里
 
+后台的配置也是用上面额方法获取配置的值，后台配置的默认值也是写在 etc/config.xml 文件里
+
 一个例子
 ```xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -2209,7 +2345,7 @@ indexer:status 的输出就包含了 indexer:info 的输出。
 - 通过浏览器的断点来实现前端的调试
 - 一些情况下可以使用使用鼠标点击的事件作为断点，如果是火狐浏览器可以直接查看节点绑定的事件
 - 忽略一些 js 文件，把这些 js 文件标记为库文件
-- 使用浏览器的覆盖功能，直接在前端修改 js 代码，这样做的好处是不用运行 setup:static-content:deploy 这种命令
+- 使用浏览器的覆盖功能，直接在前端修改 js 和 css 代码，这样做的好处是不用运行 setup:static-content:deploy 这种命令
 
 ### 修改后台的帐号密码
 
@@ -2625,6 +2761,89 @@ coupon 新建界面里的
     amasty_amrules_usage_limit
         limit
 
+
+
+关键对象 和 相关的表
+
+客户 customer_entity
+    customer_id
+    username
+    email
+产品 catalog_product_entity
+    product_id
+    产品的状态
+        status
+        visibility
+        approval
+        这几个值都在 catalog_product_entity_int
+            select @attr_product_status:=attribute_id from eav_attribute where attribute_code = 'status' and backend_type = 'int';
+            select @attr_approval:=attribute_id from eav_attribute where attribute_code = 'approval' and backend_type = 'int';
+            select @attr_visibility:=attribute_id from eav_attribute where attribute_code = 'visibility' and backend_type = 'int';
+    产品的库存
+        cataloginventory_stock vendor\magento\module-catalog-inventory\Model\ResourceModel\Stock.php
+        cataloginventory_stock_item vendor\magento\module-catalog-inventory\Model\ResourceModel\Stock\Item.php
+        cataloginventory_stock_status vendor\magento\module-catalog-inventory\Model\ResourceModel\Stock\Status.php
+        eav 里也有一个和库存相关的值 quantity_and_stock_status
+            这个值在 catalog_product_entity_int
+            select @attr_quantity_and_stock_status:=attribute_id from eav_attribute where attribute_code = 'quantity_and_stock_status' and backend_type = 'int';
+            但似乎已经弃用了
+购物车 quote
+    购物车id quote.entity_id
+    customer_id
+    相关的表
+        quote
+        quote_item
+        quote_item_option
+        quote_address
+        quote_shipping_rate
+        union_shipping_quote_item
+订单 sales_order
+    order_id
+    customer_id
+    increment_id
+    相关的表
+        sales_order
+        sales_order_item
+        sales_order_status
+        sales_order_status_history
+        sales_order_payment
+        sales_order_address
+        sales_creditmemo
+        sales_creditmemo_comment
+        sales_order_tax
+        sales_invoice
+        sales_invoice_comment
+        sales_shipment
+        sales_shipment_item
+        sales_shipment_comment
+        sales_shipment_track
+订单的送货 sales_shipment
+订单的备忘录 sales_creditmemo
+订单的发票 sales_invoice
+地址
+    customer_address_entity
+    quote_address
+    quote_address_item
+    sales_order_address
+    service_center_address
+    union_shipping_oto_store
+分类 catalog_category_entity
+管理员 admin_user
+支付方式 sales_order_payment
+销售规则 salesrule
+配置 core_config_data
+还有一些 _grid 结尾的表
+
+
+eav 模型里还有一些表无法理解？
+    **_eav_attribute 例如 customer_eav_attribute catalog_eav_attribute
+    eav_attribute_group
+    eav_attribute_label
+    eav_attribute_option
+    eav_attribute_option_switch
+    eav_attribute_option_value
+    eav_attribute_set
+    eav_entity_attribute
 
 
 -->
