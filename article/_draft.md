@@ -53,7 +53,7 @@
                 ntp
                     网络时间协议（Network Time Protocol）
                 dhcp
-                stmp
+                smtp
                 pop3
                 imap
                 echo
@@ -1149,7 +1149,7 @@ vscode的使用技巧
         很多时候实现不一定会跟着标准来
         标准有时会指导实现，实现有时又会被标准追认（例如 http 的代理 rfc 2730 2731）
     例子
-        telnet inted
+        telnet inetd
 这些年来的生活经验 学习如何学习 如何定位问题 如何寻找问题的解决办法
     这些年来的生活经验
         要有一个博客记录开发的经验
@@ -3421,7 +3421,7 @@ acme
             在 ~/.bashrc 加入这一行
                 alias acme.sh=~/.acme.sh/acme.sh
             然后再运行这句 source ~/.bashrc
-            如果没有 ~/.bashrc ，就新建一个 touche ~/.bashrc
+            如果没有 ~/.bashrc ，就新建一个 touch ~/.bashrc
         其实把安装后的目录复制到根目录和创建别名都不是必须的，但为了贴合文档的教程和方便使用，最好还是这样做
     申请证书
         运行这句命令，http服务需要已经启用，并且是监听 80 端口的
@@ -4084,6 +4084,17 @@ linux 应用的一般启动套路
         所以现在的 tar 命令能同时执行打包和压缩的操作
         windows10 1803 及以后的版本都内置了 tar
         unix 上有一个名为 ar 的工具，但现在已经被 tar 取代
+        例子
+            tar -cvf test.tar test
+                把名为 test 的文件或目录打包，最后生成的文件命名为 test.tar
+            tar -zcvf test.tar.gz test
+                把名为 test 的文件或目录打包并使用 gzip 压缩，最后生成的文件命名为 test.tar.gz
+            tar -jcvf test.tar.bz2 test
+                把名为 test 的文件或目录打包并使用 bzip2 压缩，最后生成的文件命名为 test.tar.bz2
+            c 新建打包文件
+            z 使用 gzip 压缩
+            v 显示打包和压缩的过程
+            f 指定生成的文件路径
     压缩
         算法 压缩格式 容器格式
             哈夫曼编码（Huffman Coding）
@@ -4117,8 +4128,19 @@ linux 应用的一般启动套路
     分卷压缩
         在linux环境下
             压缩完文件直接用 split 分割就可以了。。。
+                两句命令
+                    tar -zcvf test.tar.gz test; split -b 50m -d test.tar.gz test.tar.gz-
+                一句命令
+                    tar -zcf - test | split -b 50m -d - test.tar.gz-
+                -b 50m 每个分片50m
+                -d 使用数字编号
+                - 来自标准输入
+                test.tar.gz- 分片的前缀
             使用cat命令合并，要注意分卷文件的顺序，要按顺序合并
+                cat test.tar.gz-* > test.tar.gz
+                cat test.tar.gz-00 cat test.tar.gz-01 cat test.tar.gz-02 > test.tar.gz
             合并完后再解压
+                tar -zxvf test.tar.gz
     自解压
         自释放压缩包（英语：self-extracting archive，缩写为SFX或SEA）是一种可执行程序，
         它包含一个被压缩的文件，以及一个用于提取压缩包内文件的计算机程序。
@@ -4127,6 +4149,11 @@ linux 应用的一般启动套路
         在 linux 环境下的自解压？
         其实我觉得 自解压 可以作为软件的安装包
     密码保护
+        在linux环境下
+            压缩完文件直接用 openssl 加密就可以了。。。
+                tar -zc test | openssl enc -e -des3 -salt -k 123456 -out test.tar.gz
+            同样地，解密就是先用 openssl 解密，然后再解压
+                openssl enc -d -des3 -salt -k 123456 -in test.tar.gz | tar -zxvf test
     压缩软件比较 https://en.wikipedia.org/wiki/Comparison_of_file_archivers
     HTTP 协议中的数据压缩 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Compression
         gzip

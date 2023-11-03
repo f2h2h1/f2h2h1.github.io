@@ -2782,7 +2782,11 @@ coupon 新建界面里的
     产品的库存
         cataloginventory_stock vendor\magento\module-catalog-inventory\Model\ResourceModel\Stock.php
         cataloginventory_stock_item vendor\magento\module-catalog-inventory\Model\ResourceModel\Stock\Item.php
+            is_in_stock
+            qty
         cataloginventory_stock_status vendor\magento\module-catalog-inventory\Model\ResourceModel\Stock\Status.php
+            stock_status
+            qty
         eav 里也有一个和库存相关的值 quantity_and_stock_status
             这个值在 catalog_product_entity_int
             select @attr_quantity_and_stock_status:=attribute_id from eav_attribute where attribute_code = 'quantity_and_stock_status' and backend_type = 'int';
