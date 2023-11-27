@@ -164,13 +164,15 @@ app
                 view
                     areaCode 区域代码 就是 frontend adminhtml 这种
                         layout
-                            xml
+                            *.xml
+                            这个目录下的 xml 文件是布局配置文件
                             这些 xml 的文件名是对应路由的，也就是和路由名称一样
                         page_layout
+                            这个目录下的 xml 文件就是页面布局文件，文件名就是布局id
                         ui_component 也是放 xml 文件，但还不知道有什么用
                             这里的 xml 文件可以在 layout 里引用
                         template
-                            **.phtml
+                            *.phtml
                         web
                             css
                             fonts
@@ -186,6 +188,7 @@ app
                                 这里放的是 html 文件
                                 这些 html 文件通常是 ko 的模板
                                 component 通过 ajax 获取这些模板
+                        layouts.xml 用于声明有哪些布局
                         requirejs-config.js 用来声明 requirejs 的配置，例如 js 的加载顺序
                 i18n
                 其它的文件夹
@@ -1059,7 +1062,7 @@ https://github.com/magento/magento2/issues/8866
     on save
     update by schedule
 
-magento2 的 indexer 看上去更像是数据库中的物化视图，只是mysql不支持物化视图
+magento2 的 indexer 看上去更像是数据库中的物化视图，只是mysql不支持物化视图（Materialized view）
 
 -->
 
@@ -1431,6 +1434,24 @@ ORDER BY x.config_id DESC
 
 DELETE FROM core_config_data
 	WHERE config_id=2578;
+
+
+直接在命令行里运行 cronjob ，要在项目的根目录里运行，数据库里就没有运行记录了
+php -a <<- 'EOF'
+try {
+require __DIR__ . '/app/bootstrap.php';
+$bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+$objectManager = $bootstrap->getObjectManager();
+$instance = \Magento\Sales\Cron\CleanExpiredQuotes::class;
+$method = 'execute';
+$cronJob = $objectManager->get($instance);
+call_user_func([$cronJob, $method]);
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+EOF
+
 
 -->
 
@@ -1939,18 +1960,49 @@ https://developer.adobe.com/commerce/php/architecture/modules/areas/
 后台的渲染逻辑会不会和前台不一样？
 
 
+ui_component的文档
+https://developer.adobe.com/commerce/frontend-core/ui-components/
+
+后台配置的文档
+https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/files/config-reference-systemxml.html
+
+
+block -> ui_component -> system.xml
+
+ui_component 需要现在 view/adminhtml/ui_component 文件夹下 定义
+view/adminhtml/ui_component/admin_usage_notification.xml
+再在 view/adminhtml/layout 的 xml 文件里声明，类似于 声明 block
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <uiComponent name="admin_usage_notification">
+                <visibilityCondition name="can_view_admin_usage_notification" className="Magento\AdminAnalytics\Model\Condition\CanViewNotification"/>
+            </uiComponent>
+        </referenceContainer>
+    </body>
+</page>
+
+
 在 phtml 文件中，可以像这样获得前端资源的路径
 $iconHeart = $block->getViewFileUrl('Magento_Catalog::images/icons/icon-heart.svg');
 
+盲点还有很多盲点
+    magento2 的 xml 是如何合并的？
+    indexer 的 on save 是怎么运行的？
+    队列是怎么运行的？
     css 是怎么加载的？
         除了写在 layout.xml 这种。。。
-    如何把 参数 传递进 block ?
+        在 block 里加载也可以。。。
+    如何把 参数 传递进 block
         setData 这类方法
         在 block 中查数据库
-    block 之间的嵌套式如何实现的?
+    block 之间的嵌套式如何实现的
         xml 文件要有对应的声明
         在 phtml 文件里这样调用
             <?= $block->getChildHtml('checkout_cart_empty_widget') ?>
+其实还有很多
+在后台的 Content 似乎也能直接修改视图
 
 一个block可以对应多个模板，在 block 的这个方法里修改模板
 vendor\magento\framework\View\Element\Template.php
@@ -2068,10 +2120,47 @@ $orderCollection->addFieldToFilter('entity_id', $orderId); // 可以修改条件
 $order = $orderCollection->getFirstItem(); // $orderCollection->getItems(); // 获取集合
 ```
 
+```php
+$objectMamager = \Magento\Framework\App\ObjectManager::getInstance();
+
+// 根据 customer id 或 email 获取 customer 对象
+/** @var \Magento\Customer\Model\CustomerFactory */
+$customerFactory = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Customer\Model\CustomerFactory::class);
+$customer = $customerFactory->create()->load($customerID);
+$customer = $customerFactory->create()->loadByEmail($email);
+
+// 获取某个 customer 的购物车
+$quote = $customer->getQuote();
+
+// 获取某个 customer 最近成功支付的订单
+/** @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory */
+$orderCollectionFactory = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Sales\Model\ResourceModel\Order\CollectionFactory::class);
+$orderCollection = $orderCollectionFactory->create();
+$orderCollection->addFieldToFilter('customer_id', $customer->getId());
+$orderCollection->addFieldToFilter('state', ['in' => [
+    \Magento\Sales\Model\Order::STATE_PROCESSING,
+    \Magento\Sales\Model\Order::STATE_COMPLETE
+]]);
+$orderCollection->setOrder('created_at');
+$orderCollection->setPageSize(1);
+$order = $orderCollection->getFirstItem();
+
+// 根据 productId 获取 product 对象
+/** @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory */
+$productCollectionFactory = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class);
+$productCollection = $productCollectionFactory->create();
+$productCollection->addFieldToFilter(
+    'entity_id', ['in' => $productId]
+    // 'sku', ['eq' => $sku]
+);
+$productCollection->setPageSize(1);
+$product = $productCollection->getFirstItem();
+```
+
 <!--
 常用的对象
 \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
-product
+\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
 \Magento\Customer\Model\CustomerFactory
 \Magento\Quote\Model\QuoteFactory
 shipment
@@ -2335,6 +2424,29 @@ php -d xdebug.start_with_request=yes bin/magento indexer:info
 一些对象可以通过 \Magento\Framework\App\ObjectManager::getInstance()->get() 的方法获得。
 indexer:status 的输出就包含了 indexer:info 的输出。
 
+直接运行测试代码，要在项目的根目录里运行，但这种方式无法调试
+```bash
+php -a <<- 'EOF'
+try {
+// 引入 magento2 的引导文件
+require __DIR__ . '/app/bootstrap.php';
+// 创建一个应用对象
+$bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+// 获取一个对象管理器
+$objectManager = $bootstrap->getObjectManager();
+// 获取一个文件系统对象
+$fileSystem = $objectManager->get(\Magento\Framework\Filesystem::class);
+// 获取临时目录的路径
+$tempDir = $fileSystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::TMP)->getAbsolutePath();
+// 输出路径
+echo $tempDir;
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+EOF
+```
+
 ### 前端的调试
 
 - 可以这样在浏览器查看前端模块的数据
@@ -2548,30 +2660,6 @@ http://www.wps.team/book/magento2/
 这是一个收费的文档
 https://www.kancloud.cn/zouhongzhao/magento2-in-action
 
-盲点还有很多盲点
-    magento2 的 xml 是如何合并的？
-    indexer 的 on save 是怎么运行的？
-    队列是怎么运行的？
-    css 是怎么加载的？
-        除了写在 layout.xml 这种。。。
-        在 block 里加载也可以。。。
-    如何把 参数 传递进 block
-        setData 这类方法
-        在 block 中查数据库
-    block 之间的嵌套式如何实现的
-        xml 文件要有对应的声明
-        在 phtml 文件里这样调用
-            <?= $block->getChildHtml('checkout_cart_empty_widget') ?>
-其实还有很多
-在后台的 Content 似乎也能直接修改视图
-
-一个block可以对应多个模板，在 block 的这个方法里修改模板
-vendor\magento\framework\View\Element\Template.php
-    public function setTemplate($template)
-    {
-        $this->_template = $template;
-        return $this;
-    }
 
 在这个位置加上 WHERE
 vendor\magento\zendframework1\library\Zend\Db\Select.php
@@ -2700,6 +2788,7 @@ salesrule 这个表的值对应 Cart Price Rules 页面的值
     times_used 只要 rule 的 coupon_code 有消耗就会加1
     uses_per_customer
     uses_per_coupon
+    conditions_serialized 生效的条件，这是一个 json 字符串
 amasty_amrules_usage_limit
     salesrule_id 对应 salesrule 的 row_id
     limit 全局的数量限制？
@@ -2848,6 +2937,36 @@ eav 模型里还有一些表无法理解？
     eav_attribute_option_value
     eav_attribute_set
     eav_entity_attribute
+
+
+magento2的布局有两种类型
+1. 页面布局(page layout) -> 在 page_layout 目录里的 xml 文件
+2. 页面配置(page configuration) -> 在 layout 目录里的 xml 文件
+
+页面布局 的 xml 只包含 容器
+页面布局 的 文件名 就是 布局id
+
+绝大多数情况下修改的是 页面配置 文件
+
+这个就是 magento2 最基础的布局
+vendor\magento\module-theme\view\base\page_layout\empty.xml
+更完整的代码可以参考这个目录下的文件
+vendor\magento\module-theme\view\base
+
+
+
+// magento2 的事务
+/** @var \Magento\Framework\App\ResourceConnection */
+$resourceConnection = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ResourceConnection::class);
+$connection = $resourceConnection->getConnection();
+$connection->beginTransaction();
+try {
+    // 一些数据库修改的操作
+    $connection->commit();
+} catch (\Exception $e) {
+    $connection->rollBack();
+    throw $e;
+}
 
 
 -->

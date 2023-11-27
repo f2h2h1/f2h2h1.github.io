@@ -233,31 +233,79 @@
                 https://a-programmers-guide-to-english.harryyu.me/
         抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
     计算机学科的相关概念
+        计算理论（Theory of computation）
+        计算理论的三个主要问题
+            采用什么计算模型（即形式语言、自动机）
+            解决哪些是可计算的、哪些是不可计算的（即可计算性理论及演算法）
+            要用多少时间、要用多少存储（即计算复杂性理论）
+        计算模型（model of computation）
+            顺序模型（Sequential models）
+                图灵机（Turing machine）
+                寄存器机（Register machine）
+                    随机存取机（英语：Random-access machine，缩写为RAM）
+                    随机存取储存程式机（英语：Random-access stored-program machine，缩写为RASP）
+            函数式模型（Functional models）
+                λ演算（Lambda calculus）
+                递归函数（recursive function）
+                抽象重写系统（Abstract rewriting system，缩写为ARS）
+                    马尔可夫算法（markov algorithm）
+            同步模型（Concurrent models）
+                元细胞自动机（Cellular automaton，缩写为CA）
+                    生命游戏（Game of Life）
+        抽象机器（Abstract machine） -> 自动机（Automata） -> 图灵机（Turing machine，缩写为TM）
+            半在自动机的三元组
+            自动机的五元组
+            图灵机的七元组
         图灵机
             组成
                 纸带
                 读写头
                 状态寄存器
-            通用图灵机
-            图灵完备
-            可计算性（Computability）
-                停机问题（halting problem）
-                判定问题（decision problem）
-            其它计算模型
-                λ演算
-                递归函数
-                寄存器机
-                生命游戏
-                马尔可夫算法
+        通用图灵机（Universal Turing Machine，又称UTM或Machine U）
+        图灵完全/图灵完备（Turing complete）
+        图灵等价/图灵等效（Turing equivalent）
+        计算模型 -> 计算机系统架构 -> 指令集 -> 微架构
+        寄存器机 -> 冯诺依曼架构 -> x86指令集 -> Zen4
         冯诺依曼结构
             以运算单元为中心
             数据和指令都以二进制编码
             数据和指令不加区别混合存储在同一个存储器中
+            指令由操作码和地址码组成
             顺序执行程序的每一条指令
             由五个部件构成
                 运算器 控制器 存储器 输入设备 输出设备
-        计算模型 -> 架构 -> 指令集
-        图灵机 -> 冯诺依曼架构 -> x86指令集
+        计算问题（Computational problem）
+            在理论计算机科学中，计算问题是可以通过算法解决的问题。
+            分类
+                决策问题
+                搜索问题
+                计数问题
+                优化问题
+                功能问题
+                承诺问题
+                    承诺问题 是 决策问题 的推广
+        可计算性（Computability）
+            可计算性理论的一个目标是确定在每个计算模型中可以解决哪些问题或问题类别。
+            可判定性（Entscheidungsproblem）
+            停机问题（halting problem）
+                停机问题就是判断任意一个程序是否能在有限的时间之内结束运行的问题。
+                该问题等价于如下的判定问题：是否存在一个程序P，对于任意输入的程序w，能够判断w会在有限时间内结束或者死循环。
+                艾伦·图灵在1936年用对角论证法证明了，不存在解决停机问题的通用算法。这个证明的关键在于对计算机和程序的数学定义
+                停机问题在图灵机上是不可判定问题
+                停机问题包含了自我指涉，本质是一阶逻辑的不完备性，类似的命题有理发师悖论、全能悖论等。
+        计算复杂性理论（Computational complexity theory）
+            复杂度
+                时间
+                    确定性
+                    非确定性
+                空间
+                    确定性
+                    非确定性
+                最好，最坏，平均
+            复杂度类
+                NP问题
+                    N non-deterministic 非确定性的
+                    P polynomial 多项式的
     计算机的发展历史
         早期工具
             算盘
@@ -309,8 +357,27 @@
                 微内核 仅包括了创建一个系统必需的几个部分 进程调度 内存分配 文件系统
                 宏内核 在 微内核的基础上加上 驱动 和 系统调用
         linux 系统的一般使用
+            系统安装
             启动过程
             shell 和 treminal
+            查看系统信息
+                硬件信息
+                    cpu
+                    内存
+                    硬盘
+                    网卡
+                系统信息
+                    linux内核版本
+                    系统版本
+                网络
+                    有多少个网卡
+                    ip地址 网关
+                    tcp udp 的端口占用情况
+                    防火墙
+                进程
+                用户
+                    用户 用户组
+                    当前登录的用户
             常用的软件
                 gnu 工具链
                 四剑客
@@ -318,6 +385,18 @@
                     sed
                     awk
                     find
+                在linux下查找文件
+                    查找文件
+                    find / -name httpd.conf
+                    查找普通文件
+                    find / -name httpd.conf -type f
+                    查找文件夹
+                    find / -name mysql -type d
+                查找一个命令的位置
+                    通过 ps 命令查找
+                    type command
+                    which command
+                    whereis command
             包管理器
                 apt
             守护进程
@@ -332,6 +411,7 @@
                 用户组
             网络
                 设置ip
+                设置hosts和dns
                 设置代理
                 设置防火墙
             图形界面
@@ -1335,6 +1415,7 @@ vscode的使用技巧
     大多数情况下，开发效率比运行效率重要
         因为大多数情况下，硬件成本比人力成本低
 如何搭建一个邮件服务器
+    单机的在不同用户间发送邮件
     在局域网里自娱自乐
     能收发外网的邮件
 使用正则表达式实现的关键词过滤
@@ -1513,10 +1594,10 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         Android的原生浏览器是一个基于Webkit的实现
         所以原生的安卓webview也是WebKit内核
         但4.4之后，安卓的原生浏览器就换成使用 Chromium 实现的了
-        同样地现在的 webview 也是 Chromium
+        同样地4.4之后的 webview 也是 Chromium
         一些浏览器的实现会直接使用系统的 webview 例如 chrome lite
         一些浏览器则会自己带着一个 webview 例如 chrome
-            可以在系统设置里修改 webview 的实现
+            可以在系统设置里修改 webview 的实现，前提是有安装其它 webview
         ios 里的浏览器和webview全都是safari的套壳
     无头浏览器（headless）
         无头浏览器起码要能执行js
@@ -1565,7 +1646,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             内置命令，shell 自己就能解释，一般不会 fork 子进程
         文件 File
         文件夹 Folder
-            文件夹（Folder）是GUI对象,是一个逻辑概念，不一定映射到物理目录，
+            文件夹（Folder）是GUI对象，是一个逻辑概念，不一定映射到物理目录，
             文件夹概念一般用在Windows操作系统或者Linux的图形界面。
             目录（Directory）是文件系统对象，大部分时候可以与文件夹概念互换。
             在命令行控制台中查看时通常称为目录，
@@ -1840,13 +1921,14 @@ git的一般使用指南
                         域名 指向 ip
                 各种代理
                     mua webmail RainLoop
-                    mta Postfix
+                    mta exim Postfix sendmail
                         amavisd-new 调度 ClamAV 和 SpamAssassin
                         ClamAV 邮件反病毒
                         SpamAssassin 过滤垃圾邮件
                     mda Dovecot
                     msa
                     mra
+                    maa
                 opendkim
                 还有更多？ bimi RUA RUF MTA-STS TLS-RPT
             企业邮箱
@@ -2762,8 +2844,8 @@ composer
         在项目的根目录里新建一个 patches 文件夹
         在 patches 文件夹里新建补丁文件
         补丁文件通常是这样子的
-            --- /Model/Product/Copier.php    2022-02-23 15:08:21.521148335 +0800
-            +++ /Model/Product/Copier.php    2022-02-23 15:07:56.013242367 +0800
+            --- Model/Product/Copier.php    2022-02-23 15:08:21.521148335 +0800
+            +++ Model/Product/Copier.php    2022-02-23 15:07:56.013242367 +0800
             @@ -104,10 +104,7 @@ class Copier
                     $this->setDefaultUrl($product, $duplicate);
                     $this->setStoresUrl($product, $duplicate);
@@ -2795,6 +2877,9 @@ composer
                     sed -i 's/echo "d1";/echo "d2";/g' d2.php
                 使用 diff 对比 d1.php 和 d2.php 并把结果输出到一个文件里
                     diff -up d1.php d2.php > d1.patch
+                    一个 patch 可以包含多个文件的补丁，例如这样
+                        diff -up a1.php a2.php >> d1.patch
+                        diff -up b1.php b2.php >> d1.patch
                 打开 d1.patch ，把文件开头的 d2.php 的路径修改为和 d1.php 一样的路径
                     开头的两个文件的路径，应该是相对于库根目录的路径
                 把 d1.patch 文件复制进 patches 文件夹里
@@ -2816,6 +2901,43 @@ composer
             环境变量里需要有 patch 这个命令
             一般情况下 windwos 的 cmd 和 powershell 都没有这个命令
             但 git for windows 的 bash 里有这个命令
+            所以在 windows 环境下最好用 git for windows 的 bash 来运行 composer install
+        如果遇到 patch 失败的情况，可以加上 -vvv 参数参看详细的输出 composer install -vvv
+        patch 给文件打补丁的命令
+            一次修改一个文件
+                patch 源文件 < 差异文件
+                patch -d 目录 源文件 < 差异文件
+            一次修改一个文件，差异文件里要包含多个文件
+                patch -d 目录 < 差异文件
+        cweagans/composer-patches 会按照这样的格式生成 patch 命令
+            patch %s --no-backup-if-mismatch -d %s < %s
+        cweagans/composer-patches 会依次尝试四条命令，只要其中一条成功，就当是打补丁成功了
+            patch -p1 --no-backup-if-mismatch -d 库目录的完整路径 < 差异文件
+            patch -p0 --no-backup-if-mismatch -d 库目录的完整路径 < 差异文件
+            patch -p2 --no-backup-if-mismatch -d 库目录的完整路径 < 差异文件
+            patch -p4 --no-backup-if-mismatch -d 库目录的完整路径 < 差异文件
+            -p1 -p4 这类参数的意思是忽略差异文件里目标文件路径前面的目录
+            -p0 是都不忽略 -p1 是忽略一层目录
+            --no-backup-if-mismatch 这个参数的意思是不生成备份文件
+        cweagans/composer-patches 生成和运行 patch 命令的文件
+            vendor\cweagans\composer-patches\src\Patches.php
+                postInstall
+                getAndApplyPatch
+        cweagans/composer-patches 生成命令的例子
+            windows环境
+                patch -p1 --no-backup-if-mismatch -d "C:\Users\a\magento2\vendor/magento/module-sales-rule" < patches/composer/sales_rule.patch
+                patch -p0 --no-backup-if-mismatch -d "C:\Users\a\magento2\vendor/magento/module-sales-rule" < patches/composer/sales_rule.patch
+                patch -p2 --no-backup-if-mismatch -d "C:\Users\a\magento2\vendor/magento/module-sales-rule" < patches/composer/sales_rule.patch
+                patch -p4 --no-backup-if-mismatch -d "C:\Users\a\magento2\vendor/magento/module-sales-rule" < patches/composer/sales_rule.patch
+            linux环境
+                patch -p1 --no-backup-if-mismatch -d "/var/www/magento2/vendor/magento/module-sales-rule" < patches/composer/sales_rule.patch
+                patch -p0 --no-backup-if-mismatch -d "/var/www/magento2/vendor/magento/module-sales-rule" < patches/composer/sales_rule.patch
+                patch -p2 --no-backup-if-mismatch -d "/var/www/magento2/vendor/magento/module-sales-rule" < patches/composer/sales_rule.patch
+                patch -p4 --no-backup-if-mismatch -d "/var/www/magento2/vendor/magento/module-sales-rule" < patches/composer/sales_rule.patch
+        在项目根目录里运行 patch ，可以不用绝对路径，像这样
+            patch -p0 --no-backup-if-mismatch -d vendor/magento/module-sales-rule < patches/composer/sales_rule.patch
+            需要根据 patch 文件的内容，适当地修改 -p 参数的值
+            这种命令可以直接打补丁，不需要运行 composer 的命令
         另一个补丁库 https://github.com/vaimo/composer-patches
         git diff 命令也可以生成 patch 文件
     可以通过硬改 composer.lock 里的 url 和 shasum 的 方式来安装一些需要登录的包
@@ -3200,7 +3322,7 @@ linux 中的各种 id
     并发 和 并行 不是互斥的概念，往往都会同时存在
         例如 一个超级简化的例子
             cpu 有两个逻辑核心，然后当前运行的进程有四个线程，那么这四个线程看起来是并发的，
-            然后又因为 cpu 又两个逻辑核心，所以同一时刻可以有两个线程运行，所以有两个线程并行
+            然后又因为 cpu 有两个逻辑核心，所以同一时刻可以有两个线程运行，所以有两个线程并行
     多核cpu，超线程，逻辑核心，还有多个cpu的主机
     并行计算（parallel computing）
     并发计算（concurrent computing）
@@ -4039,9 +4161,9 @@ termux
         0 需要先有一台有公网ip的服务器
         1 在服务器的防火墙和安全组放行 8022 端口
         2 在 termux 里运行这句，运行这句之前要先确保 sshd 的服务已经启动了
-            ssh -o ServerAliveInterval=60 -f -N -C -g -R 127.0.0.1:8022:127.0.0.1:8022 用户名@远程地址
+            ssh -o ServerAliveInterval=60 -f -N -C -g -R 127.0.0.1:8022:127.0.0.1:8022 用户名@远程服务器地址
         3 在远程计算机里运行这句
-            ssh -o ServerAliveInterval=60 -f -N -C -g -L 127.0.0.1:8022:127.0.0.1:8022 用户名@远程地址
+            ssh -o ServerAliveInterval=60 -f -N -C -g -L 127.0.0.1:8022:127.0.0.1:8022 用户名@远程服务器地址
         4 在远程计算机里运行这句，这样就能通过外网连回手机的 termux 了
             ssh -o ServerAliveInterval=60  用户名@127.0.0.1 -p 8022
 linux 应用的一般启动套路
