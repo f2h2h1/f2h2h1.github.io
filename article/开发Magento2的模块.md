@@ -2015,6 +2015,12 @@ vendor\magento\framework\View\Element\Template.php
 
 像这类标签里的内容，是有什么作用的？
 <script type="text/x-magento-init">
+这个标签里的代码似乎都是 json
+这里的 json 数据似乎会加载到 对应 模块 里的 config 变量里
+html标签中的data-mage-init属性似乎也有类似的作用
+
+
+magento2 是如何加载对象的？
 
 
 /** @var \Magento\Framework\View\TemplateEngine\Php $this */
@@ -2205,6 +2211,7 @@ $result = $conn->fetchAll($select);
 // 直接运行 sql 语句
 $conn = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ResourceConnection::class);
 $result = $conn->getConnection()->query('SELECT TIMEDIFF(NOW(), UTC_TIMESTAMP);')->fetchAll();
+$result = $conn->getConnection()->query("update sales_order set status = 'complete', state = 'complete' where entity_id = 123456;")->execute();
 ```
 
 通过某一个模型的 collection 对象
@@ -2967,6 +2974,77 @@ try {
     $connection->rollBack();
     throw $e;
 }
+
+
+$timeZone = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\Stdlib\DateTime\TimezoneInterface::class);
+$currentTimezone = @date_default_timezone_get();
+@date_default_timezone_set($timeZone->getConfigTimezone());
+$strtime = strtotime($strtime);
+@date_default_timezone_set($currentTimezone);
+
+
+在这个位置，也把时区设为 utc
+app\bootstrap.php
+
+在这个位置里，连接完数据库后，时区会马上设置为 utc
+vendor\magento\framework\DB\Adapter\Pdo\Mysql.php
+_connect
+
+
+在 magento2 里，一些位置能自动完成时区的转换，一些位置还是需要手动来转换
+数据库里的类型
+    int string date datetime time
+需要显示的格式
+    时间戳 格式化的字符串
+格式化的字符串
+    $fmt = new \IntlDateFormatter($storeCode);
+    $fmt->setTimeZone($timezone);
+    $fmt->setPattern('yyyy年 M月 dd日, hh:mm a');
+    return $fmt->format($timestamp);
+    https://www.php.net/manual/en/class.intldateformatter.php
+    https://unicode-org.github.io/icu/userguide/format_parse/datetime/
+
+
+magento2 的时区保存在core_config_data表的这个位置 general/locale/timezone
+select * from core_config_data where path like '%timezone%'
+
+在php的代码里这样获取
+$timezone = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\Stdlib\DateTime\TimezoneInterface::class);
+var_dump($timezone->getConfigTimezone());
+
+在后台里这样设置
+Stores -> Configuration -> General -> General -> Locale Options
+
+
+Magento2 有三种运行模式，按性能由低到高，
+依次为：developer < default < production
+
+magento2 有三种运行模式，分别是：
+developer：这是开发者模式，适合开发和调试 magento2 应用。在这个模式下，错误信息和日志会更详细，静态文件不会缓存，代码修改会立即生效。
+default：这是默认模式，适合一般的使用场景。在这个模式下，错误信息和日志会比较简洁，静态文件会缓存，代码修改需要重新部署才能生效。
+production：这是生产模式，适合正式的运营环境。在这个模式下，错误信息和日志会最少，静态文件会压缩和合并，代码修改需要重新编译和部署才能生效。
+你可以使用以下命令来查看或设置 magento2 的运行模式：
+bin/magento deploy:mode:show：查看当前的运行模式
+bin/magento deploy:mode:set {mode}：设置运行模式为 developer, default 或 production
+bin/magento deploy:mode:set production --skip-compilation：设置运行模式为 production 但跳过编译步骤
+
+
+magento2 的维护模式
+php bin/magento maintenance:enable
+php bin/magento maintenance:disable
+php bin/magento maintenance:status
+
+magneto2 的维护模式是用在生产环境里的，
+
+magento2 查看当前开发模式
+php bin/magento deploy:mode:show
+magento2 把开发模式切换成 开发者模式
+php bin/magento deploy:mode:set developer
+
+magento2 安装示例数据，安装示例数据需要切换到开发者模式
+php bin/magento sampledata:deploy
+php bin/magento setup:upgrade
+
 
 
 -->

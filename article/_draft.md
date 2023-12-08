@@ -254,6 +254,7 @@
                     生命游戏（Game of Life）
         抽象机器（Abstract machine） -> 自动机（Automata） -> 图灵机（Turing machine，缩写为TM）
             半在自动机的三元组
+                状态集 字母表 转移函数
             自动机的五元组
             图灵机的七元组
         图灵机
@@ -286,6 +287,7 @@
                     承诺问题 是 决策问题 的推广
         可计算性（Computability）
             可计算性理论的一个目标是确定在每个计算模型中可以解决哪些问题或问题类别。
+                除了 可计算问题，不可计算问题，还有一种 近似可计算问题
             可判定性（Entscheidungsproblem）
             停机问题（halting problem）
                 停机问题就是判断任意一个程序是否能在有限的时间之内结束运行的问题。
@@ -1416,8 +1418,53 @@ vscode的使用技巧
         因为大多数情况下，硬件成本比人力成本低
 如何搭建一个邮件服务器
     单机的在不同用户间发送邮件
+        apt install -y mailutils
+        这句命令安装的是 exim
+        如无意外，安装完后就能直接用 sendmail mail mailx 命令了
+        发送邮件给其它用户
+            使用 mailx 命令发送
+            echo "test mail content" | mailx -s "test mail subject" root
+            echo 邮件内容 | mailx -s 邮件主题 用户名
+            使用 sendmail 命令发送
+            echo -e "From: root\nTo: root\nSubject: 问候\n\n我是 root 用户，这是一封用 sendmail 命令发送的邮件。" | sendmail -t
+            sendmail -t <<EOF
+            From: root
+            To: root
+            Subject: 问候
+
+            我是 root 用户，这是一封用 sendmail 命令发送的邮件。
+            EOF;
+        查看用户的邮件
+            mail -u root
+            mail -u 用户名
+            mail -f /var/spool/mail/mail
+            mail -f 用于保存邮件的文件路径
+        邮件保存的位置
+            目录
+                /var/spool/mail 这个目录会软连接到 /var/mail
+                /var/mail 这个是实际的目录
+            文件
+                /var/mail/root
+                /var/mail/用户名
+        日志
+            日志文件的目录
+                /var/log/exim4
+            日志文件
+                /var/log/exim4/mainlog
+            预防万一可以先事先新建一个
+                ls -l /var/log/exim4
+                mkdir -p /var/log/exim4
+                touch /var/log/exim4/mainlog
+            查看日志
+                cat /var/log/exim4/mainlog
     在局域网里自娱自乐
+        至少需要搭建 smtp 和 imap
     能收发外网的邮件
+        除了 搭建 smtp 和 imap 之外，还要做好域名的解释
+        域名解释才是最困难的部分
+        要确保这几个端口的开放
+            25 465 143 993
+            除了安全组，防火墙，还要向运营商确认这几个端口有没有开放
 使用正则表达式实现的关键词过滤
     定义关键词列表
     把关键词转换为正则表达式
@@ -1706,6 +1753,10 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             根据现有的 api 重新组合新功能的是 拓展
             通过增加 api 而添加新功能的是 插件
             其实多数情况下会被混用
+            个人的理解
+                脚本 重新组织 api 的使用
+                插件 编译后的脚本
+                扩展 增加新的 api
         计算
             operation
             arithmetic
@@ -3159,6 +3210,8 @@ MutationObserver？
     清空 dns
         edge://net-internals/#dns
         chrome://net-internals/#dns
+    输入 chrome://about 命令，将集中列出 Chrome 浏览器支持的所有的命令
+    命令行参数 --enable-features=msEdgeAreaSelect ，启用新版 edge 不再支持的 网页选择 功能
     火狐不显示图片
         about:config
         permissions.default.image 把这个值由 1 改成 2
@@ -3946,6 +3999,8 @@ nc netcat ncat socat
     有哪些通用的语法？
         似乎除了 -l 之外，其它参数都有变动
         最稳妥的方式还是通过 -h 来查看帮助
+    这里有描述如何用 ncat 实现最简单的五个协议
+        https://nmap.org/ncat/guide/ncat-simple-services.html
     echo
         while read -r line; do echo "$line"; done
         echo 123 | while read -r line; do echo "$line"; done
@@ -4034,6 +4089,39 @@ nc netcat ncat socat
     socat 和 ncat 和 nc-openbsd 都支持 tsl ，又可以搞各种奇技淫巧了。。。
     用 python 和 php 实现一个 nc ，只实现 -v -h -l 这三个参数即可
         如果 bash 有 /usr/lib/bash/accept 这个特性，那么直接用 bash 实现一个 nc 也不是不可以的
+    windows 如何使用 nc
+        github 上有好几个 windows 版的 nc ，但都很久没更新了
+            https://github.com/diegocr/netcat
+            https://github.com/int0x33/nc.exe
+        先下载 windows 版的 busybox ，再使用 busybox 里的 nc
+            https://frippery.org/busybox/
+            https://github.com/rmyorston/busybox-w32
+            要下载 busybox64u.exe 这个版本，64位且支持 unicode ，虽然这个版本只支持 win10和win11
+        nmap 也有提供 windows 版的 nc
+            https://nmap.org/ncat/
+            https://sectools.org/tool/netcat/
+            https://nmap.org/book/ncat-man.html
+            https://nmap.org/ncat/guide/index.html
+        windows 版的 ncat 最好还是在 bash 里运行。。。
+        或者用 脚本 语言自己实现一个也可以。。。
+    nc 的源码
+        Nmap的nc
+            https://github.com/nmap/nmap/tree/master/ncat
+            https://github.com/nmap/nmap/blob/master/ncat/ncat_main.c
+        BusyBox nc
+            https://github.com/mirror/busybox/blob/master/networking/nc.c
+        nc-openbsd
+            https://github.com/openbsd/src/blob/master/usr.bin/nc/netcat.c
+        nc-traditional
+            可以下载到源码，但不能在线预览，bz2 的那个才是源码
+            https://snapshot.debian.org/package/netcat/
+            https://manpages.debian.org/bookworm/netcat-traditional/nc.traditional.1.en.html
+        socat 的源码镜像，但很久没更新了
+            https://github.com/3ndG4me/socat
+            源码可以直接在官网里下载 gz 文件
+            http://www.dest-unreach.org/socat/
+        原始版本的nc，也是很久都没更新了
+            https://sourceforge.net/p/nc110/git/ci/master/tree/
 bash 如何实现并发
     使用 &
     使用 &+wait
@@ -4076,7 +4164,10 @@ termux
             运行这句 termux-setup-storage 后应该会弹出授权的确认框
             Termux 有三种不同的存储
                 Internal storage 内部存储
+                    Termux 的主目录，位于 /data/data/com.termux/files/home，只有 Termux 可以访问，不需要额外的权限
+                    直接在 Termux 终端中输入命令，cd ~ 切换到主目录
                 Shared storage 共享存储
+                    在 Termux 终端中输入 termux-setup-storage 命令，并允许 Termux 访问存储权限。这样，Termux 主目录下会生成一个 storage 子目录，它是共享存储的符号链接
                 External storage 外部存储
             如果不运行 termux-setup-storage ，就只能访问 Internal storage
         安装一些必要的包
@@ -4147,6 +4238,7 @@ termux
         ~/.vnc/xstartup 注释掉原本的内容，写入下面的内容
             #!/data/data/com.termux/files/usr/bin/sh
             xfce4-session &
+        vnc -> x11/Wayland -> rdp
     vnc
         server
             apt install tightvncserver
@@ -4197,6 +4289,7 @@ linux 应用的一般启动套路
         标记-清除
         三色标记
         分代收集
+    php的垃圾回收
 打包和压缩
     tar
         tape archive (磁带 存档)
