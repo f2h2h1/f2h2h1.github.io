@@ -7,9 +7,40 @@
 - apache 2.4
 - nginx 1.12
 - redis 3.2.1 (redis 的 windows 版已经很久没更新了，虽然还是能用)
-- git for windows 2.33 
+- git for windows 2.33
     - 虽然 git 和运行 php 没有关系，但用 composer 安装依赖时有些时候会直接从 github 里拉取代码，如果这时系统里没有安装 git 可能会报错
     - git 也要加到环境变量里（一般安装完后重启一次环境变量里就有 git 的了）
+
+<!--
+- elasticsearch 7.9.3
+- kibana 7.6.2
+
+从官网下载 elasticsearch
+下载完后解压
+运行这个文件就能运行 elasticsearch 了
+bin/elasticsearch.bat
+
+从官网下载 kibana
+下载完后解压
+运行这个文件就能运行 kibana 了
+bin/kibana.bat
+http://127.0.0.1:5601
+进入Kibana的DevTools界面操作ES
+
+要先运行 elasticsearch 后运行 kibana
+kibana 的版本要和 elasticsearch 对应，不然 kibana 运行不了
+如果运行失败要留意命令行的输出
+
+只要双方都是默认配置，那么就可以直接运行的了
+elasticsearch 的配置文件 config/elasticsearch.yml
+kibana 的配置文件 config/kibana.yml
+
+curl -v --user user:passwd 'http://localhost:9200/_cat/nodes?v'
+curl -v 'http://127.0.0.1:9200/_cat/nodes?v'
+curl -v 'http://127.0.0.1:9200'
+
+-->
+
 
 ## php
 

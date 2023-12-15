@@ -1705,6 +1705,9 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         程序 progrem
         进程 process
         线程 thread
+        协程 coroutine
+        异步 asynchronous
+        同步 synchronous
         文档 document
         数据 data
         配置 configuration

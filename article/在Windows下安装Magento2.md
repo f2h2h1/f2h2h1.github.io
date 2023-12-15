@@ -329,6 +329,10 @@
 - 如果 clone 速度太慢，可以在 releases 那里下载源码的压缩包（如果还是太慢就用一些下载工具来下载 releases 的压缩包）
 
 配置 vscode 的 xml 文件语法高亮
+1. vscode 里装上这个插件
+    ```
+    XML Language Support by Red Hat
+    ```
 1. 在项目根目录运行这句命令
     ```bash
     php bin/magento dev:urn-catalog:generate --ide vscode -- .vscode/misc.xml

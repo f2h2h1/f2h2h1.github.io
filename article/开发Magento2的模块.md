@@ -1546,6 +1546,12 @@ php bin/magento cron:run --group=consumers
 di.xml
 
 <preference for="Magento\Banner\Model\Banner\Validator" type="LocalDev\HomeBanner\Model\Banner\Validator" />
+
+<preference for=“原始类或接口” type=“新的类” />
+
+preference 的优点是可以方便地修改或扩展已有的类或接口
+preference 的缺点是可能会导致类之间的冲突，因为一次只能有一个 preference 生效，除非你手动地让它们链式地继承
+
 -->
 
 ## 事件和观察者 (Events and Observers)
@@ -1841,10 +1847,10 @@ uiElement 继承自 uiClass
 uiClass 是普通的类
 uiElement 可以算是 knockoutjs 里的视图模型了
 
-uiElement:      'Magento_Ui/js/lib/core/element/element',
-uiCollection:   'Magento_Ui/js/lib/core/collection',
-uiComponent:    'Magento_Ui/js/lib/core/collection',
-uiClass:        'Magento_Ui/js/lib/core/class',
+uiElement:      'Magento_Ui/js/lib/core/element/element', vendor\magento\module-ui\view\base\web\js\lib\core\element\element.js
+uiCollection:   'Magento_Ui/js/lib/core/collection', vendor\magento\module-ui\view\base\web\js\lib\core\collection.js
+uiComponent:    'Magento_Ui/js/lib/core/collection', vendor\magento\module-ui\view\base\web\js\lib\core\collection.js
+uiClass:        'Magento_Ui/js/lib/core/class', vendor\magento\module-ui\view\base\web\js\lib\core\class.js
 
 uiRegistry
 vendor\magento\module-ui\view\base\web\js\lib\registry\registry.js
@@ -1854,17 +1860,65 @@ define 和 require 这两个函数是不一样的。。。
 
 requirejs 模块加载(require)及定义(define)
 
+underscore lib\web\underscore.js
+mageUtils   lib\web\mage\utils\main.js
+mage/utils/wrapper   lib\web\mage\utils\wrapper.js
+mage/translate lib\web\mage\utils\template.js
+
+uiEvents vendor\magento\module-ui\view\base\web\js\lib\core\events.js
+links vendor\magento\module-ui\view\base\web\js\lib\core\element\links.js
+uiRegistry vendor\magento\module-ui\view\base\web\js\lib\registry\registry.js
+
+uiClass 好像也是继承自 underscore 
+uiClass 好像和 mageUtils 和 mage/utils/wrapper 密切相关
+而 mageUtils 和 mage/utils/wrapper 则是来自 underscore
+
+knockout lib\web\knockoutjs\knockout.js
+lib\web\requirejs\require.js
+
+要留意模块里的这个文件 requirejs-config.js
+
+这是另一个重要的 requirejs-config.js
+vendor\magento\module-theme\view\base\requirejs-config.js
+
+会把各个主题和模块里的 requirejs-config.js 文件合并成一个单独的 requirejs-config.js
+
+在加载 lib\web\requirejs\require.js 之前，会有这一段 js 是用来指示 js 的加载路径的
+<script>
+var BASE_URL = 'https\u003A\u002F\u002Fshop\u002Ddev.theclub.com.hk\u002F';
+var require = {
+    'baseUrl': 'https\u003A\u002F\u002Fshop\u002Ddev.theclub.com.hk\u002Fstatic\u002Fversion1669169968\u002Ffrontend\u002FHKT\u002Fstandard\u002Fen_US'
+};
+</script>
+
+这是第一个引入的 js 文件
+lib\web\requirejs\require.js
+pub\static\frontend\HKT\standard\en_US\requirejs\require.js
+
+
+mage 开头的前端文件 是来自这个文件夹的
+lib\web\mage
 
 mageUtils   lib\web\mage\utils\main.js
 mage/utils/wrapper   lib\web\mage\utils\wrapper.js
 mage/translate lib\web\mage\utils\template.js
 
 
-uiClass 好像也是继承自 mageUtils 和 mage/utils/wrapper
-而 mageUtils 和 mage/utils/wrapper 则是来自 underscore
-
-
 knockoutjs 这个的视图是怎么实现的？
+
+如果开了生产模式，且完成构建后，这个才是页面第一个加载的js，这是一个经过合并的js文件
+这个js会加载 requirejs 和 一些 config ，然后又会加载一些 公共的模块，像 jq 这些
+https://magento.local/static/version1702444490/_cache/merged/bb6ac75328fcb226b1c39f8031afeb03.min.js
+总而言之 requirejs 是第一个加载的 js 库
+
+
+每个component都有自己独立的template，knockoutjs会把template动态渲染到页面上。
+但也由于是动态异步渲染，template的元素渲染完成的时间很难掌握，想用jquery操作渲染完成后的DOM就成了难题。
+knockoutjs并不鼓励用jquery操作它渲染出来的DOM，但丰富的jquery插件并不对knockoutjs友好，使用jquery几乎不可避免。
+要让jquery操作knockoutjs的DOM关键在于template渲染完成后主动向外发出通知，jquery再截获通知。
+渲染的核心代码在以下位置:
+vendor/magento/module-ui/view/base/web/js/lib/ko/template/renderer.js
+
 
 ko 的文档里提到了三种模板引擎
     ko 自身的
