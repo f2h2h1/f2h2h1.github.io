@@ -1442,6 +1442,8 @@ try {
 require __DIR__ . '/app/bootstrap.php';
 $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
 $objectManager = $bootstrap->getObjectManager();
+$state = $objectManager->get(\Magento\Framework\App\State::class);
+$state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
 $instance = \Magento\Sales\Cron\CleanExpiredQuotes::class;
 $method = 'execute';
 $cronJob = $objectManager->get($instance);
@@ -2495,6 +2497,11 @@ require __DIR__ . '/app/bootstrap.php';
 $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
 // 获取一个对象管理器
 $objectManager = $bootstrap->getObjectManager();
+
+// 如果出现这种错误 area code is not set ，则加上这两句， area 的值可以根据实际场景修改
+$state = $objectManager->get(\Magento\Framework\App\State::class);
+$state->setAreaCode(\Magento\Framework\App\Area::AREA_FRONTEND);
+
 // 获取一个文件系统对象
 $fileSystem = $objectManager->get(\Magento\Framework\Filesystem::class);
 // 获取临时目录的路径

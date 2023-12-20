@@ -15,6 +15,9 @@
 - elasticsearch 7.9.3
 - kibana 7.6.2
 
+elasticsearch 和 kibana 都在这里下载
+https://www.elastic.co/cn/downloads/past-releases
+
 从官网下载 elasticsearch
 下载完后解压
 运行这个文件就能运行 elasticsearch 了
@@ -233,6 +236,22 @@ https://dev.mysql.com/
     ```
 
 8. MySQL 的 ZIP 版本容易出现各种奇怪的错误，安装版能省心一点
+
+9. 如果 mysql8 遇到这种错误
+    ```
+    Please use caching_sha2_password instead
+    ```
+
+    用命令行进入 mysql 再修改一次密码
+    ```
+    ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '新密码';
+    flush privileges;
+    ```
+
+    查看用用户的验证器插件
+    ```
+    select Host, User, Plugin from user;
+    ```
 
 ### 5.7
 1. 下载 zip 版
@@ -490,6 +509,9 @@ http://nginx.org/download/nginx-1.21.1.zip
 ### 下载 redis
 ```plaintext
 https://github.com/MicrosoftArchive/redis/releases
+
+这是新的 redis windows 版，虽然不是官方版本，但总比没有好
+https://github.com/redis-windows/redis-windows
 ```
 这里推荐下载 zip 版
 

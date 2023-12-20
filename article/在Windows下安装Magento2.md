@@ -102,10 +102,11 @@
 1. magento2 的依赖有点多，最好准备一个 github-oauth
 1. 修改源码
     1. `vendor\magento\framework\Image\Adapter\Gd2.php` 大概在 90 行左右的位置
+    <!-- lib\internal\Magento\Framework\Image\Adapter\Gd2.php -->
         ```
         private function validateURLScheme(string $filename) : bool
         {
-            if(!file_exists($filename)) { // if file not exist
+            if (!file_exists($filename)) { // if file not exist
                 $allowed_schemes = ['ftp', 'ftps', 'http', 'https'];
                 $url = parse_url($filename);
                 if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes)) {
@@ -117,13 +118,14 @@
         }
         ```
     1. `vendor\magento\framework\View\Element\Template\File\Validator.php` 大概在 140 行左右的位置
+    <!-- lib\internal\Magento\Framework\View\Element\Template\File\Validator.php -->
         ```
         protected function isPathInDirectories($path, $directories)
         {
             if (!is_array($directories)) {
                 $directories = (array)$directories;
             }
-            //$realPath = $this->fileDriver->getRealPath($path);
+            // $realPath = $this->fileDriver->getRealPath($path);
             $realPath = str_replace('\\', '/', $this->fileDriver->getRealPath($path));
             foreach ($directories as $directory) {
                 if (0 === strpos($realPath, $directory)) {
@@ -134,6 +136,10 @@
         }
         ```
 1. 修改 hosts 文件，把域名 localhost-magento 指向本地 ip （其实这步没有也没关系，但为了方便下文的描述还是加上了这步）
+1. 在数据库里新建对应的库
+    ```
+    create database magento2ce;
+    ```
 1. 运行安装命令
     ```
     php bin/magento setup:install `
@@ -156,8 +162,8 @@
     ```
     php bin/magento setup:upgrade
     php bin/magento setup:di:compile
-    php bin/magento indexer:reindex
     php bin/magento setup:static-content:deploy -f
+    php bin/magento indexer:reindex
     php bin/magento cache:flush
     ```
 1. 修改 nginx 的配置
@@ -322,10 +328,17 @@
     git switch 2.4.2-p1
     只 clone 一个分支
     git clone -b 2.4.2-p1 https://github.com/magento/magento2.git .
+
+    切换到对应的 tag
+    git pull
+    git checkout 2.4.5
+
+    通过 github 拉取源码的需要运行一次 composer install
     ```
-- 通过 composer 安装的 magento 的框架文件在这个目录里 `vendor/magento/framework` 。
-- 通过 github 源码安装的 magento 的框架文件在这个目录里 `lib/internal/Magento/Framework` 。
-- github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块 。
+- 通过 composer 安装的 magento 的框架文件在这个目录里 `vendor/magento/framework`
+- 通过 github 源码安装的 magento 的框架文件在这个目录里 `lib/internal/Magento/Framework`
+- 如果是通过 github 修改源码的，要记得替换架的路径
+- github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块
 - 如果 clone 速度太慢，可以在 releases 那里下载源码的压缩包（如果还是太慢就用一些下载工具来下载 releases 的压缩包）
 
 配置 vscode 的 xml 文件语法高亮
@@ -380,34 +393,42 @@ magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给
 
 1. 修改源码
     1. `vendor\magento\framework\App\StaticResource.php` 大概在 278 行左右的位置
+    <!-- lib\internal\Magento\Framework\App\StaticResource.php -->
     ```
     private function isThemeAllowed(string $theme): bool
     {
-        $theme = str_replace('\\', '/', $theme); //fix windows path
+        $theme = str_replace('\\', '/', $theme); // fix windows path
         return in_array($theme, array_keys($this->themePackageList->getThemes()));
     }
     ```
 
+    1. `vendor\magento\framework\Interception\PluginListGenerator.php` 大概在 156 行左右的位置
+    <!-- lib\internal\Magento\Framework\Interception\PluginListGenerator.php -->
+    ```
+    // $cacheId = implode('|', $this->scopePriorityScheme) . "|" . $this->cacheId;
+    $cacheId = implode('-', $this->scopePriorityScheme) . "-" . $this->cacheId;
+    ```
+
 1. 安装命令要加上 Elasticsearch 的配置
     ```
-    php bin/magento setup:install `
-        --base-url=http://localhost-magento/ `
-        --db-host=localhost `
-        --db-name=magento2ce2 `
-        --db-user=root `
-        --db-password=1234 `
-        --admin-firstname=admin `
-        --admin-lastname=admin `
-        --admin-email=admin@admin.com `
-        --admin-user=admin `
-        --admin-password=admin123 `
-        --language=en_US `
-        --currency=USD `
-        --timezone=America/Chicago `
-        --use-rewrites=1 `
-        --search-engine=elasticsearch7 `
-        --elasticsearch-host=localhost `
-        --elasticsearch-port=9200 `
+    php bin/magento setup:install  \
+        --base-url=http://localhost-magento/  \
+        --db-host=localhost  \
+        --db-name=magento2ce2  \
+        --db-user=root  \
+        --db-password=1234  \
+        --admin-firstname=admin  \
+        --admin-lastname=admin  \
+        --admin-email=admin@admin.com  \
+        --admin-user=admin  \
+        --admin-password=admin123  \
+        --language=en_US  \
+        --currency=USD  \
+        --timezone=America/Chicago  \
+        --use-rewrites=1  \
+        --search-engine=elasticsearch7  \
+        --elasticsearch-host=localhost  \
+        --elasticsearch-port=9200  \
         --elasticsearch-index-prefix=magento2
     ```
 
@@ -416,6 +437,146 @@ magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给
     php bin/magento module:disable Magento_TwoFactorAuth
     php bin/magento cache:flush
     ```
+
+## 使用 patch 修改源码
+
+这是上面几个需要修改的文件的合集。
+这个 patch 要在项目的根目录下运行，
+这个 patch 要在 composer install 之后运行， php bin/magento setup:upgrade 前运行
+
+patch 文件的内容
+```patch
+--- lib/internal/Magento/Framework/Image/Adapter/Gd2.php	2023-12-19 17:16:58.149464800 +0800
++++ lib/internal/Magento/Framework/Image/Adapter/Gd2.php	2023-12-19 17:22:09.469880100 +0800
+@@ -91,10 +91,12 @@ class Gd2 extends AbstractAdapter
+      */
+     private function validateURLScheme(string $filename) : bool
+     {
+-        $allowed_schemes = ['ftp', 'ftps', 'http', 'https'];
+-        $url = parse_url($filename);
+-        if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes)) {
+-            return false;
++        if (!file_exists($filename)) { // if file not exist
++            $allowed_schemes = ['ftp', 'ftps', 'http', 'https'];
++            $url = parse_url($filename);
++            if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes)) {
++                return false;
++            }
+         }
+ 
+         return true;
+--- lib/internal/Magento/Framework/View/Element/Template/File/Validator.php	2023-12-19 17:17:02.495932300 +0800
++++ lib/internal/Magento/Framework/View/Element/Template/File/Validator.php	2023-12-19 17:23:23.889091300 +0800
+@@ -135,7 +135,8 @@ class Validator
+         if (!is_array($directories)) {
+             $directories = (array)$directories;
+         }
+-        $realPath = $this->fileDriver->getRealPath($path);
++        // $realPath = $this->fileDriver->getRealPath($path);
++        $realPath = str_replace('\\', '/', $this->fileDriver->getRealPath($path));
+         foreach ($directories as $directory) {
+             if ($directory !== null && 0 === strpos($realPath, $directory)) {
+                 return true;
+--- lib/internal/Magento/Framework/App/StaticResource.php	2023-12-19 17:16:54.560803000 +0800
++++ lib/internal/Magento/Framework/App/StaticResource.php	2023-12-19 17:21:47.440984600 +0800
+@@ -285,6 +285,7 @@ class StaticResource implements \Magento
+      */
+     private function isThemeAllowed(string $theme): bool
+     {
++        $theme = str_replace('\\', '/', $theme); // fix windows path
+         return in_array($theme, array_keys($this->themePackageList->getThemes()));
+     }
+ }
+--- lib/internal/Magento/Framework/Interception/PluginListGenerator.php	2023-12-19 17:16:58.383831000 +0800
++++ lib/internal/Magento/Framework/Interception/PluginListGenerator.php	2023-12-19 17:22:39.196325500 +0800
+@@ -153,7 +153,8 @@ class PluginListGenerator implements Con
+                 if (false === in_array($scope, $this->scopePriorityScheme, true)) {
+                     $this->scopePriorityScheme[] = $scope;
+                 }
+-                $cacheId = implode('|', $this->scopePriorityScheme) . "|" . $this->cacheId;
++                // $cacheId = implode('|', $this->scopePriorityScheme) . "|" . $this->cacheId;
++                $cacheId = implode('-', $this->scopePriorityScheme) . "-" . $this->cacheId;
+                 [
+                     $virtualTypes,
+                     $this->scopePriorityScheme,
+```
+
+这是针对使用 github 新建的项目，如果是通过 composer 新建的项目，要替换一些路径
+```
+sed -i 's/lib\/internal\/Magento\/Framework\//vendor\/magento\/framework\//g' windows.patch;
+```
+
+执行 patch 的命令，要在项目的根目录运行
+```
+patch -p0 --no-backup-if-mismatch < windows.patch;
+```
+
+生成 patch 文件的方式
+```php
+\define('PATCH_FILE', 'windows.patch');
+$targetArr = [
+    'lib/internal/Magento/Framework/Image/Adapter/Gd2.php',
+    'lib/internal/Magento/Framework/View/Element/Template/File/Validator.php',
+    'lib/internal/Magento/Framework/App/StaticResource.php',
+    'lib/internal/Magento/Framework/Interception/PluginListGenerator.php',
+];
+
+echo "
+先确定好哪些文件需要修改
+复制一份
+修改文件
+生成 patch 文件
+替换 patch 文件里的路径
+在项目根目录执行 patch
+";
+
+echo PHP_EOL . PHP_EOL;
+
+$cpArr = array_map(function($item) {
+    return 'cp ' . $item . ' ' . str_replace('.php', '2.php', $item);
+}, $targetArr);
+
+$diffArr = array_map(function($item) {
+    return str_replace('cp ', 'diff -up ', $item) . ' >> ' . PATCH_FILE;
+}, $cpArr);
+
+$sedArr = array_map(function($item) {
+    $item = str_replace('/', '\/', $item);
+    $a = str_replace('.php', '2.php', $item);
+    $b = $item;
+    return sprintf("sed -i 's/%s/%s/g' " . PATCH_FILE, $a, $b);
+}, $targetArr);
+
+array_map(function($item) {
+    echo join(';' . PHP_EOL, $item) . PHP_EOL . PHP_EOL;
+    return $item;
+}, [$cpArr, $diffArr, $sedArr]);
+
+echo 'patch -p0 --no-backup-if-mismatch < ' . PATCH_FILE . PHP_EOL;
+```
+
+<!--
+
+cat > windows.patch <<- 'EOF'
+
+EOF
+cat windows.patch; \
+patch -p0 --no-backup-if-mismatch < windows.patch;
+
+
+if [ -d lib/internal/Magento/Framework ]; \
+then  patch -p0 --no-backup-if-mismatch -d lib/internal/Magento/Framework < windows.patch; \
+else  patch -p0 --no-backup-if-mismatch -d vendor/magento/framework < windows.patch; fi
+
+sed -i 's/lib\/internal\/Magento\/Framework\///g' windows.patch
+sed -i 's/lib\/internal\/Magento\/Framework\//vendor\/magento\/framework\//g' windows.patch
+sed -i 's/vendor\/magento\/framework\//lib\/internal\/Magento\/Framework\//g' windows.patch
+
+php -a <<- 'EOF'
+
+EOF
+
+-->
 
 ## 参考
 
@@ -431,3 +592,29 @@ magento 相关的博客
 - https://www.mageoo.com/
 - http://www.sbboke.com/
 - https://bbs.mallol.cn/
+
+<!--
+
+暂时最完善的构建脚本
+startAtTimestamp=$(date +%s); \
+startAt=$(date -d @$startAtTimestamp +%FT%T%:z); \
+echo startAt: $startAt; \
+rm -rf var/di/* var/generation/* var/cache/* var/page_cache/* var/view_preprocessed/* var/composer_home/cache/*  var/tmp/* && \
+rm -rf generated/code/* generated/metadata/* pub/static/* && \
+php bin/magento setup:upgrade && \
+php bin/magento setup:di:compile && \
+php bin/magento setup:static-content:deploy -f && \
+php bin/magento indexer:reindex && \
+php bin/magento cache:flush; \
+endAtTimestamp=$(date +%s); \
+endAt=$(date -d @$endAtTimestamp +%FT%T%:z); \
+seconds=$(echo $startAtTimestamp $endAtTimestamp | awk '{printf("%d", $2-$1)}') ; \
+hour=$(echo $seconds | awk '{printf("%d", $1/3600)}'); \
+min=$(echo $seconds $hour | awk '{printf("%d", ($1-$2*3600)/60)}'); \
+sec=$(echo $seconds $hour $min | awk '{printf("%d", $1-$2*3600-$3*60)}'); \
+echo startAt: $startAt; \
+echo endAt: $endAt; \
+echo $hour $min $sec | awk '{printf("Runtime: %02d:%02d:%02d\n", $1, $2, $3)}'; \
+echo $startAtTimestamp $endAtTimestamp | awk '{printf("Runtime: %d\n", $2-$1)}'
+
+-->
