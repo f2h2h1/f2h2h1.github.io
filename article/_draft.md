@@ -4400,6 +4400,43 @@ linux 应用的一般启动套路
     监听路由的变化
     匹配路由并渲染对应的内容
     放行不匹配的路由
+telnet rlogin ssh
+    rexec/rlogin/rsh都属于rsh-server包
+        Berkeley r-commands
+        rcp
+        rexec
+        rlogin
+        rsh
+        rstat 从内核返回性能统计信息。
+        ruptime 显示自上次重新启动以来 Unix 系统运行了多长时间
+        rwho 列出登录到本地网络上所有多用户 Unix 系统的用户
+    这几个是 windows 的
+        r rcmd rscript rtrem
+    图形界面的远程控制主要是 RFB 和 RDP ，RFB 就是 vnc 使用的协议， RDP 就是 windows 远程桌面使用的协议
+如何用一条命令关闭windows的屏幕
+    这一句只能运行在 cmd 里
+        powershell (Add-Type '[DllImport(\"user32.dll\")]^public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);' -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)
+    这一段效果是一样的，能运行在 powershell 里，但一个 powershell 窗口只能运行一次，因为类型不能重复定义
+        $Code = @'
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);
+        '@
+        (Add-Type -MemberDefinition $Code -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)
+    这一句效果是一样的，能运行在 powershell 里，但一个 powershell 窗口只能运行一次，因为类型不能重复定义
+        (Add-Type -MemberDefinition '[DllImport("user32.dll")] public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);' -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)
+如何用命令行打开windows的控制面板
+    按下 Win 键 + R 键，打开运行对话框，输入 control ，然后按回车键
+    在 cmd 或 powershell 或 其他终端里，输入 control ，然后按回车键
+在没有管理员权限的前提下运行需要管理员权限的程序
+    运行前先设置好环境变量
+        set __COMPAT_LAYER=RUNASINVOKER
+        export __COMPAT_LAYER=RUNASINVOKER;
+        [Environment]::SetEnvironmentVariable('__COMPAT_LAYER', 'RUNASINVOKER', [EnvironmentVariableTarget]::Process)
+    如果是安装程序，那么安装的路径不能在系统盘里，
+        安装的路径可以选择 %USERPROFILE%\AppData\Local
+在windows中，通过 pid 获取进程的命令行
+    $process = Get-WmiObject Win32_Process -Filter "ProcessId = 49532"; if ($process) {return $process.CommandLine} else {return $null}
+    Get-WmiObject -Class Win32_Process -Filter "name = 'php-cgi.exe'"
 计算机科学的五次浪潮
     大型机     1945 第一台通用的电子计算机
     个人计算机 1975 微软成立

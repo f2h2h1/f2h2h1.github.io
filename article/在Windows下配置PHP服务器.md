@@ -129,13 +129,24 @@ composer config -g repo.packagist composer https://packagist.phpcomposer.com
 7. 在 PHP 的文件夹下新建一个名为 composer 的文件，把以下内容复制进去，然后保存，这样在 git bash 里也可以直接用 composer 的命令了
 ```
 #!/usr/bin/env sh
-"$(dirname "$0")"/php.exe "$(dirname "$0")"/composer.phar $*
+dp0=$(dirname "$0")
+"$dp0"/php.exe "$dp0"/composer.phar $*
+```
+
+powershell 的版本 composer.ps1
+```powershell
+$dp0 = Split-Path -Parent $MyInvocation.MyCommand.Source
+$php = (Join-Path -Path $dp0 -ChildPath php.exe)
+$composer = (Join-Path -Path $dp0 -ChildPath composer.phar)
+PowerShell -command $php $composer $args
 ```
 
 composer 的脚本文件使用绝对路径是为了方便安装多个版本的 php
 ```
 bat 下的绝对路径
 "%~dp0php.exe"
+powershell 下的绝对路径
+Split-Path -Parent $MyInvocation.MyCommand.Source
 sh 下的绝对路径
 "$(dirname "$0")"/php.exe
 ```
@@ -596,21 +607,28 @@ hosts 的文件位置是 `%WINDIR%\System32\drivers\etc\hosts`
 修改 hosts 需要管理员权限，直接用记事本修改会保存失败的，可以用 vscode 修改
 
 或者打开管理员的命令行，再在命令行里打开记事本，再用记事本打开 hosts
-例如这样 这是 bat 的
+或者用 vscode 打开， vscode 在保存时会自动提示管理员权限的授权
+例如这样
 ```
 notepad %WINDIR%\System32\drivers\etc\hosts
+notepad $env:windir\system32\drivers\etc\hosts
+notepad "$WINDIR/system32/drivers/etc/hosts"
+
+code %WINDIR%\System32\drivers\etc\hosts
+code $env:windir\system32\drivers\etc\hosts
+code "$WINDIR/system32/drivers/etc/hosts"
 ```
 
-或者这样 这是 powershell 的
+hosts 修改后，要记得刷新 DNS ，可以用这个命令刷新 DNS
 ```
-notepad $env:windir\system32\drivers\etc\hosts
+ipconfig /flushdns
 ```
 
 hosts 修改后，可以用这个命令 `nslookup 域名` 来判断有没有生效
 
-hosts 修改后如果沒有生效，可以用这个命令刷新 DNS `ipconfig /flushdns`
-
 windows 的 hosts 文件需要是 ascii 编码或 ansi 编码，用其它编码 hosts 可能会无效
+
+如果没有权限修改 hosts 文件，可以在本地自建一个 DNS 服务
 
 ### 一些实用的命令
 
