@@ -414,7 +414,7 @@ echo $retSql;
 一次输出 eav 对象全部属性的 sql ，用于 product 和 category 的
 ```php
 $entityId = '3893';
-$entityTabel = 'catalog_product_entity';
+$entityTabel = 'catalog_product_entity'; // catalog_category_entity
 $eavTable = [
     'varchar',
     'int',
@@ -939,6 +939,28 @@ return fetch(`${graphqlEndpoint}`, {
     }
 });
 })();
+
+
+graphqlquery=$(cat <<- EOF
+query {
+  customer {
+    email
+    firstname
+    lastname
+  }
+}
+EOF
+);
+graphqlquery=$(echo -n $graphqlquery | php -r 'print(http_build_query(["query"=>file_get_contents("php://stdin")]));');
+curl -v -L -k 'https://magento2.localhost.com/graphql?'$graphqlquery \
+    -H 'authorization: Bearer 214dee33a45a11eeae4800e04c947949' \
+    -H 'accept: */*' \
+    -H 'cache-control: no-cache' \
+    -H 'accept: application/json' \
+    --cookie "XDEBUG_SESSION=vscode" \
+    --resolve magento2.localhost.com:80:127.0.0.1 \
+    --resolve magento2.localhost.com:443:127.0.0.1 \
+    --no-progress-meter
 
 
 -->

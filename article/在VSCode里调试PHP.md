@@ -60,7 +60,7 @@
     xdebug.client_host = 127.0.0.1
     xdebug.client_port = 9003
     xdebug.connect_timeout_ms = 2000
-    xdebug.start_with_request = no
+    xdebug.start_with_request = "trigger"
     ```
 
 2.9 配置参考文档
@@ -100,6 +100,12 @@ IntelliSense 的插件有两个， IntelliSense 只需要装一个就可以的�
     - xdebug 3.0
         ```
         php -d xdebug.start_with_request=yes test.php
+        ```
+    - 在环境变量中，把 XDEBUG_SESSION 的值设为和配置中 idekey 的值一样也能触发调试
+        ```
+        export XDEBUG_SESSION=vscode; php test.php
+        set XDEBUG_SESSION=vscode && php test.php
+        $Env:XDEBUG_SESSION = "vscode"; php test.php
         ```
 4. 如无意外，当代码运行到断点时会自动停止
 
