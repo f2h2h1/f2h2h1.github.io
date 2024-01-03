@@ -1828,6 +1828,28 @@ https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/
 
 <!-- select * from core_config_data where path like '%promo/promotion_group/email_address%' limit 10 -->
 
+<!--
+
+block -> ui_component -> system.xml
+
+ui_component的文档
+https://developer.adobe.com/commerce/frontend-core/ui-components/
+
+后台配置的文档
+https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/files/config-reference-systemxml.html
+后台配置页的Controller
+vendor\magento\module-config\Controller\Adminhtml\System\Config\Edit.php
+后台配置页的 layout 文件
+vendor\magento\module-config\view\adminhtml\layout\adminhtml_system_config_edit.xml
+后台配置页的block文件
+vendor\magento\module-config\Block\System\Config\Edit.php
+vendor\magento\module-config\Block\System\Config\Form.php
+后台配置页的phtml文件
+vendor\magento\module-config\view\adminhtml\templates\system\config\edit.phtml
+vendor\magento\module-backend\view\adminhtml\templates\widget\form.phtml
+
+-->
+
 ## 前端
 
 <!--
@@ -1909,15 +1931,24 @@ vendor\magento\module-theme\view\base\requirejs-config.js
 
 在加载 lib\web\requirejs\require.js 之前，会有这一段 js 是用来指示 js 的加载路径的
 <script>
-var BASE_URL = 'https\u003A\u002F\u002Fshop\u002Ddev.theclub.com.hk\u002F';
+var BASE_URL = 'https\u003A\u002F\u002Fshop\u002Dlocalhost-magento\u002F';
 var require = {
-    'baseUrl': 'https\u003A\u002F\u002Fshop\u002Ddev.theclub.com.hk\u002Fstatic\u002Fversion1669169968\u002Ffrontend\u002FHKT\u002Fstandard\u002Fen_US'
+    'baseUrl': 'https\u003A\u002F\u002Fshop\u002Dlocalhost-magento\u002Fstatic\u002Fversion1669169968\u002Ffrontend\u002Flocal_dev\u002Fstandard\u002Fen_US'
 };
 </script>
 
 这是第一个引入的 js 文件
 lib\web\requirejs\require.js
-pub\static\frontend\HKT\standard\en_US\requirejs\require.js
+pub\static\frontend\local_dev\standard\en_US\requirejs\require.js
+
+这是第二个引入的 js文件
+static/frontend/local_dev/standard/en_US/mage/requirejs/mixins.js
+
+这是第三个引入的 js文件
+static/frontend/local_dev/standard/en_US/requirejs-config.js
+
+输出 requirejs 全部的配置项
+requirejs.s.contexts._.config
 
 
 mage 开头的前端文件 是来自这个文件夹的
@@ -2096,13 +2127,84 @@ vendor\magento\framework\View\Element\Template.php
 这个标签里的代码似乎都是 json
 这里的 json 数据似乎会加载到 对应 模块 里的 config 变量里
 html标签中的data-mage-init属性似乎也有类似的作用
+https://developer.adobe.com/commerce/frontend-core/javascript/init/
+
+通常会和 jqui 的 widget 或 magento 的 ui 配合来用
+
+用在 define 类型的 js 文件里
+模块名定义在 主题或模块的这个文件里 requirejs-config.js
+
+例子
+这是 define 的定义
+define(['jquery'], function($)
+{
+     return function(config, element)
+     {
+        console.log(element);
+        console.log(config);
+     };
+});
+这是 requirejs-config.js
+var config = {
+    map: {
+        '*': {
+                'carousel': 'js/carousel'
+            }
+        }
+};
+这是 config
+<script type="text/x-magento-init">
+    {
+        "#<carousel_name>": {
+            "carousel": {"option": value}
+        },
+        "*": { // 如果是星号，则不绑定节点
+            "carousel": {"option": value}
+        }
+    }
+</script>
+这是写在 html标签中的data-mage-init属性
+<div data-mage-init='{"carousel":{"option": value}}'>
 
 
-magento2 是如何加载对象的？
+
+
+data-mage-init 属性是一种在 Magento 2 中初始化 JavaScript 的方法。
+它允许你在 HTML 元素上指定一个 JSON 对象，该对象包含要调用的 RequireJS 模块的名称和配置参数。
+例如，如果你有一个 HTML 元素如下：
+<div id="example" data-mage-init='{"js/example": {"a": "Hello from attribute"}}'></div>
+那么当页面加载时，Magento 会自动调用 js/example 这个 RequireJS 模块，
+并传递 {“a”: “Hello from attribute”} 这个 JSON 对象作为配置参数。
+你可以在 js/example 模块中使用这个参数来实现你的逻辑。
+例如，你可以在 js/example 模块中这样定义：
+define ( [ 'jquery' ], function ($) {
+    'use strict' ;
+    return function (config) {
+        console. log ( config ); // will output {a: "Hello from attribute"}
+        alert ( config .a); // would be equal to alert ( "Hello from attribute" );
+    }
+});
+这样，你就可以在 HTML 元素上使用 data-mage-init 属性来初始化 JavaScript，而不需要在模板中插入 <script> 标签。
+这样可以使你的代码更简洁和可维护。
+
+在这两个文件里把 <script type="text/x-magento-init"> 和 data-mage-init属性的json数据加载到对应的模块里
+lib\web\mage\apply\main.js
+lib\web\mage\apply\scripts.js
+
+这几个文件的加载顺序猜测是这样的
+vendor\magento\module-theme\view\frontend\requirejs-config.js
+    lib\web\mage\bootstrap.js
+        lib\web\mage\apply\main.js
+            lib\web\mage\apply\scripts.js
+
+这个目录下的文件应该就是magento2的js文件了
+lib\web\mage
+
+这似乎也是一份重要的js文件
+lib\web\mage\mage.js
 
 
 /** @var \Magento\Framework\View\TemplateEngine\Php $this */
-
 
 
 magento2 的分层
@@ -2125,6 +2227,20 @@ var require = {
 这是第一个引入的 js 文件
 lib\web\requirejs\require.js
 pub\static\frontend\Magento\standard\en_US\requirejs\require.js
+
+前端 大致的 加载 流程
+    假设已经输出了 完整的html
+        先加载两个全局变量 BASE_URL require
+        再依次加载这三份文件
+            requirejs/require.js requirejs库
+            requirejs/mixins.js requirejs的插件
+            requirejs-config.js requirejs的配置，这个文件是由各个主题和模块里的 requirejs-config.js 文件合并而成的
+                requirejs-config.js 会指示各个模块的加载路径
+                目测会按以下顺序加载模块
+                    knockoutjs
+                    mage/utils/main 这个应该是来自 magento2 的模块，在这个模块里会加载 underscore
+                    mage/requirejs/resolver 这个应该是来自 magento2 的模块
+                    jquery-ui 在这个模块里会加载 jquery
 
 
 
@@ -3127,6 +3243,112 @@ php bin/magento deploy:mode:set developer
 magento2 安装示例数据，安装示例数据需要切换到开发者模式
 php bin/magento sampledata:deploy
 php bin/magento setup:upgrade
+
+
+magento2 是如何加载对象的？
+Plugins 是如何实现的？
+preference 是如何实现的？
+Events 是如何实现的？
+
+有没有什么办法可以手动更新 generated 里的文件？
+
+
+
+一个 界面 的显示是被哪些数据所影响的？
+数据
+    赋值在哪里
+    保存在哪里
+    显示在哪里
+    从获取到显示之间经过了哪些位置？
+
+
+magento2 是如何加载对象的？
+    这个要先了解 composer 是如何自动加载对象的
+        spl_autoload_register
+        这个要先了解 原生的php 是如何加载对象的
+            include include_once
+            require require_once
+            命名空间
+
+    模块下的这几个文件是什么时候加载的？
+        etc/module.xml
+        composer.json 这个是给 composer 用的，只有 composer 的命令会用到
+        registration.php 也是通过 composer 的文件来加载的
+            根目录下的 composer.json 里有声明
+            引用这个文件 app/etc/NonComposerComponentRegistration.php
+            NonComposerComponentRegistration.php 会加载全部模块下的 registration.php
+            其实 registration.php 也只是运行一次 \Magento\Framework\Component\ComponentRegistrar::register
+
+
+magento2 是如何读取配置的？
+    没有缓存的
+    有缓存的
+
+    配置文件是通过这里读取的
+    \Magento\Framework\Config\FileResolverInterface
+    \Magento\Framework\Config\FileResolver
+    获取配置文件路径
+    vendor\magento\framework\Module\Dir\Reader.php
+    读取配置文件内容
+    vendor\magento\framework\Filesystem\File\Read.php
+
+    这个是用于读取配置的
+    \Magento\Framework\App\Config\ScopeConfigInterface \Magento\Framework\App\Config
+        \Magento\Framework\App\Config\ScopeCodeResolver
+        \Magento\Framework\App\Config\ConfigTypeInterface
+            \Magento\Framework\App\Config\ConfigSourceInterface Magento\Config\App\Config\Type\System
+                \Magento\Config\App\Config\Type\System\Reader
+                    \Magento\Framework\App\Config\ConfigSourceInterface 这个接口似乎有很多实现的类
+    这个是用于修改配置的，主要是针对数据库的 core_config_data 表
+    \Magento\Config\Model\Config
+
+    后台配置页的Controller
+    vendor\magento\module-config\Controller\Adminhtml\System\Config\Edit.php
+
+    最早的配置是在 \Magento\Framework\App\ObjectManagerFactory create 里读取的
+    在这个方法中 \Magento\Framework\App\ObjectManagerFactory create
+        会创建一个新的 ObjectManager 对象，
+            会传入 \Magento\Framework\ObjectManager\FactoryInterface 对象，
+            最早的 di 文件，
+            最早的 $sharedInstances 这些对象是写死在代码里的
+
+
+
+入口文件
+    require __DIR__ . '/app/bootstrap.php';
+        require_once __DIR__ . '/autoload.php'; // 在这个位置加载 composer
+            ./vendor/autoload.php
+    // 创建一个 Bootstrap 对象
+    $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+    // 创建一个 Application 对象
+    $app = $bootstrap->createApplication(\Magento\Framework\App\Http::class);
+        // Application 对象 也是通过 objectManager 对象创建的
+        // $application = $this->objectManager->create($type, $arguments);
+    // 通过 Bootstrap 对象 运行 Application 对象
+    $bootstrap->run($app);
+        // 这两句是关键
+        $response = $application->launch(); // 处理请求
+        $response->sendResponse(); // 输出响应
+
+vendor\magento\framework\App\Http.php launch
+    vendor\magento\framework\App\FrontController.php dispatch
+        vendor/magento/framework/App/Router/DefaultRouter.php match // 匹配路由
+        processRequest // 处理请求
+            vendor\magento\framework\App\Request\ValidatorInterface.php validate // 判断请求是否合法
+            getActionResponse // 处理请求
+                执行 $actionInstance->dispatch($request); 或 $actionInstance->execute();
+                $actionInstance 就是具体的控制器对象了
+                从这里返回的就是 result 了
+    renderResult
+
+
+magento2 的命令行是通过 
+\Magento\Framework\Console\Cli 继承 \Symfony\Component\Console\Application
+后，直接调用 \Symfony\Component\Console\Application doRun 实现的
+所以 magento2 的核心其实是
+\Magento\Framework\App\Bootstrap
+\Magento\Framework\App\ObjectManagerFactory
+\Magento\Framework\App\ObjectManager
 
 
 

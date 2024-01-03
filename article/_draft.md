@@ -4401,15 +4401,20 @@ linux 应用的一般启动套路
     匹配路由并渲染对应的内容
     放行不匹配的路由
 telnet rlogin ssh
-    rexec/rlogin/rsh都属于rsh-server包
-        Berkeley r-commands
-        rcp
-        rexec
+    telnet 是最古老的，通常 telnet 连接成功后启动的是 login 程序
+    rexec/rlogin/rsh都属于rsh-server包，又或者叫做 Berkeley r-commands
         rlogin
+        rexec
         rsh
+        rcp
         rstat 从内核返回性能统计信息。
         ruptime 显示自上次重新启动以来 Unix 系统运行了多长时间
         rwho 列出登录到本地网络上所有多用户 Unix 系统的用户
+    rlogin 类似于 telnet ，但因为是专用于远程shell的协议，所以实现起来比 telnet 更简单，连接速度也会稍微快一点，但也是只支持交互式的shell
+    rexec 就是和 rlogin 差不多但只支持非交互式shell，就是一次只能执行一行命令
+    rsh 和现代的 ssh 很类似了，只是少了加密的功能
+    ssh
+        和 telnet r-commands 相比，ssh 有完善的加密机制，可以有交互式的shell和非交互式的shell
     这几个是 windows 的
         r rcmd rscript rtrem
     图形界面的远程控制主要是 RFB 和 RDP ，RFB 就是 vnc 使用的协议， RDP 就是 windows 远程桌面使用的协议
@@ -4467,6 +4472,17 @@ nas
         市电
         ups
         超级电容
+    nas 有哪些流媒体解决方案？
+        ftp
+        smb
+        nfs
+        WebDAV
+        DLNA
+        Miracast
+        单独建一个网站或app
+            直出视频文件
+            使用hls
+    除了视频之外还可以继续有 音频 图片 文档 等等
     更多？
         连接其它设备？物联网？智能家电？all in one？
             忽略 猫 和 路由 ？
@@ -4474,7 +4490,7 @@ nas
         更多的存储设备
             用于冷备的硬盘
             网盘上再放一份数据？
-        放在哪里？体积？噪声？
+        放在哪里？体积？噪声？辐射？
         费用？
             硬件费用，电费，网费
 和声音相关的笔记
@@ -4584,6 +4600,7 @@ php updateMetadata.php
 只更新了一点内容
     update fraction 日期
     update fraction 20211223
+    pwd; sleep 8000; git commit -m "update fraction "$(date +%Y%m%d); git push;
 修改 错别字 标点 格式
     update format
 更新 sitemap 之类的文件
