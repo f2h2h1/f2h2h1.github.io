@@ -94,5 +94,17 @@
         "href": "https://www.wanglingyue.com",
         "desc": "Sky Blog，技术博客",
         "avatar": "https://cdn.wanglingyue.com/me-1.jpg"
+    },
+    {
+        "name": "王子高的个人博客",
+        "href": "https://zigaow.com",
+        "desc": "与时俱进，创未来。",
+        "avatar": "https://zigao.wang/photo.png"
+    },
+    {
+        "name": "小孙同学",
+        "href": "https://blog.sunguoqi.com",
+        "desc": "路虽远行则将至，事虽难做则必成！",
+        "avatar": "https://blog.sunguoqi.com/images/avatar.jpg"
     }
 ]

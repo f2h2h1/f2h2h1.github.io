@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- articleList -->
+- [ACME的使用经验](/article/ACME的使用经验.md)
 - [文件的上传和下载](/article/文件的上传和下载.md)
 - [终端，控制台和外壳](/article/终端，控制台和外壳.md)
 - [和颜色相关的笔记](/article/和颜色相关的笔记.md)
@@ -78,6 +79,8 @@
 |[仙士可博客](https://www.php20.cn/)||https://www.php20.cn/||
 |[Barney’s Blog](https://hugo.bnblogs.cc/)|<img alt="Barney’s Blog" src="https://hugo.bnblogs.cc/images/img/20220215001349.png" width="119" />|https://hugo.bnblogs.cc/|All the truth is simple|
 |[Sky Blog](https://www.wanglingyue.com)|<img alt="Sky Blog" src="https://cdn.wanglingyue.com/me-1.jpg" width="119" />|https://www.wanglingyue.com|Sky Blog，技术博客|
+|[王子高的个人博客](https://zigaow.com)|<img alt="王子高的个人博客" src="https://zigao.wang/photo.png" width="119" />|https://zigaow.com|与时俱进，创未来。|
+|[小孙同学](https://blog.sunguoqi.com)|<img alt="小孙同学" src="https://blog.sunguoqi.com/images/avatar.jpg" width="119" />|https://blog.sunguoqi.com|路虽远行则将至，事虽难做则必成！|
 <!-- exchangeList -->
 
 <!--
