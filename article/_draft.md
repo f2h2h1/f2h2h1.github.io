@@ -3576,73 +3576,6 @@ ELF格式
     查看文件格式 `file 文件路径`
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
-acme
-    ACME
-        Automatic Certificate Management Environment
-        自动 证书 管理 环境
-    ACME 的 rfc
-        rfc8555
-    下载和安装
-        acme.sh的GitHub仓库
-            https://github.com/acmesh-official/acme.sh
-        acme.sh 的中文说明
-            https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E
-            https://github.com/acmesh-official/acme.sh/wiki/Blogs-and-tutorials#%E4%B8%AD%E6%96%87
-        直接下载安装
-            curl https://get.acme.sh | sh -s email=my@example.com
-        从源码安装
-            git clone --depth 1 https://github.com/acmesh-official/acme.sh.git
-            cd acme.sh
-            ./acme.sh --install -m my@example.com
-        安装完后把 .acme.sh 文件夹复制到用户的根目录下，类似这样 /root/.acme.sh/
-        创建一个别名
-            在 ~/.bashrc 加入这一行
-                alias acme.sh=~/.acme.sh/acme.sh
-            然后再运行这句 source ~/.bashrc
-            如果没有 ~/.bashrc ，就新建一个 touch ~/.bashrc
-        其实把安装后的目录复制到根目录和创建别名都不是必须的，但为了贴合文档的教程和方便使用，最好还是这样做
-    申请证书
-        运行这句命令，http服务需要已经启用，并且是监听 80 端口的
-        这句命令运行后会输出证书生成的位置
-            acme.sh --issue -d example.com -d www.example.com --webroot /home/wwwroot/example.com/
-        acme.sh 临时运行一个 webserver, 临时听在80 端口，这是使用 socat 实现的，所以要先安装好 socat
-            acme.sh --issue -d example.com -d www.example.com --webroot /home/wwwroot/example.com/ --standalone
-    安装证书
-        acme.sh --install-cert -d www.example.com \
-            --cert-file      /c/nginx/crt/www.example.com/cert.pem  \
-            --key-file       /c/nginx/crt/www.example.com/blog.complexcloud.site.key \
-            --fullchain-file /c/nginx/crt/www.example.com/fullchain.cer \
-            --reloadcmd     "service nginx force-reload"
-        安装证书后 --reloadcmd 不能修改，要修改 --reloadcmd 命令，就重新安装一次证书，直接改配置文件也是可以的，但文档里不推荐这样做
-        其实安装证书这步不是必须的，可以自己手动把证书复制到 nginx 对应的目录里，但没有安装证书这一步就不能自动续签
-    自动续签证书
-        一般的命令
-            ./acme.sh/acme.sh --cron --home "/root/.acme.sh" > /dev/null
-        写成 cron 表达式
-            0 2 * * * /bin/bash /root/.acme.sh --cron --home "/root/.acme.sh" > /dev/null
-    其它命令
-        查看全部证书
-            acme.sh --list
-        产看全部证书，包括已过的
-            acme.sh --list-archive
-        查看已安装证书的信息
-            acme.sh --info -d www.example.com
-        更新
-            acme.sh --upgrade
-        开启自动更新
-            acme.sh --upgrade --auto-upgrade
-        关闭自动更新
-            acme.sh --upgrade --auto-upgrade 0
-    在 windows 里使用
-        https://github.com/acmesh-official/acme.sh/wiki#4-how-to-run-on-windows-with-cygwin-or-git-bash
-        先安装好 cygwin 环境，其实装好 git for windows 就可以了
-        然后和 linux 的步骤基本一致
-        需要注意
-            路径都要写成 linux 的格式，例如 网站根目录 ， 证书安装路径 这些
-                类似这样的 /c/nginx/crt/www.example.com/cert.pem
-            安装证书时的 reloadcmd 命令
-            自读续签证书的定时任务可以使用 windows 计划任务，但这样的写法，任务运行时会有一个黑框弹出来（我用了很多方法依然无法隐藏这个黑框，在服务器里每晚运行一次的话应该没关系的吧，即使有黑框也是一闪而过）
-                Register-ScheduledTask -TaskName "acme_cron" -AsJob -Trigger (New-ScheduledTaskTrigger -Daily -At "2:00 AM") -Action (New-ScheduledTaskAction -Execute "PowerShell" -Argument "-Nolog -NonInteractive -WindowStyle Hidden -Command `"C:\Users\a\Git\usr\bin\bash.exe -l /c/Users/a/.acme.sh/acme.sh --cron --home /c/Users/a/.acme.sh`"")
 定时任务
     cron
         安装
@@ -4589,6 +4522,12 @@ git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
 
 php updateMetadata.php
 
+node cli.js --build="updateMatedata" --config-host="https://f2h2h1.github.io" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=true
+
+node cli.js --build="createPage" --config-host="https://blog.complexcloud.site" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
+
+node cli.js --build="updateMatedata|createPage" --config-host="https://blog.complexcloud.site" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
+
 不要同时提交两篇文章
 
 新增一篇文章
@@ -4608,5 +4547,6 @@ php updateMetadata.php
     update auxiliary 日期
     update auxiliary 20211223
     update auxiliary article
+    git commit -m "update auxiliary "$(date +%Y%m%d); git push;
 
 ````
