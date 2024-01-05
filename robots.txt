@@ -1,3 +1,5 @@
 User-agent: *
+Disallow: /.git/
+Disallow: /.github/
 Disallow: /.vscode/
 Sitemap: https://f2h2h1.github.io/sitemap.xml

@@ -210,6 +210,7 @@ class cli {
         let xmlstr = '';
         let spaceLen = 4;
         var that = this;
+
         mainTemplate = `
             <urlset
                 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -465,7 +466,7 @@ class cli {
             }
             let attr = prop.substring(prefix.length, prop.length);
             let val = argvArr[prop];
-            console.log(attr, val);
+            // console.log(attr, val);
             if (appData.hasOwnProperty(attr)) {
                 if (attr == 'thirdPartyCode') {
                     if (val == 'false') {
@@ -556,15 +557,22 @@ class cli {
             let config = this.serverConfig;
             switch (config.type) {
                 case 'static':
+                    console.log(this.serverConfig);
                     console.log('static server');
                     this.server(config, config.type);
                     break;
                 case 'backendRender':
+                    console.log(this.serverConfig);
                     console.log('backendRender server');
                     this.server(config, config.type);
                     break;
+                // case 'backendStaticRender': // html文件存在就输出文件，不存在就创建一个html文件再输出
+                //         console.log(this.serverConfig);
+                //         console.log('backendStaticRender server');
+                //         this.server(config, config.type);
+                //         break;
                 default:
-                    console.log('server type of build argument');
+                    console.log('do not start server');
             }
         // }
 

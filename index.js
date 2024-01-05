@@ -216,7 +216,7 @@ class Application {
                 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
                 进行许可。</p>
                 </aside>`;
-        if (new Date().getTime() / 1000 - articleInfo['updateTime'] > 15552000) {
+        if (new Date().getTime() / 1000 - articleInfo['updateTime'] > 15552000) { // 3600*24*30*6
             let tips = '<p class="expired-prompt">这篇文章最后更新的时间在六个月之前，文章所叙述的内容可能已经失效，请谨慎参考！</p>';
             articleHtml = articleHtml.trim();
             articleHtml = articleHtml.replace(/<h1.*>.*<\/h1>/i, "$& " + tips);
@@ -331,6 +331,12 @@ a = a.replace(/<article id="content">[ |\t]*<h1.*>.*<\/h1>/i, "$& asd");
 console.log(a);
 
 要有一个重建标题的过程
+
+友链也要做一个 rss ？
+一个单独的友链页面？
+    普通的友链，推荐的友链，要定时删除访问不了的友链
+再加一个最近更新？
+为每篇文章加个目录？
 
 
 */
