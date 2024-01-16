@@ -4,10 +4,24 @@
     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
     <link href="https://f2h2h1.github.io/" />
     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    <updated>2024-01-04T18:49:50+08:00</updated>
+    <updated>2024-01-16T13:18:10+08:00</updated>
     <author>
         <name>f2h2h1's blog</name>
     </author>
+    <entry>
+        <title>nc的使用和原理</title>
+        <link href="https://f2h2h1.github.io/article/nc的使用和原理.html" />
+        <id>https://f2h2h1.github.io/article/nc的使用和原理.html</id>
+        <updated>2024-01-16T13:16:29+08:00</updated>
+        <summary>nc的使用和原理</summary>
+    </entry>
+    <entry>
+        <title>定时任务</title>
+        <link href="https://f2h2h1.github.io/article/定时任务.html" />
+        <id>https://f2h2h1.github.io/article/定时任务.html</id>
+        <updated>2024-01-11T13:38:01+08:00</updated>
+        <summary>定时任务</summary>
+    </entry>
     <entry>
         <title>ACME的使用经验</title>
         <link href="https://f2h2h1.github.io/article/ACME的使用经验.html" />
@@ -166,7 +180,7 @@
         <title>开发Magento2的模块</title>
         <link href="https://f2h2h1.github.io/article/开发Magento2的模块.html" />
         <id>https://f2h2h1.github.io/article/开发Magento2的模块.html</id>
-        <updated>2024-01-03T18:17:33+08:00</updated>
+        <updated>2024-01-16T13:17:47+08:00</updated>
         <summary>开发Magento2的模块</summary>
     </entry>
     <entry>
@@ -285,7 +299,7 @@
         <title>一些开发笔记</title>
         <link href="https://f2h2h1.github.io/article/一些开发笔记.html" />
         <id>https://f2h2h1.github.io/article/一些开发笔记.html</id>
-        <updated>2023-12-27T18:27:08+08:00</updated>
+        <updated>2024-01-16T13:17:47+08:00</updated>
         <summary>一些开发笔记</summary>
     </entry>
     <entry>

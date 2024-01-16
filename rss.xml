@@ -6,6 +6,20 @@
         <description>f2h2h1's blog</description>
         <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>nc的使用和原理</title>
+            <link>https://f2h2h1.github.io/article/nc的使用和原理.html</link>
+            <description>nc的使用和原理</description>
+            <pubDate>Tue, 16 Jan 2024 13:16:29 +0800</pubDate>
+            <guid>https://f2h2h1.github.io/article/nc的使用和原理.html</guid>
+        </item>
+        <item>
+            <title>定时任务</title>
+            <link>https://f2h2h1.github.io/article/定时任务.html</link>
+            <description>定时任务</description>
+            <pubDate>Thu, 11 Jan 2024 13:38:01 +0800</pubDate>
+            <guid>https://f2h2h1.github.io/article/定时任务.html</guid>
+        </item>
+        <item>
             <title>ACME的使用经验</title>
             <link>https://f2h2h1.github.io/article/ACME的使用经验.html</link>
             <description>ACME的使用经验</description>
@@ -163,7 +177,7 @@
             <title>开发Magento2的模块</title>
             <link>https://f2h2h1.github.io/article/开发Magento2的模块.html</link>
             <description>开发Magento2的模块</description>
-            <pubDate>Wed, 03 Jan 2024 18:17:33 +0800</pubDate>
+            <pubDate>Tue, 16 Jan 2024 13:17:47 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/开发Magento2的模块.html</guid>
         </item>
         <item>
@@ -282,7 +296,7 @@
             <title>一些开发笔记</title>
             <link>https://f2h2h1.github.io/article/一些开发笔记.html</link>
             <description>一些开发笔记</description>
-            <pubDate>Wed, 27 Dec 2023 18:27:08 +0800</pubDate>
+            <pubDate>Tue, 16 Jan 2024 13:17:47 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/一些开发笔记.html</guid>
         </item>
         <item>
