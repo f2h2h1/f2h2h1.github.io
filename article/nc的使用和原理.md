@@ -23,12 +23,13 @@ netcat 的原始版本是一个 Unix 程序。
     - ncat 通常是指 nmap 版的 nc
     - ncat 的包名通常是 ncat nmap-ncat
     - https://github.com/nmap/nmap/tree/master/ncat
-    ncat 是 nmap 项目的组成部分。
-
-        Nmap (“Network Mapper(网络映射器)”) 
-        Nmap（“网络映射器”）是一个免费的开源实用程序，用于 网络发现和安全审核。
-        除了经典的命令行 Nmap 可执行文件之外，Nmap 套件包括
-        高级 GUI 和结果查看器 （Zenmap），一个灵活的数据 传输、重定向和调试工具 （Ncat），一个实用程序 比较扫描结果 （Ndiff） 和数据包生成和响应分析工具 （Nping）
+    - ncat 是 nmap 项目的组成部分。
+    - Nmap (“Network Mapper(网络映射器)”) 是一个免费的开源实用程序，用于 网络发现和安全审核。
+    - 除了经典的命令行 Nmap 可执行文件之外，Nmap 套件包括
+        - 高级 GUI 和结果查看器 （Zenmap），
+        - 一个灵活的数据 传输、重定向和调试工具 （Ncat），
+        - 一个实用程序 比较扫描结果 （Ndiff） 
+        - 数据包生成和响应分析工具 （Nping）
 - socat
     - socat 的官方文档描述它是 "netcat++" (extended design, new implementation)
     - socat 的包名就是 socat
@@ -36,6 +37,7 @@ netcat 的原始版本是一个 Unix 程序。
     - http://www.dest-unreach.org/socat/
 - BusyBox 版
     - https://github.com/mirror/busybox/blob/master/networking/nc.c
+    - 同样地 toybox 里也有一个 nc
 - 除此之外，还有一个 cryptcat
     - cryptcat 是 netcat 的变体，基本上就是多了一个 密码 的参数
     - cryptcat 好像是来自 kali linux
@@ -267,5 +269,10 @@ nc 有哪些通用的语法？
 如果 bash 有 /usr/lib/bash/accept 这个特性，那么直接用 bash 实现一个 nc 也不是不可以的
 
 <!--
-用 python 和 php 实现一个 nc ，只实现 -v -h -l 这三个参数即可。
+用 python 和 php 实现一个 nc ，只实现 -h -l -e 这三个参数即可。
+
+理论上只要实现了 l p e 三个参数就能作为服务端运行
+即使没有 e 参数，也能通过管道实现各种奇技淫巧
+也就是只需要实现 l p 即可
+
 -->

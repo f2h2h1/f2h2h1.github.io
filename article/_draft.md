@@ -3471,12 +3471,12 @@ io 模型
             强制的锁
         死锁 (Deadlock)
     实现上的锁
-        文件锁
+        文件锁 (file lock)
             从写代码的角度来看，就是各种系统调用
         mysql锁
             死锁
         redis锁
-    分布式锁
+    分布式锁 (Distributed lock)
 信号量 (semaphore)
 管程 (monitors)
 事务 (transaction)
@@ -3491,6 +3491,8 @@ io 模型
     interrupt 中断
     exception 异常
     traps 陷阱
+    PIC (Programmable Interrupt Controller, 可编程中断控制器)
+    APIC (Advanced Programmable Interrupt Controller, 高级可编程中断控制器)
 CPU的工作模式
     CPU的工作模式是指CPU的寻址方式、寄存器大小等用来反应CPU在该环境下如何工作的概念。
     现代计算机只有在开机时CPU工作在实模式，而后的一切工作都是在保护模式下进行
@@ -3581,6 +3583,8 @@ MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
         mysql 可以使用多种存储引擎
         mysql 在集群上有更成熟的方案
+        连接模型：MySQL采用在每个连接上生成一个新线程，而PostgreSQL采用在每个连接上生成一个新进程，PostgreSQL提供了更好的隔离性，但也消耗了更多的资源
+        PostgreSQL 支持物化视图
         pg 更倾向于 OLAP 在 OLTP 的性能上可能追不上 mysql
         但因为 pg 的软件协议更加宽松，使得我在情感上更加倾向于 pg
         或许 MariaDB 是相对折中和务实的选择
@@ -3695,6 +3699,7 @@ bash 如何接收标准输入和环境变量？
         printenv PATH;
     如果遇到需要处理二进制数据的情况，可以尝试使用 xxd od hexdump 这类命令
 bash 里如何实现多维数组？
+bash 里如何实现一个 trim ？
 termux
     下载和安装
         要先下载和安装 f-droid https://f-droid.org/
@@ -4010,6 +4015,10 @@ nas
     硬件
         就普通的服务器，然后再加上 ups
         至少两块硬盘
+    RAID
+        Redundant Array of Independent Disks 独立磁盘冗余阵列，简称为「磁盘阵列」
+        常见的 RAID
+            0 1 5 6 10 50 53 60
     网
         宽带
             双路宽带？
