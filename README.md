@@ -95,6 +95,7 @@ https://tumutanzi.com/
 https://blog.ihomura.cn/
 https://blog.roco.work/
 https://www.liuxinggang.com/
+https://hugo.bnblogs.cc/
 -->
 
 ## 在本地运行
