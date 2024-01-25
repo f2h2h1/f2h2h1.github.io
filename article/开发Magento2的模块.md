@@ -171,7 +171,7 @@ app
                             这个目录下的 xml 文件就是页面布局文件，文件名就是布局id
                         ui_component 也是放 xml 文件，但还不知道有什么用
                             这里的 xml 文件可以在 layout 里引用
-                        template
+                        templates
                             *.phtml
                         web
                             css
@@ -184,6 +184,7 @@ app
                                     这个文件夹下的 js 就是前端的 component ，继承自 magento2 的 uiComponent
                                     这个文件夹下的 js 应该实和 template 里的 html 文件一一对应的，
                                     但也可以在 js 里修改模板的路径
+                                *.js 直接放在 js 目录下的通常是 jq 的 widget
                             template
                                 这里放的是 html 文件
                                 这些 html 文件通常是 ko 的模板
@@ -1874,6 +1875,7 @@ layoutContent
         jQuery.Deferred
     jquery-ui
         jquery-ui 的 widget
+            通常直接写在 view/frontend/web/js 目录下
     underscore
     knockoutjs
         knockoutjs 的模板又是怎样的？
@@ -1893,10 +1895,14 @@ uiElement 继承自 uiClass
 uiClass 是普通的类
 uiElement 可以算是 knockoutjs 里的视图模型了
 
-uiElement:      'Magento_Ui/js/lib/core/element/element', vendor\magento\module-ui\view\base\web\js\lib\core\element\element.js
 uiCollection:   'Magento_Ui/js/lib/core/collection', vendor\magento\module-ui\view\base\web\js\lib\core\collection.js
 uiComponent:    'Magento_Ui/js/lib/core/collection', vendor\magento\module-ui\view\base\web\js\lib\core\collection.js
+uiElement:      'Magento_Ui/js/lib/core/element/element', vendor\magento\module-ui\view\base\web\js\lib\core\element\element.js
 uiClass:        'Magento_Ui/js/lib/core/class', vendor\magento\module-ui\view\base\web\js\lib\core\class.js
+
+uiElement 和 uiClass 都有用到 underscore 的 extend 方法
+
+uiElement 中的 template 就是纯粹的 html 文件了
 
 uiRegistry
 vendor\magento\module-ui\view\base\web\js\lib\registry\registry.js
@@ -1978,8 +1984,12 @@ vendor/magento/module-ui/view/base/web/js/lib/ko/template/renderer.js
 ko 的文档里提到了三种模板引擎
     ko 自身的
         大致分成四部分
-            html代码 -> 通常写在 phtml 文件里
-            js模板(view) -> 通常写在 views/web/template
+            html代码 -> 通常写在 views/templates ， 就是 phtml 文件
+                例子
+                    <div name="coupon-wrapper" data-bind="scope: 'coupon-wrapper'" class="coupon-wrapper">
+                    &lt;!-- ko template: getTemplate() --&gt;&lt;!-- /ko --&gt;
+                    </div>
+            js模板(view) -> 通常写在 views/web/template ， 就是 html 文件，通常由 view model 通过 ajax 加载
             js代码(model) -> 通常写在 views/web/js/model
             js代码(view model) -> 通常写在 views/web/js/view
                 通常 view 和 view model 是一一对应的
@@ -2199,6 +2209,7 @@ vendor\magento\module-theme\view\frontend\requirejs-config.js
     lib\web\mage\bootstrap.js
         lib\web\mage\apply\main.js
             lib\web\mage\apply\scripts.js
+            apply 方法，在这个方法里会加载全部的 uiComponent
 
 这个目录下的文件应该就是magento2的js文件了
 lib\web\mage
@@ -2230,6 +2241,12 @@ var require = {
 这是第一个引入的 js 文件
 lib\web\requirejs\require.js
 pub\static\frontend\Magento\standard\en_US\requirejs\require.js
+
+这是输出 html 的流程
+page_layout -> layout -> templates
+大致就是先读取 page_layout 和 layout
+然后根据配置加载 block 和 templates
+然后调用 block 的 _toHtml 方法
 
 前端 大致的 加载 流程
     假设已经输出了 完整的html
@@ -2874,9 +2891,25 @@ https://www.kancloud.cn/zouhongzhao/magento2-in-action
 vendor\magento\zendframework1\library\Zend\Db\Select.php
 _where
 
-在这个位置加上 filter
+Filter
 vendor\magento\framework\Api\Filter.php
 vendor\magento\framework\Api\AbstractSimpleObject.php
+
+FilterGroup
+vendor\magento\framework\Api\Search\FilterGroup.php
+vendor\magento\framework\Api\AbstractSimpleObject.php
+
+filter_groups -> FilterGroup的数组
+FilterGroup -> \Magento\Framework\Api\Search\FilterGroup
+filters -> Filter的数组
+Filter ->  \Magento\Framework\Api\Search\Filter
+
+搜索通常是使用这两种对象
+SearchCriteria
+Collection
+
+搜索通常是把 Filter 转换为 sql 或 es 的 where 语句
+
 
 getData 和 setData
 一般的对象
@@ -3153,7 +3186,7 @@ magento2的布局有两种类型
 2. 页面配置(page configuration) -> 在 layout 目录里的 xml 文件
 
 页面布局 的 xml 只包含 容器
-页面布局 的 文件名 就是 布局id
+页面配置 的 文件名 就是 布局id
 
 绝大多数情况下修改的是 页面配置 文件
 
@@ -3272,6 +3305,11 @@ magento2 是如何加载对象的？
             include include_once
             require require_once
             命名空间
+    几乎所有的类都是通过 \Magento\Framework\App\ObjectManager 的 create 方法创建的
+    create 方法 之后才是 composer 的 loadClass 方法
+        \Magento\Framework\App\ObjectManager create ->
+        \Magento\Framework\ObjectManager\ObjectManager create ->
+        \Magento\Framework\ObjectManager\Factory\AbstractFactory createObject
 
     模块下的这几个文件是什么时候加载的？
         etc/module.xml
