@@ -275,4 +275,21 @@ nc 有哪些通用的语法？
 即使没有 e 参数，也能通过管道实现各种奇技淫巧
 也就是只需要实现 l p 即可
 
+c 如何实现一个交互式的命令行？
+php 如何实现一个交互式的命令行？
+python 如何实现一个交互式的命令行？
+
+https://github.com/mirror/busybox/blob/master/networking/telnet.c
+https://github.com/mirror/busybox/blob/master/networking/telnetd.c
+
+https://docs.python.org/zh-cn/3/library/telnetlib.html
+https://github.com/python/cpython/tree/3.12/Lib/telnetlib.py
+    这个文件似乎能直接左右 telnet 客户端使用
+    python telnetlib.py [-d] ... [host [port]]
+https://www.cnblogs.com/mrlayfolk/p/15154813.html
+
+https://github.com/search?q=telnet+language%3AC&type=repositories&l=PHP&s=stars&o=desc
+https://github.com/fijiwebdesign/php-telnet
+https://github.com/diotteo/TelnetClient.php
+
 -->

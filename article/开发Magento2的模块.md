@@ -2065,13 +2065,17 @@ pub\static\frontend\LocalDev\standard\en_US\requirejs-config.js
 pub\static\area\开发商\主题\语言包\前端的文件
 
 areaCode
+    global
     frontend
-    backend
-    base
-    cron
-    webrest_api
-    graphql
+    adminhtml
+    doc
+    crontab
+    webapi_rest
     webapi_soap
+    graphql
+
+areaCode 的值在这个位置
+vendor\magento\framework\App\Area.php
 
 https://developer.adobe.com/commerce/php/architecture/modules/areas/
 

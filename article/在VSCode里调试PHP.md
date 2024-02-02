@@ -104,6 +104,7 @@ IntelliSense 的插件有两个， IntelliSense 只需要装一个就可以的�
     - 在环境变量中，把 XDEBUG_SESSION 的值设为和配置中 idekey 的值一样也能触发调试
         ```
         export XDEBUG_SESSION=vscode; php test.php
+        export XDEBUG_SESSION=vscodetest; php -d xdebug.idekey=vscodetest test.php
         set XDEBUG_SESSION=vscode && php test.php
         $Env:XDEBUG_SESSION = "vscode"; php test.php
         ```
