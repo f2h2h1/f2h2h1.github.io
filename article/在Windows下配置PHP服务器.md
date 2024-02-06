@@ -94,7 +94,12 @@ php 需要安装 vc 依赖，在 php 下载页面的左边有 vc 库的下载链
         max_execution_time 运行时间的最大值
         short_open_tag 是否启用短标签
         ```
-1. 最好也启用 opcache ，启用 opcache 需要在配置文件的 [opcache] 下加上这样一句 `zend_extension = "php path\ext\php_opcache.dll"`
+1. 最好也启用 opcache ，启用 opcache 需要在配置文件的 [opcache] 下加上这样一句 
+    ```
+    zend_extension = "php path\ext\php_opcache.dll" # 如果 php_opcache.dll 在其它目录就填这句，这是绝对路径
+    zend_extension = "php_opcache.dll" # 如果 php_opcache.dll 在 ext 目录就填这句
+    ```
+    
 1. 还有就是命令行运行也启用 opcache `opcache.enable_cli=1`
 
 ### composer
@@ -108,7 +113,30 @@ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 
 3. 安装
 ```
+# 安装最新的版本
 php composer-setup.php
+# 安装版本 2.2 ， 2.2 是 lts
+php composer-setup.php --2.2
+# 安装版本 2 中最新的版本
+php composer-setup.php --2
+# 安装版本 1 中最新的版本
+php composer-setup.php --1
+```
+
+安装 composer 时遇到这种错误
+```
+PHP Warning: copy(): SSL operation failed with code 1
+```
+
+在 php 的安装目录里运行这句
+```
+curl --remote-name cacert.pem https://curl.se/ca/cacert.pem
+```
+
+然后修改 php.ini
+```
+openssl.cafile = "/etc/ssl/certs/cacert.pem" # 如果 cacert.pem 在其它目录就填这句，这是绝对路径
+openssl.cafile = ./cacert.pem # 如果 cacert.pem 在php的安装目录就填这句
 ```
 
 4. 删除安装脚本
@@ -133,6 +161,11 @@ dp0=$(dirname "$0")
 "$dp0"/php.exe "$dp0"/composer.phar $*
 ```
 
+写成别名的形式，加到 ~/.bashrc 里也是可以的，但 composer.phar 要写成绝对路径
+```
+alias composer="php /c/Users/a/dev/php/composer.phar"
+```
+
 powershell 的版本 composer.ps1
 ```powershell
 $dp0 = Split-Path -Parent $MyInvocation.MyCommand.Source
@@ -150,6 +183,21 @@ Split-Path -Parent $MyInvocation.MyCommand.Source
 sh 下的绝对路径
 "$(dirname "$0")"/php.exe
 ```
+
+8. 最好提前准备好 github 的 oauth toekn
+    - 因为 composer 下载包时会经常从 github 里下载，如果没有 token 会很快就出发匿名 api 的访问限制
+    - https://getcomposer.org/doc/articles/authentication-for-private-packages.md#github-oauth
+    - 同样地最好提前设置好代理，因为 github 总是间歇性访问不了
+    - oauth token 填在 auth.json 里
+        ```
+        这个文件 auth.json 可以放在项目的根目录里，
+        也可以放在全局的配置里 C:\Users\a\AppData\Roaming\Composer\auth.json
+        {
+            "github-oauth": {
+                "github.com": "123qwMbCqG4nOVFc1wx3kuwvZ3lwObrWny2nRe39"
+            }
+        }
+        ```
 
 ### xdebug
 
@@ -187,16 +235,16 @@ https://dev.mysql.com/
     # 允许连接失败的次数。这是为了防止有人从该主机试图攻击数据库系统
     max_connect_errors=10
     # 服务端使用的字符集默认为UTF8
-    character-set-server=utf8
+    character-set-server=utf8mb4
     # 创建新表时将使用的默认存储引擎
     default-storage-engine=INNODB
     [mysql]
     # 设置mysql客户端默认字符集
-    default-character-set=utf8
+    default-character-set=utf8mb4
     [client]
     # 设置mysql客户端连接服务端时默认使用的端口
     port=3306
-    default-character-set=utf8
+    default-character-set=utf8mb4
     ```
     - my.ini 的编码必须为 utf-8 无 bom，换行符使用 \n
     - 遇到错误时，可以去查看 data 文件夹里， err 后缀的文件
@@ -234,7 +282,7 @@ https://dev.mysql.com/
         - 上面命令的服务名是 mysql ，这个服务名可以自定以的。启动服务前需要先注册服务，移除服务前需要先停止服务。
     - 只能以一种方式运行，因为是 zip 版，笔者更倾向于用 命令行运行
 
-7. 修改密码，以次运行以下命令
+7. 修改密码，依次运行以下命令
     ```
     # 登入 mysql
     mysql -uroot -p
@@ -264,6 +312,11 @@ https://dev.mysql.com/
     select Host, User, Plugin from user;
     ```
 
+10. 如果遇到这种错误，用命令行登录一次，然后改密码就好了
+    ```
+    Your password has expired. To log in you must change it using a client that supports expired
+    ```
+
 ### 5.7
 1. 下载 zip 版
 1. 从官网下载时，要用心找一下，因为 5.7 算是旧版了，下载地址不像 8 那样显眼
@@ -280,7 +333,7 @@ https://dev.mysql.com/
     1. 第一次运行时要修改 root 密码
     1. 用命令行运行mysql的客户端
         ```
-        mysql -uroot
+        mysql -uroot -p
         ```
     1. 进入 mysql 后，依次运行下面的命令
         ```
