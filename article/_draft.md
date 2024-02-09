@@ -3862,7 +3862,8 @@ linux 应用的一般启动套路
             tar -jcvf test.tar.bz2 test
                 把名为 test 的文件或目录打包并使用 bzip2 压缩，最后生成的文件命名为 test.tar.bz2
             c 新建打包文件
-            z 使用 gzip 压缩
+            z 使用 gzip 压缩或解压缩
+            j 表示使用 bzip2 压缩或解压缩
             v 显示打包和压缩的过程
             f 指定生成的文件路径
     压缩
@@ -3935,6 +3936,12 @@ linux 应用的一般启动套路
         归档并压缩
         软件打包和分发
         容器文件技术
+    一些例子
+        apt install zip unzip 7z-full 7z-rar
+            7z-full 是 7z 的常规版，如果要让 7z 支持 rar 格式还需要格外安装 7z-rar
+        把当前目录下的 wp-plugin 文件或目录 压缩成 wp-plugin.zip 文件
+            zip -r wp-plugin.zip wp-plugin
+            7z a -tzip wp-plugin.zip wp-plugin
 各种帮助文件
     man info
     hlp chm hsx mshc h1s
