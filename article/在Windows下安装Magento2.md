@@ -499,6 +499,7 @@ patch 文件的内容
                  [
                      $virtualTypes,
                      $this->scopePriorityScheme,
+
 ```
 
 这是针对使用 github 新建的项目，如果是通过 composer 新建的项目，要替换一些路径
@@ -525,7 +526,7 @@ echo "
 先确定好哪些文件需要修改
 复制一份
 修改文件
-生成 patch 文件
+生成 patch 文件，patch 的文件结尾要有一个空行
 替换 patch 文件里的路径
 在项目根目录执行 patch
 ";

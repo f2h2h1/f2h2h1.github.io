@@ -1929,6 +1929,10 @@ uiRegistry vendor\magento\module-ui\view\base\web\js\lib\registry\registry.js
 uiClass 好像也是继承自 underscore 
 uiClass 好像和 mageUtils 和 mage/utils/wrapper 密切相关
 而 mageUtils 和 mage/utils/wrapper 则是来自 underscore
+mageUtils 里包含了
+    objects lib\web\mage\utils\objects.js
+    template lib\web\mage\utils\template.js
+objects 里又包含了 ko
 
 knockout lib\web\knockoutjs\knockout.js
 lib\web\requirejs\require.js
@@ -2271,6 +2275,25 @@ page_layout -> layout -> templates
                     mage/requirejs/resolver 这个应该是来自 magento2 的模块
                     jquery-ui 在这个模块里会加载 jquery
 
+
+require('knockout');
+require('knockout').components
+
+require('knockout').utils.domData
+
+
+require('mageUtils')
+
+这样可以找到对应的 ui component ，问题在于 name 比较长，问题也在于如何找到对应的 name
+require('uiRegistry').get('sales_order_shipment_grid.sales_order_shipment_grid.listing_top.listing_filters')
+require('uiRegistry').get('sales_order_shipment_grid.sales_order_shipment_grid.listing_top.fulltext')
+
+输出全部 ui component
+require('uiRegistry').filter(function(a){console.log(a)})
+
+如何通过 ui component 找到对应的 dom 节点 ？
+如何通过 dom 节点找到对应的 ui component ？
+如何判断一个 dom节点有没有绑定 ui component ？
 
 
 // 确保 customerData 加载完后执行的方法
