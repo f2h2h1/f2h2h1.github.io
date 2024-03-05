@@ -3423,6 +3423,24 @@ magento2 的命令行是通过
 \Magento\Framework\App\ObjectManagerFactory
 \Magento\Framework\App\ObjectManager
 
+路由
+    配置文件中的 routes.xml
+    数据库中的表
+        url_rewrite
+        catalog_url_rewrite_product_category
+view 下的 layout 下的 xml 文件的命名方式通常是，都是小写字母
+    routeid_controller_action
+    如果 routeid 或 controller 或 action 里有下滑线或大写字母时要怎么处理？
+action类的 execute 方法通常是返回一个 \Magento\Framework\View\Result\Page 对象
 
+action类的 execute 方法大概就返回四种 result
+    \Magento\Framework\View\Result\page
+    \Magento\Framework\Controller\Result\Json
+    \Magento\Framework\Controller\Result\Raw
+    \Magento\Framework\Controller\Result\Forward 转发到其它 action
+    \Magento\Framework\Controller\Result\Redirect http的重定向
+这些类都继承自 \Magento\Framework\Controller\AbstractResult
+
+如何加载 page_layout 和 layout 还是有一点模糊
 
 -->

@@ -284,7 +284,7 @@ https://github.com/mirror/busybox/blob/master/networking/telnetd.c
 
 https://docs.python.org/zh-cn/3/library/telnetlib.html
 https://github.com/python/cpython/tree/3.12/Lib/telnetlib.py
-    这个文件似乎能直接左右 telnet 客户端使用
+    这个文件似乎能直接作为 telnet 客户端使用
     python telnetlib.py [-d] ... [host [port]]
 https://www.cnblogs.com/mrlayfolk/p/15154813.html
 

@@ -2892,6 +2892,10 @@ composer
             "archive": {
                 "exclude": ["var/cache/", "tmp", "/*.test", "!/var/di/"]
             }
+        git 也有类似的打包功能
+            在项目根目录下运行这句，
+            git archive --format=tar --output=archiveFileName.tar HEAD
+            git archive --format=zip --output=archiveFileName.zip HEAD
     给composer里的库打补丁
         下载这个库 cweagans/composer-patches
             composer require cweagans/composer-patches
@@ -3943,6 +3947,109 @@ linux 应用的一般启动套路
         把当前目录下的 wp-plugin 文件或目录 压缩成 wp-plugin.zip 文件
             zip -r wp-plugin.zip wp-plugin
             7z a -tzip wp-plugin.zip wp-plugin
+wordpress
+    前置依赖
+        php 和 mysql
+    安装和配置
+        直接下载源码就可以啦
+    wp-cli
+        下载和安装
+            从 github 下载 wp-cli.phar ， 这是文档推荐的，下载到 wp的根目录里
+                curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+                像这样使用 php wp-cli.phar --info
+                然后可以搞一个别名 alias wp="php wp-cli.phar"
+            通过 composer 安装
+                通过命令行 composer require wp-cli/wp-cli-bundle
+                通过配置文件，然后 composer install
+                {
+                    "require": {
+                        "wp-cli/wp-cli-bundle": "*"
+                    }
+                }
+                像这样使用
+                    composer exec -v -- wp --info
+                    ./vendor/bin/wp info
+                别名
+                    alias wp="composer exec -v -- wp "
+                    alias wp="./vendor/bin/wp "
+            wp-cli 还可以通过 docker 安装
+        一般命令
+            wp info
+            创建 wp-config.php 文件
+                wp config create --dbname=wp --dbuser=root --dbpass=1234
+            运行 web server ，这个需要先创建 wp-config.php 文件
+                wp server --host=127.0.0.1 --port=80
+            忘记密码后用来修改密码的， 1 是userid
+                php wp-cli.phar user update 1 --user_pass=password
+        如果是使用 composer exec 来运行 wp server 则需要设置 compoer 的 timeout ， composer 的 timeout 默认是 300 秒
+            通过配置文件设置
+                {
+                    "config": {
+                        "process-timeout": 0
+                    }
+                }
+            通过环境变量设置
+            export COMPOSER_PROCESS_TIMEOUT=0
+    WooCommerce 安装和配置
+        示例数据
+            商品数据
+        支付方式
+    其它常用的插件
+    如何开发一个插件？
+        wp 没有composer
+        wp 核心没有面向对象
+        WordPress是由三大部分组成的，
+            即WordPress核心、主题和插件
+            主题：决定了网站的外观、设计、界面，基本上理解为访客所看到的网站的样子；
+            插件：扩展WordPress核心的各种功能，达到自己网站的功能定制。
+            WordPress开发，指的是主题和插件的定制开发。
+        插件 基本上就是 函数 和 钩子(Hook)
+            钩子又分为两类 动作(Actions)和过滤器(Filters)
+            do_action apply_filter
+            add_action add_filter
+            remove_action remove_filter
+            动作不需要返回值，动作是有副作用的，动作可以操作数据库和直接输出
+            过滤器需要返回值，过滤器不应该有副作用
+            简单来说，Action 用来添加功能，Filter 用来修改数据
+            其实两种 Hook 的运作方式几乎一样，只差在增加 Action Hook 函式不需回传值
+        最简单的插件例子，只需要一个文件 wp-content/plugins/example.php
+        一般的例子，一个文件夹 wp-content/plugins/example/
+        创建插件时需要的 3 个基础钩子是  register_activation_hook()，register_deactivation_hook()  和 register_uninstall_hook()。
+            register_activation_hook 我们激活插件时会运行，我们可以使用这个钩子挂载一个函数来设置我们的插件，例如在数据表中添加一些默认设置。
+            register_deactivation_hook 在我们禁用插件时运行，我们可以挂载一个清理插件数据的函数来清理一些临时数据。
+            register_uninstall_hook 在我们卸载插件时运行，我们可以挂载一个清理插件所有数据的函数来清理数据库中不再需要的插件数据。
+    在 wp 中如何使用 composer
+        主题 和 插件 是可以通过 composer 安装的
+        主题 在 composer 中的 type 是 wordpress-theme
+        插件 在 composer 中的 type 是 wordpress-plugin 或 wordpress-muplugin ，通常都是 wordpress-plugin
+        只要正确的修改 composer 的配置，就能把插件安装到对应的目录
+        "extra": {
+        "installer-paths": {
+            "wp-content/plugins/{$name}/": [
+            "type:wordpress-plugin"
+            ]
+            "wp-content/themes/{$name}/": [
+            "type:wordpress-theme"
+            ]
+        }
+    如何给 woo 增加支付方式
+    如何把 wp 建设成 询盘型的外贸企业站 ？
+    如何把 wp 建设成 B2C外贸卖货网站 ？
+    在 wp 中如何跟踪物流信息？
+        这个插件 17track ？
+    WordPress如何使用SQLite？
+        分两种情况，
+        一是全新的WordPress站点，
+        二是已经有数据的WordPress站点。
+        https://make.wordpress.org/core/2022/09/12/lets-make-wordpress-officially-support-sqlite/
+        https://wpmore.cn/wordpress-%e5%8f%91%e5%b8%83%e4%ba%86%e7%8b%ac%e7%ab%8b%e7%9a%84-sqlite-%e6%8f%92%e4%bb%b6.html
+        既然可以使用 sqlite ，那么使用 PostgreSQL 也是可以的吧
+接入 alipay+ 的过程
+    注册和设置
+    支付
+    回调
+    退款
+    查询支付结果
 各种帮助文件
     man info
     hlp chm hsx mshc h1s
@@ -3992,13 +4099,47 @@ telnet rlogin ssh
 如何用命令行打开windows的控制面板
     按下 Win 键 + R 键，打开运行对话框，输入 control ，然后按回车键
     在 cmd 或 powershell 或 其他终端里，输入 control ，然后按回车键
-在没有管理员权限的前提下运行需要管理员权限的程序
-    运行前先设置好环境变量
+在没有管理员权限的前提下
+    运行需要管理员权限的程序
+        设置环境变量，通过 cmd 或 powershell 修改当前进程的环境变量，这个是不需要权限的
         set __COMPAT_LAYER=RUNASINVOKER
         export __COMPAT_LAYER=RUNASINVOKER;
         [Environment]::SetEnvironmentVariable('__COMPAT_LAYER', 'RUNASINVOKER', [EnvironmentVariableTarget]::Process)
     如果是安装程序，那么安装的路径不能在系统盘里，
+        先把安装程序复制到 不是系统盘的目录，或者这个目录 %USERPROFILE%
+        然后再设置环境变量
         安装的路径可以选择 %USERPROFILE%\AppData\Local
+    修改环境变量
+        只修改当前用户的环境变量，不修改系统的环境变量
+    无法修改 hosts 文件
+        自建一个 dns 服务，并设为网卡的首选dns
+        https://github.com/NLnetLabs/unbound
+        要记得把原本的 dns 设为转发地址
+判断服务是否可用
+    假设客户端是没有问题的情况下
+    判断域名解释
+        nslookup -debug test.com
+        nslookup -debug -querytype=any test.com
+        nslookup -debug -querytype=any test.com 8.8.8.8
+        Resolve-DnsName test.com
+        Resolve-DnsName test.com -type ALL
+        Resolve-DnsName test.com -type ALL -server 8.8.8.8 
+    判断是否能ping通
+        ping -n 4 test.com
+        ping -n 4 127.0.0.1
+        Test-NetConnection -ComputerName "127.0.0.1" -InformationLevel "Detailed"
+        Test-NetConnection -ComputerName "127.0.0.1" -TraceRoute -InformationLevel "Detailed"
+    判断端口是否开放
+        nc -v -i 1 127.0.0.1 801
+        Test-NetConnection -ComputerName "test.com" -Port 80 -InformationLevel "Detailed"
+    判断服务是否可用
+        http服务
+            访问首页 curl -v -L http://test.com
+            访问HealthCheck curl -v -L http://test.com/HealthCheck
+        代理服务
+            curl -v -L --proxy 127.0.0.1:6080 https://www.google.com.hk
+            curl -v -L --ssl-no-revoke --proxy 127.0.0.1:6080 https://www.google.com.hk
+            curl -v -L -k --proxy 127.0.0.1:6080 https://www.google.com.hk
 在windows中，通过 pid 获取进程的命令行
     $process = Get-WmiObject Win32_Process -Filter "ProcessId = 49532"; if ($process) {return $process.CommandLine} else {return $null}
     Get-WmiObject -Class Win32_Process -Filter "name = 'php-cgi.exe'"
