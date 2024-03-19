@@ -400,6 +400,16 @@ js 的各种循环方法
         obj instanceof Object && obj !== null;
         这两种方式都无法区分普通对象 数组 和 函数
     用 Object.prototype.toString 最稳
+        Object.prototype.toString.call({}); // '[object Object]'
+        Object.prototype.toString.call([]); // '[object Array]'
+        Object.prototype.toString.call(function(){}); // '[object Function]'
+        Object.prototype.toString.call(1); // '[object Number]'
+        Object.prototype.toString.call('1'); // '[object String]'
+        Object.prototype.toString.call(true); // '[object Boolean]'
+        Object.prototype.toString.call(null); // '[object Null]'
+        Object.prototype.toString.call(); // '[object Undefined]'
+        Object.prototype.toString.call(BigInt("0x1fffffffffffff")); // '[object BigInt]'
+        Object.prototype.toString.call(Symbol(42)); // '[object Symbol]'
 如何判断对象是否有某个属性
     in 和 hasOwnProperty
     hasOwnProperty 自身的属性

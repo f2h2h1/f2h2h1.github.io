@@ -1122,6 +1122,8 @@ vscode的使用技巧
         可以先找几家不是目标公司面试，先积累一下面试的感觉
         先准备一周，然后随便面试一周，最后才是目标公司的面试（但准备这么久目标公司的岗位可能已经没有了）
         面试的关键在于 预判面试官的问题，预判面试官对问题答案的期待
+        面试技巧是锦上添花，不能作为核心竞争力
+        面试技巧最主要的作用是向招聘单位准确全面地展示自己的能力，尽量地收集招聘单位的信息，保持必要的体面
     拒绝不合适的公司
         要对比已经收到的 offer
     试用期期间要考虑去留
@@ -4012,27 +4014,42 @@ wordpress
             过滤器需要返回值，过滤器不应该有副作用
             简单来说，Action 用来添加功能，Filter 用来修改数据
             其实两种 Hook 的运作方式几乎一样，只差在增加 Action Hook 函式不需回传值
+            例子
+                add_action('example_action', function(){
+                    echo 'example';
+                });
+                add_filter('example_filter', function($msg){
+                    return $msg;
+                });
+                do_action('example_action');
+                echo apply_filters('example_filter', 'example');
         最简单的插件例子，只需要一个文件 wp-content/plugins/example.php
         一般的例子，一个文件夹 wp-content/plugins/example/
         创建插件时需要的 3 个基础钩子是  register_activation_hook()，register_deactivation_hook()  和 register_uninstall_hook()。
             register_activation_hook 我们激活插件时会运行，我们可以使用这个钩子挂载一个函数来设置我们的插件，例如在数据表中添加一些默认设置。
             register_deactivation_hook 在我们禁用插件时运行，我们可以挂载一个清理插件数据的函数来清理一些临时数据。
             register_uninstall_hook 在我们卸载插件时运行，我们可以挂载一个清理插件所有数据的函数来清理数据库中不再需要的插件数据。
+        插件的配置保存在哪里？
+    如何调试 wp ？
     在 wp 中如何使用 composer
         主题 和 插件 是可以通过 composer 安装的
         主题 在 composer 中的 type 是 wordpress-theme
         插件 在 composer 中的 type 是 wordpress-plugin 或 wordpress-muplugin ，通常都是 wordpress-plugin
         只要正确的修改 composer 的配置，就能把插件安装到对应的目录
         "extra": {
-        "installer-paths": {
-            "wp-content/plugins/{$name}/": [
-            "type:wordpress-plugin"
-            ]
-            "wp-content/themes/{$name}/": [
-            "type:wordpress-theme"
-            ]
+            "installer-paths": {
+                "wp-content/plugins/{$name}/": [
+                    "type:wordpress-plugin"
+                ]
+                "wp-content/themes/{$name}/": [
+                    "type:wordpress-theme"
+                ]
+            }
         }
-    如何给 woo 增加支付方式
+    能用于 wp 的 dockerfile 和 docker-compose.yml ？
+    如何给 woo 增加支付方式 ？
+    wordpress 如何实现 国际化/多语言 ？
+    wordpress 如何实现 群站 ？
     如何把 wp 建设成 询盘型的外贸企业站 ？
     如何把 wp 建设成 B2C外贸卖货网站 ？
     在 wp 中如何跟踪物流信息？

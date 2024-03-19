@@ -285,4 +285,15 @@ select
     @@global.system_time_zone, @@global.time_zone, @@session.time_zone
 ;
 
+在 mysql 中 CST ，至少有两种含义
+Central Standard Time (USA) UT-6:00 美国标准时间
+China Standard Time UT+8:00 中国标准时间
+
+比较保险的方式是通过 select now(); 对比一下当前的时间
+
+修改 global.time_zone 的值，改成 +08:00 这种形式
+set global time_zone='+08:00';
+flush privileges;
+
+
 -->
