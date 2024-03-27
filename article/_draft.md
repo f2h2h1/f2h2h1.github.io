@@ -1490,6 +1490,15 @@ vscode的使用技巧
         要确保这几个端口的开放
             25 465 143 993
             除了安全组，防火墙，还要向运营商确认这几个端口有没有开放
+    php 发送邮件示例
+        使用原本的函数
+            mail 函数
+            windows 环境
+            linux 环境
+            关注 sendmail 这个命令
+        使用第三方库
+            https://github.com/PHPMailer/PHPMailer/
+            https://github.com/symfony/mailer
 使用正则表达式实现的关键词过滤
     定义关键词列表
     把关键词转换为正则表达式
