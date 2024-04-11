@@ -2291,6 +2291,10 @@ require('uiRegistry').get('sales_order_shipment_grid.sales_order_shipment_grid.l
 输出全部 ui component
 require('uiRegistry').filter(function(a){console.log(a)})
 
+require('uiRegistry').filter(function(a){
+    if (a.name) console.log(a.name); else console.log(a);
+})
+
 如何通过 ui component 找到对应的 dom 节点 ？
 如何通过 dom 节点找到对应的 ui component ？
 如何判断一个 dom节点有没有绑定 ui component ？

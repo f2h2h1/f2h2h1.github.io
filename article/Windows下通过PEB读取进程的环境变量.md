@@ -1,6 +1,6 @@
 # Windows 下通过 PEB 读取进程的环境变量
 
-Windows 下没有能 api 能直接读取进程的环境变量。
+Windows 下没有 api 能直接读取进程的环境变量。
 wmi 和 powershell 也没有方式能读取进程的环境变量。
 在 powershell 5.1 里确实可以通过象这样的命令读取环境变量，但这并不是进程的环境变量。
 ```powershell
