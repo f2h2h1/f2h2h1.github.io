@@ -6,6 +6,12 @@
         "avatar": ""
     },
     {
+        "name":"中文博客集锦",
+        "href": "https://nobodxbodon.github.io",
+        "desc": "",
+        "avatar": ""
+    },
+    {
         "name": "开往",
         "href": "https://www.travellings.cn/go.html",
         "desc": "开往-友链接力",
@@ -100,5 +106,11 @@
         "href": "https://blog.sunguoqi.com",
         "desc": "路虽远行则将至，事虽难做则必成！",
         "avatar": "https://blog.sunguoqi.com/images/avatar.jpg"
+    },
+    {
+        "name": "idealclover",
+        "href": "https://idealclover.top",
+        "desc": "Stay simple, stay naive.",
+        "avatar": "https://image.idealclover.cn/blog/assets/icon.png"
     }
 ]
