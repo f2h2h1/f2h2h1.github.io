@@ -266,7 +266,9 @@ nc 有哪些通用的语法？
 
 用 python 和 php 实现一个 nc
 
-如果 bash 有 /usr/lib/bash/accept 这个特性，那么直接用 bash 实现一个 nc 也不是不可以的
+如果 bash 有 /usr/lib/bash/accept 这个特性，那么直接用 bash 实现一个 nc 也不是不可以的。
+客户端部分用 exec /dev/tcp/$host/$port 和 exec /dev/udp/$host/$port 来实现，
+服务端部分用 /usr/lib/bash/accept 来实现。
 
 <!--
 用 python 和 php 实现一个 nc ，只实现 -h -l -e 这三个参数即可。

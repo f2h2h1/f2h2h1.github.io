@@ -110,6 +110,10 @@
         静态路由
         动态路由
             迪达拉算法
+            距离向量路由协议（Distance Vector Routing Protocol）：
+                RIP（Routing Information Protocol）和IGRP（Interior Gateway Routing Protocol），它们使用跳数作为衡量指标。
+            链路状态路由协议（Link State Routing Protocol）：
+                OSPF（Open Shortest Path First）和IS-IS（Intermediate System to Intermediate System），它们通过交换链路状态信息来构建网络拓扑图。
     tcp 和 udp
     什么是socket
     从socket里读写内容
@@ -191,6 +195,8 @@
                     pac
             websocket
                 WebSocket Secure (wss)
+            认证 和 授权
+            流量控制
         TLS
             1.2
             1.3
@@ -351,7 +357,7 @@
                     进程调度 -> cpu
                     内存分配 -> 内存
                     文件系统 -> 硬盘
-                    网络栈 其实可以算到驱动里，但现代操作系统的网络很重要
+                    网络栈 其实可以算到驱动里，但现代操作系统的网络很重要，流量控制
                 系统调用
                 外围程序
                     shell
@@ -825,7 +831,7 @@ vscode的使用技巧
         刚毕业简历尽量不要超过1张单面a4纸，工作五年内不要超过2张单面a4纸
         内容
             个人信息
-                姓名 性别 出生年月 期望工位 期望工资 入职时间
+                姓名 性别 出生年月 期望岗位 期望工资 入职时间
                 leetcode主页 github主页 blog
                 联系方式
                     邮箱 手机
@@ -1507,10 +1513,62 @@ vscode的使用技巧
         openssl s_client -quiet -connect smtp.qq.com:465
 如何实现一个搜索引擎？
 客户端的动画？
-    js jq css3 还有哪些库？
-    古早时期的动画是如何实现的？
+    动画是如何实现的？
+        js
+            setInterval
+            requestAnimationFrame
+        css3
+            transform
+            transition
+            animation
+        jq
+            显示和隐藏
+                show hide toggle
+            淡入和淡出
+                fadeIn fadeOut fadeToggle fadeTo
+            滑动
+                slideDown slideUp slideToggle
+            延迟执行 delay
+            通用的动画方法 animate
+            可以链式执行
+        还有哪些库？
+            animate.css
+            animate.js
+            Three.js
+            Popmotion 这个是 bootstrap 采用的
+        古早时期的动画
+            通过 setInterval 实现的，或者直接用 jq 的库
     实现原理？
+        持续时间 -> 持续的秒数
+        时序函数 ->
+            连续的 ->
+                线性 linear
+                    关键字 linear 等价于 linear(0, 1) 等价于 cubic-bezier(0, 0, 1, 1)
+                三次贝塞尔曲线 cubic-bezier
+                    ease 等价于 cubic-bezier(0.25, 0.1, 0.25, 1.0)
+                    ease-in 等价于 cubic-bezier(0.42, 0, 1.0, 1.0)
+                    ease-out 等价于 cubic-bezier(0, 0, 0.58, 1.0)
+                    ease-in-out 等价于 cubic-bezier(0.42, 0, 0.58, 1.0)
+            离散的 -> 阶跃函数 steps
+                jump-start
+                jump-end
+                jump-none
+                jump-both
+                start 等价于 jump-start
+                end 等价于 jump-end
+                step-start
+                step-end
+        绘制函数 -> 需要改变的属性
+        延迟执行 -> 延迟多少秒执行
     分类？
+        改变形状
+        改变颜色
+        平移
+        旋转
+        改变透明度
+        Z 轴顺序
+        显示和隐藏
+        本质上是改变属性？
 使用正则表达式实现的关键词过滤
     定义关键词列表
     把关键词转换为正则表达式
@@ -4123,6 +4181,7 @@ telnet rlogin ssh
     这几个是 windows 的
         r rcmd rscript rtrem
     图形界面的远程控制主要是 RFB 和 RDP ，RFB 就是 vnc 使用的协议， RDP 就是 windows 远程桌面使用的协议
+    无论是哪一种，本质上都是建立连接然后传输数据，传输控制数据和图像数据
 如何用一条命令关闭windows的屏幕
     这一句只能运行在 cmd 里
         powershell (Add-Type '[DllImport(\"user32.dll\")]^public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);' -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)
@@ -4170,6 +4229,10 @@ telnet rlogin ssh
     判断端口是否开放
         nc -v -i 1 127.0.0.1 801
         Test-NetConnection -ComputerName "test.com" -Port 80 -InformationLevel "Detailed"
+        curl -v telnet://127.0.0.1:801
+            如果连接成功，curl会显示Connected信息。如果一直显示Trying，则表示连接不通。使用Ctrl+C可以退出
+        (echo >/dev/tcp/www.baidu.com/80) >/dev/null 2>&1 && echo "www.baidu.com 80 open"
+            这个只能在 bash 中使用，如果一直没有输出，则表示连接不通。使用Ctrl+C可以退出
     判断服务是否可用
         http服务
             访问首页 curl -v -L http://test.com
@@ -4338,6 +4401,8 @@ node cli.js --build="createPage" --config-host="https://blog.complexcloud.site" 
 
 node cli.js --build="updateMatedata|createPage" --config-host="https://blog.complexcloud.site" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
 
+node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:8022" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
+
 不要同时提交两篇文章
 
 新增一篇文章
@@ -4358,5 +4423,24 @@ node cli.js --build="updateMatedata|createPage" --config-host="https://blog.comp
     update auxiliary 20211223
     update auxiliary article
     git commit -m "update auxiliary "$(date +%Y%m%d); git push;
+
+
+# telnet详解
+
+## telnet 的简介
+## telnet 的使用
+### 其他远程管理工具
+## telnet 的原理
+## 如何实现一个 telnet
+
+可以参考 nc 的实现
+
+rfc 97 137 153 318
+    854 855 856 857 859 860 861
+    2217
+
+### 服务端
+### 客户端
+
 
 ````
