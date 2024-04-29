@@ -66,6 +66,7 @@
 |站点|头像|网址|描述|
 |-|-|-|-|
 |[中文独立博客列表](https://github.com/timqian/chinese-independent-blogs)||https://github.com/timqian/chinese-independent-blogs||
+|[中文博客集锦](https://nobodxbodon.github.io)||https://nobodxbodon.github.io||
 |[开往](https://www.travellings.cn/go.html)|<img alt="开往" src="https://www.travellings.cn/assets/logo.svg" width="119" />|https://www.travellings.cn/go.html|开往-友链接力|
 |[虫洞](https://www.foreverblog.cn/go.html)|<img alt="虫洞" src="https://img.foreverblog.cn/logo_en_default.png" width="119" />|https://www.foreverblog.cn/go.html|穿梭虫洞-随机访问十年之约友链博客|
 |[I Am I](https://5ime.cn/)||https://5ime.cn/||
@@ -79,10 +80,10 @@
 |[林海草原](https://lhcy.org/)|<img alt="林海草原" src="https://gravatar.loli.net/avatar/8391fb097fff7eec5ff0a8877b94967b" width="119" />|https://lhcy.org/|愿我经历的苦难你不要经历，愿我已有的幸福你触手可及|
 |[涛叔](https://taoshu.in)||https://taoshu.in||
 |[仙士可博客](https://www.php20.cn/)||https://www.php20.cn/||
-|[Barney’s Blog](https://hugo.bnblogs.cc/)|<img alt="Barney’s Blog" src="https://hugo.bnblogs.cc/images/img/20220215001349.png" width="119" />|https://hugo.bnblogs.cc/|All the truth is simple|
 |[Sky Blog](https://www.wanglingyue.com)|<img alt="Sky Blog" src="https://cdn.wanglingyue.com/me-1.jpg" width="119" />|https://www.wanglingyue.com|Sky Blog，技术博客|
 |[王子高的个人博客](https://zigaow.com)|<img alt="王子高的个人博客" src="https://zigao.wang/photo.png" width="119" />|https://zigaow.com|与时俱进，创未来。|
 |[小孙同学](https://blog.sunguoqi.com)|<img alt="小孙同学" src="https://blog.sunguoqi.com/images/avatar.jpg" width="119" />|https://blog.sunguoqi.com|路虽远行则将至，事虽难做则必成！|
+|[idealclover](https://idealclover.top)|<img alt="idealclover" src="https://image.idealclover.cn/blog/assets/icon.png" width="119" />|https://idealclover.top|Stay simple, stay naive.|
 <!-- exchangeList -->
 
 <!--
