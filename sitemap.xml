@@ -5,247 +5,247 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
-        <loc>http://127.0.0.1:8022/article/nc的使用和原理.html</loc>
+        <loc>https://f2h2h1.github.io/article/nc的使用和原理.html</loc>
         <lastmod>2024-04-29T18:21:54+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/定时任务.html</loc>
+        <loc>https://f2h2h1.github.io/article/定时任务.html</loc>
         <lastmod>2024-01-11T13:38:01+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/ACME的使用经验.html</loc>
+        <loc>https://f2h2h1.github.io/article/ACME的使用经验.html</loc>
         <lastmod>2024-01-04T18:46:19+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/文件的上传和下载.html</loc>
+        <loc>https://f2h2h1.github.io/article/文件的上传和下载.html</loc>
         <lastmod>2024-04-29T18:21:54+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/终端，控制台和外壳.html</loc>
+        <loc>https://f2h2h1.github.io/article/终端，控制台和外壳.html</loc>
         <lastmod>2024-04-29T18:21:54+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/和颜色相关的笔记.html</loc>
+        <loc>https://f2h2h1.github.io/article/和颜色相关的笔记.html</loc>
         <lastmod>2023-05-06T18:49:41+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/Windows下通过PEB读取进程的环境变量.html</loc>
+        <loc>https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html</loc>
         <lastmod>2024-04-11T18:31:09+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/关于环境变量的不完整总结.html</loc>
+        <loc>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</loc>
         <lastmod>2023-09-19T18:33:39+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/各种标记语言.html</loc>
+        <loc>https://f2h2h1.github.io/article/各种标记语言.html</loc>
         <lastmod>2022-07-30T21:01:39+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/使用PowerShell实现的http服务器.html</loc>
+        <loc>https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html</loc>
         <lastmod>2022-07-30T21:01:39+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/MySQL的时间类型和时间相关的函数.html</loc>
+        <loc>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</loc>
         <lastmod>2024-03-19T18:04:06+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/nginx+ffmpeg+websocket实现的直播例子.html</loc>
+        <loc>https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html</loc>
         <lastmod>2022-05-05T21:01:11+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/kind相关经验.html</loc>
+        <loc>https://f2h2h1.github.io/article/kind相关经验.html</loc>
         <lastmod>2022-07-30T21:01:39+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/使用shell实现的kv数据库.html</loc>
+        <loc>https://f2h2h1.github.io/article/使用shell实现的kv数据库.html</loc>
         <lastmod>2023-03-20T13:00:14+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/对JS原型链的理解.html</loc>
+        <loc>https://f2h2h1.github.io/article/对JS原型链的理解.html</loc>
         <lastmod>2024-04-11T18:31:09+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/magento2加上varnish缓存.html</loc>
+        <loc>https://f2h2h1.github.io/article/magento2加上varnish缓存.html</loc>
         <lastmod>2022-05-07T13:53:20+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/数字号码资源.html</loc>
+        <loc>https://f2h2h1.github.io/article/数字号码资源.html</loc>
         <lastmod>2023-02-08T18:06:53+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/使用docker-compose部署magento2.html</loc>
+        <loc>https://f2h2h1.github.io/article/使用docker-compose部署magento2.html</loc>
         <lastmod>2022-03-05T20:29:08+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/如何完成以xx管理系统为选题的毕业设计.html</loc>
+        <loc>https://f2h2h1.github.io/article/如何完成以xx管理系统为选题的毕业设计.html</loc>
         <lastmod>2023-02-16T18:12:38+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/DNSSEC简介.html</loc>
+        <loc>https://f2h2h1.github.io/article/DNSSEC简介.html</loc>
         <lastmod>2022-06-22T18:53:13+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/在Windows下安装Magento2.html</loc>
+        <loc>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</loc>
         <lastmod>2024-03-01T18:17:26+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/用纯CSS3实现的滑动按钮.html</loc>
-        <lastmod>2021-11-04T13:33:47+08:00</lastmod>
+        <loc>https://f2h2h1.github.io/article/用纯CSS3实现的滑动按钮.html</loc>
+        <lastmod>2024-05-08T18:34:39+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/Linux的GUI.html</loc>
+        <loc>https://f2h2h1.github.io/article/Linux的GUI.html</loc>
         <lastmod>2023-05-06T18:49:41+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/使用Tesseract识别字符验证码.html</loc>
+        <loc>https://f2h2h1.github.io/article/使用Tesseract识别字符验证码.html</loc>
         <lastmod>2021-10-15T13:28:51+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/开发Magento2的模块.html</loc>
+        <loc>https://f2h2h1.github.io/article/开发Magento2的模块.html</loc>
         <lastmod>2024-04-11T18:31:09+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/浏览器和服务器通讯方式的不完整总结.html</loc>
+        <loc>https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html</loc>
         <lastmod>2023-01-19T18:43:45+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/HTTP认证方式的不完整总结.html</loc>
+        <loc>https://f2h2h1.github.io/article/HTTP认证方式的不完整总结.html</loc>
         <lastmod>2023-10-17T18:45:52+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/PHP各种运行方式的不完整总结.html</loc>
+        <loc>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</loc>
         <lastmod>2021-11-26T18:07:54+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/把网页导出成PDF.html</loc>
+        <loc>https://f2h2h1.github.io/article/把网页导出成PDF.html</loc>
         <lastmod>2022-07-30T21:01:39+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/FirstData后台的设置.html</loc>
+        <loc>https://f2h2h1.github.io/article/FirstData后台的设置.html</loc>
         <lastmod>2021-07-15T22:36:31+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/SEO的经验.html</loc>
+        <loc>https://f2h2h1.github.io/article/SEO的经验.html</loc>
         <lastmod>2023-04-10T18:16:37+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/paypal，firtdata，支付宝的不完整接入指南.html</loc>
+        <loc>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</loc>
         <lastmod>2021-07-10T23:47:47+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/微信支付的不完整接入指南.html</loc>
+        <loc>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</loc>
         <lastmod>2021-07-10T23:44:05+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/观察网站性能.html</loc>
+        <loc>https://f2h2h1.github.io/article/观察网站性能.html</loc>
         <lastmod>2022-07-30T21:01:39+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/git的笔记.html</loc>
+        <loc>https://f2h2h1.github.io/article/git的笔记.html</loc>
         <lastmod>2021-07-19T23:31:14+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/密码学入门简明指南.html</loc>
+        <loc>https://f2h2h1.github.io/article/密码学入门简明指南.html</loc>
         <lastmod>2024-02-02T18:09:35+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/使用docker部署nuxt.html</loc>
+        <loc>https://f2h2h1.github.io/article/使用docker部署nuxt.html</loc>
         <lastmod>2021-09-10T21:24:55+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/在Windows下搭建git服务.html</loc>
+        <loc>https://f2h2h1.github.io/article/在Windows下搭建git服务.html</loc>
         <lastmod>2023-09-26T18:46:02+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/用docker-compose部署lnmp环境.html</loc>
+        <loc>https://f2h2h1.github.io/article/用docker-compose部署lnmp环境.html</loc>
         <lastmod>2020-06-22T21:47:08+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/mongodb分片.html</loc>
+        <loc>https://f2h2h1.github.io/article/mongodb分片.html</loc>
         <lastmod>2020-06-20T00:45:57+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/练习.html</loc>
+        <loc>https://f2h2h1.github.io/article/练习.html</loc>
         <lastmod>2020-01-06T00:32:21+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/一些开发笔记.html</loc>
+        <loc>https://f2h2h1.github.io/article/一些开发笔记.html</loc>
         <lastmod>2024-03-05T18:02:20+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/一些关于Linux的笔记.html</loc>
+        <loc>https://f2h2h1.github.io/article/一些关于Linux的笔记.html</loc>
         <lastmod>2023-10-17T18:45:52+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/在Windows下安装pear.html</loc>
+        <loc>https://f2h2h1.github.io/article/在Windows下安装pear.html</loc>
         <lastmod>2021-10-28T23:57:55+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/在VSCode里使用Xdebug远程调试PHP.html</loc>
+        <loc>https://f2h2h1.github.io/article/在VSCode里使用Xdebug远程调试PHP.html</loc>
         <lastmod>2023-12-22T18:18:22+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/在Windows下配置PHP服务器.html</loc>
+        <loc>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</loc>
         <lastmod>2024-02-06T19:47:27+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/关于字符编码的一些坑.html</loc>
+        <loc>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</loc>
         <lastmod>2024-03-27T19:15:44+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/在VSCode里调试PHP.html</loc>
+        <loc>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</loc>
         <lastmod>2024-02-02T18:09:35+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>http://127.0.0.1:8022/article/关于.html</loc>
+        <loc>https://f2h2h1.github.io/article/关于.html</loc>
         <lastmod>2024-03-19T18:04:06+08:00</lastmod>
         <priority>0.5</priority>
     </url>

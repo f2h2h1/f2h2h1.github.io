@@ -1,352 +1,352 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title> </title>
-        <link>http://127.0.0.1:8022/</link>
-        <description> </description>
-        <atom:link href="http://127.0.0.1:8022/rss.xml" rel="self" type="application/rss+xml" />
+        <title>f2h2h1's blog</title>
+        <link>https://f2h2h1.github.io/</link>
+        <description>f2h2h1's blog</description>
+        <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
         <item>
             <title>nc的使用和原理</title>
-            <link>http://127.0.0.1:8022/article/nc的使用和原理.html</link>
+            <link>https://f2h2h1.github.io/article/nc的使用和原理.html</link>
             <description>nc的使用和原理</description>
             <pubDate>Mon, 29 Apr 2024 18:21:54 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/nc的使用和原理.html</guid>
+            <guid>https://f2h2h1.github.io/article/nc的使用和原理.html</guid>
         </item>
         <item>
             <title>定时任务</title>
-            <link>http://127.0.0.1:8022/article/定时任务.html</link>
+            <link>https://f2h2h1.github.io/article/定时任务.html</link>
             <description>定时任务</description>
             <pubDate>Thu, 11 Jan 2024 13:38:01 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/定时任务.html</guid>
+            <guid>https://f2h2h1.github.io/article/定时任务.html</guid>
         </item>
         <item>
             <title>ACME的使用经验</title>
-            <link>http://127.0.0.1:8022/article/ACME的使用经验.html</link>
+            <link>https://f2h2h1.github.io/article/ACME的使用经验.html</link>
             <description>ACME的使用经验</description>
             <pubDate>Thu, 04 Jan 2024 18:46:19 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/ACME的使用经验.html</guid>
+            <guid>https://f2h2h1.github.io/article/ACME的使用经验.html</guid>
         </item>
         <item>
             <title>文件的上传和下载</title>
-            <link>http://127.0.0.1:8022/article/文件的上传和下载.html</link>
+            <link>https://f2h2h1.github.io/article/文件的上传和下载.html</link>
             <description>文件的上传和下载</description>
             <pubDate>Mon, 29 Apr 2024 18:21:54 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/文件的上传和下载.html</guid>
+            <guid>https://f2h2h1.github.io/article/文件的上传和下载.html</guid>
         </item>
         <item>
             <title>终端，控制台和外壳</title>
-            <link>http://127.0.0.1:8022/article/终端，控制台和外壳.html</link>
+            <link>https://f2h2h1.github.io/article/终端，控制台和外壳.html</link>
             <description>终端，控制台和外壳</description>
             <pubDate>Mon, 29 Apr 2024 18:21:54 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/终端，控制台和外壳.html</guid>
+            <guid>https://f2h2h1.github.io/article/终端，控制台和外壳.html</guid>
         </item>
         <item>
             <title>和颜色相关的笔记</title>
-            <link>http://127.0.0.1:8022/article/和颜色相关的笔记.html</link>
+            <link>https://f2h2h1.github.io/article/和颜色相关的笔记.html</link>
             <description>和颜色相关的笔记</description>
             <pubDate>Sat, 06 May 2023 18:49:41 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/和颜色相关的笔记.html</guid>
+            <guid>https://f2h2h1.github.io/article/和颜色相关的笔记.html</guid>
         </item>
         <item>
             <title>Windows下通过PEB读取进程的环境变量</title>
-            <link>http://127.0.0.1:8022/article/Windows下通过PEB读取进程的环境变量.html</link>
+            <link>https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html</link>
             <description>Windows下通过PEB读取进程的环境变量</description>
             <pubDate>Thu, 11 Apr 2024 18:31:09 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/Windows下通过PEB读取进程的环境变量.html</guid>
+            <guid>https://f2h2h1.github.io/article/Windows下通过PEB读取进程的环境变量.html</guid>
         </item>
         <item>
             <title>关于环境变量的不完整总结</title>
-            <link>http://127.0.0.1:8022/article/关于环境变量的不完整总结.html</link>
+            <link>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</link>
             <description>关于环境变量的不完整总结</description>
             <pubDate>Tue, 19 Sep 2023 18:33:39 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/关于环境变量的不完整总结.html</guid>
+            <guid>https://f2h2h1.github.io/article/关于环境变量的不完整总结.html</guid>
         </item>
         <item>
             <title>各种标记语言</title>
-            <link>http://127.0.0.1:8022/article/各种标记语言.html</link>
+            <link>https://f2h2h1.github.io/article/各种标记语言.html</link>
             <description>各种标记语言</description>
             <pubDate>Sat, 30 Jul 2022 21:01:39 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/各种标记语言.html</guid>
+            <guid>https://f2h2h1.github.io/article/各种标记语言.html</guid>
         </item>
         <item>
             <title>使用PowerShell实现的http服务器</title>
-            <link>http://127.0.0.1:8022/article/使用PowerShell实现的http服务器.html</link>
+            <link>https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html</link>
             <description>使用PowerShell实现的http服务器</description>
             <pubDate>Sat, 30 Jul 2022 21:01:39 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/使用PowerShell实现的http服务器.html</guid>
+            <guid>https://f2h2h1.github.io/article/使用PowerShell实现的http服务器.html</guid>
         </item>
         <item>
             <title>MySQL的时间类型和时间相关的函数</title>
-            <link>http://127.0.0.1:8022/article/MySQL的时间类型和时间相关的函数.html</link>
+            <link>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</link>
             <description>MySQL的时间类型和时间相关的函数</description>
             <pubDate>Tue, 19 Mar 2024 18:04:06 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/MySQL的时间类型和时间相关的函数.html</guid>
+            <guid>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</guid>
         </item>
         <item>
             <title>nginx+ffmpeg+websocket实现的直播例子</title>
-            <link>http://127.0.0.1:8022/article/nginx+ffmpeg+websocket实现的直播例子.html</link>
+            <link>https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html</link>
             <description>nginx+ffmpeg+websocket实现的直播例子</description>
             <pubDate>Thu, 05 May 2022 21:01:11 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/nginx+ffmpeg+websocket实现的直播例子.html</guid>
+            <guid>https://f2h2h1.github.io/article/nginx+ffmpeg+websocket实现的直播例子.html</guid>
         </item>
         <item>
             <title>kind相关经验</title>
-            <link>http://127.0.0.1:8022/article/kind相关经验.html</link>
+            <link>https://f2h2h1.github.io/article/kind相关经验.html</link>
             <description>kind相关经验</description>
             <pubDate>Sat, 30 Jul 2022 21:01:39 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/kind相关经验.html</guid>
+            <guid>https://f2h2h1.github.io/article/kind相关经验.html</guid>
         </item>
         <item>
             <title>使用shell实现的kv数据库</title>
-            <link>http://127.0.0.1:8022/article/使用shell实现的kv数据库.html</link>
+            <link>https://f2h2h1.github.io/article/使用shell实现的kv数据库.html</link>
             <description>使用shell实现的kv数据库</description>
             <pubDate>Mon, 20 Mar 2023 13:00:14 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/使用shell实现的kv数据库.html</guid>
+            <guid>https://f2h2h1.github.io/article/使用shell实现的kv数据库.html</guid>
         </item>
         <item>
             <title>对JS原型链的理解</title>
-            <link>http://127.0.0.1:8022/article/对JS原型链的理解.html</link>
+            <link>https://f2h2h1.github.io/article/对JS原型链的理解.html</link>
             <description>对JS原型链的理解</description>
             <pubDate>Thu, 11 Apr 2024 18:31:09 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/对JS原型链的理解.html</guid>
+            <guid>https://f2h2h1.github.io/article/对JS原型链的理解.html</guid>
         </item>
         <item>
             <title>magento2加上varnish缓存</title>
-            <link>http://127.0.0.1:8022/article/magento2加上varnish缓存.html</link>
+            <link>https://f2h2h1.github.io/article/magento2加上varnish缓存.html</link>
             <description>magento2加上varnish缓存</description>
             <pubDate>Sat, 07 May 2022 13:53:20 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/magento2加上varnish缓存.html</guid>
+            <guid>https://f2h2h1.github.io/article/magento2加上varnish缓存.html</guid>
         </item>
         <item>
             <title>数字号码资源</title>
-            <link>http://127.0.0.1:8022/article/数字号码资源.html</link>
+            <link>https://f2h2h1.github.io/article/数字号码资源.html</link>
             <description>数字号码资源</description>
             <pubDate>Wed, 08 Feb 2023 18:06:53 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/数字号码资源.html</guid>
+            <guid>https://f2h2h1.github.io/article/数字号码资源.html</guid>
         </item>
         <item>
             <title>使用docker-compose部署magento2</title>
-            <link>http://127.0.0.1:8022/article/使用docker-compose部署magento2.html</link>
+            <link>https://f2h2h1.github.io/article/使用docker-compose部署magento2.html</link>
             <description>使用docker-compose部署magento2</description>
             <pubDate>Sat, 05 Mar 2022 20:29:08 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/使用docker-compose部署magento2.html</guid>
+            <guid>https://f2h2h1.github.io/article/使用docker-compose部署magento2.html</guid>
         </item>
         <item>
             <title>如何完成以xx管理系统为选题的毕业设计</title>
-            <link>http://127.0.0.1:8022/article/如何完成以xx管理系统为选题的毕业设计.html</link>
+            <link>https://f2h2h1.github.io/article/如何完成以xx管理系统为选题的毕业设计.html</link>
             <description>如何完成以xx管理系统为选题的毕业设计</description>
             <pubDate>Thu, 16 Feb 2023 18:12:38 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/如何完成以xx管理系统为选题的毕业设计.html</guid>
+            <guid>https://f2h2h1.github.io/article/如何完成以xx管理系统为选题的毕业设计.html</guid>
         </item>
         <item>
             <title>DNSSEC简介</title>
-            <link>http://127.0.0.1:8022/article/DNSSEC简介.html</link>
+            <link>https://f2h2h1.github.io/article/DNSSEC简介.html</link>
             <description>DNSSEC简介</description>
             <pubDate>Wed, 22 Jun 2022 18:53:13 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/DNSSEC简介.html</guid>
+            <guid>https://f2h2h1.github.io/article/DNSSEC简介.html</guid>
         </item>
         <item>
             <title>在Windows下安装Magento2</title>
-            <link>http://127.0.0.1:8022/article/在Windows下安装Magento2.html</link>
+            <link>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</link>
             <description>在Windows下安装Magento2</description>
             <pubDate>Fri, 01 Mar 2024 18:17:26 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/在Windows下安装Magento2.html</guid>
+            <guid>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</guid>
         </item>
         <item>
             <title>用纯CSS3实现的滑动按钮</title>
-            <link>http://127.0.0.1:8022/article/用纯CSS3实现的滑动按钮.html</link>
+            <link>https://f2h2h1.github.io/article/用纯CSS3实现的滑动按钮.html</link>
             <description>用纯CSS3实现的滑动按钮</description>
-            <pubDate>Thu, 04 Nov 2021 13:33:47 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/用纯CSS3实现的滑动按钮.html</guid>
+            <pubDate>Wed, 08 May 2024 18:34:39 +0800</pubDate>
+            <guid>https://f2h2h1.github.io/article/用纯CSS3实现的滑动按钮.html</guid>
         </item>
         <item>
             <title>Linux的GUI</title>
-            <link>http://127.0.0.1:8022/article/Linux的GUI.html</link>
+            <link>https://f2h2h1.github.io/article/Linux的GUI.html</link>
             <description>Linux的GUI</description>
             <pubDate>Sat, 06 May 2023 18:49:41 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/Linux的GUI.html</guid>
+            <guid>https://f2h2h1.github.io/article/Linux的GUI.html</guid>
         </item>
         <item>
             <title>使用Tesseract识别字符验证码</title>
-            <link>http://127.0.0.1:8022/article/使用Tesseract识别字符验证码.html</link>
+            <link>https://f2h2h1.github.io/article/使用Tesseract识别字符验证码.html</link>
             <description>使用Tesseract识别字符验证码</description>
             <pubDate>Fri, 15 Oct 2021 13:28:51 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/使用Tesseract识别字符验证码.html</guid>
+            <guid>https://f2h2h1.github.io/article/使用Tesseract识别字符验证码.html</guid>
         </item>
         <item>
             <title>开发Magento2的模块</title>
-            <link>http://127.0.0.1:8022/article/开发Magento2的模块.html</link>
+            <link>https://f2h2h1.github.io/article/开发Magento2的模块.html</link>
             <description>开发Magento2的模块</description>
             <pubDate>Thu, 11 Apr 2024 18:31:09 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/开发Magento2的模块.html</guid>
+            <guid>https://f2h2h1.github.io/article/开发Magento2的模块.html</guid>
         </item>
         <item>
             <title>浏览器和服务器通讯方式的不完整总结</title>
-            <link>http://127.0.0.1:8022/article/浏览器和服务器通讯方式的不完整总结.html</link>
+            <link>https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html</link>
             <description>浏览器和服务器通讯方式的不完整总结</description>
             <pubDate>Thu, 19 Jan 2023 18:43:45 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/浏览器和服务器通讯方式的不完整总结.html</guid>
+            <guid>https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html</guid>
         </item>
         <item>
             <title>HTTP认证方式的不完整总结</title>
-            <link>http://127.0.0.1:8022/article/HTTP认证方式的不完整总结.html</link>
+            <link>https://f2h2h1.github.io/article/HTTP认证方式的不完整总结.html</link>
             <description>HTTP认证方式的不完整总结</description>
             <pubDate>Tue, 17 Oct 2023 18:45:52 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/HTTP认证方式的不完整总结.html</guid>
+            <guid>https://f2h2h1.github.io/article/HTTP认证方式的不完整总结.html</guid>
         </item>
         <item>
             <title>PHP各种运行方式的不完整总结</title>
-            <link>http://127.0.0.1:8022/article/PHP各种运行方式的不完整总结.html</link>
+            <link>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</link>
             <description>PHP各种运行方式的不完整总结</description>
             <pubDate>Fri, 26 Nov 2021 18:07:54 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/PHP各种运行方式的不完整总结.html</guid>
+            <guid>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</guid>
         </item>
         <item>
             <title>把网页导出成PDF</title>
-            <link>http://127.0.0.1:8022/article/把网页导出成PDF.html</link>
+            <link>https://f2h2h1.github.io/article/把网页导出成PDF.html</link>
             <description>把网页导出成PDF</description>
             <pubDate>Sat, 30 Jul 2022 21:01:39 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/把网页导出成PDF.html</guid>
+            <guid>https://f2h2h1.github.io/article/把网页导出成PDF.html</guid>
         </item>
         <item>
             <title>FirstData后台的设置</title>
-            <link>http://127.0.0.1:8022/article/FirstData后台的设置.html</link>
+            <link>https://f2h2h1.github.io/article/FirstData后台的设置.html</link>
             <description>FirstData后台的设置</description>
             <pubDate>Thu, 15 Jul 2021 22:36:31 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/FirstData后台的设置.html</guid>
+            <guid>https://f2h2h1.github.io/article/FirstData后台的设置.html</guid>
         </item>
         <item>
             <title>SEO的经验</title>
-            <link>http://127.0.0.1:8022/article/SEO的经验.html</link>
+            <link>https://f2h2h1.github.io/article/SEO的经验.html</link>
             <description>SEO的经验</description>
             <pubDate>Mon, 10 Apr 2023 18:16:37 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/SEO的经验.html</guid>
+            <guid>https://f2h2h1.github.io/article/SEO的经验.html</guid>
         </item>
         <item>
             <title>paypal，firtdata，支付宝的不完整接入指南</title>
-            <link>http://127.0.0.1:8022/article/paypal，firtdata，支付宝的不完整接入指南.html</link>
+            <link>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</link>
             <description>paypal，firtdata，支付宝的不完整接入指南</description>
             <pubDate>Sat, 10 Jul 2021 23:47:47 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/paypal，firtdata，支付宝的不完整接入指南.html</guid>
+            <guid>https://f2h2h1.github.io/article/paypal，firtdata，支付宝的不完整接入指南.html</guid>
         </item>
         <item>
             <title>微信支付的不完整接入指南</title>
-            <link>http://127.0.0.1:8022/article/微信支付的不完整接入指南.html</link>
+            <link>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</link>
             <description>微信支付的不完整接入指南</description>
             <pubDate>Sat, 10 Jul 2021 23:44:05 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/微信支付的不完整接入指南.html</guid>
+            <guid>https://f2h2h1.github.io/article/微信支付的不完整接入指南.html</guid>
         </item>
         <item>
             <title>观察网站性能</title>
-            <link>http://127.0.0.1:8022/article/观察网站性能.html</link>
+            <link>https://f2h2h1.github.io/article/观察网站性能.html</link>
             <description>观察网站性能</description>
             <pubDate>Sat, 30 Jul 2022 21:01:39 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/观察网站性能.html</guid>
+            <guid>https://f2h2h1.github.io/article/观察网站性能.html</guid>
         </item>
         <item>
             <title>git的笔记</title>
-            <link>http://127.0.0.1:8022/article/git的笔记.html</link>
+            <link>https://f2h2h1.github.io/article/git的笔记.html</link>
             <description>git的笔记</description>
             <pubDate>Mon, 19 Jul 2021 23:31:14 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/git的笔记.html</guid>
+            <guid>https://f2h2h1.github.io/article/git的笔记.html</guid>
         </item>
         <item>
             <title>密码学入门简明指南</title>
-            <link>http://127.0.0.1:8022/article/密码学入门简明指南.html</link>
+            <link>https://f2h2h1.github.io/article/密码学入门简明指南.html</link>
             <description>密码学入门简明指南</description>
             <pubDate>Fri, 02 Feb 2024 18:09:35 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/密码学入门简明指南.html</guid>
+            <guid>https://f2h2h1.github.io/article/密码学入门简明指南.html</guid>
         </item>
         <item>
             <title>使用docker部署nuxt</title>
-            <link>http://127.0.0.1:8022/article/使用docker部署nuxt.html</link>
+            <link>https://f2h2h1.github.io/article/使用docker部署nuxt.html</link>
             <description>使用docker部署nuxt</description>
             <pubDate>Fri, 10 Sep 2021 21:24:55 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/使用docker部署nuxt.html</guid>
+            <guid>https://f2h2h1.github.io/article/使用docker部署nuxt.html</guid>
         </item>
         <item>
             <title>在Windows下搭建git服务</title>
-            <link>http://127.0.0.1:8022/article/在Windows下搭建git服务.html</link>
+            <link>https://f2h2h1.github.io/article/在Windows下搭建git服务.html</link>
             <description>在Windows下搭建git服务</description>
             <pubDate>Tue, 26 Sep 2023 18:46:02 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/在Windows下搭建git服务.html</guid>
+            <guid>https://f2h2h1.github.io/article/在Windows下搭建git服务.html</guid>
         </item>
         <item>
             <title>用docker-compose部署lnmp环境</title>
-            <link>http://127.0.0.1:8022/article/用docker-compose部署lnmp环境.html</link>
+            <link>https://f2h2h1.github.io/article/用docker-compose部署lnmp环境.html</link>
             <description>用docker-compose部署lnmp环境</description>
             <pubDate>Mon, 22 Jun 2020 21:47:08 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/用docker-compose部署lnmp环境.html</guid>
+            <guid>https://f2h2h1.github.io/article/用docker-compose部署lnmp环境.html</guid>
         </item>
         <item>
             <title>mongodb分片</title>
-            <link>http://127.0.0.1:8022/article/mongodb分片.html</link>
+            <link>https://f2h2h1.github.io/article/mongodb分片.html</link>
             <description>mongodb分片</description>
             <pubDate>Sat, 20 Jun 2020 00:45:57 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/mongodb分片.html</guid>
+            <guid>https://f2h2h1.github.io/article/mongodb分片.html</guid>
         </item>
         <item>
             <title>练习</title>
-            <link>http://127.0.0.1:8022/article/练习.html</link>
+            <link>https://f2h2h1.github.io/article/练习.html</link>
             <description>练习</description>
             <pubDate>Mon, 06 Jan 2020 00:32:21 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/练习.html</guid>
+            <guid>https://f2h2h1.github.io/article/练习.html</guid>
         </item>
         <item>
             <title>一些开发笔记</title>
-            <link>http://127.0.0.1:8022/article/一些开发笔记.html</link>
+            <link>https://f2h2h1.github.io/article/一些开发笔记.html</link>
             <description>一些开发笔记</description>
             <pubDate>Tue, 05 Mar 2024 18:02:20 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/一些开发笔记.html</guid>
+            <guid>https://f2h2h1.github.io/article/一些开发笔记.html</guid>
         </item>
         <item>
             <title>一些关于Linux的笔记</title>
-            <link>http://127.0.0.1:8022/article/一些关于Linux的笔记.html</link>
+            <link>https://f2h2h1.github.io/article/一些关于Linux的笔记.html</link>
             <description>一些关于Linux的笔记</description>
             <pubDate>Tue, 17 Oct 2023 18:45:52 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/一些关于Linux的笔记.html</guid>
+            <guid>https://f2h2h1.github.io/article/一些关于Linux的笔记.html</guid>
         </item>
         <item>
             <title>在Windows下安装pear</title>
-            <link>http://127.0.0.1:8022/article/在Windows下安装pear.html</link>
+            <link>https://f2h2h1.github.io/article/在Windows下安装pear.html</link>
             <description>在Windows下安装pear</description>
             <pubDate>Thu, 28 Oct 2021 23:57:55 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/在Windows下安装pear.html</guid>
+            <guid>https://f2h2h1.github.io/article/在Windows下安装pear.html</guid>
         </item>
         <item>
             <title>在VSCode里使用Xdebug远程调试PHP</title>
-            <link>http://127.0.0.1:8022/article/在VSCode里使用Xdebug远程调试PHP.html</link>
+            <link>https://f2h2h1.github.io/article/在VSCode里使用Xdebug远程调试PHP.html</link>
             <description>在VSCode里使用Xdebug远程调试PHP</description>
             <pubDate>Fri, 22 Dec 2023 18:18:22 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/在VSCode里使用Xdebug远程调试PHP.html</guid>
+            <guid>https://f2h2h1.github.io/article/在VSCode里使用Xdebug远程调试PHP.html</guid>
         </item>
         <item>
             <title>在Windows下配置PHP服务器</title>
-            <link>http://127.0.0.1:8022/article/在Windows下配置PHP服务器.html</link>
+            <link>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</link>
             <description>在Windows下配置PHP服务器</description>
             <pubDate>Tue, 06 Feb 2024 19:47:27 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/在Windows下配置PHP服务器.html</guid>
+            <guid>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</guid>
         </item>
         <item>
             <title>关于字符编码的一些坑</title>
-            <link>http://127.0.0.1:8022/article/关于字符编码的一些坑.html</link>
+            <link>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</link>
             <description>关于字符编码的一些坑</description>
             <pubDate>Wed, 27 Mar 2024 19:15:44 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/关于字符编码的一些坑.html</guid>
+            <guid>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</guid>
         </item>
         <item>
             <title>在VSCode里调试PHP</title>
-            <link>http://127.0.0.1:8022/article/在VSCode里调试PHP.html</link>
+            <link>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</link>
             <description>在VSCode里调试PHP</description>
             <pubDate>Fri, 02 Feb 2024 18:09:35 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/在VSCode里调试PHP.html</guid>
+            <guid>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</guid>
         </item>
         <item>
             <title>关于</title>
-            <link>http://127.0.0.1:8022/article/关于.html</link>
+            <link>https://f2h2h1.github.io/article/关于.html</link>
             <description>关于</description>
             <pubDate>Tue, 19 Mar 2024 18:04:06 +0800</pubDate>
-            <guid>http://127.0.0.1:8022/article/关于.html</guid>
+            <guid>https://f2h2h1.github.io/article/关于.html</guid>
         </item>
     </channel>
 </rss>
