@@ -299,14 +299,19 @@ class cli {
         fs.writeFileSync('rss.xml', xmlstr);
     }
 
-    createPage() {
+    beforeCreatePage() {
         let articleList = this.getJsonObj('articleList.json');
         let exchangeList = this.getJsonObj('exchangeList.json');
 
         this.application.setTemplate(fs.readFileSync('template.html', {encoding:'utf8', flag:'r'}));
         this.application.setArticleList(articleList);
         this.application.setLinkExchangeList(exchangeList);
+    }
 
+    createPage() {
+        this.beforeCreatePage();
+        let articleList = this.application.articleList;
+        let exchangeList = this.application.linkExchangeList;
         let pageHtml = '';
         for (let i = 0, len = articleList.length; i < len; i++) {
             articleList[i]['md'] = fs.readFileSync('article/' + articleList[i]['title'] + '.md', {encoding:'utf8', flag:'r'});
@@ -377,6 +382,9 @@ class cli {
      */
     server(config, type) {
         var that = this;
+        if (type == 'backendRender') {
+            this.beforeCreatePage();
+        }
         http.createServer(function (request, response) {
 
             let pathname = url.parse(request.url).pathname;
@@ -403,9 +411,44 @@ class cli {
             let filePath = rootDirectory + decodeURI(pathname);
             fs.readFile(filePath, function(err, data) {
                 if (err) {
-                    // console.log(err);
-                    statusCode = 404;
-                    response.writeHead(statusCode);
+                    if (type == 'backendRender') {
+                        var regex = /\/article\/(.*)\.html$/; // 正则表达式，匹配最后一个'/'之后的所有字符，可选的'/'表示URL可能以'/'结尾  
+                        var match = pathname.match(regex);  
+                        if (match && match[1]) {
+                            let articleName =  decodeURI(match[1]);
+                            try {
+                                let pageMd = fs.readFileSync('article/' + articleName + '.md', {encoding:'utf8', flag:'r'});
+                                let articleInfo = {
+                                    'md': pageMd,
+                                    'titel': articleName,
+                                    'createTime': '',
+                                    'updateTime': '',
+                                };
+                                let pageHtml = that.application.buildConetnt(that.application.appData.sitename, that.application.buildArticle(articleInfo));
+                                let ContentType = config.mimeList['.html'];
+                                statusCode = 200;
+                                let head = {
+                                    'Content-Type': ContentType,
+                                    'Content-Length': (new TextEncoder()).encode(pageHtml).length, // 这是获取 utf8 字符串字节的长度，TextEncoder类只能用于utf8编码
+                                }
+                                response.writeHead(statusCode, head);
+                                response.write(pageHtml);
+                            } catch (e) { // 这里最好再区分一下不同类型的异常
+                                console.log(e);
+                                statusCode = 404;
+                                response.writeHead(statusCode);
+                            }
+                        } else {
+                            console.log(err);
+                            statusCode = 404;
+                            response.writeHead(statusCode);
+                        }
+                    } else {
+                        console.log(err);
+                        statusCode = 404;
+                        response.writeHead(statusCode);
+                    }
+                    // 以后有空再写一个好看一点的报错页面吧。。。
                 } else {
                     let extname = path.extname(filePath);
                     let ContentType = 'application/octet-stream';
@@ -646,6 +689,8 @@ npm run asd
 
 ls article/*.html | xargs rm -f
 
-node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:8022" --config-sitename="f2h2h1\'s blog" --config-thirdPartyCode=false --server-type="static" --server-host="127.0.0.1" --server-port=8022 --server-type="static"
+node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:8022" --config-sitename="f2h2h1\'s blog" --config-thirdPartyCode=false --server-type="static" --server-host="127.0.0.1" --server-port=8022
+
+node cli.js --config-host="http://127.0.0.1:8022" --config-sitename="f2h2h1\'s blog" --config-thirdPartyCode=false --server-type="backendRender" --server-host="127.0.0.1" --server-port=8022
 
 */
