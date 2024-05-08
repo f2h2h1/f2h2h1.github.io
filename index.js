@@ -294,7 +294,7 @@ class Application {
     run() {
         console.log('application.run');
         if (this.isBowser()) {
-            window.addEventListener('load', this.init())
+            window.addEventListener('load', this.init());
         } else {
             this.init();
         }

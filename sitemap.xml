@@ -6,7 +6,7 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
         <loc>http://127.0.0.1:8022/article/nc的使用和原理.html</loc>
-        <lastmod>2024-03-05T18:02:20+08:00</lastmod>
+        <lastmod>2024-04-29T18:21:54+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -21,12 +21,12 @@
     </url>
     <url>
         <loc>http://127.0.0.1:8022/article/文件的上传和下载.html</loc>
-        <lastmod>2023-12-22T18:18:22+08:00</lastmod>
+        <lastmod>2024-04-29T18:21:54+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>http://127.0.0.1:8022/article/终端，控制台和外壳.html</loc>
-        <lastmod>2024-04-11T18:31:09+08:00</lastmod>
+        <lastmod>2024-04-29T18:21:54+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
