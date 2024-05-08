@@ -1538,6 +1538,13 @@ vscode的使用技巧
             Popmotion 这个是 bootstrap 采用的
         古早时期的动画
             通过 setInterval 实现的，或者直接用 jq 的库
+        css 和 js 的动画最大的区别是
+            css 不能新增节点，js可以新增节点
+            css 的代码看起来能更简洁一些
+        动画的实现方式
+            DOM 一般语境下的动画都是通过dom来实现的
+            Canvas
+            SVG
     实现原理？
         持续时间 -> 持续的秒数
         时序函数 ->
@@ -1569,6 +1576,12 @@ vscode的使用技巧
         Z 轴顺序
         显示和隐藏
         本质上是改变属性？
+    相关的单词
+        effect n. 效果
+        transition n. 过渡
+        animation n. 动画
+        animate vt. 把…制作成动画片
+        transform n. 变换, vt. 使…改变
 使用正则表达式实现的关键词过滤
     定义关键词列表
     把关键词转换为正则表达式
@@ -3261,6 +3274,7 @@ js 中的任务和微任务
     https://developer.mozilla.org/zh-CN/docs/Web/API/queueMicrotask
     https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_DOM_API/Microtask_guide
     https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_DOM_API/Microtask_guide/In_depth
+    https://zh.javascript.info/event-loop
 MutationObserver？
 浏览器相关的经验
     启动参数

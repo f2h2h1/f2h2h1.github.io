@@ -12,59 +12,64 @@
     - ::after 作为滑块
 0. 用 :checked 来区分 checkbox 选中和未选中的状态
     - 当 checkbox 为选中状态时更改 span::before 的背景颜色和 span::after 的位置
-
-<!-- 加上动画 -->
+0. 用 transition 属性来实现动画
 
 ## 完整的代码
 
 ```html
 <style>
 .switch {
-    position: relative;
+	--button-width: 25px;
+	--bg-width: 50px;
+	--transition-fun: 0.3s ease;
 }
 .switch input[type=checkbox] {
     display:none;
 }
 .switch span {
     cursor: pointer;
-    position: absolute;
-    display: block;
+    display: flex;
     text-align: center;
-    padding-left: 50px;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+
 }
 .switch span::before {
     content: "";
     cursor: pointer;
-    width: 40px;
-    height: 24.5px;
+    width: var(--bg-width);
+    height: var(--button-width);
     border: 1px solid rgb(156, 155, 155);
     background-color: rgb(179, 176, 176);
-    border-radius: 25px;
-    position: absolute;
-    left: 0px;
+    border-radius: var(--button-width);
+	margin-right: 5px;
     display: inline-block;
+	transition: background-color var(--transition-fun);
 }
 .switch span::after {
     content: "";
     cursor: pointer;
-    width: 25px;
-    height: 25px;
+    width: var(--button-width);
+    height: var(--button-width);
     background-color: rgb(255, 255, 255);
-    border-radius: 25px;
-    position: absolute;
-    left: 0px;
-    top:0px;
+    border-radius: var(--button-width);
+	position: absolute;
     display: inline-block;
+	transition: margin-left var(--transition-fun);
 }
 .switch input[type=checkbox]:checked + span::before {
     background-color: green;
+	transition: background-color var(--transition-fun);
 }
 .switch input[type=checkbox]:checked + span::after {
-    margin-left:15px;
+    margin-left: calc(var(--bg-width) - var(--button-width));
+	transition: margin-left var(--transition-fun);
 }
 </style>
 <div class="switch">
     <label>
+        <!-- <input type="checkbox" checked /> 如果需要默认选中，就在标签里加上 checked 属性 -->
         <input type="checkbox" />
         <span>label</span>
     </label>
