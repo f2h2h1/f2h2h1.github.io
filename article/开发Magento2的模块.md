@@ -1611,6 +1611,15 @@ preference 的缺点是可能会导致类之间的冲突，因为一次只能有
     ```
 1. 参考 https://developer.adobe.com/commerce/php/development/components/events-and-observers/
 
+<!--
+
+从这个方法来看，每个前台页面都能触发一个对应的事件
+vendor\magento\framework\App\FrontController.php dispatchPreDispatchEvents
+两个参数 action对象 和 request对象
+据说如果有 varnish 的缓存则不会触发这类事件
+
+-->
+
 ## 新建一个后台视图
 
 1. 视图是一个 xml 文件
@@ -2325,7 +2334,75 @@ require([
     });
 });
 
+获取 customer-data
+require('Magento_Customer/js/customer-data').get('customer')()
+刷新全部 customer-data
+require('Magento_Customer/js/customer-data').reload()
+刷新一部分 customer-data
+require('Magento_Customer/js/customer-data').reload('wishlist')
+刷新 customer-data 可以避免重新登录
 
+刷新时会请求这个地址
+https://localhost/customer/section/load/?_=1715824421237
+
+请求达到的方法
+vendor\magento\module-customer\Controller\Section\Load.php
+execute
+
+\Magento\Customer\Controller\Section\Load::class 里有一个
+sectionPool 属性
+这个属性有一个 getSectionData 方法
+
+sectionPool 的位置
+\Magento\Customer\CustomerData\SectionPool::class;
+vendor\magento\module-customer\CustomerData\SectionPool.php
+sectionPool 里有一个 sectionSourceMap 属性
+
+sectionSourceMap 是一个数组
+数组里的对象都有一个 getSectionData 方法
+sectionSourceMap 数组里的对象通过 di.xml 里声明的
+vendor\magento\module-customer\etc\frontend\di.xml
+
+customer的数据来自这个类
+\Magento\Customer\CustomerData\Customer::class
+原始的类里只有这三个属性
+    fullname
+    firstname
+    websiteId
+
+在 localstorage 里有一份 customer 数据
+    JSON.parse(window.localStorage['mage-cache-storage']);
+在 cookie 里也有一份 customer 数据
+    JSON.parse(jQuery.cookie('section_data_ids'));
+    JSON.parse(decodeURIComponent(document.cookie.split('; ').find(row => row.startsWith('section_data_ids')).split('=')[1]));
+
+window 对象里也有一份 customer 数据，但不是每个页面都有
+    window.customerData
+    window.checkoutConfig.customerData
+
+checkout页面中的customerData是由 js 生成
+js 的数据用 这样的形式输出到 html 里
+vendor/magento/module-checkout/view/frontend/templates/onepage.phtml
+<?php
+$serializedCheckoutConfig = /* @noEscape */ $block->getSerializedCheckoutConfig();
+$scriptString = <<<script
+    window.checkoutConfig = {$serializedCheckoutConfig};
+    // Create aliases for customer.js model from customer module
+    window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+    window.customerData = window.checkoutConfig.customerData;
+script;
+?>
+
+vendor/magento/module-checkout/Controller/Index/Index.php
+vendor/magento/module-checkout/view/frontend/templates/onepage.phtml
+vendor/magento/module-checkout/Block/Onepage.php getCheckoutConfig
+\Magento\Checkout\Model\CompositeConfigProvider getConfig
+    vendor\magento\module-checkout\etc\frontend\di.xml
+        configProviders
+            Magento\Checkout\Model\DefaultConfigProvider getConfig
+                customerData -> CustomerInterface->__toArray
+            Magento\Checkout\Model\Cart\CheckoutSummaryConfigProvider
+            Magento\Checkout\Model\PaymentCaptchaConfigProvider
 -->
 
 ## 缓存
@@ -2357,6 +2434,23 @@ pub/static/*
 -->
 
 ## 发送邮件
+
+<!--
+
+magento2 使用这个库来发送邮件的
+https://github.com/laminas/laminas-mail
+
+magento2 在默认情况下似乎不支持 SMTP 发送邮件
+可以用这个拓展来实现 SMTP 发送邮件
+https://www.mageplaza.com/magento-2-smtp/
+
+magento2 在默认情况下 使用 PHP 的 Sendmail 函数来发送邮件，就是调用系统里的 sendmail ，只能设置 host 和 port
+magento2 在 2.3 之后也支持 smtp 了
+在这个位置设置，可以选择 sendmail 和 smtp
+Stores > Settings > Configuration> Advanced > System > Mail Sending Settings > Transport
+
+
+-->
 
 ## 一些调试技巧
 

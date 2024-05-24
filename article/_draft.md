@@ -85,6 +85,7 @@
                 icmp
             网际层
                 ip v4 v6
+                    五元组: 源地址 源端口 目标地址 目标端口 传输层协议
                 ARP
                 IPsec
             数据链路层
@@ -259,15 +260,22 @@
                 元细胞自动机（Cellular automaton，缩写为CA）
                     生命游戏（Game of Life）
         抽象机器（Abstract machine） -> 自动机（Automata） -> 图灵机（Turing machine，缩写为TM）
-            半在自动机的三元组
+            半自动机(Semiautomaton)的三元组
                 状态集 字母表 转移函数
             自动机的五元组
+                状态集 字母表 转移函数 初始状态 最终状态
+                初始状态 和 最终状态 都包含在 状态集 里
             图灵机的七元组
+                Hopcroft 和 Ullman 对图灵机的定义
+                    状态集 字母表 转移函数 初始状态 最终状态(接受状态) 空白符号 磁带字母符号
+                另外一种定义？
+                    状态集 字母表 转移函数 初始状态 接受状态 拒绝状态 磁带字母符号
         图灵机
             组成
-                纸带
-                读写头
-                状态寄存器
+                tape 纸带（TAPE）
+                head 读写头（HEAD）
+                state register 状态寄存器（REGISTER）
+                finite table of instructions 有限的指令表（TABLE）
         通用图灵机（Universal Turing Machine，又称UTM或Machine U）
         图灵完全/图灵完备（Turing complete）
         图灵等价/图灵等效（Turing equivalent）
@@ -435,9 +443,9 @@
             explorer.exe
     计算机语言
         机器语言
-            指令集（机器指令的集合）
-            机器指令
-            微程序
+            指令集（机器指令的集合） instruction set
+            机器指令 machine instruction
+            微程序 micro program
             微指令
             微命令和微操作
         汇编 assembly
@@ -594,6 +602,8 @@ frp的使用
         http://rogerdudler.github.io/git-guide/index.zh.html
         http://marklodato.github.io/visual-git-guide/index-zh-cn.html
     由 hulu 赞助的 oi wiki https://github.com/OI-wiki/OI-wiki/
+    ctf wiki https://github.com/ctf-wiki/ctf-wiki
+    并行计算的 wiki 和 oi wiki ctf wiki 差不多 https://github.com/lcpu-club/hpc-wiki
     演算法笔记：台湾师范大学总结的教程 https://web.ntnu.edu.tw/~algo/
     云原生资料库 https://jimmysong.io/docs/
     除了这些文档外，更应该关注各项技术的官方文档
@@ -685,7 +695,7 @@ vscode的使用技巧
         先直接下载 vscode
         复制下载链接
         把链接里的域名改成这个 vscode.cdn.azure.cn
-    常用的拓展
+    常用的扩展
         git
             Git History
             GitLens — Git supercharged
@@ -707,7 +717,7 @@ vscode的使用技巧
         },
     使用 git
         关闭自动刷新
-            选项->拓展->git->autorefresh
+            选项->扩展->git->autorefresh
             "git.autorefresh": false
     搜索文档内容的技巧
         排除 或 包含
@@ -791,6 +801,7 @@ vscode的使用技巧
             js 的代码要检测是否在 selenium 等环境里，如果是就清空页面的内容
             js 的代码要判断当前的运行环境是否在 nodejs ，如果是就清空页面的内容
             禁用鼠标右键，禁止f12，ctrl+f10，ctrl+shift+i，禁止选中和复制
+        在客户端里加上一些垃圾计算，pow？像预防垃圾邮件那样？
         最终目标
             只允许人访问，访问频率不能太高，限制的内容不能被抓取
             完全杜绝爬虫是很难的，但可以尽量地提高爬虫的成本
@@ -982,6 +993,7 @@ vscode的使用技巧
                             合适优于先进 > 演化优于一步到位 > 简单优于复杂
                         服务治理
                         集群和分布式
+                        “封底计算”（Back-Of-The-Envelope Calculation）？
                 八股的三种类型
                     细节
                     底层
@@ -1838,7 +1850,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         选项 option
         代码 code
         脚本 script
-        拓展 extension
+        扩展 extension
         插件 plugin
         组件 component
         模块 module
@@ -1871,7 +1883,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             addon
             加 s 是一个版本，加 - 是一个版本
             根据现有的 api 重新组合新功能的是 插件
-            通过增加 api 而添加新功能的是 拓展
+            通过增加 api 而添加新功能的是 扩展
             其实多数情况下会被混用
             个人的理解
                 脚本 重新组织 api 的使用
@@ -2893,7 +2905,7 @@ magento2 配置 paypal
             gcc make autoconf automake pkg-config
         curl 是为了下载 php 源码
         gcc make pkg-config 编译主体必须的
-        autoconf 编译拓展必须的
+        autoconf 编译扩展必须的
         autoconf 依赖 automake
         除非禁用了相关编译参数，不然这两个包是必须的 libxml2-dev libsqlite3-dev
     下载源码
