@@ -82,7 +82,7 @@ typeof 只能检测原始数据类型。
 
 对象分类：
 1. 内置对象
-    - 由 es 标准中定义的对象，在任何的 es 的环境中都可以使用，例如：Object Function Math Date 等
+    - 由 es 标准中定义的对象，在任何的 es 的环境中都可以使用，例如：Object Function Array Math Date 等
 2. 宿主对象
     - 由 js 的运行环境提供的对象，例如由浏览器提供的对象：BOM（浏览器对象模型） DOM（文档对象模型）
 3. 自定义对象
@@ -101,6 +101,8 @@ Object.prototype 的原型是 null 。
 函数可以理解成一个变量。
 函数的类型是 Object 。
 函数名和变量名相同时会提示语法错误。
+Function 是一种对象。
+function 是一个用于声明对象的关键字。
 
 ```
 // 一个函数的声明
@@ -150,7 +152,9 @@ new 关键字会进行如下的操作：
 a 本质上只是一个普通的函数，但使用 new 运算符创建新的对象 b 时， a 就可以被称为构造函数。
 在一些语境下 a 也会被称为类。
 
-参考 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/new
+参考
+- https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/new
+- https://zh.javascript.info/constructor-new
 
 ## 原型链
 
@@ -272,6 +276,7 @@ https://zh.javascript.info/prototype-inheritance
 <!--
 this
     this的指向随着调用环境的变化而变化
+    this的值是在调用时计算出来的，它的值并不取决于方法声明的位置
 作用域和闭包
     执行上下文
         全局执行上下文
@@ -332,6 +337,8 @@ this
     不能使用new操作符(作为构造函数使用)
     不能使用原型属性
     箭头函数不绑定arguments,取而代之用rest参数
+    箭头函数没有this，没有arguments，没有super，箭头函数里的this取决于上下文
+函数的 bind call apply 这几个方法有什么作用？
 重写原型对象
 原型链的继承方式
 class 语法糖的本质
@@ -439,5 +446,153 @@ js 的各种循环方法
     类型化数组 也是一种对象
         类型化数组不是普通数组，调用 Array.isArray() 会返回 false
 浅拷贝和深拷贝
-    数组 对象
+    浅拷贝
+        对象
+            let copy = Object.assign({}, original);
+        数组
+            let arr2 = arr1.concat([]);
+            let arr2 = arr1.slice();
+            arr2 是一个新数组，但依然是浅拷贝
+            js 里还有超级多的方法能复制数组，但我个人认为这个最简单
+        直接复制 let arr2 = arr1 ，复制引用而不是值
+            这个语句只是将 arr1 的内存地址赋值给了 arr2。这意味着 arr1 和 arr2 都指向同一个数组对象，而不是两个独立的数组。
+            如果你更改 arr1 或 arr2 中的任何元素，这些更改都会反映在两个变量中，因为它们引用的是同一个数组对象。
+        浅拷贝类似于这样，就是对象第一层属性的直接复制
+            let obj2 = {}；
+            for (let key in obj) {
+                obj2[key] = obj[key];
+            }
+    深拷贝通常可以通过JSON.parse(JSON.stringify(object))来实现，但这种方法不能复制函数和循环引用的对象。
+        let copy = JSON.parse(JSON.stringify(original));
+    underscore
+        在 Underscore.js 中，有一个用于浅拷贝的方法叫做 _.clone(object)，但它只会复制对象的第一层属性，不会处理嵌套的对象或数组。
+        如果需要深拷贝，你可以自己实现一个递归的深度克隆函数。
+    jquery
+       let obj2 jQuery.extend(true, {}, obj1); // 这是深拷贝
+       let obj2 jQuery.extend(false {}, obj1); // 这是浅拷贝
+       jquery 的 extend 方法原本是用于合并对象的
+       jquery 中还有一个 clone 方法， clone 方法是用来复制 dom 节点的
+    lodash
+        let deepCopy = _.cloneDeep(original); // 这是深拷贝
+        lodash 是 underscore 的超集
+    这篇文章推荐使用 lodash 的 cloneDeep 方法，而不是自己写深拷贝的方法
+        https://zh.javascript.info/object-copy
+    深拷贝大致的方法
+        function deepClone(obj) {
+            if (typeof obj !== 'object' || obj === null) {
+                return obj;
+            }
+            if (typeof obj === 'function') {
+                // 如果是函数，可以选择返回一个新的函数
+                // 这里只是简单地返回原函数，但你可以根据需要进行更复杂的操作
+                return obj;
+            }
+            let clonedObj = Array.isArray(obj) ? [] : {};
+            for (let key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    clonedObj[key] = deepClone(obj[key]);
+                }
+            }
+            return clonedObj;
+        }
+
+
+
+new 运算符
+function User(name) {
+  // this = {};（隐式创建）
+
+  // 添加属性到 this
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;（隐式返回）
+  // 也可以显示返回其它值
+}
+let user = new User();
+
+函数的类型是对象。
+    name —— 函数的名字。通常取自函数定义，但如果函数定义时没设定函数名，JavaScript 会尝试通过函数的上下文猜一个函数名（例如把赋值的变量名取为函数名）。
+    length —— 函数定义时的入参的个数。Rest 参数不参与计数。
+
+如果函数是通过函数表达式的形式被声明的（不是在主代码流里），并且附带了名字，
+那么它被称为命名函数表达式（Named Function Expression）。
+这个名字可以用于在该函数内部进行自调用，例如递归调用等。
+
+普通的函数表达式：
+let sayHi = function(who) {
+  alert(`Hello, ${who}`);
+};
+
+命名函数表达式
+let sayHi = function func(who) {
+  if (who) {
+    alert(`Hello, ${who}`);
+  } else {
+    func("Guest"); // 使用 func 再次调用函数自身
+  }
+};
+
+
+在浏览器中 setTimeout 和 setInterval 的 this 是指向 window 的
+所以，在定时器里执行函数时最好再包装一层函数
+例如这样
+setTimeout(sayHi, 1000); // 没有包装的
+setTimeout(function(){sayHi();}, 1000); // 用匿名函数包装的
+setTimeout(()=>sayHi(), 1000); // 用箭头函数包装的
+setTimeout(sayHi(), 1000); // 一般情况下这是错误的，传入的是 sayHi() 函数的返回值，
+
+
+
+节流(throttle)
+防抖(debounce)
+在JavaScript中，**防抖（debounce）和节流（throttle）**都是用来控制函数执行频率的技术，
+但它们的应用场景和行为方式有所不同。
+**防抖（debounce）**
+    是指当事件被触发后，延迟一段时间再执行回调，如果在这段延迟时间内事件又被触发，则重新计算延迟时间。
+    防抖适用于那些你希望在一系列连续的事件触发结束后只执行一次的情况，比如输入框的实时搜索功能。
+**节流（throttle）**
+    则是确保函数在一定时间内只执行一次，即使事件持续触发也不会增加更多的调用。
+    节流适用于那些你希望无论事件触发频率多高，都保持一定的执行频率的情况，比如滚动事件的处理。
+简单来说，防抖是“停下来再执行”，而节流是“按时执行”。
+
+**防抖的应用场景**:
+1. **搜索框搜索输入**：当用户停止输入一段时间后，才开始搜索查询，避免每次键入都触发查询。
+2. **窗口大小调整（resizing）**：只在用户完成窗口大小调整后，才执行计算布局的操作。
+3. **表单验证**：当用户完成输入后，才进行表单验证。
+4. **按钮提交**：防止用户多次点击提交，只在最后一次点击后一段时间执行。
+**节流的应用场景**:
+1. **滚动事件处理**（如无限滚动加载或滚动监听）：确保滚动事件不会过于频繁地触发，可能会导致浏览器卡顿。
+2. **游戏中的按键响应**：限制玩家的操作频率，例如射击按钮。
+3. **性能监测**：限制监测数据的记录频率。
+4. **动画控制**：确保动画在规定时间内只执行一次，避免多次触发导致的性能问题。
+这些场景展示了如何根据不同的需求选择使用防抖或节流技术来优化用户体验和应用性能。
+
+
+// 防抖函数示例
+function debounce(func, delay) {
+  let timer;
+  return function() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, arguments);
+    }, delay);
+  };
+}
+
+// 节流函数示例
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+
 -->

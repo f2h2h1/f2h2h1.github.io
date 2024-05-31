@@ -2242,6 +2242,31 @@ lib\web\mage\mage.js
 
 /** @var \Magento\Framework\View\TemplateEngine\Php $this */
 
+在 phtml 文件里获取其它 block
+/** @var \Magento\Cms\Block\Page */
+$cmsBlockPage = $block->getLayout()->createBlock(\Magento\Cms\Block\Page::class);
+
+在 phtml 文件里获取配置
+$scopeConfig = $block->getConfig();
+$value = $scopeConfig->getValue('configPath', 'scope_store');
+需要在 block 里暴露 scopeConfig 对象
+/**
+ * @return \Magento\Framework\App\Config\ScopeConfigInterface
+ */
+public function getConfig()
+{
+    return $this->scopeConfig;
+}
+
+在 phtml 文件里获取 cms 页面的html代码
+/** @var \Magento\Cms\Block\Page */
+$cmsBlockPage = $block->getLayout()->createBlock(\Magento\Cms\Block\Page::class);
+$cmsBlockPage->unsetData('page');
+$cmsBlockPage->setData('page_id', 'page_id');
+// $cmsBlockPage->setData('page_id', $block->getConfig()->getValue(\Magento\Cms\Helper\Page::XML_PATH_NO_ROUTE_PAGE)); // 获取默认的404页面
+$cmsPage = $cmsBlockPage->getPage();
+printf('<h1>%s</h1>%s', $cmsPage->getContentHeading(), $cmsPage->getContent());
+
 
 magento2 的分层
 表示层 -> 就是前端 + 控制器
