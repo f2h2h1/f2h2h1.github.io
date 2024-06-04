@@ -1835,6 +1835,9 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         进程 process
         线程 thread
         协程 coroutine
+        生成器 generator
+        迭代器 iterator
+        容器 container
         异步 asynchronous
         同步 synchronous
         文档 document
@@ -3517,33 +3520,63 @@ linux 中的各种 id
             libuv
     并行模型
         并行模型也有不少，但笔者工作时基本遇不到，所以就先不记录了
-    异步 规范 Promises/A+ https://promisesaplus.com/
+    异步
+        回调函数
+        Future与promise
+            future n. 未来
+            promise n. 承诺
+            delay n. v. 延迟
+            deferred v. 延期
+        async/await
+        规范 Promises/A+ https://promisesaplus.com/
 多进程 和 多线程 和 协程
     多进程讲究的是进程间通讯
+        管道 pipe
+        命名管道 fifo
+        消息队列 MessageQueue
+        共享内存 SharedMemory
+        信号量 semaphore
+        信号 signal
+        套接字 socket
     多线程讲究的是数据的一致性（多个线程操作同一个变量时不要有冲突）
         通常是通过锁来实现的
     多进程 和 多线程 是通过 中断 来实现的
+    无论是哪一种，最后都是依赖 多线程 和 信号
+    多进程/多线程 和 信号 依赖的是 中断
+    从写代码的角度来看，这些都是依赖 系统调用
     为什么进程的开销比线程大？
+        独立的地址空间：
+            每个进程都有自己的独立地址空间，而线程则共享其所属进程的地址空间。
+            进程之间的切换需要切换整个地址空间，这涉及到更多的内存操作和资源消耗。
+        资源分配和管理：
+            进程是操作系统资源分配的基本单位，它拥有独立的代码和数据空间、文件描述符、环境变量等。
+            线程作为轻量级的进程，共享大部分资源，因此资源管理的复杂度和开销相对较小。
     为什么线程的开销比协程大？
+        用户空间与内核空间切换：
+            线程的切换涉及到用户空间和内核空间之间的切换，
+            这是一个特权模式切换，需要操作系统的调度模块完成。
+            而协程切换完全在用户空间进行，不需要这种模式切换，因此开销更小。
     协程
         无栈协程
-            生成器
+            生成器 generator
         有栈协程
+    还有 线程池/进程池 (pool)
 io 模型
     五种模型
-        阻塞
+        阻塞 （blocking I/O）
             最传统的io
-        非阻塞
+        非阻塞 （non-blocking I/O）
             通过 fnctl 把 fd 加上非阻塞的 flg ，read 没完成是就会返回 EAGAIN 或 EWOULDBLOCK
             这似乎只有 linux 才有的特性
-        信号驱动io
+        信号驱动io （signal-driven IO）
             信号驱动io 是 边缘触发
-        io复用
+        io复用 （I/O Multiplexing）
             select poll epoll
             select 和 poll 是水平触发
             epoll 可以支持 水平触发 和 边缘触发
             虽然 epoll 被归类在 io多路复用 ，但我认为 epoll 更像是 poll 和 信号驱动io 的合体
-        异步io
+            和 epoll 类似的， windows 的 iocp ， freebsd 的 kqueue
+        异步io （asynchronous I/O）
             异步io 更严谨的描述应该是 信号驱动的异步io
             信号驱动io和异步io都需要通过信号来接收内核的通知
             信号驱动io接收到通知后，依然需要通过系统调用把数据从内核复制到用户态
@@ -3557,11 +3590,13 @@ io 模型
             如果 发起IO请求 是 非阻塞的，就是 非阻塞
             所以，除了 阻塞io 之外，其它的都是非阻塞io
         同步和异步
-            如果 处理IO请求 是 阻塞的，就是 同步
+            如果 处理IO请求 是 阻塞的，就是 同步 （synchronous I/O）
             如果 处理IO请求 是 非阻塞的，就是 异步
             所以，除了 异步io 之外，其它的都是同步io
+    还有 零拷贝（Zero-copy） 和 写时复制（Copy-on-write，简称COW）
 锁（lock）
     锁的目的是避免数据的争用，避免脏数据的产生，保证数据的一致性
+    先访问锁，获得锁之外再访问资源
     原理
         原子操作 (atomic operation)
             不可中断的一个或一系列操作
@@ -3583,6 +3618,7 @@ io 模型
             强制的锁
         死锁 (Deadlock)
     实现上的锁
+        信号量 (semaphore)
         文件锁 (file lock)
             从写代码的角度来看，就是各种系统调用
         mysql锁
@@ -3690,6 +3726,16 @@ ELF格式
     查看文件格式 `file 文件路径`
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
+动态规划
+    递归
+    记忆化递归
+人工智能
+    概述
+        是什么 能做什么 有哪些流派
+    发展历史
+    数学基础
+    计算机基础
+    神经网络
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
