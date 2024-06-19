@@ -136,7 +136,7 @@ SEO 的方法要跟随搜索引擎的规则不断调整。如果没有精力研�
 - 主动地提交网站地址给搜索引擎
 - 使用搜索引擎提供的站长工具
 - 使用一个站点分析工具
-- 除了 sitemap 和 robots.txt 之外，还可以再加上 atom 和 rss
+- 除了 sitemap 和 robots.txt 之外，还可以再加上 atom 和 rss 和 JSONFeed
 - 重视链接的分享
 - 不要搞 SEO 的作弊
 

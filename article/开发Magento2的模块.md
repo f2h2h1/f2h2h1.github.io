@@ -325,10 +325,11 @@ composer.json
     php bin/magento setup:upgrade
     ```
 
-- Magento的 模型系统 分为三部分 - 模型 资源模型 集合
+- Magento的 模型系统 分为四部分 - 模型(Model) 资源模型(ResourceModel) 集合(Collection) 工厂(Factory)
 - 模型是一个抽象的对象
 - 资源模型会对应数据库里的表，模型的增删查改通过资源模型进行，例如 资源模型->save(模型)
 - 集合就是模型的集合，一些查询操作也是在集合里进行
+- 工厂用于创建模型或集合，工厂类一般是由 magento2 自动生成的，用编译的命令 php bin/magento setup:di:compile
 
 ## EAV
 
@@ -2327,12 +2328,106 @@ require('uiRegistry').filter(function(a){console.log(a)})
 
 require('uiRegistry').filter(function(a){
     if (a.name) console.log(a.name); else console.log(a);
+    // 这里输出的 name ，可以用在这里 require('uiRegistry').get(name) 的 name
+    // 这里输出的 component ，可以用在这里 require(component)();
 })
 
 如何通过 ui component 找到对应的 dom 节点 ？
+    没有好的方法，只能遍历dom
 如何通过 dom 节点找到对应的 ui component ？
+    没有好的方法，只能遍历dom
 如何判断一个 dom节点有没有绑定 ui component ？
+    用 ko.contextFor 这个方法
 
+
+
+这种输出的一般是 UiClass 对象
+require('Payment/js/view/payment/method-renderer')();
+
+
+KnockoutJS 其实是有多少种运行方式的？
+    Bindings 如果没有组件的状态下，视图模型（viewModel）会应用在全局的组件中，猜测一个页面只会有一个 ko.applyBindings 生效
+    Components 组件， Components 和 Bindings 可以同时使用，但全局的视图模型依然只能有一个。。。
+
+在 KnockoutJS 中，data-bind="scope: 'cart_content'" 这段代码用于创建一个新的绑定上下文（binding context）。
+这里的 'cart_content' 是一个已注册的组件的名称，
+它告诉 KnockoutJS 在当前 DOM 元素及其子元素中应用这个组件的视图模型（ViewModel）。
+
+KnockoutJS 的组件（component）分成两部分
+    viewModel 视图模型
+    template 模板
+
+KnockoutJS 的 API 没有直接提供获取所有组件列表的方法
+
+
+这个好像只要节点是正常的都会输出一个全局的 ko 对象
+require('knockout').contextFor(jQuery("[id='cart']")[0]);
+
+如果节点有绑定 ko ，那么输出的 $data 会有数据
+ko.contextFor(document.getElementById('test'))
+ko.contextFor(document.getElementById('test1'))
+
+如果存在对应的组件名就会输出对应的对象，如果没有怎输出null
+ko.components.get('message-editor', function(a){console.log(a)});
+
+ko.contextFor(document.getElementsByClassName('liveExample'))
+
+用于判断组件名是否存在，但在 magento2 里似乎没有效果
+require('knockout').components.isRegistered('minicart_content');
+
+遍历dom节点，
+(function(ko, root) {
+class Particle {
+    constructor(ele) {
+        this.ele = ele;
+        this.koBindingContext = null;
+        this.component = null;
+        this.name = null;
+        let bindingContext = ko.contextFor(this.ele);
+        if (bindingContext && bindingContext.$data) {
+            this.koBindingContext = bindingContext;
+            let $data = this.koBindingContext.$data;
+            if ($data.component) {
+                this.component = $data.component;
+            }
+            if ($data.name) {
+                this.name = $data.name;
+            }
+        }
+        this.children = [];
+    }
+    addChild(particle) {
+        this.children.push(particle);
+    }
+}
+
+let traverseDOM = function(parentsElement, result) {
+    if (!parentsElement) {
+        return result
+    }
+    let currentElement = parentsElement.firstElementChild;
+    while (currentElement) {
+        // console.log(currentElement);
+        let subresult = traverseDOM(currentElement, new Particle(currentElement));
+        result.addChild(subresult);
+        currentElement = currentElement.nextElementSibling
+    }
+    return result;
+};
+
+let result = traverseDOM(root, new Particle(root));
+console.log(result);
+
+})(require('knockout'), jQuery('#maincontent .payment-methods')[0])
+// document.body
+// jQuery('#maincontent .payment-methods')[0]
+// 如果不是 require 环境，就直接的 ko 就可以了
+// document.getElementById('test')
+// document.getElementsByClassName('test')
+// 直接用 document.body 输出的对象会非常大，最好先限定一下范围
+
+
+用审查元素里的 事件侦听器 也能通过节点找到对应的js代码
 
 // 确保 customerData 加载完后执行的方法
 require([
@@ -3565,5 +3660,18 @@ action类的 execute 方法大概就返回四种 result
 这些类都继承自 \Magento\Framework\Controller\AbstractResult
 
 如何加载 page_layout 和 layout 还是有一点模糊
+
+那些可以迅速定位问题的文件？各种入口？
+http
+    frontend
+    backend
+    rest
+    graphql
+        vendor\magento\framework\GraphQl\Query\QueryProcessor.php
+console
+    console
+    cron
+
+
 
 -->
