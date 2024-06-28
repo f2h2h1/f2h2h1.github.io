@@ -133,6 +133,11 @@ acme.sh --list-archive
 acme.sh --info -d www.example.com
 ```
 
+删除证书
+```
+acme.sh --remove -d www.example.com
+```
+
 更新
 ```
 acme.sh --upgrade
@@ -146,6 +151,11 @@ acme.sh --upgrade --auto-upgrade
 关闭自动更新
 ```
 acme.sh --upgrade --auto-upgrade 0
+```
+
+卸载 acme.sh
+```
+acme.sh --uninstall
 ```
 
 ## 在 Windows 环境下使用 ACME
@@ -168,6 +178,19 @@ https://github.com/acmesh-official/acme.sh/wiki#4-how-to-run-on-windows-with-cyg
 ```
 Register-ScheduledTask -TaskName "acme_cron" -AsJob -Trigger (New-ScheduledTaskTrigger -Daily -At "2:00 AM") -Action (New-ScheduledTaskAction -Execute "PowerShell" -Argument "-Nolog -NonInteractive -WindowStyle Hidden -Command `"C:\Users\a\Git\usr\bin\bash.exe -l /c/Users/a/.acme.sh/acme.sh --cron --home /c/Users/a/.acme.sh`"")
 ```
+
+
+似乎可以这样安装 计划任务 ，即使在 windows 环境里，只要在 cygwin 中运行，一样是有效的
+```
+acme.sh --install-cronjob
+```
+
+删除定时任务
+```
+acme.sh --uninstall-cronjob 
+```
+
+<!-- 从源码里看，似乎只要运行了 acme.sh --install 就会自动新建定时任务了，除非指定了 --no-cron 参数 -->
 
 ### 以 nginx 为例子
 
@@ -243,13 +266,7 @@ Register-ScheduledTask -TaskName "acme_cron" -AsJob -Trigger (New-ScheduledTaskT
 
 版本是 3.0.8
 
-似乎可以这样安装 计划任务 ，即使在 windows 环境里，只要在 cygwin 中运行，一样是有效的
-acme.sh --install-cronjob
 
-从源码里看，似乎只要运行了 acme.sh --install 就会自动新建定时任务了，除非指定了 --no-cron 参数
-
-acme.sh --uninstall-cronjob 删除定时任务
-acme.sh --uninstall 卸载 acme.sh
 
 
         server {

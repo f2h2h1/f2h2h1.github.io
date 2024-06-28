@@ -280,6 +280,10 @@ nc 有哪些通用的语法？
 c 如何实现一个交互式的命令行？
 php 如何实现一个交互式的命令行？
 python 如何实现一个交互式的命令行？
+处理命令行参数
+建立连接
+处理输入
+处理输出
 
 https://github.com/mirror/busybox/blob/master/networking/telnet.c
 https://github.com/mirror/busybox/blob/master/networking/telnetd.c
