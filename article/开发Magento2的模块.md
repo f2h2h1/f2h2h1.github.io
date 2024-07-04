@@ -3176,6 +3176,10 @@ https://github.com/netz98/n98-magerun2
 n98-magerun2.phar sys:cron:run sales_clean_quotes
 其实这个工具还有很多其它功能的
 
+curl -O https://files.magerun.net/n98-magerun2.phar && chmod +x ./n98-magerun2.phar;
+su www-data -c "./n98-magerun2.phar sys:cron:run sales_clean_quotes"
+
+
 配置文件修改后，要清除一次缓存
 php bin/magento c:c
 
@@ -3672,6 +3676,6 @@ console
     console
     cron
 
-
+document.cookie="XDEBUG_SESSION=vscode"
 
 -->
