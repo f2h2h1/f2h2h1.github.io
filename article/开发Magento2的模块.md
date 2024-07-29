@@ -2587,6 +2587,7 @@ $orderCollectionFactory = \Magento\Framework\App\ObjectManager::getInstance()->g
 $orderId = 3068;
 $orderCollection = $orderCollectionFactory->create();
 $orderCollection->addFieldToFilter('entity_id', $orderId); // 可以修改条件
+/** @var \Magento\Sales\Model\Order */
 $order = $orderCollection->getFirstItem(); // $orderCollection->getItems(); // 获取集合
 ```
 
@@ -3677,5 +3678,40 @@ console
     cron
 
 document.cookie="XDEBUG_SESSION=vscode"
+
+
+
+
+从数据库里看，当前系统有这么多种支付方式
+select
+	sales_order_payment.method,
+    count(sales_order_payment.method) as 'count'
+FROM 
+    sales_order_payment
+group by sales_order_payment.method
+order by count desc
+
+从数据库里看，当前系统有这么多种送货方式
+select
+	shipping_method,
+    count(shipping_method) as 'count'
+FROM 
+    sales_order
+order by count desc
+
+查看订单的支付方式
+select
+	sales_order.entity_id,
+    sales_order.increment_id,
+    sales_order.shipping_method,
+    sales_order_payment.method AS payment_method,
+    sales_order_payment.additional_information AS payment_info
+FROM 
+    sales_order
+JOIN 
+    sales_order_payment ON sales_order.entity_id = sales_order_payment.parent_id
+order by sales_order.entity_id desc
+limit 100
+
 
 -->

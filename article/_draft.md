@@ -1080,6 +1080,7 @@ vscode的使用技巧
                             物理限制
                             决策者的偏好和取舍
                 要传达出一种能力，我不会，是因为没有遇过，我的学习能力很强，只要我遇到了，我就能解决
+                    要如何传达出这个感觉？
             遇到对回答不认可的情况怎么办
             还有什么问题
                 目的1 了解岗位信息
@@ -1173,9 +1174,12 @@ vscode的使用技巧
                 你们是几号发工资的
                 当前公司大概有多少名员工，主要是和 参保人数对比一下 ，如果 参保人数远小于公司当前员工，那么这家公司就可能是坑
                 你在这家公司工作多久了 通过员工的在职时间判断公司是否是好的公司
+                你最开始为什么选择了这家公司
+                你为什么留在这家公司
                 什么时候会有面试的结果
                 后续还有什么流程
                 有针对新员工的培训吗
+                更多的反问可以参考这里 https://github.com/yifeikong/reverse-interview-zh
         如果一些问题面试官没有正面回答的，就不要追问了，不要把气氛弄得太尴尬
         如果觉得面试的公司没有太多诚意的话，就不要勉强自己
         如果是现场面试，还要观察一下公司的办公环境
@@ -1183,7 +1187,7 @@ vscode的使用技巧
             例如，技术面有哪些问题，反问的时候对方是怎么回答的
             一方面可以查漏补缺，另一方面在收到多个 offer 时，可以更好地对比不同的公司
             列一个表格，对比各家公司的条件
-                公司规模 办公环境 工作地点 是否双休 上班时间 有没有加班费 工资 试用期工资 试用期长度 社保 公积金 其它补贴（补充医疗 餐补 通勤补贴 通讯补贴 租房补贴） 奖金 期权 工作内容 技术栈 调薪或晋升体系 。。。
+                公司规模 办公环境 工作地点 是否双休 上班时间 有没有加班费 工资 试用期工资 试用期长度 社保 公积金 其它补贴（补充医疗 餐补 通勤补贴 通讯补贴 租房补贴） 奖金 期权 工作内容 技术栈 调薪或晋升体系 通勤时间 公司周边的房租。。。
         去面试之前，一定要先认真地准备，最好预留一周的时间，认真地准备面试
             主要是复习各类基础知识和背面试题目
         可以先找几家不是目标公司面试，先积累一下面试的感觉
@@ -3775,6 +3779,14 @@ ELF格式
     查看文件格式 `file 文件路径`
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
+算法思想
+    穷举
+    递归
+    贪心
+    分治
+    回溯
+    分支界限
+    动态规划
 动态规划
     递归
     深度优先搜索
@@ -3795,11 +3807,10 @@ ELF格式
             用机器模拟人脑
         能做什么
             理想状态下，人能做什么，ai就能做什么
-
         有哪些流派
-            符号
-            联结
-            行为
+            符号主义（Symbolists）
+            联结主义（Connectionists）
+            行为主义（Behaviorism）
     发展历史
         经典的机器学习 -> 神经网络 -> 深度学习 -> 大语言模型
     数学基础
@@ -3809,8 +3820,30 @@ ELF格式
         离散数学
             数理逻辑 集合论 组合数学 图论 运筹学 博弈论
         最优化
+        数学建模
     计算机基础
+        理论计算机科学
+        408全家桶
+        数据库
+        前端三件套
+        软件工程
+        常用的工具
+    经典的机器学习
+        五大流派
+            符号主义（Symbolists）
+            联结主义（Connectionists）
+            贝叶斯派（Bayesians）
+            进化主义（Evolutionists）
+            类推主义（Analogizers）
+            符号主义和链接主义和人工智能中的分类是一样的
+            人工智能中的行为主义似乎没有什么存在感
+            贝叶斯 进化主义 类推主义 在人工智能的流派中好像没有对应的分类
     神经网络
+    相关的书籍和仓库
+        深度学习500问 https://github.com/scutan90/DeepLearning-500-questions
+        数学要素 https://github.com/Visualize-ML/Book3_Elements-of-Mathematics
+            这是一套系列丛书，一共有七本 https://github.com/Visualize-ML/Book3_Elements-of-Mathematics/blob/main/鸢尾花书_整体布局.pdf
+        如何入门人工智能科研 https://github.com/WengLean/hands-on-research-tutorial
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
@@ -4322,6 +4355,7 @@ wordpress
         https://make.wordpress.org/core/2022/09/12/lets-make-wordpress-officially-support-sqlite/
         https://wpmore.cn/wordpress-%e5%8f%91%e5%b8%83%e4%ba%86%e7%8b%ac%e7%ab%8b%e7%9a%84-sqlite-%e6%8f%92%e4%bb%b6.html
         既然可以使用 sqlite ，那么使用 PostgreSQL 也是可以的吧
+    如何寻找前1000个用户 https://github.com/naxiaoduo/1000UserGuide
 接入 alipay+ 的过程
     注册和设置
     支付
@@ -4406,6 +4440,7 @@ telnet rlogin ssh
     判断是否能ping通
         ping -n 4 test.com
         ping -n 4 127.0.0.1
+        traceroute -I 127.0.0.1
         Test-NetConnection -ComputerName "127.0.0.1" -InformationLevel "Detailed"
         Test-NetConnection -ComputerName "127.0.0.1" -TraceRoute -InformationLevel "Detailed"
     判断端口是否开放
@@ -4472,7 +4507,7 @@ nas
             使用hls
     除了视频之外还可以继续有 音频 图片 文档 等等
     更多？
-        连接其它设备？物联网？智能家电？all in one？
+        连接其它设备？物联网？智能家电？软路由？all in one？
             忽略 猫 和 路由 ？
         始终至少需要一个外网的服务器
         更多的存储设备
@@ -4547,10 +4582,12 @@ nas
     https://docs.microsoft.com/zh-cn/contribute/style-quick-start
     https://docs.microsoft.com/zh-cn/style-guide/welcome/
 程序员延寿指南 https://github.com/geekan/HowToLiveLonger
+人体系统调优不完全指南 https://github.com/zijie0/HumanSystemOptimization
 程序员做饭指南 https://github.com/Anduin2017/HowToCook
 开源软件指南
     https://github.com/github/opensource.guide
     https://opensource.guide/zh-hans/
+GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts
 版本控制软件比较
     git
         github
