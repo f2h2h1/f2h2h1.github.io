@@ -277,6 +277,53 @@ edge 也可以用类似的命令，但火狐却没有生成PDF的命令
 
 ### 使用 Playwright 生成 PDF
 
+- python 3.12
+- playwright 1.45
+- 这个是很简单的例子，在 pdf 方法里还有不少参数可以设置，例如设置 页码 页眉 这些
+- 参考
+    - https://playwright.dev/python/docs/api/class-playwright
+    - https://playwright.dev/python/docs/api/class-browsertype#browser-type-launch
+    - https://playwright.dev/python/docs/api/class-page#page-pdf
+- Puppeteer 和 Selenium 也有类似的操作
+
+```python
+import time
+from playwright.sync_api import sync_playwright, Playwright
+
+def run(playwright: Playwright):
+    chromium = playwright.chromium
+    browser = chromium.launch(devtools=True, headless=False, executable_path="C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
+
+    # 其它一些可能会用到的参数
+    # args=args, executable_path=executablePath, devtools=devtools, headless=headless, user_data_dir='./playwright_temp/user', user_agent=ua, viewport=windowSize, is_mobile=isMobile
+
+    page = browser.new_page()
+
+    targetUrl = "https://f2h2h1.github.io/article/%E6%8A%8A%E7%BD%91%E9%A1%B5%E5%AF%BC%E5%87%BA%E6%88%90PDF.html"
+    waittime = 3
+    load_script = '''
+        console.log(123);
+    '''
+
+    if load_script != None:
+        page.on("load", lambda :page.evaluate(load_script))
+
+    page.goto(targetUrl)
+
+    page.wait_for_load_state('load')
+    time.sleep(waittime)
+
+    # page.pdf(path="page.pdf")
+    with open('page.pdf', 'wb') as file:
+        file.write(page.pdf())
+
+    browser.close()
+
+if __name__ == '__main__':
+    with sync_playwright() as playwright:
+        run(playwright)
+```
+
 ## PS
 Opera 浏览器（77.0.4054.203）有一个把页面另存为 PDF 的功能（不是打印预览），几乎可以把页面的样式完整地保留下来（不是打印的样式就是当前渲染的样式）而且还能保持 a 标签的链接。但只能通过图形界面操作，没有命令行参数，也不能通过 Playwright 这类工具来操作浏览器生成。
 可以弄一个单独的 Windows 服务器，用 autoit 这类工具操作 Opera 浏览器把页面另存为 PDF 。

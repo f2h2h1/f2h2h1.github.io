@@ -509,7 +509,7 @@ sed -i 's/lib\/internal\/Magento\/Framework\//vendor\/magento\/framework\//g' wi
 
 执行 patch 的命令，要在项目的根目录运行
 ```
-patch -p0 --no-backup-if-mismatch < windows.patch;
+patch --verbose -p0 --no-backup-if-mismatch < windows.patch;
 ```
 
 生成 patch 文件的方式
@@ -553,7 +553,7 @@ array_map(function($item) {
     return $item;
 }, [$cpArr, $diffArr, $sedArr]);
 
-echo 'patch -p0 --no-backup-if-mismatch < ' . PATCH_FILE . PHP_EOL;
+echo 'patch --verbose -p0 --no-backup-if-mismatch < ' . PATCH_FILE . PHP_EOL;
 ```
 
 <!--
@@ -562,7 +562,7 @@ cat > windows.patch <<- 'EOF'
 
 EOF
 cat windows.patch; \
-patch -p0 --no-backup-if-mismatch < windows.patch;
+patch --verbose -p0 --no-backup-if-mismatch < windows.patch;
 
 
 if [ -d lib/internal/Magento/Framework ]; \
@@ -618,4 +618,6 @@ echo endAt: $endAt; \
 echo $hour $min $sec | awk '{printf("Runtime: %02d:%02d:%02d\n", $1, $2, $3)}'; \
 echo $startAtTimestamp $endAtTimestamp | awk '{printf("Runtime: %d\n", $2-$1)}'
 
+查看当前版本
+php bin/magento --version
 -->

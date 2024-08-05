@@ -117,10 +117,10 @@ php bin/magento module:disable 模块名
 刷新缓存
 ```
 php bin/magento cache:clean 清除缓存
-php bin/magento indexer:reindex 刷新全部索引
 php bin/magento setup:upgrade 更新数据 Upgrades the Magento application, DB data, and schema
 php bin/magento setup:di:compile 编译
 php bin/magento setup:static-content:deploy -f 部署静态视图文件
+php bin/magento indexer:reindex 刷新全部索引
 php bin/magento cache:flush 刷新缓存
 ```
 
@@ -2551,6 +2551,74 @@ generated/code/
 generated/metadata/
 pub/static/*
 
+
+查看缓存是否有启用，可以用这个命令来查看缓存的key
+php bin/magento cache:status
+一共会输出两列，第一列是缓存的key，第二列是缓存的状态，1是启用，0是禁用
+
+清除全部缓存
+php bin/magento cache:clean
+
+禁用全部缓存
+php bin/magento cache:disable
+
+启用全部缓存
+php bin/magento cache:enable
+
+刷新特定缓存
+php bin/magento cache:flush 缓存的key
+
+清除特定缓存
+php bin/magento cache:clean 缓存的key
+
+禁用特定缓存
+php bin/magento cache:disable 缓存的key
+
+启用特定缓存
+php bin/magento cache:enable 缓存的key
+
+刷新特定缓存
+php bin/magento cache:flush 缓存的key
+
+
+AdminPortal 管理缓存的位置，这里可以直接刷新缓存
+System -> Tools -> Cache Management
+在这个页面里还有三个附件缓存是没法通过命令行操作的
+Additional Cache Management
+Flush Catalog Images Cache -> Pregenerated product images files
+    vendor\magento\module-backend\Controller\Adminhtml\Cache\CleanImages.php
+Flush JavaScript/CSS Cache -> Themes JavaScript and CSS files combined to one file
+    vendor\magento\module-backend\Controller\Adminhtml\Cache\CleanMedia.php
+Flush Static Files Cache -> Preprocessed view files and static files
+    vendor\magento\module-backend\Controller\Adminhtml\Cache\CleanStaticFiles.php
+
+可以使用这样的奇技淫巧来刷新静态文件的缓存
+php -a <<- 'EOF'
+try {
+require __DIR__ . '/app/bootstrap.php';
+$bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+$objectManager = $bootstrap->getObjectManager();
+$eventManager = $objectManager->get(\Magento\Framework\Event\ManagerInterface::class);
+
+$objectManager->get(\Magento\Catalog\Model\Product\Image::class)->clearCache();
+$eventManager->dispatch('clean_catalog_images_cache_after');
+
+$objectManager->get(\Magento\Framework\View\Asset\MergeService::class)->cleanMergedJsCss();
+$eventManager->dispatch('clean_media_cache_after');
+
+$objectManager->get(\Magento\Framework\App\State\CleanupFiles::class)->clearMaterializedViewFiles();
+$eventManager->dispatch('clean_static_files_cache_afters');
+
+call_user_func([$cronJob, $method]);
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+EOF
+
+在 k8s 多个pod的环境下，这些操作是否有效？
+在有 cdn 的环境下，这些操作是否有效？
+
 -->
 
 ## 发送邮件
@@ -2896,7 +2964,7 @@ php -d xdebug.start_with_request=yes bin/magento indexer:info
 一些对象可以通过 \Magento\Framework\App\ObjectManager::getInstance()->get() 的方法获得。
 indexer:status 的输出就包含了 indexer:info 的输出。
 
-直接运行测试代码，要在项目的根目录里运行，但这种方式无法调试
+直接运行测试代码，要在项目的根目录里运行，但这种方式无法调试，这种运行方式很容易忽略一些模块的 plugin 或 event
 ```bash
 php -a <<- 'EOF'
 try {
@@ -3348,6 +3416,16 @@ coupon 新建界面里的
         limit
 
 
+select
+    row_id,
+    rule_id,
+    name,
+    description,
+    conditions_serialized
+from salesrule where rule_id = 5898;
+
+可以通过 conditions_serialized 字段查看 rule 生效的代码
+
 
 关键对象 和 相关的表
 
@@ -3712,6 +3790,23 @@ JOIN
     sales_order_payment ON sales_order.entity_id = sales_order_payment.parent_id
 order by sales_order.entity_id desc
 limit 100
+
+
+查看一个订单下的产品
+select
+	sales_order.entity_id,
+    sales_order.increment_id,
+    sales_order.shipping_method,
+    sales_order_item.product_id,
+    sales_order_item.sku,
+    sales_order_item.name,
+    sales_order_item.product_type,
+    sales_order_item.is_virtual
+FROM 
+    sales_order
+JOIN 
+    sales_order_item on sales_order.entity_id = sales_order_item.order_id
+WHERE sales_order.entity_id = 28546;
 
 
 -->

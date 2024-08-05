@@ -3125,6 +3125,8 @@ composer
             所以在 windows 环境下最好用 git for windows 的 bash 来运行 composer install
         如果遇到 patch 失败的情况，可以加上 -vvv 参数参看详细的输出 composer install -vvv
         patch 给文件打补丁的命令
+            查看帮助 patch --help
+            加上 --verbose 可以输出详细信息
             一次修改一个文件
                 patch 源文件 < 差异文件
                 patch -d 目录 源文件 < 差异文件
@@ -3780,13 +3782,22 @@ ELF格式
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
 算法思想
-    穷举
-    递归
-    贪心
-    分治
-    回溯
-    分支界限
-    动态规划
+    主要的算法思想
+        穷举
+        递归
+        贪心
+        分治
+        回溯
+        动态规划
+            动态规划 约等于 深度优先搜索 + 回溯
+        分支界限
+            分支界限 约等于 广度优先搜索 + 回溯
+    算法思想之所被称为思想是因为算法思想可以应用到不同的数据结构里
+    一个具体的算法肯定是基于一个具体的数据结构
+    简单但不严谨的比喻
+        数据结构 是 食材
+        算法 是 菜谱
+        算法思想 是 烹饪方式
 动态规划
     递归
     深度优先搜索
@@ -3844,6 +3855,21 @@ ELF格式
         数学要素 https://github.com/Visualize-ML/Book3_Elements-of-Mathematics
             这是一套系列丛书，一共有七本 https://github.com/Visualize-ML/Book3_Elements-of-Mathematics/blob/main/鸢尾花书_整体布局.pdf
         如何入门人工智能科研 https://github.com/WengLean/hands-on-research-tutorial
+        ApacheCN
+            https://github.com/apachecn/Interview
+            https://github.com/apachecn/ailearning
+            https://github.com/apachecn/ai-roadmap
+    Kaggle
+        这是一个类似 leetcode 的平台，题目内容是数据分析相关的
+        官网 https://www.kaggle.com/
+        《Python机器学习及实践：从零开始通往Kaggle竞赛之路（2022年度版）》
+            https://book.douban.com/subject/36143721/
+            https://github.com/godfanmiao/ML-Kaggle-Github-2022
+        Kaggle 的官方入门书籍，但没有中文版
+            https://github.com/PacktPublishing/The-Kaggle-Book
+        ApacheCN 中对 kaggle 的介绍
+            https://github.com/apachecn/Interview/tree/master/docs/Kaggle
+            https://github.com/apachecn/Kaggle
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
