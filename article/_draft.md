@@ -628,6 +628,9 @@ frp的使用
     数据库开发
     InfoQ
     人人都是产品经理
+    瑞典马工
+    非法加码
+    机器之心
 一些网址
 文档
     mdn
@@ -679,6 +682,7 @@ frp的使用
         少数派
     软件行业的
         开源中国 https://www.oschina.net/news
+    今日热榜，各种主流app的热搜聚集 https://rebang.today/home?tab=top
 git仓库
     github中文社区，一些github仓库的索引 https://www.githubs.cn
     分享 GitHub 上入门级、有趣的开源项目 https://hellogithub.com
@@ -787,6 +791,21 @@ vscode的使用技巧
         python
         c
     远程开发的配置
+    安装和使用 vscode 的网页版
+        三种版本
+            下载时直接选择 cli 版就可以了，普通版的也可以，直接用这条命令就可以了
+                code serve-web
+                网页版和普通的的配置和插件是互相独立的
+                这样查看帮助
+                    code serve-web --help
+                    可以指定用户目录和插件目录，但不是所有插件都可以运行在 serve-web 里
+                默认端口是 8000 可以这样修改端口
+                code serve-web --port 8888
+                好像是每个端口都会新建一套配置？
+                好像没法设置密码，但可以通过http代理设置的吧
+            https://github.com/coder/code-server
+            https://github.com/gitpod-io/openvscode-server
+        直接访问 vscode.dev 也可以编辑本地文件
 爬虫与反爬虫的经验
     爬虫
         无视 robots.txt
@@ -3829,12 +3848,13 @@ ELF格式
         四门基础
             微积分 线性代数 概率论 数理统计
         离散数学
-            数理逻辑 集合论 组合数学 图论 运筹学 博弈论
+            数理逻辑 集合论 组合数学 图论 运筹学 博弈论 信息论
         最优化
         数学建模
     计算机基础
         理论计算机科学
         408全家桶
+            数据结构 计算机组成原理 操作系统 计算机网络
         数据库
         前端三件套
         软件工程
@@ -3851,6 +3871,7 @@ ELF格式
             贝叶斯 进化主义 类推主义 在人工智能的流派中好像没有对应的分类
     神经网络
     相关的书籍和仓库
+        Deep Learning 中文翻译 https://github.com/exacity/deeplearningbook-chinese
         深度学习500问 https://github.com/scutan90/DeepLearning-500-questions
         数学要素 https://github.com/Visualize-ML/Book3_Elements-of-Mathematics
             这是一套系列丛书，一共有七本 https://github.com/Visualize-ML/Book3_Elements-of-Mathematics/blob/main/鸢尾花书_整体布局.pdf
@@ -4533,7 +4554,7 @@ nas
             使用hls
     除了视频之外还可以继续有 音频 图片 文档 等等
     更多？
-        连接其它设备？物联网？智能家电？软路由？all in one？
+        连接其它设备？物联网？智能家电？软路由？all in one？算存网分离？
             忽略 猫 和 路由 ？
         始终至少需要一个外网的服务器
         更多的存储设备
@@ -4614,6 +4635,7 @@ nas
     https://github.com/github/opensource.guide
     https://opensource.guide/zh-hans/
 GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts
+中国程序员容易发音错误的单词 https://github.com/shimohq/chinese-programmer-wrong-pronunciation
 版本控制软件比较
     git
         github

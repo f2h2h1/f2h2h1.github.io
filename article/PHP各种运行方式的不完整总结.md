@@ -75,6 +75,15 @@ php-cgi 没有平滑重启，修改 php.ini 后要重启 php-cgi 。
 
 ### apache 模块
 
+<!--
+apache 的 模块
+mod_fcgid
+mod_fastcgi
+mod_proxy_fcgi
+mod_cgid
+mod_cgi
+-->
+
 apache 模块的运行方式也是十分流行的运行方式。
 
 这里需要注意的是，要根据 apache 的 mpm (Multi-Processing Module) 来选择 PHP 的版本。

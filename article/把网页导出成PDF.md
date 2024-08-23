@@ -340,3 +340,17 @@ save as pdf 和 pirnt to pdf 是不一样的，
 - https://answers.microsoft.com/en-us/msoffice/forum/all/save-as-pdf-vs-print-to-pdf-quality-issues/28c536c6-6fb2-4484-b28b-1e15ce4aac75
 
 thead 标签可以在表格被分页时，每一页都保持一个表头
+
+<!--
+
+右键菜单的打印
+ctrl+p
+浏览器菜单的打印
+直接调用 print 事件
+这四种操作生成的pdf效果是一样的
+
+有哪些可以导出pdf的浏览器插件
+
+
+
+-->

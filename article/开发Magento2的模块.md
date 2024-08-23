@@ -3750,6 +3750,10 @@ http
     backend
     rest
     graphql
+        vendor\magento\module-graph-ql\etc\graphql\di.xml 在这个文件里，把 Magento\Framework\App\FrontControllerInterface 声明为
+            Magento\GraphQl\Controller\GraphQl
+            vendor\magento\module-graph-ql\Controller\GraphQl.php
+            ScandiPWA\\PersistedQuery\\Query\\QueryProcessor
         vendor\magento\framework\GraphQl\Query\QueryProcessor.php
 console
     console
