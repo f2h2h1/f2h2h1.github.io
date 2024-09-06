@@ -351,6 +351,17 @@ ctrl+p
 
 有哪些可以导出pdf的浏览器插件
 
+其实可以把上面几段js写成Tampermonkey脚本吧
 
+看上去挺厉害的一个工具，用于把网页保存为pdf，但本质上依然是用浏览器实现的，这是用 Qt WebKit
+https://wkhtmltopdf.org/
+https://github.com/wkhtmltopdf/wkhtmltopdf
+因为用了 qt 所以可以跨平台运行
+但从 github 的仓库来看，好像已经处于不活跃的阶段了
+
+我也写一个，封装一个浏览器在里面，然后做到开箱即用
+其实可以不单输出 pdf ，输出 图片 html 代码也是可以的吧
+把那个 seo 的仓库再改一下
+面向一般用户的，面向开发者的
 
 -->

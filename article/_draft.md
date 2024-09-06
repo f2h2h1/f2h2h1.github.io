@@ -611,6 +611,7 @@ frp的使用
     360奇舞团 https://75.team/
     小米信息部技术团队 https://xiaomi-info.github.io/
     京东零售官方设计共享平台 https://jelly.jd.com/
+    凹凸实验室 https://aotu.io/
     阮一峰 https://www.ruanyifeng.com/blog/
     廖雪峰 https://www.liaoxuefeng.com/
     并发编程网 https://ifeve.com/
@@ -772,6 +773,15 @@ vscode的使用技巧
         关闭自动刷新
             选项->扩展->git->autorefresh
             "git.autorefresh": false
+    忽略一些文件的解析
+        "intelephense.references.exclude": [
+            "**/vendor/**",
+            "generated",
+            "dev",
+            "var",
+            "pub/media",
+            "pub/static"
+        ]
     搜索文档内容的技巧
         排除 或 包含
             可以用 , 表示多个条件，例如像这样 .jmx,.js,.css,.less,.xml,.md
@@ -780,7 +790,7 @@ vscode的使用技巧
             ^\s*(?=\r?$)\n
             ^$
     搜索文件的技巧
-        ctrl+p 按文件名搜索
+        ctrl + p 按文件名搜索
     转跳到行数
         Ctrl + G 然后在弹出的框中输入行数
     task的配置
@@ -1971,6 +1981,20 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             compute
             counting
             algorism
+        option config setting 的区别
+            option n. 选项，可选项
+            setting n. 设置
+            config
+                configuration n. 配置
+                configure v. 配置
+            profile n. 配置集
+            preference n. 偏好
+            option configuration profile preference 可以简单但不严谨地理解为都是同义词，混用关系也不大
+            option 是可选的设置，可以被忽略的
+            configuration 是面向开发者的设置，例如 数据库连接
+            setting 是面向用户的设置，侧重于程序的功能和行为
+            profile 通常用于用户信息，例如 昵称 简介
+            preference 通常用于个性化用户体验，例如 外观 主题颜色 快捷键
         参数
             parameter
             argument
@@ -1988,14 +2012,14 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         应用=面向终端用户的软件
         软件=程序+数据
         程序=算法+数据结构
-        算法=逻辑+控制
-        数学=逻辑+计算（计算这个词有歧义）
+        算法=逻辑+控制？
+        数学=逻辑+计算（计算这个词有歧义）？
         进程=运行中的程序
         守护进程=在后台一直运行的进程
         定时任务=一个不断判断是否有任务需要执行的守护进程
         操作系统=一堆守护进程的集合
-        中间件=服务于其它软件的软件
-        数据结构=类型+结构
+        中间件=服务于其它软件的软件？
+        数据结构=类型+结构    结构是什么？
         控制=顺序+分支+跳转（goto）
         循环可以用分支+跳转实现
         逻辑=推理+归纳？
@@ -2058,7 +2082,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
     执行 npm publish 上传代码到npm包管理库
 spa 的 ssr
 一些文章
-  原文链接 快照链接
+  标题 简介 原文链接 快照链接
 git的一般使用指南
 如何制作一个 php 框架
     组件
@@ -4126,6 +4150,18 @@ termux
             ssh -o ServerAliveInterval=60 -f -N -C -g -L 127.0.0.1:8022:127.0.0.1:8022 用户名@远程服务器地址
         4 在远程计算机里运行这句，这样就能通过外网连回手机的 termux 了
             ssh -o ServerAliveInterval=60  用户名@127.0.0.1 -p 8022
+虚拟机
+    目标系统/宿主系统
+        windows linux Android macOS
+    下载 安装 使用
+    wsl
+    qemu
+    Hyper-V
+    VirtualBox
+    VMware
+    Bochs
+        https://bochs.sourceforge.io/
+        https://github.com/bochs-emu/Bochs
 linux 应用的一般启动套路
     至少一个启动脚本
         检测或启动一些前置依赖
@@ -4255,11 +4291,45 @@ linux 应用的一般启动套路
         把当前目录下的 wp-plugin 文件或目录 压缩成 wp-plugin.zip 文件
             zip -r wp-plugin.zip wp-plugin
             7z a -tzip wp-plugin.zip wp-plugin
+富文本编辑器，页面构造器，代码编辑器
+    页面构造器（page builder）
+    富文本编辑器（rich text editor）
+    代码编辑器（code editor）
+        ACE
+        Atom
+        Code Mirror
+        Monaco Editor
+        codejar
+        下面这三个都是 ECD
+            Eclipse Che
+            Eclipse Theia
+            Orion
+            Eclipse Cloud Development (ECD) https://wiki.eclipse.org/ECD
+        https://en.wikipedia.org/wiki/Comparison_of_JavaScript-based_source_code_editors
+        有哪些类似于 vscode 的编辑器
+            能兼容 vscode 插件的
+                VSCodium
+                atom
+                fleet
+                ECD 三兄弟
+                    Eclipse Che
+                    Eclipse Theia
+                    Orion
+            不能兼容 vscode 插件的
+                brackets
+            vscode 是基于 Monaco Editor
+            brackets 是基于 Code Mirror
+    视图
+        源码
+        分栏
+        所见即所得（WYSIWYG）
+    功能是否满足需求 活跃程度 是否可商用 是否免费 是否开源
 wordpress
     前置依赖
         php 和 mysql
     安装和配置
         直接下载源码就可以啦
+        要先创建库，才能运行安装程序
     wp-cli
         下载和安装
             从 github 下载 wp-cli.phar ， 这是文档推荐的，下载到 wp的根目录里
@@ -4302,6 +4372,11 @@ wordpress
         示例数据
             商品数据
         支付方式
+    页面构建器（page builder）
+        Gutenberg
+        Elementor
+        WPBakery Page Builder
+        Beaver
     其它常用的插件
         wp-cron
     如何开发一个插件？

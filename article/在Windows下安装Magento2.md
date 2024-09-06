@@ -135,7 +135,7 @@
             return false;
         }
         ```
-1. 修改 hosts 文件，把域名 localhost-magento 指向本地 ip （其实这步没有也没关系，但为了方便下文的描述还是加上了这步）
+1. 修改 hosts 文件，把域名 localhost-magento.com 指向本地 ip （其实这步没有也没关系，但为了方便下文的描述还是加上了这步）
 1. 在数据库里新建对应的库
     ```
     create database magento2ce;
@@ -143,7 +143,7 @@
 1. 运行安装命令
     ```
     php bin/magento setup:install `
-        --base-url=http://localhost-magento/ `
+        --base-url=http://localhost-magento.com/ `
         --db-host=localhost `
         --db-name=magento2ce `
         --db-user=root `
@@ -177,7 +177,7 @@
         access_log  logs/localhost-magento.access.log;
         error_log  logs/localhost-magento.error.log;
 
-        server_name  localhost-magento;
+        server_name  localhost-magento.com;
         set $MAGE_ROOT C:/code/magento-community; # 这里是 magento 的根目录
         set $MAGE_DEBUG_SHOW_ARGS 1;
         include C:/code/magento-community/nginx.conf.sample; # 这里是 magento 的根目录里的 nginx.conf.sample
@@ -188,7 +188,7 @@
         proxy_busy_buffers_size 256k;
     }
     ```
-1. 重启 nginx 然后在浏览器里输入 localhost-magento ，如无意外能看到 magento 的 home page
+1. 重启 nginx 然后在浏览器里输入 localhost-magento.com ，如无意外能看到 magento 的 home page
 1. 安装示例数据，这一步不是必须的
     1. 查看当前模式
     ```
@@ -272,15 +272,6 @@
                     'database' => '0',
                     'port' => '6379'
                 ],
-            ],
-            'page_cache' => [
-                'backend' => 'Cm_Cache_Backend_Redis',
-                'backend_options' => [
-                    'server' => '127.0.0.1',
-                    'port' => '6379',
-                    'database' => '1',
-                    'compress_data' => '0'
-                ]
             ]
         ]
     ],
@@ -325,9 +316,11 @@
     clone 整个仓库后再切换分支
     git clone https://github.com/magento/magento2.git .
     git pull
-    git switch 2.4.2-p1
+    git switch 2.4.6-p1
     只 clone 一个分支
-    git clone -b 2.4.2-p1 https://github.com/magento/magento2.git .
+    git clone -b 2.4.6-p1 https://github.com/magento/magento2.git --depth=1 .
+    只 clone 一个分支，以更快的方式
+    git clone -b 2.4.6-p7 --single-branch --no-tags https://github.com/magento/magento2.git --depth=1 .
 
     切换到对应的 tag
     git pull
@@ -341,24 +334,41 @@
 - github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块
 - 如果 clone 速度太慢，可以在 releases 那里下载源码的压缩包（如果还是太慢就用一些下载工具来下载 releases 的压缩包）
 
-配置 vscode 的 xml 文件语法高亮
-1. vscode 里装上这个插件
+- 配置 vscode 的 xml 文件语法高亮
+    1. vscode 里装上这个插件
+        ```
+        XML Language Support by Red Hat
+        ```
+    1. 在项目根目录运行这句命令
+        ```bash
+        php bin/magento dev:urn-catalog:generate --ide vscode -- .vscode/misc.xml
+        ```
+    1. 在 vscode 的配置文件 `.vscode/settings.json` 里加上这几句
+        ```
+        {
+            "xml.catalogs": [
+                ".vscode\\misc.xml"
+            ],
+            "xml.validation.resolveExternalEntities": true,
+            "xml.codeLens.enabled": true,
+        }
+        ```
+
+- 在 vscode 中关掉 git 的自动刷新
     ```
-    XML Language Support by Red Hat
+        "git.autorefresh": false
     ```
-1. 在项目根目录运行这句命令
-    ```bash
-    php bin/magento dev:urn-catalog:generate --ide vscode -- .vscode/misc.xml
+
+- 在 vscode 中可以用这样的配置来忽略一些文件的解析
     ```
-1. 在 vscode 的配置文件 `.vscode/settings.json` 里加上这几句
-    ```
-    {
-        "xml.catalogs": [
-            ".vscode\\misc.xml"
-        ],
-        "xml.validation.resolveExternalEntities": true,
-        "xml.codeLens.enabled": true,
-    }
+        "intelephense.references.exclude": [
+            "**/vendor/**",
+            "generated",
+            "dev",
+            "var",
+            "pub/media",
+            "pub/static"
+        ]
     ```
 
 ## 安装 2.4
@@ -412,7 +422,7 @@ magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给
 1. 安装命令要加上 Elasticsearch 的配置
     ```
     php bin/magento setup:install  \
-        --base-url=http://localhost-magento/  \
+        --base-url=http://localhost-magento.com/  \
         --db-host=localhost  \
         --db-name=magento2ce2  \
         --db-user=root  \
@@ -432,7 +442,7 @@ magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给
         --elasticsearch-index-prefix=magento2
     ```
 
-1. 进入后台之前需要禁用两步验证的模块和刷新缓存，不然会因为没有两步验证而无法进入后台
+1. 进入后台之前需要禁用两步验证的模块和刷新缓存，不然会因为没有两步验证而无法进入后台, Magento_TwoFactorAuth 这个模块好像社区版没有
     ```
     php bin/magento module:disable Magento_TwoFactorAuth
     php bin/magento cache:flush
@@ -620,4 +630,12 @@ echo $startAtTimestamp $endAtTimestamp | awk '{printf("Runtime: %d\n", $2-$1)}'
 
 查看当前版本
 php bin/magento --version
+
+magento 的备份命令
+如何不使用 es 安装 2.4及之后的版本
+
+如何升级 magento
+升级 magento 时要注意些什么
+
+
 -->

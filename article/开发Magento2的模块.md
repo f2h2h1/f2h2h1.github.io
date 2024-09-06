@@ -1398,7 +1398,14 @@ missed 错过
 error 运行失败
 
 插入的语句如果执行的时间太迟，可能会被删掉？
-
+在这个位置，会把schedule_at不符合cron表达式的记录删掉，再执行符合cron表达式的任务
+vendor\magento\module-cron\Observer\ProcessCronQueueObserver.php
+    _generateJobs
+        saveSchedule
+    cleanupScheduleMismatches
+        schedule->trySchedule
+之前没发现这个问题，是因为我是用 index 去测试的，index的cron表达式全是 * 或 每十分钟 执行一次，很容易遇到正确的时间，所以就没有发现这个问题
+所以，强行向数据库插记录，也不是总是能成功执行到对应的定时任务
 
 输入 magento cron:run 命令两三次。
 第一次输入命令时，它会将作业排入队列；随后，将运行cron作业。 必须输入命令 至少 两次。
@@ -2609,7 +2616,6 @@ $eventManager->dispatch('clean_media_cache_after');
 $objectManager->get(\Magento\Framework\App\State\CleanupFiles::class)->clearMaterializedViewFiles();
 $eventManager->dispatch('clean_static_files_cache_afters');
 
-call_user_func([$cronJob, $method]);
 } catch (\Throwable $e) {
     echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
     echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
@@ -3751,10 +3757,38 @@ http
     rest
     graphql
         vendor\magento\module-graph-ql\etc\graphql\di.xml 在这个文件里，把 Magento\Framework\App\FrontControllerInterface 声明为
-            Magento\GraphQl\Controller\GraphQl
-            vendor\magento\module-graph-ql\Controller\GraphQl.php
-            ScandiPWA\\PersistedQuery\\Query\\QueryProcessor
-        vendor\magento\framework\GraphQl\Query\QueryProcessor.php
+            Magento\GraphQl\Controller\GraphQl vendor\magento\module-graph-ql\Controller\GraphQl.php
+            
+            Magento\Framework\GraphQl\Query\QueryProcessor vendor\magento\framework\GraphQl\Query\QueryProcessor.php
+            ScandiPWA\PersistedQuery\Query\QueryProcessor vendor\scandipwa\persisted-query\src\Query\QueryProcessor.php
+
+
+            "vendor/webonyx/graphql-php/src/GraphQL.php:94 GraphQL\\GraphQL promiseToExecute",
+            "vendor/webonyx/graphql-php/src/GraphQL.php:162 GraphQL\\Executor\\Executor promiseToExecute",
+            "vendor/webonyx/graphql-php/src/Executor/Executor.php:156 GraphQL\\Executor\\ReferenceExecutor doExecute",
+            "vendor/webonyx/graphql-php/src/Executor/ReferenceExecutor.php:215 GraphQL\\Executor\\ReferenceExecutor executeOperation",
+            "vendor/webonyx/graphql-php/src/Executor/ReferenceExecutor.php:264 GraphQL\\Executor\\ReferenceExecutor executeFields",
+            "vendor/webonyx/graphql-php/src/Executor/ReferenceExecutor.php:1195 GraphQL\\Executor\\ReferenceExecutor resolveField",
+            "vendor/webonyx/graphql-php/src/Executor/ReferenceExecutor.php:550 GraphQL\\Executor\\ReferenceExecutor resolveFieldValueOrError",
+                vendor\webonyx\graphql-php\src\Executor\ExecutionContext.php
+                vendor\webonyx\graphql-php\src\Type\Definition\FieldDefinition.php
+            "vendor/webonyx/graphql-php/src/Executor/ReferenceExecutor.php:623 Magento\\Framework\\GraphQl\\Query\\Resolver\\PromiseFactory Magento\\Framework\\GraphQl\\Query\\Resolver\\{closure}",
+            vendor\magento\framework\GraphQl\Query\Resolver\PromiseFactory.php
+
+
+            resolveType 和 resolve 有什么区别？
+            从源码来看 magento2 中的 graphql 的 contect 的第一个 fieldResolver 都是 defaultFieldResolver
+            从日志来看，似乎只有 fieldDef 和 exeContext 两种类型，又因为 exeContext 是 defaultFieldResolver ，所以只需要关注 fieldDef 就可以了
+            然后 fieldDef 还有三种类型
+                schemaMetaFieldDef
+                typeMetaFieldDef
+                typeNameMetaFieldDef
+
+            vendor\magento\framework\GraphQl\Query\Resolver\PromiseFactory.php 这个文件是关键
+                graphql 是如何加载到这个文件的？
+                加在那个匿名函数里，可以通过 $resolver的类型 或 fieldName 或 path 来区分不同的请求
+                get_class($resolver), $info->fieldName, join(PHP_EOL, $info->path)
+
 console
     console
     cron
