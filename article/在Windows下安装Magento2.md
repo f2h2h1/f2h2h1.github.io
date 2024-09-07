@@ -222,7 +222,7 @@
     ```
     - 支付设置的相关文档 https://docs.magento.com/user-guide/payment/payments.html
 - magento2 的运行效率真的很低
-- 可以在 magento 的根目录里运行这样的命令启动 php 的内置 web server ，但速度真的很慢，要注意修改 base-url
+- 可以在 magento 的根目录里运行这样的命令启动 php 的内置 web server ，但速度真的很慢，要注意修改 base-url ，可以通过修改 DEBUG_ROUTER 这个常量启用 router.php 的 debug 模式
     ```
     php -S 127.0.0.1:8082 -t ./pub/ ./phpserver/router.php
     ```
@@ -301,6 +301,10 @@
     - 这句需要运行在 `php bin/magento setup:di:compile` 后面
     - 这句需要运行在 `php bin/magento setup:static-content:deploy -f` 前面
     - 如果是开发者模式就不要运行这句
+- 运行部署静态文件这条命令时最好翻墙，不然一些字体文件没法下载
+    ```
+    php bin/magento setup:static-content:deploy
+    ```
 - 打开浏览器的开发者工具时，关掉禁用缓存的选项也能提升速度， magento2 的静态文件真的非常多，但有时又会因为浏览器的缓存这样观察不到更新
 - 使用 imdisk 这类内存硬盘能有效地提升速度。但内存硬盘存在断电后数据丢失的风险，而且真的非常消耗内存，内存至少也要有 16G
     - 只把生成的目录和文件放在内存硬盘里，这里需要用软连接把 var 和 generated 文件夹映射到内存硬盘
@@ -308,6 +312,7 @@
     - 把整套项目源码和数据库都放在内存硬盘里
 - 可以使用 Papercut-SMTP 这类软件来接收测试的邮件
 - 浏览器禁用图片的加载也能有效地提升速度
+- magento2 有三种模式，按性能由低到高，依次为：developer < default < production ；除此之外还有一个维护模式 maintenance ，用户访问会返回 503
 
 除了可以通过 compoer 安装外，还可以通过 github 的仓库安装。
 - 通过 github 安装就可以不申请 magento 的帐号了。
@@ -333,6 +338,12 @@
 - 如果是通过 github 修改源码的，要记得替换架的路径
 - github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块
 - 如果 clone 速度太慢，可以在 releases 那里下载源码的压缩包（如果还是太慢就用一些下载工具来下载 releases 的压缩包）
+- 如果没有开启url重写，大部分链接前面都会带着 index.php，如果开了url重写则没有 index.php
+    - 例如 后台的链接
+        ```
+        没有url重写 /index.php/admin
+        有url重写 /admin
+        ```
 
 - 配置 vscode 的 xml 文件语法高亮
     1. vscode 里装上这个插件
@@ -383,6 +394,7 @@ https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html
 - 还有就是 composer 需要 2 以上版本
 
 因为 Elasticsearch 的存在使得门槛高了不少。笔者感觉奥多比正在抛弃中小用户。
+笔者感到很奇怪，没有 redis 也可以安装，但没有 Elasticsearch 却不行。
 
 安装流程和注意事项和 2.3 的基本一致。
 
@@ -632,10 +644,41 @@ echo $startAtTimestamp $endAtTimestamp | awk '{printf("Runtime: %d\n", $2-$1)}'
 php bin/magento --version
 
 magento 的备份命令
-如何不使用 es 安装 2.4及之后的版本
+备份功能自2.1.16、2.2.7和2.3.0起已弃用。我们建议研究其他备份技术和二进制备份工具（如Percona XtraBackup）。
+
+默认情况下备份功能会禁用，要先启用备份功能
+php bin/magento config:set system/backup/functionality_enabled 1
+
+备份和恢复备份都需要先进入维护模式
+
+备份
+bin/magento setup:backup [--code] [--media] [--db]
+
+查看已有的备份
+php bin/magento info:backups:list
+
+恢复备份
+php bin/magento setup:rollback [-c|--code-file="<name>"] [-m|--media-file="<name>"] [-d|--db-file="<name>"]
+
+选项	含义	备份文件名和位置
+--code	备份文件系统（var和pub/static目录除外）。	var/backups/<timestamp>/_filesystem.tgz
+--media	备份pub/media目录	var/backups/<timestamp>/_filesystem_media.tgz
+--db	备份数据库。	var/backups/<timestamp>/_db.sql
+
+
+新建一个这样的文件就是进入维护模式了，把这个文件删了就是退出维护模式了
+var/.maintenance.flag
 
 如何升级 magento
 升级 magento 时要注意些什么
+
+
+修改 base-url
+php bin/magento setup:store-config:set --base-url="http://localhost-magento.com/"
+
+
+查看所有模块
+php bin/magento module:status
 
 
 -->
