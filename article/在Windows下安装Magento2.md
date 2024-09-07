@@ -460,6 +460,101 @@ magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给
     php bin/magento cache:flush
     ```
 
+## 2.4 但不使用 es
+
+禁用 es 相关的模块，用这个库来替换
+```
+https://github.com/swissup/module-search-mysql-legacy
+```
+
+### 安装时就排除 es
+1. 修改安装命令
+    1. 排除 es 相关的配置
+        ```
+        就是安装命令里删掉这几个参数
+        --search-engine
+        --elasticsearch-host
+        --elasticsearch-port
+        --elasticsearch-index-prefix
+        ```
+    1. 禁用 es 相关的模块
+        ```
+        就是安装命令里加上这一个参数
+        --disable-modules=Magento_Elasticsearch,Magento_Elasticsearch7,Magento_OpenSearch
+        2.4 的小版本里，有好几个和 es 相关的模块
+        Magento_Elasticsearch
+        Magento_Elasticsearch6
+        Magento_Elasticsearch7
+        Magento_InventoryElasticsearch
+        Magento_OpenSearch
+        ```
+    1. 比较完整的安装命令，但仅供参考
+        ```
+        php bin/magento setup:install  \
+            --base-url=http://localhost-magento.com/  \
+            --db-host=localhost  \
+            --db-name=magento2ce  \
+            --db-user=root  \
+            --db-password=1234  \
+            --admin-firstname=admin  \
+            --admin-lastname=admin  \
+            --admin-email=admin@admin.com  \
+            --admin-user=admin  \
+            --admin-password=admin123  \
+            --language=en_US  \
+            --currency=USD  \
+            --timezone=Asia/Shanghai  \
+            --use-rewrites=0 \
+            --disable-modules=Magento_Elasticsearch,Magento_Elasticsearch7,Magento_OpenSearch
+        ```
+1. 安装 mysql 搜索模块
+    ```
+    composer require swissup/module-search-mysql-legacy --prefer-source --ignore-platform-reqs
+    ```
+1. 启用 mysql 搜索模块
+    ```
+    php bin/magento module:enable Swissup_SearchMysqlLegacy Swissup_Core
+    php bin/magento setup:upgrade --safe-mode=1
+    php bin/magento setup:di:compile
+    ```
+1. 把搜索的引擎设为 mysql
+    - 用命令行设置
+        ```
+        php bin/magento config:set catalog/search/engine 'lmysql'
+        ```
+    - 在后台设置
+        ```
+        AdminPortal > Store > Settings > Configuration > CATALOG > Catalog > Catalog Search > Search Engine
+        ```
+1. 刷新索引
+    ```
+    php bin/magento indexer:reindex
+    ```
+
+### 安装完后再排除 es
+1. 进入维护模式
+    ```
+    php bin/magento maintenance:enable
+    ```
+1. 禁用 es 相关的模块
+    ```
+    php bin/magento module:disable Magento_Elasticsearch Magento_Elasticsearch7 Magento_OpenSearch
+    2.4 的小版本里，有好几个和 es 相关的模块
+    最好先用 php bin/magento module:status 看看有哪些和 es 相关的模块再禁用
+    ```
+1. 安装 mysql 搜索模块
+    - 和上一节一样
+1. 启用 mysql 搜索模块
+    - 和上一节一样
+1. 把搜索的引擎设为 mysql
+    - 和上一节一样
+1. 刷新索引
+    - 和上一节一样
+1. 退出维护模式
+    ```
+    php bin/magento maintenance:disable
+    ```
+
 ## 使用 patch 修改源码
 
 这是上面几个需要修改的文件的合集。
