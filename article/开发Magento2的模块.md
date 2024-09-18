@@ -48,7 +48,7 @@ routeid/controller/action
     <?xml version="1.0"?>
     <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/routes.xsd">
         <router id="standard">
-            <route id="local_dev" frontName="local_dev">
+            <route id="localdev" frontName="localdev">
                 <module name="LocalDev_HelloModule" />
             </route>
         </router>
@@ -67,17 +67,44 @@ routeid/controller/action
         class World extends \Magento\Framework\App\Action\Action
         {
             public function __construct(
-                \Magento\Framework\App\Action\Context $context)
-                {
-                    return parent::__construct($context);
+                \Magento\Framework\App\Action\Context $context,
+            ) {
+                parent::__construct($context);
             }
+
             public function execute()
             {
-                echo 'Hello World';
-                exit;
+                /** @var \Magento\Backend\Model\View\Result\Page $result */
+                $result = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_PAGE);
+                return $result;
             }
         }
         ```
+0. 新建视图
+    1. 在模块目录下新建 view 文件夹
+    1. 在 view 文件夹下，新建一个 frontend 文件夹
+    1. 在 frontend 文件夹下，新建一个 layout 文件夹 和 一个 templates 文件夹
+    1. 在 layout 文件夹下，新建一个以路由命名的 xml 文件，例如 `localdev_hello_world.xml`
+    1. 在 xml 文件里写入以下内容
+        ```xml
+        <?xml version="1.0"?>
+        <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+            <body>
+                <referenceContainer name="content">
+                    <block class="Magento\Framework\View\Element\Template" template="LocalDev_HelloModule::container.phtml" name="localdev.container"/>
+                </referenceContainer>
+            </body>
+        </page>
+        ```
+    1. 在 templates 文件夹下，新建一个名为 `container.phtml` 的文件，这个文件名要和 xml 文件里的 template 属性对应
+    1. 在 phtml 文件里写入以下内容
+        ```php
+        <?php
+        /** @var \Magento\Framework\View\Element\Template $block */
+        ?>
+        <p><?=$block->getBaseUrl()?></p>
+        ```
+
 
 完整的模块目录结构是这样的
 ```
@@ -92,10 +119,23 @@ app
                     frontend
                         routes.xml
                     module.xml
+                view
+                    frontend
+                        layout
+                            localdev_hello_world.xml
+                        templates
+                            container.phtml
                 registration.php
+
 ```
 
-启用模块和刷新缓存后，访问这样的链接 `http://localhost-magento/local_dev/hello/world` ，应该就能看到 `hello world` 的输出
+启用模块和刷新缓存后，访问这样的链接 `http://localhost-magento/localdev/hello/world` ，应该就能看到 `hello world` 的输出
+
+<!--
+前台的视图
+后台的视图
+lib\internal\Magento\Framework\App\FrontController.php
+-->
 
 ### 启用模块 和 刷新缓存
 
@@ -1439,7 +1479,7 @@ crontab/group_id/jobs/job_id/schedule/cron_expr
 crontab/reports/jobs/promotion_group_attribute/schedule/cron_expr
 这个可能是要重新部署才能生效，即使是改数据库，可能是一次缓存了
 
-
+输出全部的 cronjob
 /** @var \Magento\Cron\Model\Config\Data */
 $configData = $objectMamager->get(\Magento\Cron\Model\Config\Data::class);
 var_dump($configData->getJobs());
@@ -1630,9 +1670,22 @@ vendor\magento\framework\App\FrontController.php dispatchPreDispatchEvents
 
 ## 新建一个后台视图
 
+1. 新建路由
+    - 在 etc 文件夹下新建 adminhtml 文件夹，在 adminhtml 下新建 routes.xml 并写入以下内容
+        ```xml
+        <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+            <router id="admin">
+                <route id="partnercode" frontName="partnercode">
+                    <module name="LocalDev_HelloModule" />
+                </route>
+            </router>
+        </config>
+        ```
 1. 视图是一个 xml 文件
     - 视图的命名是根据路由来的
-    - 例如 这样的视图名 partnercode_couponquota_index.xml 对应的路由就是 partnercode/couponquota/index
+    - 例如
+        - 视图名是 partnercode_couponquota_index.xml 对应的路由是 partnercode/couponquota/index
+        - 路由是 partnercode/couponquota/index 对应的控制器是 partnercode/Controller/Adminhtml/Couponquota/Index.php
     - 视图文件一般放在这几个位置
         - 后台的视图 模块/view/adminhtml/layout/视图名.xml
         - 前台的视图 模块/view/frontend/layout/视图名.xml
@@ -1652,7 +1705,7 @@ vendor\magento\framework\App\FrontController.php dispatchPreDispatchEvents
         - block 要填完整的类名，如果不是自定义的 block ，就填 \Magento\Backend\Block\Template 或 \Magento\Framework\View\Element\Template
         - name 可以随便填，但最好全局唯一
         - template 填模板的路径，是 模块名::模板的相对路径，可以参考下面的例子
-            - 如果视图的绝对路径是 app\code\Vendor\Extension\view\adminhtml\layout\partnercode_couponquota_index.phtml
+            - 如果视图的绝对路径是 app\code\Vendor\Extension\view\adminhtml\layout\partnercode_couponquota_index.xml
             - 如果模板的绝对路径是 app\code\Vendor\Extension\view\adminhtml\templates\coupon_quota\index.phtml
             - 那么在 template 里的值就填 Vendor_Extension::coupon_quota/index.phtml
 1. 视图由 block 组成
@@ -1665,6 +1718,7 @@ vendor\magento\framework\App\FrontController.php dispatchPreDispatchEvents
         ```php
         <?php
         /** @var \Magento\Framework\View\Element\Template $block */
+        ?>
         <p><?=$block->getBaseUrl()?></p>
         ```
 
@@ -1806,7 +1860,7 @@ INSERT INTO core_config_data (`scope`,scope_id,`path`,value,updated_at) VALUES (
 ```php
 /** @var \Magento\Framework\App\Config\ScopeConfigInterface */
 $scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(Magento\Framework\App\Config\ScopeConfigInterface::class);
- $scopeConfig->getValue('general/file/bunch_size');
+$scopeConfig->getValue('general/file/bunch_size');
 ```
 
 还可以用命令行来修改配置，这种修改会保存在数据库里
@@ -1965,19 +2019,19 @@ vendor\magento\module-theme\view\base\requirejs-config.js
 <script>
 var BASE_URL = 'https\u003A\u002F\u002Fshop\u002Dlocalhost-magento\u002F';
 var require = {
-    'baseUrl': 'https\u003A\u002F\u002Fshop\u002Dlocalhost-magento\u002Fstatic\u002Fversion1669169968\u002Ffrontend\u002Flocal_dev\u002Fstandard\u002Fen_US'
+    'baseUrl': 'https\u003A\u002F\u002Fshop\u002Dlocalhost-magento\u002Fstatic\u002Fversion1669169968\u002Ffrontend\u002Flocaldev\u002Fstandard\u002Fen_US'
 };
 </script>
 
 这是第一个引入的 js 文件
 lib\web\requirejs\require.js
-pub\static\frontend\local_dev\standard\en_US\requirejs\require.js
+pub\static\frontend\localdev\standard\en_US\requirejs\require.js
 
 这是第二个引入的 js文件
-static/frontend/local_dev/standard/en_US/mage/requirejs/mixins.js
+static/frontend/localdev/standard/en_US/mage/requirejs/mixins.js
 
 这是第三个引入的 js文件
-static/frontend/local_dev/standard/en_US/requirejs-config.js
+static/frontend/localdev/standard/en_US/requirejs-config.js
 
 输出 requirejs 全部的配置项
 requirejs.s.contexts._.config
@@ -2102,6 +2156,9 @@ areaCode
 
 areaCode 的值在这个位置
 vendor\magento\framework\App\Area.php
+
+文档里没有提到 doc
+soap 的存在感比较低，似乎很少会用到
 
 https://developer.adobe.com/commerce/php/architecture/modules/areas/
 
@@ -2629,21 +2686,125 @@ EOF
 
 ## 发送邮件
 
-<!--
+### 使用模板
+
+1. 在 etc 下新建 email_templages.xml 文件
+    ```xml
+    <?xml version="1.0"?>
+    <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+        <template id="self_check_order_confirmation_email" label="Self Check Order Confirmation Eamil" file="self_check_order_confirmation_email.html" type="html" module="LocalDev_HelloModule" area="adminhtml"/>
+    </config>
+    ```
+1. 在 view/area代码/email 下新建模板文件，文件名和area代码要和 email_templages.xml 里的对应
+    ```html
+    <!--@subject {{var subject}}  @-->
+    <p>{{var mail_content}}</p>
+    ```
+1. 在 php 的代码里这样调用
+    ```php
+    try {
+        require __DIR__ . '/app/bootstrap.php';
+        $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+        $objectManager = $bootstrap->getObjectManager();
+        $state = $objectManager->get(\Magento\Framework\App\State::class);
+        $state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
+
+        $appConfig = $objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $transportBuilder = $objectManager->get(\Magento\Framework\Mail\Template\TransportBuilder::class);
+
+        $templateIdentifier = 'self_check_order_confirmation_email'; // 要和 email_templages.xml 里的 id 对应
+        $templateVars = [
+            'subject'   => '123',
+            'mail_content' => '321'
+        ];
+        $templateOptions = [
+            'area' => \Magento\Backend\App\Area\FrontNameResolver::AREA_CODE,  // 要和 email_templages.xml 里的 area代码 对应
+            'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID,
+        ];
+        $sender = [
+            'name' => $appConfig->getValue('trans_email/ident_general/name'),
+            'email' => $appConfig->getValue('trans_email/ident_general/email'),
+        ];
+        $transportBuilder
+            ->setTemplateIdentifier($templateIdentifier)
+            ->setTemplateVars($templateVars)
+            ->setTemplateOptions($templateOptions)
+            ->setFrom($sender);
+        $to = [
+            '001@example.com',
+            '002@example.com',
+            '003@example.com',
+        ];
+        foreach ($to as $item) {
+            $transportBuilder->addTo($item);
+        }
+        $transportBuilder->getTransport()->sendMessage();
+    } catch (\Throwable $e) {
+        echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+        echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+    }
+    ```
+
+### 不使用模板
+
+```php
+try {
+    $message = $objectManager->get(\Magento\Framework\Mail\Message::class);
+    $appConfig = $objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+
+    $message->setSubject('Hello from Bing');
+    $message->setBodyHtml('<p>This is a test email sent by Bing using PHP mail function.</p>');
+    // $message->setBodyText('This is a test email sent by Bing using PHP mail function.');
+    $message->setFromAddress(
+        $appConfig->getValue('trans_email/ident_general/email'),
+        $appConfig->getValue('trans_email/ident_general/name')
+    );
+
+    $to = [
+        '001@example.com',
+        '002@example.com',
+        '003@example.com',
+    ];
+    foreach ($to as $item) {
+        $message->addTo($item);
+    }
+
+    (new \Laminas\Mail\Transport\Sendmail())->send(
+        \Laminas\Mail\Message::fromString($message->getRawMessage())
+    );
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+```
+
+### Transport
+
+magento2 在默认情况下 使用 PHP 的 Sendmail 函数来发送邮件，就是调用系统里的 sendmail ，只能设置 host 和 port
+
+magento2.3 之后也支持 smtp 了，在这个位置设置，可以选择 sendmail 和 smtp
+```
+Stores > Settings > Configuration > Advanced > System > Mail Sending Settings > Transport
+```
+
+magento2.3 之前的版本可以用这个模块来实现 SMTP 发送邮件
+https://www.mageplaza.com/magento-2-smtp/
 
 magento2 使用这个库来发送邮件的
 https://github.com/laminas/laminas-mail
 
-magento2 在默认情况下似乎不支持 SMTP 发送邮件
-可以用这个拓展来实现 SMTP 发送邮件
-https://www.mageplaza.com/magento-2-smtp/
+可以用这个仓库来测试邮件的发送
+    - https://github.com/axllent/mailpit
+    - 启动命令
+        ```
+        mailpit --listen 127.0.0.1:8025 --smtp 127.0.0.1:25 --smtp-auth-accept-any
+        ```
+    - 启动完后用浏览器访问 listen 的地址
+    - sendmail 和 smtp 两种方式都可以用 mailpit 来测试， mailpit 可以忽略 smtp 的账号密码
 
-magento2 在默认情况下 使用 PHP 的 Sendmail 函数来发送邮件，就是调用系统里的 sendmail ，只能设置 host 和 port
-magento2 在 2.3 之后也支持 smtp 了
-在这个位置设置，可以选择 sendmail 和 smtp
-Stores > Settings > Configuration> Advanced > System > Mail Sending Settings > Transport
-
-
+<!--
+mailpit 的版本是 v1.20
+邮件里如何加上附件？
 -->
 
 ## 一些调试技巧
@@ -3845,6 +4006,23 @@ FROM
 JOIN 
     sales_order_item on sales_order.entity_id = sales_order_item.order_id
 WHERE sales_order.entity_id = 28546;
+
+
+如果 http 头里存在这个字段 X-Requested-With ，而且这个字段的值是 XMLHttpRequest 那么这就是一个 ajax 请求
+在控制器里可以这样判断
+$isAjax = $this->getRequest()->isXmlHttpRequest() vendor\laminas\laminas-http\src\Request.php
+$isAjax = $this->getRequest()->isAjax() lib\internal\Magento\Framework\App\Request\Http.php
+    除了 isXmlHttpRequest 还会判断参数里有没有 ajax 或 isAjax
+    所以 isAjax() 应该会准确一些
+
+在控制器里可以像这样输出 json 字符串
+    public function execute()
+    {
+        /** @var \Magento\Framework\Controller\Result\Json $result */
+        $result = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_JSON);
+        return $result->setData(['isAjax' => $this->getRequest()->isAjax()]);
+    }
+
 
 
 -->
