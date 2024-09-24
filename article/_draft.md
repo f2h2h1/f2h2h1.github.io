@@ -1523,6 +1523,8 @@ vscode的使用技巧
         apt install -y mailutils
         这句命令安装的是 exim
         如无意外，安装完后就能直接用 sendmail mail mailx 命令了
+            mail 和 mailx 链接到 mail.mailutils
+            sendmail 链接到 exim4
         发送邮件给其它用户
             使用 mailx 命令发送
             echo "test mail content" | mailx -s "test mail subject" root
@@ -1561,6 +1563,8 @@ vscode的使用技巧
                 cat /var/log/exim4/mainlog
     在局域网里自娱自乐
         至少需要搭建 smtp 和 imap
+            至少要开启这两个端口 smtp(25) imap(143)
+            最好再加上这两个 smtps(465) imaps(993)
     能收发外网的邮件
         除了 搭建 smtp 和 imap 之外，还要做好域名的解释
         域名解释才是最困难的部分
@@ -1590,6 +1594,23 @@ vscode的使用技巧
         要确保这几个端口的开放
             25 465 143 993
             除了安全组，防火墙，还要向运营商确认这几个端口有没有开放
+    mta
+        Mail Transfer Agent(邮件传输代理)
+            这个是邮件系统的核心
+            主要用于
+                接收邮件
+                把邮件转发给其它mta
+                把邮件转发给mda或保存在本地
+            常见的 mta 有三种
+                sendmail
+                    最古老的 mta 之一
+                    可以通过命令行发送邮件
+                    可以作为 smtp 服务器运行
+                postfix
+                    Postfix 是为了替代 Sendmail 而设计的，提供了更现代化的特性和更高的安全性
+                    兼容一部分 sendmail 的命令
+                exim4
+                    兼容一部分 sendmail 的命令
     php 发送邮件示例
         使用原本的函数
             mail 和 mb_send_mail 函数
@@ -1605,6 +1626,9 @@ vscode的使用技巧
         nc smtp.qq.com 25
         telnet smtp.qq.com 25
         openssl s_client -quiet -connect smtp.qq.com:465
+        sendmail
+        busybox sendmail
+        curl
 如何实现一个搜索引擎？
 客户端的动画？
     动画是如何实现的？
@@ -4150,7 +4174,9 @@ termux
             ssh -o ServerAliveInterval=60 -f -N -C -g -L 127.0.0.1:8022:127.0.0.1:8022 用户名@远程服务器地址
         4 在远程计算机里运行这句，这样就能通过外网连回手机的 termux 了
             ssh -o ServerAliveInterval=60  用户名@127.0.0.1 -p 8022
-虚拟机
+虚拟化技术
+    模拟器 虚拟机 容器 兼容层 kvm k8s chroot/schroot/proot
+    硬件 系统 软件 隔离
     目标系统/宿主系统
         windows linux Android macOS
     下载 安装 使用
@@ -4295,6 +4321,7 @@ linux 应用的一般启动套路
     页面构造器（page builder）
     富文本编辑器（rich text editor）
     代码编辑器（code editor）
+    文本编辑器（text editor）
         ACE
         Atom
         Code Mirror
@@ -4320,9 +4347,10 @@ linux 应用的一般启动套路
             vscode 是基于 Monaco Editor
             brackets 是基于 Code Mirror
     视图
-        源码
-        分栏
-        所见即所得（WYSIWYG）
+        源码（source code）
+        分屏预览（SV, Split View）
+        所见即所得（WYSIWYG, What You See Is What You Get）
+        即时渲染（IR, Immediate Rendering）
     功能是否满足需求 活跃程度 是否可商用 是否免费 是否开源
 wordpress
     前置依赖

@@ -2794,13 +2794,13 @@ magento2 使用这个库来发送邮件的
 https://github.com/laminas/laminas-mail
 
 可以用这个仓库来测试邮件的发送
-    - https://github.com/axllent/mailpit
-    - 启动命令
-        ```
-        mailpit --listen 127.0.0.1:8025 --smtp 127.0.0.1:25 --smtp-auth-accept-any
-        ```
-    - 启动完后用浏览器访问 listen 的地址
-    - sendmail 和 smtp 两种方式都可以用 mailpit 来测试， mailpit 可以忽略 smtp 的账号密码
+- https://github.com/axllent/mailpit
+- 启动命令
+    ```
+    mailpit --listen 127.0.0.1:8025 --smtp 127.0.0.1:25 --smtp-auth-accept-any
+    ```
+- 启动完后用浏览器访问 listen 的地址
+- sendmail 和 smtp 两种方式都可以用 mailpit 来测试， mailpit 可以忽略 smtp 的账号密码
 
 <!--
 mailpit 的版本是 v1.20
@@ -3314,9 +3314,7 @@ authorization_role
 authorization_rule
 ```
 
-### 其它
-
-sales_order 表的两个状态
+### sales_order 表的两个状态
 - state 是 magento 内部的状态
     - 写死在文件
     - vendor\magento\module-sales\Model\Order.php
@@ -3326,7 +3324,8 @@ sales_order 表的两个状态
     - sales_order_status
 - status 和 state 的对应关系在这个表里 sales_order_status_state
 
-遇到问题，可以先搜索一下 github 的 iusses ，同样的问题可能已经出了补丁，不用自己修改。
+### 打补丁
+- 遇到问题，可以先搜索一下 github 的 iusses ，同样的问题可能已经出了补丁，不用自己修改。
 - 可以在这个站点里找到对应的补丁
     - https://devdocs.magento.com/quality-patches/tool.html
 - 关于 Quality Patches Tool (QPT) 工具的使用
@@ -3336,7 +3335,7 @@ sales_order 表的两个状态
 - 也可以把下载的 patch 文件单独复制出来，然后用 cweagans/composer-patches 打补丁
 <!-- acsd mdva 补丁的前缀其实是什么的缩写？ -->
 
-从 marketplace.magento.com 下载和安装拓展
+### 从 marketplace.magento.com 下载和安装拓展
 1. 登录
 1. 购买
 1. 获取包名和版本
@@ -3346,11 +3345,12 @@ sales_order 表的两个状态
 1. 运行 bin/magento setup:upgrade
 1. 参考 https://devdocs.magento.com/extensions/install
 
-### 参考
 
+<!--
 https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-cron.html
 
 https://devdocs.magento.com/guides/v2.4/config-guide/cron/custom-cron.html
+-->
 
 ## 参考
 

@@ -4,19 +4,19 @@
 
 2. cd 进 php 的目录
 
-3. 在 php 的目录里新建一个名为 PEAR 的文件夹
+3. 在 php 的目录里新建一个名为 pear 的文件夹
 ```
-md PEAR
+md pear
 ```
 
-4. 下载 go-pear.phar 并复制进刚刚新建的 PEAR 的文件夹
+4. 下载 go-pear.phar 并复制进刚刚新建的 pear 的文件夹
 ```
 php -r "copy('https://pear.php.net/go-pear.phar', 'pear/go-pear.phar');"
 ```
 
 5. 安装 pear
 ```
-php -d phar.require_hash=0 PEAR/go-pear.phar
+php -d phar.require_hash=0 pear/go-pear.phar
 ```
 
 6. 当出现这样的提示时，选 local
@@ -30,7 +30,7 @@ Are you installing a system-wide PEAR or a local copy?
 
 9. php.ini 的 include_path 这项是必须的，在安装 pear 的过程中会询问你是否修改这项，因为是一路按回车和输入 yes 所以这项在安装完后就会设置好， include_path 默认是注释掉的， include_path 的值为 PEAR 文件夹的绝对路径，例如
 ```
-include_path=".;C:\php\PEAR\"
+include_path=".;C:\php\pear\"
 ```
 
 10. 安装完后需要重启服务器

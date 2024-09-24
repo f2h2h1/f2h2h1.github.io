@@ -199,6 +199,11 @@ sh 下的绝对路径
         }
         ```
 
+### pear 和 pecl
+
+可以参考这篇文章 《在 Windows 下安装 pear》
+安装完毕后就可以在命令行里使用 pear 和 pecl 命令
+
 ### xdebug
 
 xdebug 的配置可以参考这篇文章 《在 VSCode 里调试 PHP》
@@ -634,7 +639,7 @@ https 自签证书的生成，可以参考这篇文章 《密码学入门简明�
     ```
 1. 可以在这个文件里 `/config.sample.inc.php` 修改 mysql 的连接参数
 1. 配置好站点就可以直接运行了，当然也可以在根目录里用 php 的内置服务器运行
-1. 除了 phpmyadmin 外，这里还推荐使用 dbeaver 或 heidisql 作为数据库的管理工具
+1. 除了 phpmyadmin 外，这里还推荐使用 Adminer 或 CloudBeaver 或 dbeaver 或 heidisql 作为数据库的管理工具
 
 ### phpredisadmin
 1. 下载 phpredisadmin
