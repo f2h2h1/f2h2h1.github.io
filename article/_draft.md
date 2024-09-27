@@ -4060,7 +4060,22 @@ bash 如何接收标准输入和环境变量？
         printenv PATH;
     如果遇到需要处理二进制数据的情况，可以尝试使用 xxd od hexdump 这类命令
 bash 里如何实现多维数组？
-bash 里如何实现一个 trim ？
+bash 里如何实现一个 trim
+    echo "   your string   " | sed 's/^[ \t]*//;s/[ \t]*$//'
+    echo "   your string   " | xargs
+    echo "   your string   " | awk '{$1=$1;print}'
+    # 定义 trim 函数
+    trim() {
+        local str="$1"
+        # 使用参数扩展去除首尾空格
+        str="${str##*( )}"
+        str="${str%%*( )}"
+        echo "$str"
+    }
+    # 使用示例
+    input="   your string   "
+    trimmed_str=$(trim "$input")
+    echo "Trimmed string: '$trimmed_str'"
 termux
     下载和安装
         要先下载和安装 f-droid https://f-droid.org/

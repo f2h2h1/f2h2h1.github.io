@@ -1481,9 +1481,24 @@ crontab/reports/jobs/promotion_group_attribute/schedule/cron_expr
 
 输出全部的 cronjob
 /** @var \Magento\Cron\Model\Config\Data */
-$configData = $objectMamager->get(\Magento\Cron\Model\Config\Data::class);
+$configData = $objectManager->get(\Magento\Cron\Model\Config\Data::class);
 var_dump($configData->getJobs());
 
+php -a <<- 'EOF'
+try {
+require __DIR__ . '/app/bootstrap.php';
+$bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+$objectManager = $bootstrap->getObjectManager();
+$state = $objectManager->get(\Magento\Framework\App\State::class);
+$state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
+/** @var \Magento\Cron\Model\Config\Data */
+$configData = $objectManager->get(\Magento\Cron\Model\Config\Data::class);
+var_dump($configData->getJobs());
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+EOF
 
 SELECT * from cron_schedule order by schedule_id desc limit 10;
 SELECT * from cron_schedule WHERE job_code in ('promotion_group_attribute') order by schedule_id desc;
@@ -2745,6 +2760,11 @@ EOF
     }
     ```
 
+<!--
+可以在模板里加载其它模板
+模板是没有缓存的
+-->
+
 ### 不使用模板
 
 ```php
@@ -2797,7 +2817,7 @@ https://github.com/laminas/laminas-mail
 - https://github.com/axllent/mailpit
 - 启动命令
     ```
-    mailpit --listen 127.0.0.1:8025 --smtp 127.0.0.1:25 --smtp-auth-accept-any
+    mailpit --listen 127.0.0.1:8025 --smtp 127.0.0.1:25 --smtp-auth-accept-any --smtp-auth-allow-insecure
     ```
 - 启动完后用浏览器访问 listen 的地址
 - sendmail 和 smtp 两种方式都可以用 mailpit 来测试， mailpit 可以忽略 smtp 的账号密码
@@ -2827,7 +2847,7 @@ $order = $orderCollection->getFirstItem(); // $orderCollection->getItems(); // �
 ```
 
 ```php
-$objectMamager = \Magento\Framework\App\ObjectManager::getInstance();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 
 // 根据 customer id 或 email 获取 customer 对象
 /** @var \Magento\Customer\Model\CustomerFactory */
@@ -3081,10 +3101,10 @@ vendor/magento/module-indexer/Console/Command/IndexerInfoCommand.php
 ```php
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $objectMamager = \Magento\Framework\App\ObjectManager::getInstance();
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 
         /** @var \Magento\Framework\App\State */
-        $appState = $objectMamager->get(\Magento\Framework\App\State::class);
+        $appState = $objectManager->get(\Magento\Framework\App\State::class);
         try { // 没有这句很容易会出现 Area code is not set 的错误
             $appState->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
         } catch (\Exception $e) {
@@ -3092,19 +3112,19 @@ vendor/magento/module-indexer/Console/Command/IndexerInfoCommand.php
 
         // 可以尝试这样更改 store view
         // /** @var \Magento\Store\Model\StoreManagerInterface */
-        // $storeManager =  $objectMamager->get(\Magento\Store\Model\StoreManagerInterface::class);
+        // $storeManager =  $objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
         // $storeManager->setCurrentStore('zh_Hans_CN');
 
         /** @var \Magento\Framework\App\ResourceConnection */
-        $connection = $objectMamager->get(\Magento\Framework\App\ResourceConnection::class);
+        $connection = $objectManager->get(\Magento\Framework\App\ResourceConnection::class);
         $conn = $connection->getConnection();
 
         /** @var \Mageplaza\SocialLogin\Model\Social */
-        $social = $objectMamager->get(\Mageplaza\SocialLogin\Model\Social::class);
+        $social = $objectManager->get(\Mageplaza\SocialLogin\Model\Social::class);
         $customer = $social->getCustomerByEmail('qwe@asd.com');
 
         /** @var \Magento\Quote\Model\QuoteFactory */
-        $quoteFactory = $objectMamager->get(\Magento\Quote\Model\QuoteFactory::class);
+        $quoteFactory = $objectManager->get(\Magento\Quote\Model\QuoteFactory::class);
         $quote = $quoteFactory->create();
         $quote->setCustomer($customer->getDataModel());
         $address = $quote->getShippingAddress();
@@ -3270,11 +3290,11 @@ WHERE user_id = (
 // 直接生成一个密码，在命令行里是用，只运行一次，因为重置了key，可能会使其他逻辑混乱
 // 输出的值，填到 admin_user.password 和 admin_passwords.password_hash
 /** @var \Magento\Framework\App\ObjectManager */
-$objectMamager = \Magento\Framework\App\ObjectManager::getInstance();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 /** @var \Magento\Framework\Encryption\Encryptor */
-$encryptor = $objectMamager->get(\Magento\Framework\Encryption\Encryptor::class);
+$encryptor = $objectManager->get(\Magento\Framework\Encryption\Encryptor::class);
 /** @var \Magento\Framework\App\DeploymentConfig */
-$deploymentConfig = $objectMamager->get(\Magento\Framework\App\DeploymentConfig::class);
+$deploymentConfig = $objectManager->get(\Magento\Framework\App\DeploymentConfig::class);
 $cryptkey = preg_split('/\s+/s', trim((string)$deploymentConfig->get('crypt/key')))[0]; // 本地的 key
 $cryptkey = '4oyi2yvpl8kx3sh9e4u05vnql41kn8fa'; // crypt/key ，其它的 key ，可能会在本地生成用于线上环境的 password
 $encryptor->setNewKey($cryptkey);
