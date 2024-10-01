@@ -4196,13 +4196,146 @@ termux
         windows linux Android macOS
     下载 安装 使用
     wsl
+        前置条件
+            cpu和主板要支持虚拟化
+            Windows 10 2004 及更高版本
+            系统设为开发者模式
+            启用linux子系统
+            启用虚拟机，只启用linux子系统不启用虚拟机的话只能用wsl1
+        安装
+            一般情况下不需要特别下载，直接在命令行里运行
+                wsl --install
+            如果这句无效就试试
+                wsl --list --online
+            如果遇到这种错误 0x80072ee7 ，就是需要翻墙，而且是全局翻墙的那种
+            安装完成后把 wsl 的默认版本设为 2
+                wsl --set-default-version 2
+                修改完默认版本后最后更新一下
+                    wsl --update
+            检查每个发行版的状态和 WSL 版本
+                wsl -l -v
+                如果遇到 version 1 最好把版本也改成 2
+                wsl --set-version <distro name> 2
+        使用
+            查看帮助
+                wsl --help
+            查看状态
+                wsl --status
+            查看支持的发行版
+                wsl --list --online
+            检查每个发行版的状态和 WSL 版本
+                wsl -l -v
+            启动一个发行版，运行完这个命令就自动进入发行版的命令行了，从命令行退出发行版也不会退出
+                wsl -d <distro name>
+            停止全部发行版
+                wsl --shutdown
+            停止特定发行版
+                wsl --terminate <distro name>
+            通过 wsl 的 gui
+                https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/gui-apps
+                单一窗口
+                    直接安装就可以运行了
+                        sudo apt install x11-apps -y
+                        安装完后就可以直接运行了 xeyes
+                    如果安装失败就更新一下 apt ， sudo apt-get update
+                    https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/gui-apps
+                有完整的桌面环境
+                默认是使用 Wayland ，可以通过配置文件禁用 Wayland ，然后再自己装 x11 环境
+                    https://ivonblog.com/posts/wsl-x-server/
+            wsl2 支持嵌套虚拟
+            导出第一个实例
+                wsl --export <发行版名称> <导出文件路径>
+            导入第一个实例
+                wsl --import <新实例名称> <安装路径> <导出文件路径>
+            导入导出例子
+                导出 wsl --export Debian D:/debian-base.vhdx --vhd
+                导入 wsl --import debian-email D:/debian-email D:/debian-base.vhdx --vhd --version 2
+                启动新导入的实例 wsl -d debian-email
+            安装完 wsl2 后就可以安装 Docker Desktop 了
+            gui
+                单一窗口
+                    直接安装就可以运行了
+                        sudo apt install x11-apps -y
+                        安装完后就可以直接运行了 xeyes
+                    如果安装失败就更新一下 apt ， sudo apt-get update
+                    https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/gui-apps
+                有完整的桌面环境
+                默认是使用 Wayland ，可以通过配置文件禁用 Wayland ，然后再自己装 x11 环境
+                    https://ivonblog.com/posts/wsl-x-server/
+                理论上还可以通过 Waydroid 来运行安卓应用
+            新版的 wsl 支持 直连显卡，这个对 机器学习而言似乎很重要，但我不会这个
+    Docker Desktop
+        windows 版的 Docker Desktop 通常用 wsl2 或 Hyper-V 作为后端
+        官方并不推荐在 wsl2 里安装 docker ，而是直接在宿主系统安装 Docker Desktop 然后用 wsl2 作为后端
+        安装完 Docker Desktop 就能直接使用 docker 和 docker-compose 命令了，但对应的 wsl2 实例要保持启用
     qemu
+        qemu 的官网
+            https://www.qemu.org/
+        下载 qemu
+            https://www.qemu.org/download/
+            https://qemu.weilnetz.de/w64/
+        关键的两个命令 qemu-img qemu-img
+        一般的流程
+            下载iso文件
+            创建镜像
+                qemu-img create -f qcow2 debian11.img 30G
+            启动虚拟机时通过iso文件安装系统
+                qemu-system-x86_64.exe debian11.img -usbdevice tablet -cdrom C:\Users\a\Downloads\debian-11.5.0-amd64-netinst.iso
+            安装完系统后启动虚拟机就不需要iso文件了
+                qemu-system-x86_64.exe debian11.img -usbdevice tablet
+            好像不用特别设置，就能联网了
+            -usbdevice tablet 这个参数可以确保虚拟机内的鼠标不漂移
+            -m 4096 -smp 4 限制内存和cpu
+            -display vnc=:1 通过 vnc 启动
+            加上硬件加速
+                -accel whpx
+                -accel whpx,kernel-irqchip=off
+                在宿主机支持硬件虚拟化的前提下
+                linux 用 kvm
+                    x86 应该没问题， arm 要看具体的 cpu
+                windows 用 whpx
+                    不管是 x86 还是 arm 都可以
+                mac 用 hvf
+                    不管是 x86 还是 arm 都可以
+                TCG
+                    Tiny Code Generator
+                    这是 qemu 的默认加速器，纯软件模拟，不依赖硬件
+        qemu-img 镜像
+            qemu-img create 创建镜像
+                qemu-img create -f qcow2 debian11.img 30G
+            qemu-img convert 转换镜像文件格式
+                qemu-img convert -f 源类型 -O 目标类型 源磁盘映像路径 输出磁盘映像路径
+                qemu-img convert -f vdi -O qcow2 androidImage.vdi androidImage.img
+            qemu-img info 查看镜像文件格式
+                qemu-img info debian11.img
+            qemu-img --help
+                在 help 的输出里可以看到支持的镜像格式 Supported formats
+        qemu-system-x86_64 虚拟机
+            qemu-system-x86_64 -version
+            qemu-system-x86_64 --help
+            qemu-system-x86_64 -m 4096 -smp 12 debian11.img -usbdevice tablet -accel whpx,kernel-irqchip=off
+            qemu-system-x86_64 -m 4096 -smp 12 win10.img -usbdevice tablet -accel whpx,kernel-irqchip=off -machine q35
+        图形界面
+            GNOME Boxes
+            virt-manager
+            EmuGUI
     Hyper-V
     VirtualBox
     VMware
+        墙内最流行的虚拟机我却几乎没有用过，虽然早年有 VMware Player 和现在的 VMware 也免费了，但我也一直没用，大概是因为不喜欢吧而且开源替代也很好用
     Bochs
         https://bochs.sourceforge.io/
         https://github.com/bochs-emu/Bochs
+        专门的x86模拟器
+        墙内似乎有很多人喜欢用这个在安卓里模拟 windows
+    Multipass
+        Multipass 是一个轻量虚拟机管理器，
+        是由 Ubuntu 运营公司 Canonical 所推出的开源项目。
+        运行环境支持 Linux、Windows、macOS。
+        在不同的操作系统上，使用的是不同的虚拟化技术。
+        在 Linux 上使用的是 KVM、Window 上使用 Hyper-V、macOS 中使用 HyperKit
+    各种镜像格式
+        raw qcow qcow2 cow vdi vmdk vpc(vhd) vhdx
 linux 应用的一般启动套路
     至少一个启动脚本
         检测或启动一些前置依赖
@@ -4366,7 +4499,7 @@ linux 应用的一般启动套路
         分屏预览（SV, Split View）
         所见即所得（WYSIWYG, What You See Is What You Get）
         即时渲染（IR, Immediate Rendering）
-    功能是否满足需求 活跃程度 是否可商用 是否免费 是否开源
+    功能是否满足需求 活跃程度 是否可商用 是否免费 是否开源 文档是否完善
 wordpress
     前置依赖
         php 和 mysql

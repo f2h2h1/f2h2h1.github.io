@@ -639,16 +639,24 @@ https 自签证书的生成，可以参考这篇文章 《密码学入门简明�
     ```
 1. 可以在这个文件里 `/config.sample.inc.php` 修改 mysql 的连接参数
 1. 配置好站点就可以直接运行了，当然也可以在根目录里用 php 的内置服务器运行
-1. 除了 phpmyadmin 外，这里还推荐使用 Adminer 或 CloudBeaver 或 dbeaver 或 heidisql 作为数据库的管理工具
+1. 除了 phpmyadmin 外，这里还推荐使用 Adminer 或 CloudBeaver 或 DBeaver 或 heidisql 作为数据库的管理工具
+
+<!-- 5.2 -->
 
 ### phpredisadmin
 1. 下载 phpredisadmin
     ```
     https://github.com/ErikDubbelboer/phpRedisAdmin
     ```
-1. 解压后，配置好站点就可以直接运行了，当然也可以在根目录里用 php 的内置服务器运行
+1. 解压后，修改配置文件
+    - 直接修改 includes/config.sample.inc.php
+    - 或者把 includes/config.sample.inc.php 复制到 includes/config.inc.php 再修改
+
+1. 配置好站点就可以直接运行了，当然也可以在根目录里用 php 的内置服务器运行
 
 1. 现在的 redis 也提供 gui 工具了 https://redis.com/redis-enterprise/redis-insight/
+
+<!-- 1.21 -->
 
 ### hosts
 

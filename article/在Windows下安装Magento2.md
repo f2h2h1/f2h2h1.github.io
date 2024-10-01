@@ -87,6 +87,7 @@
     结束进程 强制（/F参数）杀死 IMAGENAME 为 nginx.exe 的所有进程包括子进程（/T参数）
     taskkill /T /F /FI "IMAGENAME eq nginx.exe"
     ```
+- 其实大部分经验在 linux 环境下也适用
 
 ## 安装 Magento2.3
 
@@ -775,5 +776,35 @@ php bin/magento setup:store-config:set --base-url="http://localhost-magento.com/
 查看所有模块
 php bin/magento module:status
 
+有空就把 2.3 的安装过程删掉，全部换成 2.4 的，2.3 也算过时了
+
+apache的配置
+2.4
+2.2 和 2.4 的配置会有一点不一样
+
+需要在默认设置的基础上加上这三个模块
+modules/mod_rewrite.so
+modules/mod_version.so
+php_module
+
+这是站点的配置
+<VirtualHost *:80>
+    ServerAdmin webmaster@dummy-host2.example.com
+    DocumentRoot "D:\magento-ce\pub"
+    ServerName localhost-magento.com
+
+    <Directory />
+        Options FollowSymlinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    <IfModule dir_module>
+        DirectoryIndex index.html index.php
+    </IfModule>
+
+    ErrorLog "logs/localhost-magento.com-error.log"
+    CustomLog "logs/localhost-magento.com-access.log" common
+</VirtualHost>
 
 -->
