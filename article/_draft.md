@@ -1518,6 +1518,25 @@ vscode的使用技巧
     对项目发展的预期是怎样的
     大多数情况下，开发效率比运行效率重要
         因为大多数情况下，硬件成本比人力成本低
+电子邮件
+    名词
+        email
+        e-mail
+        Electronic Mail
+        电子的 邮件
+        电子邮件
+        电邮
+    组成
+        mta mua mda
+    主流的操作系统都有预装邮件客户端（mua）
+        Microsoft Mail 更早的，从dos时代开始
+        Windows Messaging 95 ， win95里的 ie3.0 也可以作为mua，这个mua后续发展出 Outlook Express
+        Outlook Express 98-xp
+        Windows Live Mail vista-7
+        Windows Mail 8-11
+        Outlook For Windows 10-11
+        unix/linux 里的 mailx
+        iOS 安卓 winphone 塞班 S40 都有预装邮件客户端，就像浏览器一样是一个重要的系统组件
 如何搭建一个邮件服务器
     单机的在不同用户间发送邮件
         apt install -y mailutils
@@ -1576,7 +1595,7 @@ vscode的使用技巧
                 MX 记录
                     @ 指向 CNAME 记录
                 TXT 记录
-                    spf dkim dmarc
+                    spf dkim dmarc DANE MTA-STS
                 PTR 记录
                     域名 指向 ip
             各种代理

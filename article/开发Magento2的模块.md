@@ -365,7 +365,11 @@ composer.json
     php bin/magento setup:upgrade
     ```
 
-- Magento的 模型系统 分为四部分 - 模型(Model) 资源模型(ResourceModel) 集合(Collection) 工厂(Factory)
+- Magento的 模型系统 分为四部分
+    - 模型 (Model)
+    - 资源模型 (ResourceModel)
+    - 集合 (Collection)
+    - 工厂 (Factory)
 - 模型是一个抽象的对象
 - 资源模型会对应数据库里的表，模型的增删查改通过资源模型进行，例如 资源模型->save(模型)
 - 集合就是模型的集合，一些查询操作也是在集合里进行
@@ -1552,8 +1556,13 @@ EOF
 
 <!--
 
-php bin/magento queue:consumers:start sales_rule.codegenerator
+列出所有消费者
 php bin/magento queue:consumers:list
+
+启用名为 sales_rule.codegenerator 的消费者
+php bin/magento queue:consumers:start sales_rule.codegenerator
+
+好像每个消费者都需要一个单独的命令
 
 php bin/magento queue:consumers:start [--max-messages=<value>] [--batch-size=<value>] [--single-thread] [--area-code=<value>] <consumer_name>
 
@@ -1571,6 +1580,11 @@ vendor\magento\module-message-queue\etc\cron_groups.xml
 
 这是通过 cron 来运行 队列
 php bin/magento cron:run --group=consumers
+这种通过 cron 运行的队列会启用所有消费者？
+
+php -r "while(true){exec('php bin/magento cron:run --group=default');sleep(1);}"
+php -r "while(true){exec('php bin/magento cron:run --group=index');sleep(10);}"
+php -r "while(true){exec('php bin/magento cron:run --group=consumers');sleep(5);}"
 
 -->
 
@@ -1877,6 +1891,24 @@ INSERT INTO core_config_data (`scope`,scope_id,`path`,value,updated_at) VALUES (
 $scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(Magento\Framework\App\Config\ScopeConfigInterface::class);
 $scopeConfig->getValue('general/file/bunch_size');
 ```
+
+<!--
+php -a <<- 'EOF'
+try {
+    require __DIR__ . '/app/bootstrap.php';
+    $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+    $objectManager = $bootstrap->getObjectManager();
+    $state = $objectManager->get(\Magento\Framework\App\State::class);
+    $state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
+    /** @var \Magento\Framework\App\Config\ScopeConfigInterface */
+    $scopeConfig = $objectManager->get(Magento\Framework\App\Config\ScopeConfigInterface::class);
+    var_dump($scopeConfig->getValue('general/file/bunch_size'));
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+EOF
+-->
 
 还可以用命令行来修改配置，这种修改会保存在数据库里
 https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/cli/configuration-management/set-configuration-values.html
@@ -2763,6 +2795,32 @@ EOF
 <!--
 可以在模板里加载其它模板
 模板是没有缓存的
+
+在模板里加上 header 和 footer ，要注意模板的 area
+{{template area='frontend' config_path="design/email/header_template"}}
+<p>{{var mail_content}}</p>
+{{template config_path="design/email/footer_template"}}
+
+
+$to = [
+    '001' => '001@example.com',
+    '002' => '002@example.com',
+    '003' => '003@example.com',
+];
+foreach ($to as $name => $item) {
+    $transportBuilder->addTo($item, $name);
+}
+
+
+$to = [
+    '001 001@example.com',
+    '002 002@example.com',
+    '003 003@example.com',
+];
+foreach ($to as $item) {
+    $message->addTo($item);
+}
+
 -->
 
 ### 不使用模板
@@ -2813,6 +2871,11 @@ https://www.mageplaza.com/magento-2-smtp/
 magento2 使用这个库来发送邮件的
 https://github.com/laminas/laminas-mail
 
+在本地测试邮件可以参考这篇文章《在Windows下配置PHP服务器》的这个章节 mailpit
+
+sendmail 和 smtp 两种方式都可以用 mailpit 来测试， mailpit 可以忽略 smtp 的账号密码
+
+<!--
 可以用这个仓库来测试邮件的发送
 - https://github.com/axllent/mailpit
 - 启动命令
@@ -2822,7 +2885,6 @@ https://github.com/laminas/laminas-mail
 - 启动完后用浏览器访问 listen 的地址
 - sendmail 和 smtp 两种方式都可以用 mailpit 来测试， mailpit 可以忽略 smtp 的账号密码
 
-<!--
 mailpit 的版本是 v1.20
 邮件里如何加上附件？
 -->
@@ -2971,7 +3033,10 @@ echo $collection->getSelectSql(true);
 ### sql 语句最终的执行位置
 
 ```
+通过 composer 安装的
 vendor\magento\zendframework1\library\Zend\Db\Adapter\Abstract.php query
+通过 github 安装的
+vendor\magento\zend-db\library\Zend\Db\Adapter\Abstract.php query
 ```
 
 ### 写日志，并记录调用栈堆
@@ -3081,7 +3146,7 @@ extends(?:.*)AbstractResource\n
 
 搜索时的排除选项
 ```
-.js,.css,.md,.txt,.json,.csv,.html,.less,.phtml,**/tests,**/test,**/Test,**/setup,**/view,**/magento2-functional-testing-framework,.wsdl,**/module-signifyd,**/Block,pub,generated
+.js,.css,.md,.txt,.json,.csv,.html,.less,.phtml,**/tests,**/test,**/Test,**/setup,**/view,**/magento2-functional-testing-framework,.wsdl,**/module-signifyd,**/Block,pub,generated,var,dev
 ```
 
 ```

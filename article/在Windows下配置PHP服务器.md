@@ -6,44 +6,12 @@
 - MySQL 8 或 5.7
 - apache 2.4
 - nginx 1.12
-- redis 3.2.1 (redis 的 windows 版已经很久没更新了，虽然还是能用)
+- redis 7.0
+- elasticsearch 7.9.3
+- kibana 7.6.2
 - git for windows 2.33
     - 虽然 git 和运行 php 没有关系，但用 composer 安装依赖时有些时候会直接从 github 里拉取代码，如果这时系统里没有安装 git 可能会报错
     - git 也要加到环境变量里（一般安装完后重启一次环境变量里就有 git 的了）
-
-<!--
-- elasticsearch 7.9.3
-- kibana 7.6.2
-
-elasticsearch 和 kibana 都在这里下载
-https://www.elastic.co/cn/downloads/past-releases
-
-从官网下载 elasticsearch
-下载完后解压
-运行这个文件就能运行 elasticsearch 了
-bin/elasticsearch.bat
-
-从官网下载 kibana
-下载完后解压
-运行这个文件就能运行 kibana 了
-bin/kibana.bat
-http://127.0.0.1:5601
-进入Kibana的DevTools界面操作ES
-
-要先运行 elasticsearch 后运行 kibana
-kibana 的版本要和 elasticsearch 对应，不然 kibana 运行不了
-如果运行失败要留意命令行的输出
-
-只要双方都是默认配置，那么就可以直接运行的了
-elasticsearch 的配置文件 config/elasticsearch.yml
-kibana 的配置文件 config/kibana.yml
-
-curl -v --user user:passwd 'http://localhost:9200/_cat/nodes?v'
-curl -v 'http://127.0.0.1:9200/_cat/nodes?v'
-curl -v 'http://127.0.0.1:9200'
-
--->
-
 
 ## php
 
@@ -596,6 +564,8 @@ redis 的官方好像是推荐用 wsl2 在 windows 里安装 redis
 下载完后解压，然后 cd 进目录，然后运行这段
 ```
 redis-server.exe redis.windows.conf
+或
+redis-server.exe redis.conf
 ```
 
 ### php 的 redis 扩展
@@ -612,6 +582,32 @@ extension=php_redis.dll
 ### 参考
 
 https://www.redis.com.cn/redis-installation.html
+
+## elasticsearch 和 kibana
+
+elasticsearch 和 kibana 都在这里下载
+https://www.elastic.co/cn/downloads/past-releases
+
+elasticsearch 下载完后解压，然后运行这个文件 `bin/elasticsearch.bat`
+然后用浏览器访问这个地址 http://127.0.0.1:9200/_cat/nodes?v
+
+kibana 下载完后解压，然后运行这个文件 `bin/kibana.bat`
+然后用浏览器访问这个地址 http://127.0.0.1:5601
+然后进入Kibana的DevTools界面操作ES
+
+要先运行 elasticsearch 后运行 kibana
+kibana 的版本要和 elasticsearch 对应，不然 kibana 运行不了
+如果运行失败要留意命令行的输出
+
+只要双方都是默认配置，那么就可以直接运行的了
+- elasticsearch 的配置文件 config/elasticsearch.yml
+- kibana 的配置文件 config/kibana.yml
+
+<!--
+curl -v --user user:passwd 'http://localhost:9200/_cat/nodes?v'
+curl -v 'http://127.0.0.1:9200/_cat/nodes?v'
+curl -v 'http://127.0.0.1:9200'
+-->
 
 ## 其它
 
@@ -657,6 +653,21 @@ https 自签证书的生成，可以参考这篇文章 《密码学入门简明�
 1. 现在的 redis 也提供 gui 工具了 https://redis.com/redis-enterprise/redis-insight/
 
 <!-- 1.21 -->
+
+### mailpit
+
+可以用这个仓库来测试邮件的发送
+- https://github.com/axllent/mailpit
+- 启动命令
+    ```
+    mailpit --listen 127.0.0.1:8025 --smtp 127.0.0.1:25 --smtp-auth-accept-any --smtp-auth-allow-insecure
+    ```
+- 启动完后用浏览器访问 listen 的地址
+
+<!--
+mailpit 的版本是 v1.20
+邮件里如何加上附件？
+-->
 
 ### hosts
 
@@ -717,6 +728,13 @@ windows 的 hosts 文件需要是 ascii 编码或 ansi 编码，用其它编码 
     tasklist /V /FI "IMAGENAME eq nginx.exe"
     tasklist /V /FI "IMAGENAME eq nginx.exe" /FI "WINDOWTITLE eq titlename"
     ```
+
+<!--
+    查看被占用端口对应的 PID
+    netstat -aon|findstr "8081"
+    查看指定 PID 的进程
+    tasklist|findstr "9088"
+-->
 
 - taskkill
     ```

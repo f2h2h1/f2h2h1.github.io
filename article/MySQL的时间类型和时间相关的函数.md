@@ -241,9 +241,11 @@ set session time_zone='+08:00';
     [mysqld]
     default-time-zone='+08:00'
     ```
-- 在启动的命令行里添加参数
+- 在启动的命令行里添加参数，这个参数在8.0似乎没有效果
     ```
     mysqld --default-time-zone='+08:00'
+    # 如果没有效果就用 --init-command 参数
+    mysqld --init-command="set session time_zone='+08:00';"
     ```
 - 用 sql 语句修改
     ```sql
@@ -295,5 +297,6 @@ China Standard Time UT+8:00 中国标准时间
 set global time_zone='+08:00';
 flush privileges;
 
+./mysql -uroot -p --init-command="set session time_zone='+08:00';"
 
 -->
