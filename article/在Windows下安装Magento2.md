@@ -5,34 +5,51 @@
 
 ## 环境依赖
 
+> 文档里明确写了不支持 Windows ，但还是可以在 Windows 里安装的，实在不行就用 docker-desktop 或 wsl2 https://experienceleague.adobe.com/en/docs/commerce-operations/installation-guide/system-requirements
+
 - windows10 20H2
 - git for windows 2.33
-- php 7.3 64 位 nts 版
-- composer 1.10.22
-- mysql 5.7
+- php 8.1 64 位 ts 版
+- composer 2.2
+- mysql 8.0
 - nginx 1.12
-- magento 2.3.7
+- apache 2.4
+- redis 7.0
+- elasticsearch 7.9
+- magento 2.4.6
 
 需要注意的事项
+- magento2 的每个小版本的系统依赖都有一点不一样
 - 环境的搭建可以参考这篇文章 《在Windows下配置PHP服务器》
-- php 需要安装 vc 依赖，在 php 下载页面的左边有 vc 库的下载链接的，用心找一下
-- composer 需要 1 的版本，现在下载的 composer 默认是 2 的版本，可以用这句命令把 composer 降级 `composer self-update --1`
+    - 环境的搭建是指 php composer mysql nginx apache redis elasticsearch 这些软件的安装和配置
 - composer 和 magento 的命令最好在有管理员权限的 git bash 下运行
 - php 需要开启这些拓展
     ```
+    bcmath
+    ctype
     curl
+    dom
     fileinfo
-    gd2
+    filter
+    gd
+    hash
+    iconv
     intl
+    json
+    libxml
     mbstring
-    exif
     openssl
+    pcre
     pdo_mysql
+    simplexml
     soap
     sockets
     sodium
-    tidy
+    tokenizer
+    xmlwriter
     xsl
+    zip
+    zlib
     ```
 - php 需要修改配置文件
     ```
@@ -43,6 +60,8 @@
     max_execution_time = 900
     max_input_time = 300
     max_input_vars = 500
+    realpath_cache_size=10M
+    realpath_cache_ttl=7200
     ```
 - php 最好启用 opcache ，因为 magento2 真的很慢
 - 调整这两个值能有效地提升性能
@@ -55,87 +74,51 @@
     set PHP_FCGI_CHILDREN=32
     ```
 - mysql 需要提前新建对应的数据库，并且默认编码是 utf-8
-- magento2.3 不支持 xdebug3.0
 - magento2 里有大量的静态文件需要加载，启用 http2 能稍微提升一下速度
 - nginx 的配置 worker_processes 要设为 cpu 逻辑核心数的两倍，例如 cpu 是 2 核 4 线程，那么 worker_processes 就是 8
 - nginx php-cgi mysql 最好以管理员运行，这样可以有效避免权限的问题
 - nginx php mysql 等软件和 magento2 的源码，最好不要放在系统盘，这样可以有效避免权限的问题
-- 软件和源码最好都放在固态硬盘里，这样能有效地提升速度。
-- nginx 的命令需要在 nginx 的安装目录里运行
-- nginx 最好用信号的形式关闭，用信号形式关闭的 nginx 需要等待一段时间 nginx 的进程才会完全终止
-    ```
-    nginx -s quit
-    ```
-- nginx 最好用信号的形式重启
-    ```
-    nginx -s reload
-    ```
-- nginx 在启动之前可以用这个命令来测试配置文件
-    ```
-    nginx -T
-    ```
-- 一些可能会用到的命令
-    ```
-    查看被占用端口对应的 PID
-    netstat -aon|findstr "8081"
-    查看指定 PID 的进程
-    tasklist|findstr "9088"
-    查看 IMAGENAME 为 nginx.exe 的进程
-    tasklist /V /FI "IMAGENAME eq nginx.exe"
-    结束进程 强制（/F参数）杀死 pid 为 9088 的所有进程包括子进程（/T参数）
-    taskkill /T /F /PID 9088
-    结束进程 强制（/F参数）杀死 IMAGENAME 为 nginx.exe 的所有进程包括子进程（/T参数）
-    taskkill /T /F /FI "IMAGENAME eq nginx.exe"
-    ```
+- 软件和源码最好都放在固态硬盘里，这样能有效地提升速度
 - 其实大部分经验在 linux 环境下也适用
 
-## 安装 Magento2.3
+## 安装 Magento2.4
 
-1. 申请一个 magento 的账号
-1. 生成一个用于 composer 的 access kye
-1. 在安装的目录里运行这句命令，要留意命令最后的 `.` ，命令最后的参数是安装目录， `.` 是安装到当前目录
-    ```
-    composer create-project --repository=https://repo.magento.com/ magento/project-community-edition=2.3.7 .
-    ```
-1. 安装的过程中会要求输入 magento 的 access kye
-    - 用 composer 下载 magento 时， puliic key 就是 username ， private key 就是 password
-1. 安装的过程有点慢，要耐心地等待
-1. magento2 的依赖有点多，最好准备一个 github-oauth
+1. 下载源码
+    1. 通过 composer
+        1. 申请一个 magento 的账号
+        1. 生成一个用于 composer 的 access kye
+        1. 在安装的目录里运行这句命令，要留意命令最后的 `.` ，命令最后的参数是安装目录， `.` 是安装到当前目录
+            ```
+            composer create-project --repository=https://repo.magento.com/ magento/project-community-edition=2.4.6 .
+            ```
+        1. 安装的过程中会要求输入 magento 的 access kye
+            - 用 composer 下载 magento 时， puliic key 就是 username ， private key 就是 password
+    1. 通过 github
+        - clone 的命令
+            ```
+            clone 整个仓库后再切换分支
+            git clone https://github.com/magento/magento2.git .
+            git pull
+            git switch 2.4.6-p1
+            只 clone 一个分支
+            git clone -b 2.4.6-p1 https://github.com/magento/magento2.git --depth=1 .
+
+            切换到对应的 tag
+            git pull
+            git checkout 2.4.5
+            ```
+        - 只 clone 一个分支，以更快的方式
+            ```
+            git clone -b 2.4.6-p7 --single-branch --no-tags https://github.com/magento/magento2.git --depth=1 .
+            ```
+        - 如果 clone 速度太慢，可以在 releases 那里下载源码的压缩包（如果还是太慢就用一些下载工具来下载 releases 的压缩包）
+1. 安装 composer 依赖
+    1. 准备一个 github-oauth
+        - 也可以参考这篇文章 《在Windows下配置PHP服务器》
+    1. 运行安装命令 `composer install`
+    1. 安装的过程有点慢，要耐心地等待
 1. 修改源码
-    1. `vendor\magento\framework\Image\Adapter\Gd2.php` 大概在 90 行左右的位置
-    <!-- lib\internal\Magento\Framework\Image\Adapter\Gd2.php -->
-        ```
-        private function validateURLScheme(string $filename) : bool
-        {
-            if (!file_exists($filename)) { // if file not exist
-                $allowed_schemes = ['ftp', 'ftps', 'http', 'https'];
-                $url = parse_url($filename);
-                if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes)) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-        ```
-    1. `vendor\magento\framework\View\Element\Template\File\Validator.php` 大概在 140 行左右的位置
-    <!-- lib\internal\Magento\Framework\View\Element\Template\File\Validator.php -->
-        ```
-        protected function isPathInDirectories($path, $directories)
-        {
-            if (!is_array($directories)) {
-                $directories = (array)$directories;
-            }
-            // $realPath = $this->fileDriver->getRealPath($path);
-            $realPath = str_replace('\\', '/', $this->fileDriver->getRealPath($path));
-            foreach ($directories as $directory) {
-                if (0 === strpos($realPath, $directory)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        ```
+    - 参考下文的这一章节 `使用 patch 修改源码`
 1. 修改 hosts 文件，把域名 localhost-magento.com 指向本地 ip （其实这步没有也没关系，但为了方便下文的描述还是加上了这步）
 1. 在数据库里新建对应的库
     ```
@@ -143,21 +126,25 @@
     ```
 1. 运行安装命令
     ```
-    php bin/magento setup:install `
-        --base-url=http://localhost-magento.com/ `
-        --db-host=localhost `
-        --db-name=magento2ce `
-        --db-user=root `
-        --db-password=1234 `
-        --admin-firstname=admin `
-        --admin-lastname=admin `
-        --admin-email=admin@admin.com `
-        --admin-user=admin `
-        --admin-password=admin123 `
-        --language=en_US `
-        --currency=USD `
-        --timezone=America/Chicago `
-        --use-rewrites=1
+    php bin/magento setup:install  \
+        --base-url=http://localhost-magento.com/  \
+        --db-host=localhost  \
+        --db-name=magento2ce \
+        --db-user=root  \
+        --db-password=1234  \
+        --admin-firstname=admin  \
+        --admin-lastname=admin  \
+        --admin-email=admin@admin.com  \
+        --admin-user=admin  \
+        --admin-password=admin123  \
+        --language=en_US  \
+        --currency=USD  \
+        --timezone=America/Chicago  \
+        --use-rewrites=1  \
+        --search-engine=elasticsearch7  \
+        --elasticsearch-host=localhost  \
+        --elasticsearch-port=9200  \
+        --elasticsearch-index-prefix=magento2
     ```
 1. 运行一些必要的命令
     ```
@@ -192,21 +179,41 @@
 1. 重启 nginx 然后在浏览器里输入 localhost-magento.com ，如无意外能看到 magento 的 home page
 1. 安装示例数据，这一步不是必须的
     1. 查看当前模式
-    ```
-    php bin/magento deploy:mode:show
-    ```
+        ```
+        php bin/magento deploy:mode:show
+        ```
     1. 调整到开发者模式，安装时的默认模式是 default
-    ```
-    php bin/magento deploy:mode:set developer
-    ```
-    1. 下载示例数据。这一步也是需要 magento 的账号密码，如果失败，就多试几次
-    ```
-    php bin/magento sampledata:deploy
-    ```
+        ```
+        php bin/magento deploy:mode:set developer
+        ```
+    1. 下载示例数据。
+        1. 通过命令行下载，这一步也是需要 magento 的账号密码，如果失败，就多试几次
+            ```
+            php bin/magento sampledata:deploy
+            ```
+        1. 通过 github 下载
+            1. clone magento2-sample-data 仓库
+                ```
+                git clone https://github.com/magento/magento2-sample-data
+                ```
+            1. 运行安装命令，这命令里的路径必须使用绝对路径，且必须在管理员权限下运行
+                ```
+                php -f /d/magento2-sample-data/dev/tools/build-sample-data.php -- --sample-data-source="/d/magento2-sample-data" --ce-source="/d/magento-ce" --command=link
+                ```
+        <!-- 示例数据的图片路径好像还有一点问题，但又不是不能用 -->
     1. 更新
-    ```
-    php bin/magento setup:upgrade
-    ```
+        ```
+        php bin/magento setup:static-content:deploy -f
+        php bin/magento setup:upgrade
+        ```
+1. 验证
+    - 访问前台地址 `http://localhost-magento.com`
+    - 访问后台地址 `http://localhost-magento.com/admin`
+    - 进入后台之前需要禁用两步验证的模块和刷新缓存，不然会因为没有两步验证而无法进入后台, Magento_TwoFactorAuth 这个模块好像社区版没有
+        ```
+        php bin/magento module:disable Magento_TwoFactorAuth
+        php bin/magento cache:flush
+        ```
 
 需要注意的事项
 - 如果没有对应的语言包就不要修改语言设置，因为没有对应的语言包但又修改了语言设置，可能会导致一些 css 加载失败
@@ -311,40 +318,19 @@
     - 只把生成的目录和文件放在内存硬盘里，这里需要用软连接把 var 和 generated 文件夹映射到内存硬盘
     - 把整套项目源码放在内存硬盘里
     - 把整套项目源码和数据库都放在内存硬盘里
-- 可以使用 Papercut-SMTP 这类软件来接收测试的邮件
+- 可以使用 Papercut-SMTP mailpit 这类软件来接收测试的邮件
 - 浏览器禁用图片的加载也能有效地提升速度
 - magento2 有三种模式，按性能由低到高，依次为：developer < default < production ；除此之外还有一个维护模式 maintenance ，用户访问会返回 503
-
-除了可以通过 compoer 安装外，还可以通过 github 的仓库安装。
-- 通过 github 安装就可以不申请 magento 的帐号了。
-- clone 的命令
-    ```
-    clone 整个仓库后再切换分支
-    git clone https://github.com/magento/magento2.git .
-    git pull
-    git switch 2.4.6-p1
-    只 clone 一个分支
-    git clone -b 2.4.6-p1 https://github.com/magento/magento2.git --depth=1 .
-    只 clone 一个分支，以更快的方式
-    git clone -b 2.4.6-p7 --single-branch --no-tags https://github.com/magento/magento2.git --depth=1 .
-
-    切换到对应的 tag
-    git pull
-    git checkout 2.4.5
-
-    通过 github 拉取源码的需要运行一次 composer install
-    ```
 - 通过 composer 安装的 magento 的框架文件在这个目录里 `vendor/magento/framework`
 - 通过 github 源码安装的 magento 的框架文件在这个目录里 `lib/internal/Magento/Framework`
-- 如果是通过 github 修改源码的，要记得替换架的路径
 - github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块
-- 如果 clone 速度太慢，可以在 releases 那里下载源码的压缩包（如果还是太慢就用一些下载工具来下载 releases 的压缩包）
 - 如果没有开启url重写，大部分链接前面都会带着 index.php，如果开了url重写则没有 index.php
     - 例如 后台的链接
         ```
         没有url重写 /index.php/admin
         有url重写 /admin
         ```
+- magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给 es 加上 http 认证
 
 - 配置 vscode 的 xml 文件语法高亮
     1. vscode 里装上这个插件
@@ -383,90 +369,15 @@
         ]
     ```
 
-## 安装 2.4
-
-笔者发现 magento2 的每个小版本的系统依赖都有一点不一样
-https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html
-
-2.3 和 2.4 的主要区别是
-- 必须使用 Elasticsearch
-- mysql 需要 8.0
-- php 需要 7.4
-- 还有就是 composer 需要 2 以上版本
-
-因为 Elasticsearch 的存在使得门槛高了不少。笔者感觉奥多比正在抛弃中小用户。
-笔者感到很奇怪，没有 redis 也可以安装，但没有 Elasticsearch 却不行。
-
-安装流程和注意事项和 2.3 的基本一致。
-
-### 安装 Elasticsearch
-
-2.4.0 依赖的 elasticsearch 版本为 7.6 。
-
-直接从官网下载就可以了，下载后解压，然后运行 bin/elasticsearch.bat 。压缩包里原本就带着 jdk 。
-
-magento2 的官网推荐使用 nginx 做 es 的反向代理，这样就可以给 es 加上 http 认证。
-
-### 安装步骤和 2.3 的区别
-
-1. 下载 magento2 的命令要把版本号改为 2.4.0
-    ```
-    composer create-project --repository=https://repo.magento.com/ magento/project-community-edition=2.4.0 .
-    ```
-
-1. 修改源码
-    1. `vendor\magento\framework\App\StaticResource.php` 大概在 278 行左右的位置
-    <!-- lib\internal\Magento\Framework\App\StaticResource.php -->
-    ```
-    private function isThemeAllowed(string $theme): bool
-    {
-        $theme = str_replace('\\', '/', $theme); // fix windows path
-        return in_array($theme, array_keys($this->themePackageList->getThemes()));
-    }
-    ```
-
-    1. `vendor\magento\framework\Interception\PluginListGenerator.php` 大概在 156 行左右的位置
-    <!-- lib\internal\Magento\Framework\Interception\PluginListGenerator.php -->
-    ```
-    // $cacheId = implode('|', $this->scopePriorityScheme) . "|" . $this->cacheId;
-    $cacheId = implode('-', $this->scopePriorityScheme) . "-" . $this->cacheId;
-    ```
-
-1. 安装命令要加上 Elasticsearch 的配置
-    ```
-    php bin/magento setup:install  \
-        --base-url=http://localhost-magento.com/  \
-        --db-host=localhost  \
-        --db-name=magento2ce2  \
-        --db-user=root  \
-        --db-password=1234  \
-        --admin-firstname=admin  \
-        --admin-lastname=admin  \
-        --admin-email=admin@admin.com  \
-        --admin-user=admin  \
-        --admin-password=admin123  \
-        --language=en_US  \
-        --currency=USD  \
-        --timezone=America/Chicago  \
-        --use-rewrites=1  \
-        --search-engine=elasticsearch7  \
-        --elasticsearch-host=localhost  \
-        --elasticsearch-port=9200  \
-        --elasticsearch-index-prefix=magento2
-    ```
-
-1. 进入后台之前需要禁用两步验证的模块和刷新缓存，不然会因为没有两步验证而无法进入后台, Magento_TwoFactorAuth 这个模块好像社区版没有
-    ```
-    php bin/magento module:disable Magento_TwoFactorAuth
-    php bin/magento cache:flush
-    ```
-
-## 2.4 但不使用 es
+## 不使用 es
 
 禁用 es 相关的模块，用这个库来替换
 ```
 https://github.com/swissup/module-search-mysql-legacy
 ```
+
+因为 Elasticsearch 的存在使得门槛高了不少。笔者感觉奥多比正在抛弃中小用户。
+笔者感到很奇怪，没有 redis 也可以安装，但没有 Elasticsearch 却不行。
 
 ### 安装时就排除 es
 1. 修改安装命令
@@ -558,9 +469,9 @@ https://github.com/swissup/module-search-mysql-legacy
 
 ## 使用 patch 修改源码
 
-这是上面几个需要修改的文件的合集。
-这个 patch 要在项目的根目录下运行，
-这个 patch 要在 composer install 之后运行， php bin/magento setup:upgrade 前运行
+- 要注意区分通过 composer 安装和通过 github 安装的路径
+- 这个 patch 要在项目的根目录下运行，
+- 这个 patch 要在 composer install 之后运行， php bin/magento setup:upgrade 前运行
 
 patch 文件的内容
 ```patch
@@ -699,9 +610,9 @@ EOF
 
 ## 参考
 
-用户指南 https://docs.magento.com/user-guide/
+安装指南 https://experienceleague.adobe.com/zh-hans/docs/commerce-operations/installation-guide/overview
 
-开发文档 https://devdocs.magento.com/
+开发文档 https://developer.adobe.com/commerce/php/development/
 
 github https://github.com/magento/magento2
 
