@@ -50,8 +50,8 @@
                     USENET 和 NNTP 的关系，大概就是 网站 和 http 的关系差不多
                 irc
                 xmpp
-                ntp
-                    网络时间协议（Network Time Protocol）
+                ntp (Network Time Protocol) 网络时间协议
+                PTP (Precision Time Protocol) 精确时间协议
                 dhcp
                 smtp
                 pop3
@@ -4965,6 +4965,9 @@ node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:
     update auxiliary article
     git commit -m "update auxiliary "$(date +%Y%m%d); git push;
 
+静态文件的index.html ？
+把 title 换成文章标题
+压缩生成后的 html ？
 
 # telnet详解
 

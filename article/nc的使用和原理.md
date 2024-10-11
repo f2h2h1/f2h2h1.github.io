@@ -298,4 +298,6 @@ https://github.com/search?q=telnet+language%3AC&type=repositories&l=PHP&s=stars&
 https://github.com/fijiwebdesign/php-telnet
 https://github.com/diotteo/TelnetClient.php
 
+/dev/tcp并不是linux下面的一个文件。直接在/dev目录下面去是找不到这个文件的。这仅仅是bash的一个feature，因此这种方法也仅能在bash中使用，换了其他shell就没用了
+
 -->
