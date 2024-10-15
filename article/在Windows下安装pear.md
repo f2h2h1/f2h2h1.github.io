@@ -98,3 +98,12 @@ pear uninstall packagename
 | 2009 | PEAR2 |
 | 2012 | Composer |
 | 2021 | pickle |
+| 2024 | PIE |
+
+<!--
+
+PIE
+PHP Installer for Extensions
+https://github.com/php/pie
+
+-->

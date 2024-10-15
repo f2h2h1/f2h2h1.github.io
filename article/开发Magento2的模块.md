@@ -1488,7 +1488,7 @@ crontab/reports/jobs/promotion_group_attribute/schedule/cron_expr
 $configData = $objectManager->get(\Magento\Cron\Model\Config\Data::class);
 var_dump($configData->getJobs());
 
-php -a <<- 'EOF'
+php -a <<- 'EOF' > cron.json
 try {
 require __DIR__ . '/app/bootstrap.php';
 $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
@@ -1497,7 +1497,7 @@ $state = $objectManager->get(\Magento\Framework\App\State::class);
 $state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
 /** @var \Magento\Cron\Model\Config\Data */
 $configData = $objectManager->get(\Magento\Cron\Model\Config\Data::class);
-var_dump($configData->getJobs());
+echo json_encode($configData->getJobs(), JSON_PRETTY_PRINT);
 } catch (\Throwable $e) {
     echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
     echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
@@ -2827,6 +2827,12 @@ foreach ($to as $item) {
 
 ```php
 try {
+    require __DIR__ . '/app/bootstrap.php';
+    $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+    $objectManager = $bootstrap->getObjectManager();
+    $state = $objectManager->get(\Magento\Framework\App\State::class);
+    $state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
+
     $message = $objectManager->get(\Magento\Framework\Mail\Message::class);
     $appConfig = $objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
 

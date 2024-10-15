@@ -4784,6 +4784,115 @@ telnet rlogin ssh
     互联网     1990 互联网Internet第一个网页浏览器WorldWideWeb由提姆·柏纳-李设计面世
     移动互联网 2007 iphone 的出现
     ai        2012 AlexNet
+数据存储 data storage
+    数据存储是指在不同类型的介质上保留数据以供计算机和其他设备使用
+    分类
+        模拟 和 数字
+        易失性 和 非易失性
+        存储介质
+        存储层次结构
+    存储介质
+        光学
+        磁性
+            磁盘
+                硬盘
+                软盘
+            磁带
+        半导体
+            Flash memory （闪存）
+        其它
+            Paper data storage （纸张数据存储）
+                打孔纸带
+                打孔卡
+                一维码
+                二维码
+            胶卷
+            黑胶/留声机圆筒
+            真空管
+    存储层次结构
+        主存储 一级
+            寄存器
+            cpu缓存
+            内存
+        辅助存储 二级
+            硬盘
+        近线存储 三级
+            云存储
+            不能立即用于 IO ，但可以在没有人工干预的情况下快速在线进行
+        离线存储 脱机存储
+            与三级存储不同，如果没有人工干预，它就无法访问
+文件系统
+    POSIX文件接口
+    VFS
+    FUSE
+    文件系统
+        FAT
+            8 12 16 32 exFAT
+        NTFS
+        EXT
+            1 2 3 4
+        macOS
+            HFS HFS+ APFS
+        XFS
+        ZFS
+    云存储
+        块存储
+        文件存储
+        对象存储
+硬盘
+    硬盘 Hard Disk
+        HDD Hard Disk Drive
+        HHD Hybrid Hard Drive
+        disk n. 磁盘；磁碟
+        disc n. 圆盘；(计算机)磁盘，磁碟；
+    逻辑结构
+        就是文件系统
+        簇 和 块
+            簇 和 块是操作系统中最小的逻辑存储单位。操作系统与磁盘打交道的最小单位是磁盘块
+            簇 cluster
+            数据簇 data cluster
+            分配单位 allocation unit
+            块 block
+        DOS 4.0版之后，术语cluster变成了allocation unit，但cluster仍然广泛使用。
+        操作系统规定，一个簇中只能放置一个文件的内容，
+        因此文件所占用的空间只能是簇的整数倍，
+        而如果文件实际大小小于一簇，它也要占一簇的空间。
+        所以一般情况下文件所占空间要略大于文件的实际大小，
+        只有在少数情况下，即文件的实际大小恰好是簇的整数倍时，文件的实际大小才会与所占空间完全一致。
+    物理结构
+        盘片（platter）
+        磁头（head）
+        磁道（track）
+        扇区（sector）
+        柱面（cylinder）
+        CHS
+            cylinder-head-sector
+            柱面-磁头-扇区
+        磁盘容量计算
+        磁道响应时间
+        机械硬盘有 CHS ，那么固态硬盘的结构是怎样的？不一样的结构对文件系统会有什么影响？
+    接口和协议
+        物理接口
+            sata
+            mini-SATA(mSATA)
+            SATA Express
+            pcie
+            m2
+                M-Key
+                B-Key
+                B&M-Key
+            u2
+            sas
+            AIC
+        传输协议 总线
+            sata
+            pcie
+            sas
+        上层协议
+            AHCI
+            NVMe
+            scsi
+    什么是4k对齐，为什么需要4k对齐
 nas
     软件
         虚拟化
@@ -4830,6 +4939,8 @@ nas
         更多的存储设备
             用于冷备的硬盘
             网盘上再放一份数据？
+        可以自建的其它服务？
+            邮局 web（博客，笔记，wiki，git）
         放在哪里？体积？噪声？辐射？
         费用？
             硬件费用，电费，网费

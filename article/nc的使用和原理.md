@@ -56,11 +56,21 @@ BusyBox nc < nc-traditional < nc-openbsd < ncat < socat
 
 nc 扫描端口
 ```
+nc -v 127.0.0.1 801
 nc -v -i 1 127.0.0.1 801
 nc -v -z -i 1 127.0.0.1 801
 nc -v -z -i 1 127.0.0.1 800-900
-不是所有版本的nc都支持 z 参数，不是所有版本的 nc 支持批量端口扫描
+不是所有版本的nc都支持 i z 参数，不是所有版本的 nc 支持批量端口扫描
 ```
+
+<!--
+nc -v 127.0.0.1 801
+echo $? 为 0 就是端口有开启
+
+如果有 -z 参数还是可以通过 bash 来实现批量端口扫描的
+有 -w 参数也可以，但可能有一点不准确
+超时可以用 timeout 这个命令？
+-->
 
 nc 实现聊天
 ```
@@ -269,6 +279,7 @@ nc 有哪些通用的语法？
 如果 bash 有 /usr/lib/bash/accept 这个特性，那么直接用 bash 实现一个 nc 也不是不可以的。
 客户端部分用 exec /dev/tcp/$host/$port 和 exec /dev/udp/$host/$port 来实现，
 服务端部分用 /usr/lib/bash/accept 来实现。
+只有 bash 搞网络编程还是有太多限制了，因为 socket 很多选项无法通过 bash 设置。
 
 <!--
 用 python 和 php 实现一个 nc ，只实现 -h -l -e 这三个参数即可。
@@ -299,5 +310,8 @@ https://github.com/fijiwebdesign/php-telnet
 https://github.com/diotteo/TelnetClient.php
 
 /dev/tcp并不是linux下面的一个文件。直接在/dev目录下面去是找不到这个文件的。这仅仅是bash的一个feature，因此这种方法也仅能在bash中使用，换了其他shell就没用了
+
+nc [OPTIONS] HOST PORT  - connect
+nc [OPTIONS] -l -p PORT [HOST] [PORT]  - listen
 
 -->
