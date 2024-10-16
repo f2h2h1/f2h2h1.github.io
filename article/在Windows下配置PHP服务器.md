@@ -437,9 +437,11 @@ Errors reported here must be corrected before the service can be started
 并不是 error ，而是提示：如果这行下边出现错误则解决错误后再启动！
 
 11. https 配置
-    1. 安装 ssl 模块 mod_ssl.so ，大多数情况下 mod_ssl.so 是默认安装好的
+    1. 安装 ssl 模块 mod_ssl.so 和 mod_socache_shmcb.so ，大多数情况下 mod_ssl.so 和 mod_socache_shmcb.so 是默认安装好的
     1. 启用 mod_ssl.so ，就是在 httpd.conf 文件里把那句 mod_ssl.so 的注释删掉
-    1. 监听 443 端口 listen 443
+    1. 启用 mod_socache_shmcb.so ，就是在 httpd.conf 文件里把那句 mod_socache_shmcb.so 的注释删掉
+    1. 把 httpd.conf 里的 #Include conf/extra/httpd-ssl.conf 注释去掉。
+    1. 把 httpd-ssl.conf 里的 VirtualHost 配置删掉或注释掉
     1. 在 VirtualHost 里至少加上这几个字段
         ```
         SSLEngine on
@@ -830,5 +832,7 @@ cmd /c shutdown.bat
 timeout 2
 cmd /c startup.bat
 ```
+
+加上 apache 和 nginx http 重定向到 https 的配置
 
 -->

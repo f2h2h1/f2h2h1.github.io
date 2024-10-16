@@ -3436,6 +3436,13 @@ authorization_rule
 1. 运行 bin/magento setup:upgrade
 1. 参考 https://devdocs.magento.com/extensions/install
 
+### 常见的 magento 扩展供应商
+- magento https://commercemarketplace.adobe.com/extensions.html
+- mageplaz https://www.mageplaza.com/
+- magefan https://magefan.com/
+- amasty https://amasty.com/
+- vnecoms https://www.vnecoms.com/
+- webkul https://webkul.com/
 
 <!--
 https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-cron.html

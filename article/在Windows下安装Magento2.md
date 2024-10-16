@@ -162,6 +162,10 @@
     server {
         listen 80;
 
+        # listen 443 ssl http2;
+        # ssl_certificate  ./cert/localhost-magento.com/domain.crt;
+        # ssl_certificate_key ./cert/localhost-magento.com/rsa_private_key.pem;
+
         access_log  logs/localhost-magento.access.log;
         error_log  logs/localhost-magento.error.log;
 
@@ -683,6 +687,7 @@ var/.maintenance.flag
 修改 base-url
 php bin/magento setup:store-config:set --base-url="http://localhost-magento.com/"
 
+SELECT * FROM magento245.core_config_data WHERE value like '%localhost-magento.com%'
 
 查看所有模块
 php bin/magento module:status
@@ -706,6 +711,50 @@ php_module
 
     <Directory />
         Options FollowSymlinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    <IfModule dir_module>
+        DirectoryIndex index.html index.php
+    </IfModule>
+
+    ErrorLog "logs/localhost-magento.com-error.log"
+    CustomLog "logs/localhost-magento.com-access.log" common
+</VirtualHost>
+
+
+openssl req -new -x509 -days 365 -nodes -out apache-selfsigned.crt -keyout apache-selfsigned.key
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@dummy-host.example.com
+    DocumentRoot "${SRVROOT}"
+    ServerName localhost-magento.com
+    ServerAlias localhost-magento.com
+
+    RewriteEngine On
+    RewriteCond          "%{HTTPS}" "!=on"
+    RewriteRule ^/?(.*)$ https://%{HTTP_HOST}/$1 [L,R=302]
+</VirtualHost>
+<VirtualHost *:443>
+    ServerAdmin webmaster@dummy-host.example.com
+    DocumentRoot "D:\magento-ce\pub"
+    ServerName localhost-magento.com
+    ServerAlias localhost-magento.com
+
+    SSLEngine on
+    SSLCertificateFile "${SRVROOT}/conf/ssl/localhost-magento.com/apache-selfsigned.crt"
+    SSLCertificateKeyFile "${SRVROOT}/conf/ssl/localhost-magento.com/apache-selfsigned.key"
+    Protocols h2 h2c http/1.1 http/1.0
+
+    #   Force clients from the Internet to use HTTPS
+    # RewriteEngine        on
+    # RewriteCond          "%{REMOTE_ADDR}" "!^192\.168\.1\.[0-9]+$"
+    # RewriteCond          "%{HTTPS}" "!=on"
+    # RewriteRule          "." "-" [F]
+
+    <Directory "/">
+        Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
     </Directory>
