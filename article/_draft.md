@@ -4271,6 +4271,8 @@ termux
                 导入 wsl --import debian-email D:/debian-email D:/debian-base.vhdx --vhd --version 2
                 启动新导入的实例 wsl -d debian-email
             安装完 wsl2 后就可以安装 Docker Desktop 了
+            网络
+                https://learn.microsoft.com/zh-cn/windows/wsl/networking
             gui
                 单一窗口
                     直接安装就可以运行了
@@ -5094,8 +5096,147 @@ rfc 97 137 153 318
     854 855 856 857 859 860 861
     2217
 
+Telnet
+Telecommunication Network
+电信网络
+
+
+telnet ftp email 最早都是在 ARPANET
+最早的 email 是使用 ftp 实现的
+telnet ftp 的出现甚至早于 tcp/ip
+
+telnet ftp 差不多同时出现
+从维基百科的词条来看 telnet 比 ftp 稍微早一点出现
+
+
+TFTP
+Trivial File Transfer Protocol
+不重要的 文件 传输 协议
+简单文件传输协议
+
+ARPANET 1969
+telnet 1969
+ftp 1971
+email 1971
+mailing list 1975
+usenet（新闻组） 1980
+telnet bbs 1990
+www 1990
+
+bbs很早就出现了，但早期的bbs并不使用 internet ，使用 telnet 的 bbs 要到 1990 才出现
+早期的bbs一般叫做 拨号式bbs
+拨号式bbs 使用的是 FidoNet
+
+
+telnet 23
+telnets 992
+
+| RFC 编号 | 标题 | 内容摘要 |
+|----------|------|----------|
+| RFC 97   | First Cut at a Proposed Telnet Protocol | 提出了一个初步的 Telnet 协议草案，旨在通过网络虚拟终端（NVT）实现远程终端访问。 |
+| RFC 137  | Telnet Protocol - a proposed document | 提出了 Telnet 协议的详细规范，定义了用户站点和服务站点之间的交互方式。 |
+| RFC 153  | SRI ARC-NIC status | 描述了 SRI ARC-NIC 的状态和功能，主要涉及网络信息中心的操作。 |
+| RFC 318  | Telnet Protocols | 详细说明了 Telnet 协议，包括网络虚拟终端和控制信号的定义。 |
+| RFC 854  | Telnet Protocol Specification | 规范了 Telnet 协议，提供了双向、八位字节的通信设施，主要用于终端设备和进程之间的接口。 |
+| RFC 855  | Telnet Option Specifications | 详细说明了 Telnet 协议中的选项机制，允许主机之间进行更复杂的通信。 |
+| RFC 856  | Telnet Binary Transmission | 定义了 Telnet 二进制传输选项，允许在 Telnet 模块之间进行二进制数据传输。 |
+| RFC 857  | Telnet Echo Option | 定义了 Telnet 回显选项，允许远程回显由另一个 Telnet 模块处理。 |
+| RFC 859  | Telnet Status Option | 定义了 Telnet 状态选项，允许用户或进程验证 Telnet 选项的当前状态。 |
+| RFC 860  | Telnet Timing Mark Option | 提供了一种检查两个 Telnet 模块之间往返路径的方法。 |
+| RFC 861  | Telnet Extended Options - List Option | 介绍了 Telnet 扩展选项列表，允许查询和设置多个选项。 |
+| RFC 2217 | Telnet Com Port Control Option | 定义了通过 Telnet 控制串行端口的选项，允许远程管理串行设备。 |
+
+busybox 里的 telnet telnetd
+busybox 里也有一个 inetd
+
+
 ### 服务端
 ### 客户端
+
+
+c 如何实现一个交互式的命令行？
+php 如何实现一个交互式的命令行？
+python 如何实现一个交互式的命令行？
+
+
+https://github.com/mirror/busybox/blob/master/networking/telnet.c
+https://github.com/mirror/busybox/blob/master/networking/telnetd.c
+
+https://docs.python.org/zh-cn/3/library/telnetlib.html
+https://github.com/python/cpython/tree/3.12/Lib/telnetlib.py
+    这个文件似乎能直接左右 telnet 客户端使用
+    python telnetlib.py [-d] ... [host [port]]
+https://www.cnblogs.com/mrlayfolk/p/15154813.html
+
+https://github.com/search?q=telnet+language%3AC&type=repositories&l=PHP&s=stars&o=desc
+https://github.com/fijiwebdesign/php-telnet
+https://github.com/diotteo/TelnetClient.php
+
+python已经放弃了 telnet
+https://peps.python.org/pep-0594/#telnetlib
+cgi smtpd 也都被抛弃了。。。
+
+https://packages.debian.org/search?keywords=telnet
+https://www.gnu.org/software/inetutils
+
+https://www.telnet.org/
+
+
+除了 ptt 外还有哪些活跃的 telnetd 服务？
+https://www.telnet.org/htm/places.htm
+bbs.newsmth.net
+
+telnet telehack.com
+直接用浏览器打开也可以
+
+
+telnet 似乎也可以作为 ftp 的客户端？
+https://blog.csdn.net/nowhere_/article/details/44877439
+
+
+没想到在 busybox 里也有有一个 telnet 和 telnetd
+虽然windows版里没有，
+但登录后只能启动shell，目测 telnetd 默认启动的是 /bin/login
+指定了 -l 参数，就可以启动其它程序，但似乎这个又不需要登录了
+如果 -l 的程序退出了，连接也会跟着关闭
+
+所以这两条命令效果是一样的
+telnetd
+telnetd -l /bin/login
+
+
+猜测 ssh telnet 等登录方式都是调用 /bin/login
+
+
+这是安装服务端
+apt install -y telnetd
+安装完后
+通过 find 找到
+find / -name telnetd
+通过 man 查看文档
+man telnetd
+
+这是安装客户端
+apt install -y telnet
+
+还有一个这样的程序？这个才是 telnetd 的主程序？
+/usr/sbin/in.telnetd
+
+还有一个这样的程序？这个程序是跟随 inetd 安装的
+/usr/sbin/tcpd
+在 inetd 默认的配置中 telnetd 是通过这个程序启动的
+
+还有一个这样的程序？这个就是默认情况下，在telnetd里连接成功后的登录程序，这个程序是跟随 telnetd 安装的
+/usr/lib/telnetlogin
+
+从文档来看
+安装完 telnetd 和 inetd 后
+只要改好配置文件 /etc/inetd.conf
+    大概就是把配置写成这个样子
+    telnet          stream  tcp     nowait  telnetd /usr/sbin/tcpd  /usr/sbin/in.telnetd
+重启 inetd 
+就可以成功开启 telnetd 服务了
+
 
 
 ````

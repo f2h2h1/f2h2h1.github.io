@@ -4103,6 +4103,7 @@ FROM
     sales_order
 JOIN 
     sales_order_item on sales_order.entity_id = sales_order_item.order_id
+WHERE sales_order.increment_id = 3100182449;
 WHERE sales_order.entity_id = 28546;
 
 
