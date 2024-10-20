@@ -6,10 +6,17 @@
         <description>f2h2h1's blog</description>
         <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>telnet的不完整总结</title>
+            <link>https://f2h2h1.github.io/article/telnet的不完整总结.html</link>
+            <description>telnet的不完整总结</description>
+            <pubDate>Sun, 20 Oct 2024 13:58:46 +0800</pubDate>
+            <guid>https://f2h2h1.github.io/article/telnet的不完整总结.html</guid>
+        </item>
+        <item>
             <title>nc的使用和原理</title>
             <link>https://f2h2h1.github.io/article/nc的使用和原理.html</link>
             <description>nc的使用和原理</description>
-            <pubDate>Mon, 29 Apr 2024 18:21:54 +0800</pubDate>
+            <pubDate>Tue, 15 Oct 2024 19:04:06 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/nc的使用和原理.html</guid>
         </item>
         <item>
@@ -23,7 +30,7 @@
             <title>ACME的使用经验</title>
             <link>https://f2h2h1.github.io/article/ACME的使用经验.html</link>
             <description>ACME的使用经验</description>
-            <pubDate>Thu, 04 Jan 2024 18:46:19 +0800</pubDate>
+            <pubDate>Fri, 28 Jun 2024 18:12:23 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/ACME的使用经验.html</guid>
         </item>
         <item>
@@ -44,7 +51,7 @@
             <title>和颜色相关的笔记</title>
             <link>https://f2h2h1.github.io/article/和颜色相关的笔记.html</link>
             <description>和颜色相关的笔记</description>
-            <pubDate>Sat, 06 May 2023 18:49:41 +0800</pubDate>
+            <pubDate>Fri, 28 Jun 2024 18:12:23 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/和颜色相关的笔记.html</guid>
         </item>
         <item>
@@ -79,7 +86,7 @@
             <title>MySQL的时间类型和时间相关的函数</title>
             <link>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</link>
             <description>MySQL的时间类型和时间相关的函数</description>
-            <pubDate>Tue, 19 Mar 2024 18:04:06 +0800</pubDate>
+            <pubDate>Thu, 10 Oct 2024 18:53:48 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</guid>
         </item>
         <item>
@@ -107,7 +114,7 @@
             <title>对JS原型链的理解</title>
             <link>https://f2h2h1.github.io/article/对JS原型链的理解.html</link>
             <description>对JS原型链的理解</description>
-            <pubDate>Thu, 11 Apr 2024 18:31:09 +0800</pubDate>
+            <pubDate>Fri, 31 May 2024 18:24:39 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/对JS原型链的理解.html</guid>
         </item>
         <item>
@@ -149,7 +156,7 @@
             <title>在Windows下安装Magento2</title>
             <link>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</link>
             <description>在Windows下安装Magento2</description>
-            <pubDate>Fri, 01 Mar 2024 18:17:26 +0800</pubDate>
+            <pubDate>Wed, 16 Oct 2024 18:59:18 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</guid>
         </item>
         <item>
@@ -177,7 +184,7 @@
             <title>开发Magento2的模块</title>
             <link>https://f2h2h1.github.io/article/开发Magento2的模块.html</link>
             <description>开发Magento2的模块</description>
-            <pubDate>Fri, 24 May 2024 18:04:13 +0800</pubDate>
+            <pubDate>Fri, 18 Oct 2024 18:16:37 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/开发Magento2的模块.html</guid>
         </item>
         <item>
@@ -198,14 +205,14 @@
             <title>PHP各种运行方式的不完整总结</title>
             <link>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</link>
             <description>PHP各种运行方式的不完整总结</description>
-            <pubDate>Fri, 26 Nov 2021 18:07:54 +0800</pubDate>
+            <pubDate>Fri, 23 Aug 2024 18:18:32 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</guid>
         </item>
         <item>
             <title>把网页导出成PDF</title>
             <link>https://f2h2h1.github.io/article/把网页导出成PDF.html</link>
             <description>把网页导出成PDF</description>
-            <pubDate>Fri, 24 May 2024 18:04:13 +0800</pubDate>
+            <pubDate>Fri, 06 Sep 2024 18:16:53 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/把网页导出成PDF.html</guid>
         </item>
         <item>
@@ -219,7 +226,7 @@
             <title>SEO的经验</title>
             <link>https://f2h2h1.github.io/article/SEO的经验.html</link>
             <description>SEO的经验</description>
-            <pubDate>Mon, 10 Apr 2023 18:16:37 +0800</pubDate>
+            <pubDate>Mon, 29 Jul 2024 18:38:09 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/SEO的经验.html</guid>
         </item>
         <item>
@@ -240,7 +247,7 @@
             <title>观察网站性能</title>
             <link>https://f2h2h1.github.io/article/观察网站性能.html</link>
             <description>观察网站性能</description>
-            <pubDate>Sat, 30 Jul 2022 21:01:39 +0800</pubDate>
+            <pubDate>Mon, 30 Sep 2024 12:33:39 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/观察网站性能.html</guid>
         </item>
         <item>
@@ -254,7 +261,7 @@
             <title>密码学入门简明指南</title>
             <link>https://f2h2h1.github.io/article/密码学入门简明指南.html</link>
             <description>密码学入门简明指南</description>
-            <pubDate>Fri, 02 Feb 2024 18:09:35 +0800</pubDate>
+            <pubDate>Wed, 16 Oct 2024 18:59:18 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/密码学入门简明指南.html</guid>
         </item>
         <item>
@@ -296,7 +303,7 @@
             <title>一些开发笔记</title>
             <link>https://f2h2h1.github.io/article/一些开发笔记.html</link>
             <description>一些开发笔记</description>
-            <pubDate>Tue, 05 Mar 2024 18:02:20 +0800</pubDate>
+            <pubDate>Sun, 20 Oct 2024 14:02:19 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/一些开发笔记.html</guid>
         </item>
         <item>
@@ -310,7 +317,7 @@
             <title>在Windows下安装pear</title>
             <link>https://f2h2h1.github.io/article/在Windows下安装pear.html</link>
             <description>在Windows下安装pear</description>
-            <pubDate>Thu, 28 Oct 2021 23:57:55 +0800</pubDate>
+            <pubDate>Tue, 15 Oct 2024 19:04:06 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/在Windows下安装pear.html</guid>
         </item>
         <item>
@@ -324,21 +331,21 @@
             <title>在Windows下配置PHP服务器</title>
             <link>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</link>
             <description>在Windows下配置PHP服务器</description>
-            <pubDate>Tue, 06 Feb 2024 19:47:27 +0800</pubDate>
+            <pubDate>Wed, 16 Oct 2024 18:59:18 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</guid>
         </item>
         <item>
             <title>关于字符编码的一些坑</title>
             <link>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</link>
             <description>关于字符编码的一些坑</description>
-            <pubDate>Wed, 27 Mar 2024 19:15:44 +0800</pubDate>
+            <pubDate>Mon, 05 Aug 2024 19:02:56 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</guid>
         </item>
         <item>
             <title>在VSCode里调试PHP</title>
             <link>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</link>
             <description>在VSCode里调试PHP</description>
-            <pubDate>Fri, 02 Feb 2024 18:09:35 +0800</pubDate>
+            <pubDate>Tue, 01 Oct 2024 13:49:55 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</guid>
         </item>
         <item>

@@ -5,8 +5,13 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
+        <loc>https://f2h2h1.github.io/article/telnet的不完整总结.html</loc>
+        <lastmod>2024-10-20T13:58:46+08:00</lastmod>
+        <priority>0.5</priority>
+    </url>
+    <url>
         <loc>https://f2h2h1.github.io/article/nc的使用和原理.html</loc>
-        <lastmod>2024-04-29T18:21:54+08:00</lastmod>
+        <lastmod>2024-10-15T19:04:06+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -16,7 +21,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/ACME的使用经验.html</loc>
-        <lastmod>2024-01-04T18:46:19+08:00</lastmod>
+        <lastmod>2024-06-28T18:12:23+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -31,7 +36,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/和颜色相关的笔记.html</loc>
-        <lastmod>2023-05-06T18:49:41+08:00</lastmod>
+        <lastmod>2024-06-28T18:12:23+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -56,7 +61,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/MySQL的时间类型和时间相关的函数.html</loc>
-        <lastmod>2024-03-19T18:04:06+08:00</lastmod>
+        <lastmod>2024-10-10T18:53:48+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -76,7 +81,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/对JS原型链的理解.html</loc>
-        <lastmod>2024-04-11T18:31:09+08:00</lastmod>
+        <lastmod>2024-05-31T18:24:39+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -106,7 +111,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</loc>
-        <lastmod>2024-03-01T18:17:26+08:00</lastmod>
+        <lastmod>2024-10-16T18:59:18+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -126,7 +131,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/开发Magento2的模块.html</loc>
-        <lastmod>2024-05-24T18:04:13+08:00</lastmod>
+        <lastmod>2024-10-18T18:16:37+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -141,12 +146,12 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</loc>
-        <lastmod>2021-11-26T18:07:54+08:00</lastmod>
+        <lastmod>2024-08-23T18:18:32+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/把网页导出成PDF.html</loc>
-        <lastmod>2024-05-24T18:04:13+08:00</lastmod>
+        <lastmod>2024-09-06T18:16:53+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -156,7 +161,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/SEO的经验.html</loc>
-        <lastmod>2023-04-10T18:16:37+08:00</lastmod>
+        <lastmod>2024-07-29T18:38:09+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -171,7 +176,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/观察网站性能.html</loc>
-        <lastmod>2022-07-30T21:01:39+08:00</lastmod>
+        <lastmod>2024-09-30T12:33:39+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -181,7 +186,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/密码学入门简明指南.html</loc>
-        <lastmod>2024-02-02T18:09:35+08:00</lastmod>
+        <lastmod>2024-10-16T18:59:18+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -211,7 +216,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/一些开发笔记.html</loc>
-        <lastmod>2024-03-05T18:02:20+08:00</lastmod>
+        <lastmod>2024-10-20T14:02:19+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -221,7 +226,7 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下安装pear.html</loc>
-        <lastmod>2021-10-28T23:57:55+08:00</lastmod>
+        <lastmod>2024-10-15T19:04:06+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
@@ -231,17 +236,17 @@
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</loc>
-        <lastmod>2024-02-06T19:47:27+08:00</lastmod>
+        <lastmod>2024-10-16T18:59:18+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</loc>
-        <lastmod>2024-03-27T19:15:44+08:00</lastmod>
+        <lastmod>2024-08-05T19:02:56+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</loc>
-        <lastmod>2024-02-02T18:09:35+08:00</lastmod>
+        <lastmod>2024-10-01T13:49:55+08:00</lastmod>
         <priority>0.5</priority>
     </url>
     <url>
