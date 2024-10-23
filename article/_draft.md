@@ -566,6 +566,7 @@
         网络模型
         各层中的协议
         使用系统api来读写网卡中的数据
+    数据结构和算法
     软件工程
     中间件
         定时任务
@@ -689,7 +690,7 @@ frp的使用
         开源中国 https://www.oschina.net/news
     今日热榜，各种主流app的热搜聚集 https://rebang.today/home?tab=top
 git仓库
-    github中文社区，一些github仓库的索引 https://www.githubs.cn
+    github中文社区，一些github仓库的索引 https://www.githubs.cn https://www.github-zh.com
     分享 GitHub 上入门级、有趣的开源项目 https://hellogithub.com
 书籍
     鸟哥私房菜
@@ -773,6 +774,8 @@ vscode的使用技巧
         "files.exclude": {
             "**/.git": false
         },
+    在 Windows 环境下，复制相对路径时使用斜杠
+        "explorer.copyRelativePathSeparator"："/"
     使用 git
         关闭自动刷新
             选项->扩展->git->autorefresh
@@ -3480,7 +3483,7 @@ MutationObserver？
     清空 dns
         edge://net-internals/#dns
         chrome://net-internals/#dns
-    输入 chrome://about 命令，将集中列出 Chrome 浏览器支持的所有的命令
+    输入 chrome://about 或者 about:about 命令，将集中列出 Chrome 浏览器支持的所有的命令，Chromium 的浏览器应该都支持这个命令
     命令行参数 --enable-features=msEdgeAreaSelect ，启用新版 edge 不再支持的 网页选择 功能
     火狐不显示图片
         about:config
@@ -3900,8 +3903,10 @@ ELF格式
     递归
     深度优先搜索
     回溯和剪支
+        回溯算法在尝试和回退中穷举所有可能的解，并通过剪枝避免不必要的搜索分支
     记忆化递归
     制表
+        这个和滚动数组有什么联系？
     一些语境下，
         记忆（Memoization） 和 制表（Tabulation） 会被区分开来，
         把 记忆 称为 记忆化递归 或 备忘录；把 制表 称为 动态规划。
@@ -4788,6 +4793,8 @@ wordpress
         存储层次结构
     存储介质
         光学
+            光盘
+                cd dvd 蓝光
         磁性
             磁盘
                 硬盘
@@ -4945,7 +4952,7 @@ nas
             用于冷备的硬盘
             网盘上再放一份数据？
         可以自建的其它服务？
-            邮局 web（博客，笔记，wiki，git，密码管理器，rss阅读器）
+            邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，rss阅读器）
         放在哪里？体积？噪声？辐射？
         费用？
             硬件费用，电费，网费
@@ -5011,6 +5018,8 @@ nas
     在这个网站里搜索 https://store.rg-adguard.net/
     下载一个带有 .appxbundle 或者 .appx 后缀的文件即可 (版本区别)
     安装 uwp 应用时可能需要管理员权限
+计算机自学指南 https://github.com/PKUFlyingPig/cs-self-learning
+hello 算法 https://github.com/krahets/hello-algo
 中文文案排版指北 https://github.com/sparanoid/chinese-copywriting-guidelines
 中文技术文档的写作规范 https://github.com/ruanyf/document-style-guide
 让长文章更容易阅读的十项原则 https://www.uisdc.com/10-typeset-make-article-readable
@@ -5024,7 +5033,7 @@ nas
 开源软件指南
     https://github.com/github/opensource.guide
     https://opensource.guide/zh-hans/
-GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts
+GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts https://gitee.com/GrowingGit/GitHub-Chinese-Top-Charts
 中国程序员容易发音错误的单词 https://github.com/shimohq/chinese-programmer-wrong-pronunciation
 版本控制软件比较
     git
