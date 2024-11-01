@@ -3415,6 +3415,11 @@ authorization_rule
     - sales_order_status
 - status 和 state 的对应关系在这个表里 sales_order_status_state
 
+<!--
+select * from sales_order_status;
+select * from sales_order_status_state;
+-->
+
 ### 打补丁
 - 遇到问题，可以先搜索一下 github 的 iusses ，同样的问题可能已经出了补丁，不用自己修改。
 - 可以在这个站点里找到对应的补丁
@@ -3774,7 +3779,7 @@ eav 模型里还有一些表无法理解？
     eav_attribute_label
     eav_attribute_option
     eav_attribute_option_switch
-    eav_attribute_option_value
+    eav_attribute_option_value 一些情况下 eav 里具体的值好像是存在这个表里的
     eav_attribute_set
     eav_entity_attribute
 
@@ -4085,6 +4090,7 @@ FROM
     sales_order
 JOIN 
     sales_order_payment ON sales_order.entity_id = sales_order_payment.parent_id
+WHERE sales_order.increment_id = 3100182449;
 order by sales_order.entity_id desc
 limit 100
 
@@ -4105,7 +4111,7 @@ JOIN
     sales_order_item on sales_order.entity_id = sales_order_item.order_id
 WHERE sales_order.increment_id = 3100182449;
 WHERE sales_order.entity_id = 28546;
-
+3100182449
 
 如果 http 头里存在这个字段 X-Requested-With ，而且这个字段的值是 XMLHttpRequest 那么这就是一个 ajax 请求
 在控制器里可以这样判断
@@ -4123,5 +4129,42 @@ $isAjax = $this->getRequest()->isAjax() lib\internal\Magento\Framework\App\Reque
     }
 
 
+select
+    *
+FROM 
+    sales_order
+WHERE sales_order.increment_id = 3100182449 \G
+
+select
+	sales_order_payment.*
+FROM 
+    sales_order
+JOIN 
+    sales_order_payment ON sales_order.entity_id = sales_order_payment.parent_id
+WHERE sales_order.increment_id = 3100182449 \G
+
+SELECT x.* FROM core_config_data x
+WHERE value like '%sales%';
+
+
+
+
+
+select
+    entity_id,
+    is_virtual,
+    customer_id,
+    email_sent,
+    send_email,
+    increment_id,
+    customer_email,
+    club_member_id,
+    area_code,
+    created_at,
+    updated_at
+FROM 
+    sales_order
+WHERE sales_order.increment_id = 3100182449 \G
 
 -->
+

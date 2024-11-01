@@ -39,6 +39,7 @@ SEO 的方法要跟随搜索引擎的规则不断调整。如果没有精力研�
 - 本站链接外站的数量和页面权重 (PageRank)
     - 网页上的链接数量限制在合理范围内（最多几千个）
     - 网页里的链接要保持有效的
+    - 移除网页中的死链
 - 本站在搜索引擎结果里被点击的次数
 
 ## SEO 技术方面的优化
@@ -138,6 +139,11 @@ SEO 的方法要跟随搜索引擎的规则不断调整。如果没有精力研�
 - 使用一个站点分析工具
 - 除了 sitemap 和 robots.txt 之外，还可以再加上 atom 和 rss 和 JSONFeed
 - 重视链接的分享
+- js 和 css 等静态资源尽量合并和压缩
+- 静态资源和图片如果可以就加上 CDN
+- 加速页面的打开速度也是 SEO 优化的一部分
+- tls 证书要及时更新
+- 如果条件允许就不要用太冷门的域名
 - 不要搞 SEO 的作弊
 
 ## SEO 的辅助工具
@@ -263,6 +269,8 @@ https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API
 微格式
     https://developer.mozilla.org/en-US/docs/Web/HTML/microformats
     https://microformats.org/
+
+AMP 是什么？
 -->
 
 ## 参考
