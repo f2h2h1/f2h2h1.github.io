@@ -4098,6 +4098,8 @@ openbsd-inetd
     inetd（internet daemon）
     感觉 inetd 就像是守护进程版的 nc
     和 nc 一样只处理连接，然后把socket的输入和输出重定向到标准输入和标准输出
+php有哪些缺点？
+php要如何实现并发？
 bash 如何实现并发
     使用 &
     使用 &+wait
@@ -4970,14 +4972,14 @@ nas
             使用hls
     除了视频之外还可以继续有 音频 图片 文档 等等
     更多？
-        连接其它设备？物联网？智能家电？软路由？htpc？电视机顶盒？游戏主机？all in one？算存网分离？
+        连接其它设备？物联网？智能家电？软路由？htpc？电视机顶盒？游戏主机？HomeLab？all in one？算存网分离？
             忽略 猫 和 路由 ？
         始终至少需要一个外网的服务器
         更多的存储设备
             用于冷备的硬盘
             网盘上再放一份数据？
         可以自建的其它服务？
-            邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，rss阅读器）
+            邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，rss阅读器） 旧的游戏
         放在哪里？体积？噪声？辐射？
         费用？
             硬件费用，电费，网费
@@ -5561,5 +5563,9 @@ node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:
 把 title 换成文章标题
 压缩生成后的 html ？
 
+有疑问的事
+想了解的事
+想做的事
+需要做的事
 
 ````

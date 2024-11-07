@@ -153,6 +153,10 @@ nc www.baidu.com 80
     printf 'GET / HTTP/1.0\r\nHost:www.baidu.com\r\n\r\n' | nc www.baidu.com 80
 ```
 
+<!--
+为什么连续输入两个空格是有效的，理论上只是输入了 \n\n ，而http协议里需要的是 \r\n\r\n 吧？
+-->
+
 nc 如何模拟 http 服务器
 - 输出固定的内容
     ```
@@ -314,4 +318,134 @@ https://github.com/diotteo/TelnetClient.php
 nc [OPTIONS] HOST PORT  - connect
 nc [OPTIONS] -l -p PORT [HOST] [PORT]  - listen
 
+-->
+
+<!--
+在命令行里的 read 命令好像不能读入 换行符
+
+直接输入回车 read 的数据就会为空
+
+这一句是可行的
+printf 'GET / HTTP/1.0\r\nHost:www.baidu.com\r\n\r\n' | ./ncc.sh www.baidu.com 80
+
+
+```bash
+#!/bin/bash
+
+# 这一份是可行的，可以读取多行数据，但只是按行读取再按行输出，不能一次发送多行数据
+
+sys_exit() {
+    # 关闭连接
+    exec 3<&-; # 关闭文件描述符 3 的输入
+    exec 3>&-; # 关闭文件描述符 3 的输出
+
+    if [ ! -z "$1" ]; then
+        exit 1
+    fi
+    exit 0
+}
+
+# debuger() {
+
+# }
+
+debugerflg=0
+
+logger() {
+    loggertype=$1
+    msg=$2
+    if [[ $loggertype = 1 ]]; then
+        if [[ $debugerflg = 1 ]]; then
+            echo "* "$msg
+        fi
+    elif [ $loggertype = 2 ]; then
+        echo "< "$msg
+    elif [ $loggertype = 3 ]; then
+        echo $msg
+    fi
+}
+
+loggerTypeInfo=1
+loggerTypeInput=2
+loggerTypeError=3
+
+current_pid=$$
+logger $loggerTypeInfo "当前脚本的 PID 是: $current_pid"
+# kill -s SIGKILL $current_pid
+
+# 检查参数
+if [ "$#" -ne 2 ]; then
+    echo "用法: $0 <主机> <端口>"
+    exit 1
+fi
+
+HOST=$1
+PORT=$2
+
+# 连接到指定的主机和端口
+exec 3<>/dev/tcp/$HOST/$PORT
+
+# 检查连接是否成功
+if [ $? -ne 0 ]; then
+    logger $loggerTypeError "无法连接到 $HOST:$PORT"
+    exit 1
+fi
+
+logger $loggerTypeInfo "已连接到 $HOST:$PORT"
+
+# read -t 1 -u 3 line：尝试从文件描述符 3 读取数据，-t 1 表示设置超时时间为 1 秒。
+sleep 1;
+while true; do
+
+    stream_input=
+    stream_input_line=
+    while true; do
+        # read -t 1 -N 1024 -u 3 stream_input_line;
+        read -t 1 -u 3 stream_input_line;
+        return_code=$?
+        logger $loggerTypeInfo "读取时 fd 返回值 $return_code"
+        if [[ ! -z $stream_input_line ]]; then
+            logger $loggerTypeInput "$stream_input_line"
+            stream_input=$stream_input$stream_input_line
+        else
+            if [[ $return_code -ne 0 ]]; then
+                if [[ $return_code -le 128 ]]; then
+                    logger $loggerTypeError "read 连接关闭"
+                    sys_exit 1
+                    break;
+                fi
+                if [[ $return_code -gt 128 ]]; then
+                    logger $loggerTypeInfo "读超时"
+                    break;
+                fi
+            fi
+        fi
+    done
+
+    logger $loggerTypeInfo "$stream_input";
+
+    stream_output=
+    read -p "> " -r stream_output;
+    if [[ ! -z $stream_output ]]; then
+
+        if [[ $stream_output = "exit" ]]; then
+            echo 'bye';
+            break;
+        fi
+
+        logger $loggerTypeInfo "output size: "$(echo -n $stream_output | wc -c)
+        echo $stream_output >&3
+        return_code=$?
+        logger $loggerTypeInfo "写入时 fd 返回值 $return_code"
+        if [[ $return_code -ne 0 ]]; then
+            logger $loggerTypeError "write 连接关闭"
+            sys_exit 1
+        fi
+    fi
+
+done
+
+sys_exit
+
+```
 -->

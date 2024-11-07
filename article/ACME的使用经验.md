@@ -107,6 +107,9 @@ acme.sh --install-cert -d www.example.com \
 一般的命令
 ```
 ~/.acme.sh/acme.sh --cron --home "/root/.acme.sh" > /dev/null
+# windows 环境下要写成这样
+~/.acme.sh/acme.sh --cron --home "/c/Users/Administrator/.acme.sh" > /dev/nul
+# --home 是 acme.sh 的安装路径，要写成绝对路径
 ```
 
 写成 cron 表达式
@@ -123,10 +126,12 @@ acme.sh --install-cert -d www.example.com \
 acme.sh --list
 ```
 
-产看全部证书，包括已过的
+<!--
+产看全部证书，包括已过时的
 ```
 acme.sh --list-archive
 ```
+-->
 
 查看已安装证书的信息
 ```

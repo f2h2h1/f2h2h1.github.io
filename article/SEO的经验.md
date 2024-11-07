@@ -7,9 +7,9 @@ SEO 的方法要跟随搜索引擎的规则不断调整。如果没有精力研�
 
 ## SEO 的三个方面
 
-- 技术
 - 内容
 - 声望（外链）
+- 技术
 
 ### 内容
 - 内容的数量
@@ -108,8 +108,15 @@ SEO 的方法要跟随搜索引擎的规则不断调整。如果没有精力研�
     - 通过 ua 来判断浏览器，然后返回不同的版本
     - 或者使用单独的域名，例如 m.qq.com 这类的
 - RTL
+    - Right-to-Left 从右到左
+    - 指的是文本和元素的布局方向，主要用于支持从右到左书写的语言，如阿拉伯语和希伯来语
+    - 支持 RTL 布局是 i18n 和 l10n 工作的重要部分
 - i18n l10n G11N
+    - Internationalization 国际化
+    - Localization 本地化
+    - Globalization 全球化
 - a11y
+    - Accessibility 可访问性
     - 网页的配色方案要保持良好的对比度
     - 表单的输入项 input 最好有对应的 label
     - 尽量使用表单验证而不是用 js 验证表单的数据
@@ -197,14 +204,14 @@ https://www.google.com/advanced_search
 
 基本原则是页面被搜索引擎爬虫访问时，返回完整的页面内容。
 
-- SSG
+- SSG (Static Site Generation , 静态站点生成)
     - 提前生成静态页面，对于中小型网站或更新不频繁的网站这是一个很好的解决方案
     - 但如果页面里有动态的内容，例如 留言 评论 这类的，就不好处理了
-- 预渲染
+- 预渲染 (pre render)
     - 类似于 SSG ，但一部分内容还是通过接口获取
     - 大多数情况下预渲染并不能很好地应对 SEO ，因为大多数情况下，预渲染只是预渲染了前端的框架部分和一些很少修改的页面，页面的主要内容还是会通过接口请求
     - 其实可以把 SSG 看作预渲染的一种
-- SSR
+- SSR (Server Side Rendering , 服务端渲染)
     - 全站 SSR
     - 首屏 SSR ，其它页面依然保持 CSR
 
@@ -247,6 +254,8 @@ https://www.google.com/advanced_search
     - 抖音
     - 快手
     - bilibili
+    - 知乎
+    - 豆瓣
 - 国外
     - X
     - 脸书
@@ -271,6 +280,24 @@ https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API
     https://microformats.org/
 
 AMP 是什么？
+
+通过写博客，在论坛发帖，在论坛回复 等形式发布软文？使得自己站点的链接出现在其它站点里？
+
+EDM
+Email Direct Marketing
+电子邮件 直接 营销
+电子邮件营销
+
+Internet marketing
+网络营销
+
+购买 流量/排名/广告 ？
+
+电话/短信/sns私信/广告联盟
+
+主动寻找目标用户
+提高产品的知名度
+
 -->
 
 ## 参考
