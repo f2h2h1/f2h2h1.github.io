@@ -296,6 +296,7 @@ c 如何实现一个交互式的命令行？
 php 如何实现一个交互式的命令行？
 python 如何实现一个交互式的命令行？
 处理命令行参数
+读取并解释配置
 建立连接
 处理输入
 处理输出
@@ -327,7 +328,7 @@ nc [OPTIONS] -l -p PORT [HOST] [PORT]  - listen
 
 这一句是可行的
 printf 'GET / HTTP/1.0\r\nHost:www.baidu.com\r\n\r\n' | ./ncc.sh www.baidu.com 80
-
+既然这样是可行的，那么理论上应该也可以发送 post 请求和上传文件的，那么理论上也可以用 bash 写一个 curl 出来。。。
 
 ```bash
 #!/bin/bash

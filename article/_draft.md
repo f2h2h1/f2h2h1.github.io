@@ -5534,6 +5534,7 @@ node cli.js --build="updateMatedata" --config-host="https://f2h2h1.github.io" --
 
 node cli.js --build="createPage" --config-host="https://blog.complexcloud.site" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
 
+git checkout -- . ; git pull;
 node cli.js --build="updateMatedata|createPage" --config-host="https://blog.complexcloud.site" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
 
 node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:8022" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
