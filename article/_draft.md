@@ -500,6 +500,12 @@
                 at 和 atq
             权限管理
                 文件权限
+                    chown
+                        change owner
+                    chgrp
+                        change group
+                    chmod
+                        change mode
                 用户
                 用户组
             网络
@@ -2016,6 +2022,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         选项 option
         代码 code
         脚本 script
+            可以被解释执行的代码
         扩展 extension
         插件 plugin
         组件 component
@@ -2031,6 +2038,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         类 class
         实体 entity
         预装 pre-install
+        内置 builtin
         服务 service
         平台 platform
         产品 product
@@ -2104,13 +2112,16 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         控制=顺序+分支+跳转（goto）
         循环可以用分支+跳转实现
         逻辑=推理+归纳？
-        命令=可执行文件名/内置命令 + 参数
+        命令=内置命令/函数或别名/外部命令 + 参数
+        外部命令=可执行文件或可执行的脚本
         站点=网站
         网站=一堆网页的集合
         网页=一个经过浏览器渲染的html文件
         互联网/英特网 internet
         以太网 Ethernet
         万维网 World Wide Web
+        电子 electric adj. 电子的
+        数字 digital adj. 数字的 数码的
         IT 行业中各种名词的解释？
         IT 是 Information Technology 信息技术
         信息 information
