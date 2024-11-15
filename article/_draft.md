@@ -3989,7 +3989,10 @@ ELF格式
             符号主义和联结主义和人工智能中的分类是一样的
             人工智能中的行为主义似乎没有什么存在感
             贝叶斯 进化主义 类推主义 在人工智能的流派中好像没有对应的分类
-    神经网络
+    神经网络（neural network）
+    深度学习（Deep Learning）
+    大语言模型（Large Language Model, LLM）
+        提示工程（Prompt Engineering）
     相关的书籍和仓库
         Deep Learning 中文翻译 https://github.com/exacity/deeplearningbook-chinese
         深度学习500问 https://github.com/scutan90/DeepLearning-500-questions
@@ -4445,6 +4448,15 @@ linux 应用的一般启动套路
         分代收集
     php的垃圾回收
 打包和压缩
+    打包和压缩是两个不同的过程，通常是先打包后压缩
+        打包是把一个或多个文件（目录）合并成一个文件
+        压缩是减少一个文件的体积
+    一些软件只支持打包，一些软件只支持压缩，一些软件两个都支持
+    压缩算法有很多种，可以单独地使用一种或组合地使用多种
+    压缩又分为无损压缩和有损压缩
+        根据信息论压缩是有极限的
+        对于一般文件而言都是无损压缩
+        只有对 图片 音频 视频 这类文件才会使用有损压缩
     tar
         tape archive (磁带 存档)
         大多数linux发行版都会有 tar
@@ -4453,44 +4465,94 @@ linux 应用的一般启动套路
         所以现在的 tar 命令能同时执行打包和压缩的操作
         windows10 1803 及以后的版本都内置了 tar
         unix 上有一个名为 ar 的工具，但现在已经被 tar 取代
+            生成以 .a .ar 为后缀的文件
+            ar 应该会和 compress 搭配使用吧。。。
         例子
             tar -cvf test.tar test
                 把名为 test 的文件或目录打包，最后生成的文件命名为 test.tar
-            tar -zcvf test.tar.gz test
+            tar -cvzf test.tar.gz test
                 把名为 test 的文件或目录打包并使用 gzip 压缩，最后生成的文件命名为 test.tar.gz
-            tar -jcvf test.tar.bz2 test
+            tar -cvjf test.tar.bz2 test
                 把名为 test 的文件或目录打包并使用 bzip2 压缩，最后生成的文件命名为 test.tar.bz2
             c 新建打包文件
-            z 使用 gzip 压缩或解压缩
-            j 表示使用 bzip2 压缩或解压缩
+            x 提取所有文件
             v 显示打包和压缩的过程
             f 指定生成的文件路径
+            z 使用 gzip 压缩或解压缩
+            j 表示使用 bzip2 压缩或解压缩
+            还可以这样显式指定压缩的算法，但通常都要先安装好对应的程序
+                -j --bzip2
+                -J --xz
+                   --lzip
+                   --lzma
+                   --lzop
+                   --zstd
+                -z --gzip
+                -Z --compress
+                   --use-compress-program 指定特定的程序作为压缩程序
+                -a --auto-compress 根据文件后缀自动选择压缩程序
+                tar --zstd -cvf test.tar.gz test
+                tar --use-compress-program=pigz -cvf test.tar.gz test
+                tar -cf archive.tar.gz -I 'gzip -9 -n' subdir
+                也可以通过管道的方式调用其它压缩程序
+                tar cf - subdir | gzip -9 -n > archive.tar.gz
+        从 tar 的帮助信息来看，其实 打包 也有很多种格式
     压缩
         算法 压缩格式 容器格式
             哈夫曼编码（Huffman Coding）
+            LZW (Lempel-Ziv-Welch)
             Deflate
             LZMA
             LZMA2
+            brotli
             压缩 和 加密 似乎有紧密的联系
             压缩算法的专利保护，似乎只保护压缩，不保护解压
         工具
             lzip
+                lzip 是一种基于 LZMA 算法的压缩工具
+                成的文件通常以 .lz 或 .lzip 结尾
             xz
+                xz 是一种基于 LZMA 算法的压缩工具
+                成的文件通常以 .xz 或 .lzma 结尾
+                xz 的压缩速度虽然慢，但 xz 5.2 之后的版本支持多线程
+                xz 使用多线程
+                    使用两个线程
+                        tar cf - subdir | xz --threads=2 > archive.tar.xz
+                    自动设置多线程
+                        tar cf - subdir | xz --threads=0 > archive.tar.xz
+                    在 tar 里调用
+                        tar -cf archive.tar.gz -I 'xz --threads=0' subdir
             bzip2
+                成的文件通常以 .bz2 或 .bz 结尾
             Info-ZIP
                 zip 用于压缩
                 unzip 用于解压
+                大多数 linux 发行版包含 unzip 但不包含 zip
                 在 windows 下是 wiz
+                http://www.info-zip.org
+            compress
+                成的文件通常以 .Z 结尾
+                compress 是一个古老的压缩程序
+                使用 LZW 算法
+                compress 用于压缩
+                uncompress 用于解压
+                gzip 基本取代了 compress
+                以前还会预装在发行版里，现在要单独安装了
+                在 debian 的安装命令
+                    apt install -y ncompress
             gzip 和 gunzip
                 gzip 用于压缩
                 gunzip 用于解压
                 大多数 linux 发行版包含的是这两个
+                这两个是来自 GNU
+                gzip 只能压缩单个文件，所以通常会配合 tar 一起使用
             7z
                 7zfm.exe（7-zip File Manager）是7-Zip软件的GUI主程序，一般来说，只使用7zfm.exe就可以了
                 7z.exe 是纯命令行工具
                 7zg.exe 是7-Zip软件的GUI模块，也可以在命令行中使用，但会显示一个图形界面的进度窗口，7zfm实际上也是调用7zg
             windows 下的软件
                 windows 的 explorer 能直接支持 zip ，从windows me开始
+                现在的 win10 win11 好像也直接支持 tar 和 gzip 了
                 winzip 也是商业软件，也支持多种格式
                 winrar 支持 zip 和 rar 还有其它格式，是收费的商业软件，中国特供版有免费的但会有广告
                 Bandizip 支持多种格式，有免费版和收费版
@@ -4525,9 +4587,21 @@ linux 应用的一般启动套路
             同样地，解密就是先用 openssl 解密，然后再解压
                 openssl enc -d -des3 -salt -k 123456 -in test.tar.gz | tar -zxvf test
     压缩软件比较 https://en.wikipedia.org/wiki/Comparison_of_file_archivers
+        性能比较
+            压缩率 压缩速度 解压速度
+        功能比较
+            密码保护 加密文件名 支持unicode 分卷压缩 自解压 文件修复 是否支持多线程
+        协议，价格，活跃状态比较
+        xz 和 7z 的压缩率应该是最高的
+        lzip 的压缩率低于 xz ，但 lzip 提供了一定的文件修复能力
+        .iso .msi .msix .appx .deb .rpm .jar .war .crx .pkg .phar .docx 这些都是打包+压缩的文件
     HTTP 协议中的数据压缩 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Compression
         gzip
         br
+            https://github.com/google/brotli
+            echo "123" | ./python.exe  -c 'import sys;import brotli;print(brotli.compress(sys.stdin.read().encode()),end="")'
+            echo "123" | ./python.exe  -c 'import sys;import brotli;sys.stdout.buffer.write(brotli.compress(sys.stdin.read().encode()))'
+            https://docs.python.org/zh-cn/3/library/sys.html#sys.stdout
     zlib https://github.com/madler/zlib
     归档格式
         仅归档
@@ -4990,7 +5064,7 @@ nas
             用于冷备的硬盘
             网盘上再放一份数据？
         可以自建的其它服务？
-            邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，rss阅读器） 旧的游戏
+            邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，2fa/mfa/totp，rss阅读器） 旧的游戏
         放在哪里？体积？噪声？辐射？
         费用？
             硬件费用，电费，网费
@@ -5511,6 +5585,8 @@ hello 算法 https://github.com/krahets/hello-algo
     https://opensource.guide/zh-hans/
 GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts https://gitee.com/GrowingGit/GitHub-Chinese-Top-Charts
 中国程序员容易发音错误的单词 https://github.com/shimohq/chinese-programmer-wrong-pronunciation
+收录基于Cloudflare的开源工具 https://github.com/zhuima/awesome-cloudflare
+计算机教育中缺失的一课 https://github.com/missing-semester-cn/missing-semester-cn.github.io
 版本控制软件比较
     git
         github
@@ -5549,6 +5625,8 @@ git checkout -- . ; git pull;
 node cli.js --build="updateMatedata|createPage" --config-host="https://blog.complexcloud.site" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
 
 node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:8022" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
+
+tar -zcvf UrsaMinor-`date +%g%m%d%H%M`.tar.gz UrsaMinor
 
 不要同时提交两篇文章
 
