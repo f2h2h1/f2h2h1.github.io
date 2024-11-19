@@ -485,6 +485,13 @@
                     find / -name mysql -type d
                     查找以.txt结尾的文件
                     find / -regex '.*\.txt'
+                    删除全部扩展名为.tmp 的文件
+                    find . -name '*.tmp' -exec rm {} \;
+                    查找全部的 PNG 文件并将其转换为 JPG
+                    find . -name '*.png' -exec convert {} {}.jpg \;
+                        \; 这个符号是一个转义字符，表示命令的结束。
+                        因为在 shell 中，分号 ; 通常用于分隔命令，所以需要用反斜杠 \ 来转义，
+                        以确保它被正确解析为 -exec 命令的一部分，而不是作为一个新的命令开始。
                 查找一个命令的位置
                     通过 ps 命令查找
                     type command
@@ -2039,6 +2046,9 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         实体 entity
         预装 pre-install
         内置 builtin
+            内置 和 预装 的一般区别
+                内置不可以卸载
+                预装可以卸载
         服务 service
         平台 platform
         产品 product
@@ -4853,6 +4863,9 @@ wordpress
         安装的路径可以选择 %USERPROFILE%\AppData\Local
     修改环境变量
         只修改当前用户的环境变量，不修改系统的环境变量
+        在 git for windows 中，可以修改这个文件来添加环境变量 /etc/profile.d/env.sh
+        例如这样
+            export PATH=/d/python-3.12.3-embed-amd64:/d/node-v22.11.0-win-x64:$PATH
     无法修改 hosts 文件
         自建一个 dns 服务，并设为网卡的首选dns
         https://github.com/NLnetLabs/unbound
@@ -5540,8 +5553,45 @@ Hello what what is the first thing, and I am am scq000.
 
 
 财政、经济、金融
+政治
+历史
+    过去发生的事
+    对过去发生的事的总结
+    对过去发生的事的评价
+    过去的政治
 企业
     总务 业务 管理
+电子支付，区块链，数字货币
+    名词
+        数字货币 digital currency
+        虚拟货币 virtual currency
+        加密货币 crypto currency
+        电子货币 electronic currency
+        电子支付 electronic payment
+        电子现金 electronic cash
+        区块链 block chain
+    电子支付
+    区块链的相关介绍
+        共识算法
+        有哪些基于区块链的应用
+    数字货币
+    比特币的相关介绍(Bitcoin)
+    除了比特币之外的主要的数字货币
+        以太坊 (Ethereum, ETH): 以太坊是一个支持智能合约的区块链平台，允许开发者构建去中心化应用（DApps）。
+        泰达币 (Tether, USDT): 作为一种稳定币，USDT 的价值与美元挂钩，通常用于在加密货币市场中作为交易媒介。
+        瑞波币 (XRP): 瑞波币旨在为银行和金融机构提供快速、低成本的跨境支付解决方案。
+        币安币 (BNB): 由币安交易所发行，最初用于支付交易手续费，现在也用于其生态系统中的多种应用。
+        卡尔达诺 (Cardano, ADA): 一个以科学研究为基础的区块链平台，旨在提供更安全和可扩展的智能合约功能。
+    比特币的衍生币
+    以太坊(Ethereum)
+    什么是智能合约(Smart Contract)
+    交易所
+        币安
+    什么是NFT(非同质化代币 Non-Fungible Token)
+    什么是元宇宙(Metaverse)
+        元宇宙一词起源于1992年的科幻小说《雪崩》，是“元(meta)”和“宇宙(universe)”的合成词。
+    什么是密码朋克(Crypto punk)
+
 收集各种镜像站点
     大学的
     https://mirrors.tuna.tsinghua.edu.cn/
@@ -5627,6 +5677,7 @@ node cli.js --build="updateMatedata|createPage" --config-host="https://blog.comp
 node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:8022" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
 
 tar -zcvf UrsaMinor-`date +%g%m%d%H%M`.tar.gz UrsaMinor
+tar --xz -cf UrsaMinor-`date +%g%m%d%H%M`.tar.xz UrsaMinor
 
 不要同时提交两篇文章
 
