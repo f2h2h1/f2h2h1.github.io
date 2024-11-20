@@ -353,6 +353,7 @@
         通用图灵机（Universal Turing Machine，又称UTM或Machine U）
         图灵完全/图灵完备（Turing complete）
         图灵等价/图灵等效（Turing equivalent）
+        自动机理论 和 编译原理 和 语言学 似乎都有联系，而且这个联系似乎还挺紧密的
         计算模型 -> 计算机系统架构 -> 指令集 -> 微架构
         寄存器机 -> 冯诺依曼架构 -> x86指令集 -> Zen4
         冯诺依曼结构
@@ -576,8 +577,28 @@
                 编程范式
                 流程控制
             语法设计
-            abnf
+            bnf ebnf abnf
+            编译分为 4个阶段(Stage)
+                1 分词器(tokenizer)，将代码拆解成一个一个的token
+                2 词法解析(parse)，将原始的代码经过词法分析转成抽象树
+                3 转换器(Transformation)，将抽象树转换成编译器需要的结构
+                4 代码生成(Code Generation)，将转换过的抽象树转换成目标代码
+                伪代码
+                    1. input  => tokenizer   => tokens
+                    2. tokens => parser      => ast
+                    3. ast    => transformer => newAst
+                    4. newAst => generator   => output
+                    function compiler(input) {
+                        let tokens = tokenizer(input);
+                        let ast    = parser(tokens);
+                        let newAst = transformer(ast);
+                        let output = codeGenerator(newAst);
+                        return output;
+                    }
             实践
+                简单的编译器例子
+                    https://github.com/jamiebuilds/the-super-tiny-compiler
+                    https://github.com/jht6/the-super-tiny-compiler
                 四则运算
                     从左至右
                     有优先级的
@@ -4122,6 +4143,14 @@ openbsd-inetd
     inetd（internet daemon）
     感觉 inetd 就像是守护进程版的 nc
     和 nc 一样只处理连接，然后把socket的输入和输出重定向到标准输入和标准输出
+c有哪些缺点？
+    没有面向对象
+        这个c++或oc可以勉强解决
+    没有好用的字符串处理方式
+        这个c++也解决不了
+    没有好用的包管理工具
+    多数情况下需要自行处理跨平台的特性
+    用c来写网页，到最后其实就是重新发明一次php，php就是c的模板语言
 php有哪些缺点？
 php要如何实现并发？
 bash 如何实现并发
@@ -4505,7 +4534,7 @@ linux 应用的一般启动套路
                 tar --use-compress-program=pigz -cvf test.tar.gz test
                 tar -cf archive.tar.gz -I 'gzip -9 -n' subdir
                 也可以通过管道的方式调用其它压缩程序
-                tar cf - subdir | gzip -9 -n > archive.tar.gz
+                tar -cf - subdir | gzip -9 -n > archive.tar.gz
         从 tar 的帮助信息来看，其实 打包 也有很多种格式
     压缩
         算法 压缩格式 容器格式
@@ -5508,6 +5537,7 @@ multiple of lines
 忽略大小写
 i标志
 ignore case, case-insensitive
+这个是只包含英文字母还是包含全部的拉丁字母？
 
 全局模式
 g标志
@@ -5551,7 +5581,107 @@ Hello what what is the first thing, and I am am scq000.
             后向查找
     逻辑处理
 
+    常用的正则表达式
+        电子邮件地址
+        网址
+        ipv4地址
+        ipv6地址
+        身份证
+        手机号
+        邮编
 
+时间
+    UTC（Universal Time Coordinated） 协调世界时
+        根据原子钟计算出来的时间
+    GMT（Greenwich Mean Time） 格林尼治标准时间
+        这是以英国格林尼治天文台观测结果得出的时间，
+        这是英国格林尼治当地时间，这个地方的当地时间过去被当成世界标准的时间。
+    UTC 和 GMT 的联系
+        协调世界时不与任何地区位置相关，也不代表此刻某地的时间，所以在说明某地时间时要加上时区
+        也就是说GMT并不等于UTC，而是等于UTC+0，只是格林尼治刚好在0时区上。
+        GMT = UTC+0
+    常见的地区时间
+        GMT（格林威治时间）
+        CST（北京时间）
+        PST（太平洋时间）
+        CST（美国的中部标准时间）
+        地区时间的缩写可能有重复，写成 UTC+8 这种可以避免歧义
+    时间戳是 UTC 的时间戳
+        Unix 时间戳是从1970年1月1日（UTC/GMT的午夜）开始所经过的秒数，不考虑闰秒。
+        一个小时表示为UNIX时间戳格式为：3600秒；一天表示为UNIX时间戳为86400秒，闰秒不计算。
+        在大多数的 Unix 系统中 Unix 时间戳存储为 32 位，这样会引发 2038 年问题或 Y2038。
+    excel 的时间计算
+    现代的报时方式
+        短波授时
+            频率范围：通常在3 MHz到30 MHz之间。
+            传播方式：通过天波传播，适合远距离传输，但受天气和地形影响较大。
+        长波授时
+            频率范围：通常在30 kHz到300 kHz之间。
+            传播方式：主要通过地波传播，覆盖范围广，信号稳定。
+        短波和长波授时指的是使用的频率范围，既可以用低频电码也可以传播授时的声音
+        低频电码授时
+            全世界共有6个民用基站
+            五地六局
+            美国 英国 德国 日本 中国
+            科罗拉多 伦敦 法兰克福 九州 福岛 商丘
+            手表的六局电波指的就是 低频电码授时
+            还可以通过耳机来伪造电波信号来完成授时
+                https://blog.csdn.net/ufo2006/article/details/60955887
+                https://github.com/bg6cq/web-bpc
+                https://github.com/shogo82148/web-jjy
+        卫星授时（gps授时）
+            定位系统都有授时功能
+                定位就是通过时间来实现的
+        网络授时
+            sntp 简单网络协议（Simple Network Time Protocol）
+                ntp 的简化版，一般用在嵌入式设备
+            ntp 网络时间协议（Network Time Protocol）
+                在理想的局域网环境中可以实现超过1毫秒的精度。不对称路由和拥塞控制可能导致100毫秒（或更高）的误差。
+                1秒=1000毫秒
+                udp 123端口
+            ptp 精确时间协议（Precision Time Protocol）
+                亚微秒级
+                1毫秒=1000微秒
+                三个版本
+                v1   IEEE 1588-2002
+                v2   IEEE 1588-2008 不兼容v1
+                v2.1 IEEE 1588-2019 兼容v2 不兼容v1
+                v2 的精度能达到30纳秒
+                应用在 金融 电信 数据中心 汽车
+        电话授时
+            国家授时中心的标准时间语音报时服务电话：029-83895117
+            12117 授时电话平台
+        电视授时
+            新闻联播里的报时
+        收音机的整点报时
+    原子钟
+    时间服务器
+        这类设备一般被称为
+            GPS time server
+            ntp time server
+            ntp server
+    古早的报时方式
+        晨钟暮鼓
+        打更报时
+        午炮报时
+        落球报时
+        点灯
+        入夜仪式/马刀开香槟
+    和时间相关的标准有哪些
+国际化和本地化
+    先国际化再本地化
+        本地单一市场 -> 国际化 -> 其它地区的本地化
+    需要关注的要点
+        文字 语言 单位 法律
+    最终目标都是为了满足不同市场的需求，提升用户体验和市场竞争力。
+    https://www.w3.org/International/questions/qa-i18n
+    https://blog.mozilla.org/l10n/2011/12/14/i18n-vs-l10n-whats-the-diff/
+    https://en.wikipedia.org/wiki/Internationalization_and_localization
+无障碍化
+那些需要写代码但又不是软件开发的领域
+    运维 网络 信息安全 嵌入式 游戏 gis 生物信息 高频交易 多媒体处理 数据分析 人工智能
+信息技术的本质是什么？
+    现实 -> 数字？
 财政、经济、金融
 政治
 历史
