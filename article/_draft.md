@@ -130,6 +130,7 @@
                 ip v4 v6
                     五元组: 源地址 源端口 目标地址 目标端口 传输层协议
                 ARP
+                    ARP inARP GARP RARP
                 IPsec
             数据链路层
                 以太网 (Ethernet)
@@ -4024,6 +4025,7 @@ ELF格式
     深度学习（Deep Learning）
     大语言模型（Large Language Model, LLM）
         提示工程（Prompt Engineering）
+        AI Agent/bot/Generative AI
     相关的书籍和仓库
         Deep Learning 中文翻译 https://github.com/exacity/deeplearningbook-chinese
         深度学习500问 https://github.com/scutan90/DeepLearning-500-questions
@@ -4690,6 +4692,9 @@ linux 应用的一般启动套路
         即时渲染（IR, Immediate Rendering）
     功能是否满足需求 活跃程度 是否可商用 是否免费 是否开源 文档是否完善
 wordpress
+    word press 文字出版社
+    word n. 文字
+    press n. 出版社
     前置依赖
         php 和 mysql
     安装和配置
@@ -5678,8 +5683,119 @@ Hello what what is the first thing, and I am am scq000.
     https://blog.mozilla.org/l10n/2011/12/14/i18n-vs-l10n-whats-the-diff/
     https://en.wikipedia.org/wiki/Internationalization_and_localization
 无障碍化
+    Accessibility ，简称 A11y
+    Web accessibility 网页可访问性
+        有一个更好的翻译
+        网页亲和力
+    WCAG
+        Web Content Accessibility Guidelines
+        网页 内容 可访问性 指南
+    障碍
+        视觉
+        听觉
+        行动
+        认知
+    WCAG 2.1 包含有四个用于无障碍设计的关键原则，有时由首字母缩写 POUR 表示。这四个关键原则分别是：
+        可感知：用户能否感知到相关 Web 内容？
+        可操作：用户能否导航、输入数据或与 Web 内容进行交互？
+        可理解：用户能否处理并理解呈现给他们的 Web 内容？
+        强健：Web 内容是否可以按预期方式在各种浏览环境（包括旧版和新兴的浏览环境）中可用？
+        可感知性、可操作性、可理解性和鲁棒性
+        易于感知的（Perceivable）
+        便于操作的（Operable）
+        稳定理解的（Understandable）
+        稳定耐用的（Robust）
+    可访问性除了给残障人士使用外，还可以给文本浏览器使用
 那些需要写代码但又不是软件开发的领域
     运维 网络 信息安全 嵌入式 游戏 gis 生物信息 高频交易 多媒体处理 数据分析 人工智能
+数据分析/机器学习/数据挖掘/数据科学/大数据
+    名词
+        artificial intelligence AI
+        statistic 统计
+        statistical analysis 统计分析
+        Data Analysis 数据分析
+        Data Mining 数据挖掘
+        Machine Learning 机器学习
+        data scientist 数据科学
+    数据分析 使用 统计学 的方法 从已有的数据中 验证预设的假设或回答特定的业务问题
+    机器学习 把已有的数据作为训练集，建立模型，用模型处理新的数据
+    数据挖掘 使用 统计学 和 机器学习 的方法 从已有的数据中 发现 关联 或 趋势
+    大数据
+        大数据通常是指对大量的数据进行数据分析或数据挖掘
+        只要数据量足够大就可以自称大数据
+        大数据往往需要用到这些工具
+            Hadoop系列
+                hive hadoop MapReduce Lucene NDFS/HDFS Hbase Nutch
+            google
+                BigTable GFS
+            流式处理框架
+                ApacheSpark ApacheFlink ApacheSamza ApacheStorm
+    数据平台
+        数据管理
+            数据采集
+            数据存储
+        数据分析（Data Analysis）
+            数据统计/统计分析（狭义的数据分析）
+            数据挖掘（机器学习）
+        数据应用
+            推荐
+            广告
+            数据可视化
+    统计是总结过去，概率是预测未来，通过统计过去来预测未来？
+    数据分析 可以由业务人员独立完成
+    机器学习 和 数据挖掘 通常由it主导
+如何判断自己是否学会了某一项技能？
+    特别是数学相关的？
+        感觉看原理时一看就懂，实践时一做就错
+从零开始学习数学建模
+为什么网络上的文章作用不是很大？
+    没有描述运行环境
+    没有描述软件版本
+    描述不够详细
+        问题
+        解决方式
+    一些信息或知识没有引用出处
+    存在歧义的名词
+        又有一个新问题，为什么总是出现有歧义的名词？
+        歧义的名词
+            从一开始就存在歧义
+            翻译的问题
+            营销名词
+                特征
+                    是新的，至少含义是新的
+                    无法从字面理解具体含义
+                    会被强调，是用来取代旧事物的新事物，是未来发现的方向
+                为什么会出现营销术语
+                    现有的市场已经饱和
+                不能麻木相信营销术语
+                不能完全否定营销术语
+                因为是新名词，所以可以自己把握解释权
+                对消费者 -> 买买买
+                对投资人 -> 加大投资
+                每隔一段时间就会有新的名词出现
+        同一个名词有多种解释，同一个事物有多个名词
+            这些都可能会导致知识的混乱
+            这似乎是很普遍的现象
+            一些是由翻译导致的，
+            一些是由缩写导致的，
+            一些是由错误的理解被广泛传播导致的，
+            一些是营销名词故意混肴普通人的理解
+        事物 和 名词
+            可能是平行关系 可能是包含关系 也可能是没有关系
+            同一事物不同部分的描述
+            不同语境下，同一名词会有不同解释
+            同一事物，在不同的发展阶段会有不同的名称
+            可能是过去的名称依然在沿用，
+            也可能是现在的名称太流行，也用于描述过去的版本
+        在 计算机科学 里这个现象特别严重，不论中文还是英文
+            其它领域也有类似的现象
+            心理学 上的新名词，例如 x效应/x心理/x人格
+            选取 一些属性 或 一些行为 ，然后就可以把有这些属性或行为的人称为 x效应/x心理/x人格 ，最后再扩大化解释一轮，加上其它属性和行为
+            例子
+                如果一个人有 a属性 b属性 c行为
+                那么这种人就是 x效应/x心理/x人格
+                这种 x效应/x心理/x人格 的人还会有 d属性 e属性 f行为
+
 信息技术的本质是什么？
     现实 -> 数字？
 财政、经济、金融

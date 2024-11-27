@@ -2275,6 +2275,10 @@ https://developer.adobe.com/commerce/frontend-core/javascript/init/
 
 通常会和 jqui 的 widget 或 magento 的 ui 配合来用
 
+
+如果是通过 ajax 加载的 x-magento-init ，需要用jq选中对应的节点，然后触发 contentUpdated 事件
+类似于这样 $(this).trigger('contentUpdated');
+
 用在 define 类型的 js 文件里
 模块名定义在 主题或模块的这个文件里 requirejs-config.js
 
@@ -3248,6 +3252,56 @@ echo $tempDir;
     echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
 }
 EOF
+```
+
+```php
+try {
+// 引入 magento2 的引导文件
+require __DIR__ . '/app/bootstrap.php';
+// 创建一个应用对象
+$application = new \Magento\Framework\Console\Cli('Magento CLI');
+// 获取一个对象管理器
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+// 获取一个文件系统对象
+$fileSystem = $objectManager->get(\Magento\Framework\Filesystem::class);
+// 获取临时目录的路径
+$tempDir = $fileSystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::TMP)->getAbsolutePath();
+// 输出路径
+echo $tempDir;
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+```
+
+```php
+try {
+// 引入 magento2 的引导文件
+require __DIR__ . '/app/bootstrap.php';
+// 创建一个应用对象
+$application = new \Magento\Framework\Console\Cli('Magento CLI');
+// 获取一个对象管理器
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+// 这两句主要用在 git for windows 的环境下，主要用在 php -a
+putenv('COLUMNS=80');
+putenv('LINES=50');
+// 允许执行多个命令，不然会只执行一个命令然后直接 exit
+$application->setAutoExit(false);
+
+$command = 'magento indexer:status catalogrule_product';
+$application->run(new \Symfony\Component\Console\Input\ArgvInput(explode(' ', $command)));
+
+$command = 'magento indexer:status catalog_product_price';
+$application->run(new \Symfony\Component\Console\Input\ArgvInput(explode(' ', $command)));
+
+} catch (\Throwable $e) {
+    echo join(PHP_EOL, [
+        $e->getFile() . ':' . $e->getLine(),
+        $e->getMessage(),
+        $e->getTraceAsString(),
+    ]);
+}
 ```
 
 ### 前端的调试
