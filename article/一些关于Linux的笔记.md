@@ -396,6 +396,10 @@ $loader->add('Acme\\Test\\', __DIR__);
 
 <!--
 
+如何查看发行版
+如何查看linux内核版本
+如何查看系统状态
+    要关注哪些指标
 系统安装和系统启动过程
 文件系统
     文件和目录
@@ -410,6 +414,7 @@ $loader->add('Acme\\Test\\', __DIR__);
 软件安装和管理
     编译安装
     包管理器
+        apt yum dnf Pacman Zypper Portage
     docker
 网络相关
     网卡

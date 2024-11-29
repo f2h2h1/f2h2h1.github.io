@@ -3983,6 +3983,92 @@ ELF格式
     通常情况下使用 记忆 需要更多的内存，
         在力扣刷题时，一些题目有内存限制，使用 记忆 可能会无法通过，
         但存在一些问题 制表 是无法解决的，依然需要使用 记忆 的方法
+数据分析/机器学习/数据挖掘/数据科学/大数据
+    名词
+        artificial intelligence AI
+        big data 大数据
+        statistic 统计
+        statistical analysis 统计分析
+        Data Analysis 数据分析
+        Data Mining 数据挖掘
+        Machine Learning 机器学习
+        data scientist 数据科学
+        data source 数据源
+        Data mesh 数据网络
+        OLTP
+            online transaction processing
+            在线 事务 处理
+        OLAP
+            online analytical processing
+            在线 分析 处理
+        HTAP
+            Hybrid Transaction and Analytical Process
+            混合 事务 和 分析 处理
+        DB
+            Data Base
+            数据 库
+        DL
+            Data Lake
+            数据 湖
+        DW / DWH
+            Data Warehouse
+            数据 仓库
+        DM
+            Data Mart
+            数据 集市
+        KB
+            Knowledge Base
+            知识 库
+        ETL
+            Extract-Transform-Load
+            抽取-转换-加载
+        ELT
+            Extract-load-transform
+            抽取-加载-转换
+        DSS
+            Decision Support System
+            决策 支持 系统
+        BI
+            Business Intelligence
+            商业 智能
+        data viz/vis
+            Data visualization
+            数据 可视化
+    数据分析 使用 统计学 的方法 从已有的数据中 验证预设的假设或回答特定的业务问题
+    机器学习 把已有的数据作为训练集，建立模型，用模型处理新的数据
+    数据挖掘 使用 统计学 和 机器学习 的方法 从已有的数据中 发现 关联 或 趋势
+    大数据
+        大数据通常是指对大量的数据进行数据分析或数据挖掘
+        只要数据量足够大就可以自称大数据
+        大数据往往需要用到这些工具
+            Hadoop系列
+                hive hadoop MapReduce Lucene NDFS/HDFS Hbase Nutch
+            google
+                BigTable GFS
+            流式处理框架
+                ApacheSpark ApacheFlink ApacheSamza ApacheStorm
+    数据平台
+        数据管理
+            数据采集
+            数据存储
+        数据分析（Data Analysis）
+            数据统计/统计分析（狭义的数据分析）
+            数据挖掘（机器学习）
+        数据应用
+            推荐
+            广告
+            数据可视化
+    统计是总结过去，概率是预测未来，通过统计过去来预测未来？
+    数据分析 可以由业务人员独立完成
+    机器学习 和 数据挖掘 通常由it主导
+    文档型数据库和关系型数据库本质上有些什么区别？文档型数据库出现的背景？
+    列数据库和关系型数据库本质上有些什么区别？
+    Symbolic AI
+    Explainable AI
+    Neuro-symbolic AI
+    weak AI
+    strong AI
+    artificial general intelligence，AGI
 人工智能
     概述
         是什么
@@ -4021,11 +4107,17 @@ ELF格式
             符号主义和联结主义和人工智能中的分类是一样的
             人工智能中的行为主义似乎没有什么存在感
             贝叶斯 进化主义 类推主义 在人工智能的流派中好像没有对应的分类
+        GOFAI
+            1985年，约翰·豪格兰在他的书《 人工智能：非常的想法 》中探讨了人工智能研究的哲学含义，
+            将符号人工智能命名为GOFAI（Good Old-Fashioned Artificial Intelligence，指的是“有效的老式人工智能）。
+            在机器人学领域 ，类似的术语是GOFR （“有效的老式机器人学”）。
+            https://en.wikipedia.org/wiki/GOFAI
     神经网络（neural network）
     深度学习（Deep Learning）
     大语言模型（Large Language Model, LLM）
         提示工程（Prompt Engineering）
         AI Agent/bot/Generative AI
+        那些生成图片，生成视频的模型和LLM有什么关系？
     相关的书籍和仓库
         Deep Learning 中文翻译 https://github.com/exacity/deeplearningbook-chinese
         深度学习500问 https://github.com/scutan90/DeepLearning-500-questions
@@ -5674,10 +5766,13 @@ Hello what what is the first thing, and I am am scq000.
         入夜仪式/马刀开香槟
     和时间相关的标准有哪些
 国际化和本地化
+    i18n Internationalization 国际化
+    l10n Localization 本地化
+    G11N Globalization 全球化
     先国际化再本地化
         本地单一市场 -> 国际化 -> 其它地区的本地化
     需要关注的要点
-        文字 语言 单位 法律
+        文字 语言 时间/日期格式 单位（货币，质量，体积） 法律
     最终目标都是为了满足不同市场的需求，提升用户体验和市场竞争力。
     https://www.w3.org/International/questions/qa-i18n
     https://blog.mozilla.org/l10n/2011/12/14/i18n-vs-l10n-whats-the-diff/
@@ -5707,43 +5802,7 @@ Hello what what is the first thing, and I am am scq000.
         稳定耐用的（Robust）
     可访问性除了给残障人士使用外，还可以给文本浏览器使用
 那些需要写代码但又不是软件开发的领域
-    运维 网络 信息安全 嵌入式 游戏 gis 生物信息 高频交易 多媒体处理 数据分析 人工智能
-数据分析/机器学习/数据挖掘/数据科学/大数据
-    名词
-        artificial intelligence AI
-        statistic 统计
-        statistical analysis 统计分析
-        Data Analysis 数据分析
-        Data Mining 数据挖掘
-        Machine Learning 机器学习
-        data scientist 数据科学
-    数据分析 使用 统计学 的方法 从已有的数据中 验证预设的假设或回答特定的业务问题
-    机器学习 把已有的数据作为训练集，建立模型，用模型处理新的数据
-    数据挖掘 使用 统计学 和 机器学习 的方法 从已有的数据中 发现 关联 或 趋势
-    大数据
-        大数据通常是指对大量的数据进行数据分析或数据挖掘
-        只要数据量足够大就可以自称大数据
-        大数据往往需要用到这些工具
-            Hadoop系列
-                hive hadoop MapReduce Lucene NDFS/HDFS Hbase Nutch
-            google
-                BigTable GFS
-            流式处理框架
-                ApacheSpark ApacheFlink ApacheSamza ApacheStorm
-    数据平台
-        数据管理
-            数据采集
-            数据存储
-        数据分析（Data Analysis）
-            数据统计/统计分析（狭义的数据分析）
-            数据挖掘（机器学习）
-        数据应用
-            推荐
-            广告
-            数据可视化
-    统计是总结过去，概率是预测未来，通过统计过去来预测未来？
-    数据分析 可以由业务人员独立完成
-    机器学习 和 数据挖掘 通常由it主导
+    运维 网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 多媒体处理 数据分析 人工智能 3D打印
 如何判断自己是否学会了某一项技能？
     特别是数学相关的？
         感觉看原理时一看就懂，实践时一做就错
