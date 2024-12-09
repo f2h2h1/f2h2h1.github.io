@@ -2,7 +2,7 @@
 ================================
 
 - 这是在 magento2.4 上开发的
-- magento2 的组件有三种
+- magento2 的组件（components）有三种
     - modules 模块
     - themes 主题
     - language packages 语言包
@@ -1013,6 +1013,8 @@ curl -v -L -k 'https://magento2.localhost.com/graphql?'$graphqlquery \
     --resolve magento2.localhost.com:443:127.0.0.1 \
     --no-progress-meter
 
+拦截这个方法就能拿到 graphql 的输入和输出
+Magento\Framework\GraphQl\Query\ResolverInterface resolve
 
 -->
 
@@ -1493,8 +1495,13 @@ try {
 require __DIR__ . '/app/bootstrap.php';
 $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
 $objectManager = $bootstrap->getObjectManager();
-$state = $objectManager->get(\Magento\Framework\App\State::class);
-$state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
+$areaCode = \Magento\Framework\App\Area::AREA_CRONTAB;
+$objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+$objectManager->configure(
+    $objectManager
+        ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+        ->load($areaCode)
+);
 /** @var \Magento\Cron\Model\Config\Data */
 $configData = $objectManager->get(\Magento\Cron\Model\Config\Data::class);
 echo json_encode($configData->getJobs(), JSON_PRETTY_PRINT);
@@ -1537,8 +1544,13 @@ try {
 require __DIR__ . '/app/bootstrap.php';
 $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
 $objectManager = $bootstrap->getObjectManager();
-$state = $objectManager->get(\Magento\Framework\App\State::class);
-$state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
+$areaCode = \Magento\Framework\App\Area::AREA_CRONTAB;
+$objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+$objectManager->configure(
+    $objectManager
+        ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+        ->load($areaCode)
+);
 $instance = \Magento\Sales\Cron\CleanExpiredQuotes::class;
 $method = 'execute';
 $cronJob = $objectManager->get($instance);
@@ -1898,8 +1910,13 @@ try {
     require __DIR__ . '/app/bootstrap.php';
     $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
     $objectManager = $bootstrap->getObjectManager();
-    $state = $objectManager->get(\Magento\Framework\App\State::class);
-    $state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
+    $areaCode = \Magento\Framework\App\Area::AREA_CRONTAB;
+    $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+    $objectManager->configure(
+        $objectManager
+            ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+            ->load($areaCode)
+    );
     /** @var \Magento\Framework\App\Config\ScopeConfigInterface */
     $scopeConfig = $objectManager->get(Magento\Framework\App\Config\ScopeConfigInterface::class);
     var_dump($scopeConfig->getValue('general/file/bunch_size'));
@@ -2757,8 +2774,13 @@ EOF
         require __DIR__ . '/app/bootstrap.php';
         $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
         $objectManager = $bootstrap->getObjectManager();
-        $state = $objectManager->get(\Magento\Framework\App\State::class);
-        $state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
+        $areaCode = \Magento\Framework\App\Area::AREA_CRONTAB;
+        $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+        $objectManager->configure(
+            $objectManager
+                ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+                ->load($areaCode)
+        );
 
         $appConfig = $objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
         $transportBuilder = $objectManager->get(\Magento\Framework\Mail\Template\TransportBuilder::class);
@@ -2834,8 +2856,14 @@ try {
     require __DIR__ . '/app/bootstrap.php';
     $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
     $objectManager = $bootstrap->getObjectManager();
-    $state = $objectManager->get(\Magento\Framework\App\State::class);
-    $state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
+
+    $areaCode = \Magento\Framework\App\Area::AREA_CRONTAB;
+    $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+    $objectManager->configure(
+        $objectManager
+            ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+            ->load($areaCode)
+    );
 
     $message = $objectManager->get(\Magento\Framework\Mail\Message::class);
     $appConfig = $objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
@@ -3238,8 +3266,13 @@ $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
 $objectManager = $bootstrap->getObjectManager();
 
 // 如果出现这种错误 area code is not set ，则加上这两句， area 的值可以根据实际场景修改
-$state = $objectManager->get(\Magento\Framework\App\State::class);
-$state->setAreaCode(\Magento\Framework\App\Area::AREA_FRONTEND);
+$areaCode = \Magento\Framework\App\Area::AREA_FRONTEND;
+$objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+$objectManager->configure(
+    $objectManager
+        ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+        ->load($areaCode)
+);
 
 // 获取一个文件系统对象
 $fileSystem = $objectManager->get(\Magento\Framework\Filesystem::class);
@@ -3262,6 +3295,14 @@ require __DIR__ . '/app/bootstrap.php';
 $application = new \Magento\Framework\Console\Cli('Magento CLI');
 // 获取一个对象管理器
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+$areaCode = \Magento\Framework\App\Area::AREA_CRONTAB;
+$objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+$objectManager->configure(
+    $objectManager
+        ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+        ->load($areaCode)
+);
 
 // 获取一个文件系统对象
 $fileSystem = $objectManager->get(\Magento\Framework\Filesystem::class);

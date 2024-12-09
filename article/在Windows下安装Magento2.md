@@ -120,6 +120,7 @@
 1. 修改源码
     - 参考下文的这一章节 `使用 patch 修改源码`
 1. 修改 hosts 文件，把域名 localhost-magento.com 指向本地 ip （其实这步没有也没关系，但为了方便下文的描述还是加上了这步）
+1. 正确地启动 mysql redis elasticsearch
 1. 在数据库里新建对应的库
     ```
     create database magento2ce;
@@ -628,6 +629,10 @@ magento 相关的博客
 - https://bbs.mallol.cn/
 
 <!--
+
+通过 alias 设置当前命令行里的 php 版本
+alias php="/c/Users/a/dev/php-7.4.29-Win32-vc15-x64/php.exe"; \
+alias composer="php /c/Users/a/dev/php-7.4.29-Win32-vc15-x64/composer.phar";
 
 暂时最完善的构建脚本
 startAtTimestamp=$(date +%s); \

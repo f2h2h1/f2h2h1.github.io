@@ -783,6 +783,9 @@ git仓库
     WebSQL 关系型数据库，火狐不支持
     IndexedDB 非关系型数据库
     一些浏览器会对 favicon.ico 有特殊的缓存
+    origin-private-file-system OPFS https://developer.mozilla.org/zh-CN/docs/Web/API/File_System_API/Origin_private_file_system
+    wa-sqlite WebAssembly SQLite
+        在前端使用 sqlite ，通过 WebAssembly 和 IndexedDB 和 OPFS 实现
 使用 debian 作为日常用机的系统
     各类硬件驱动
         网卡
@@ -955,6 +958,9 @@ vscode的使用技巧
                 https://developers.google.com/search/docs/advanced/crawling/verifying-googlebot
                 https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers
                 dns 反查 nslookup -qt=ptr 74.125.128.106
+        爬虫和反爬虫搞到最后都是人工智能。。。
+            爬虫最大的难点是验证码和ip限制
+                解决验证码最后依然是依赖计算机视觉
 寻找工作
     寻找合适的 岗位 和 公司
         各个招聘平台
@@ -4034,6 +4040,10 @@ ELF格式
         data viz/vis
             Data visualization
             数据 可视化
+        data lakehouse
+            数据 湖仓一体
+        data architecture
+            数据 架构
     数据分析 使用 统计学 的方法 从已有的数据中 验证预设的假设或回答特定的业务问题
     机器学习 把已有的数据作为训练集，建立模型，用模型处理新的数据
     数据挖掘 使用 统计学 和 机器学习 的方法 从已有的数据中 发现 关联 或 趋势
@@ -5848,6 +5858,7 @@ Hello what what is the first thing, and I am am scq000.
             也可能是现在的名称太流行，也用于描述过去的版本
         在 计算机科学 里这个现象特别严重，不论中文还是英文
             其它领域也有类似的现象
+            根据维基百科中的描述，数据挖掘也是一个营销名词，
             心理学 上的新名词，例如 x效应/x心理/x人格
             选取 一些属性 或 一些行为 ，然后就可以把有这些属性或行为的人称为 x效应/x心理/x人格 ，最后再扩大化解释一轮，加上其它属性和行为
             例子
@@ -5896,7 +5907,37 @@ Hello what what is the first thing, and I am am scq000.
     什么是元宇宙(Metaverse)
         元宇宙一词起源于1992年的科幻小说《雪崩》，是“元(meta)”和“宇宙(universe)”的合成词。
     什么是密码朋克(Crypto punk)
-
+java
+    命令行
+        Ant
+        Maven
+            pom.xml
+            在没有maven的年代是如何实现包管理的？
+        JavaBean
+        JDBC
+    gui
+        AWT
+            Swing
+                JFC
+        swt
+            JFace
+        JavaFX
+    web
+        Applet（Application）
+            Applet 是一个新造的单词，大意是小的应用程序
+        servlet（Server Applet）
+        jsp（Java Server Page）
+            EL（Expression Language，表达式语言）
+            JSTL(JSP Standard Tag Library，JSP标准标签库)
+        tomcat
+            普通的tomcat
+            嵌入式的tomcat
+    spring
+        jpa
+        Thymeleaf
+    eclipse
+    java的debug是如何实现的？
+        特别是 eclipse 里 tomcat 那种 debug
 收集各种镜像站点
     大学的
     https://mirrors.tuna.tsinghua.edu.cn/
