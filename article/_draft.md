@@ -719,6 +719,9 @@ frp的使用
         http://rogerdudler.github.io/git-guide/index.zh.html
         http://marklodato.github.io/visual-git-guide/index-zh-cn.html
     由 hulu 赞助的 oi wiki https://github.com/OI-wiki/OI-wiki/
+    hello算法，一个非常好的 数据结构和算法的教程
+        https://github.com/krahets/hello-algo
+        https://www.hello-algo.com
     ctf wiki https://github.com/ctf-wiki/ctf-wiki
     并行计算的 wiki 和 oi wiki ctf wiki 差不多 https://github.com/lcpu-club/hpc-wiki
     演算法笔记：台湾师范大学总结的教程 https://web.ntnu.edu.tw/~algo/
@@ -3565,6 +3568,20 @@ MutationObserver？
         在 git bash 里运行 firefox --help
         只有在 git bash 里有效，在 bat powershell 里都没有效果
         https://wiki.mozilla.org/Firefox/CommandLineOptions
+    火狐的缺点
+        火狐不能直接从命令行生成 网页截图 和 pdf
+        火狐不能把页面另存为单个文件的 mhtml 也不能打开 mhtml 文件
+        input 对时间的支持不够好
+            input type不支持这几个值
+                datetime
+                month
+                week
+            input type 的 datetime-local 和 time 选择时间时，没有下拉框
+        火狐的响应式调式和网络调试和 chrome 有一点差距
+            响应式的设计工具没有 chrome 好
+            network 没有截图
+            没有 lighthouse
+        不支持 dialog
 DNS
     域名
         FQDN(fully qualified domain name 完全限定域名)
@@ -3850,6 +3867,7 @@ io 模型
         信号量 (semaphore)
         文件锁 (file lock)
             从写代码的角度来看，就是各种系统调用
+            文件锁到底是怎么实现的？
         mysql锁
             死锁
         redis锁
@@ -3870,6 +3888,7 @@ io 模型
     traps 陷阱
     PIC (Programmable Interrupt Controller, 可编程中断控制器)
     APIC (Advanced Programmable Interrupt Controller, 高级可编程中断控制器)
+    异常到底是怎么实现的？
 CPU的工作模式
     CPU的工作模式是指CPU的寻址方式、寄存器大小等用来反应CPU在该环境下如何工作的概念。
     现代计算机只有在开机时CPU工作在实模式，而后的一切工作都是在保护模式下进行
@@ -3955,12 +3974,25 @@ ELF格式
     查看文件格式 `file 文件路径`
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
+leetcode做题的一般套路
+    要把问题抽象成数学问题
+        要抽象成类似这样的函数
+            答案=解答(输入)
+        从写代码的角度大概就是三步
+            读取和解释输入
+            处理输入
+            格式化输出
+        多数 leetcode 的题目都会自动处理好第一步和第三步
+    要准确地理解问题，然后选择正确的数据结构和算法
+    先学好理论再去做题
+    如果一道题一直没思路就直接看答案
 算法思想
     主要的算法思想 (algorithmic paradigm)
         穷举 (exhaustion) Brute 暴力
         递归 (recursion)
         贪心 (greedy)
         分治 (divide and conquer)
+        剪支和搜索 (prune and search)
         回溯 (backtracking)
         动态规划 (Dynamic programming, DP)
             动态规划 约等于 深度优先搜索 + 回溯
@@ -3968,11 +4000,34 @@ ELF格式
             分支界限 约等于 广度优先搜索 + 回溯
     算法思想之所被称为思想是因为算法思想可以应用到不同的数据结构里
     一个具体的算法肯定是基于至少一个具体的数据结构
+    一种数据结构通常至少会有三种算法
+        遍历 搜索 排序
     简单但不严谨的比喻
         数据结构 是 食材
         算法 是 菜谱
         算法思想 是 烹饪方式
     为什么穷举也可以算作一种算法思想？
+    迭代，递归，循环的区别
+        循环 loop
+            循环 强调 重复同一个操作
+        迭代 iteration
+            迭代 强调 下一次的输入会依赖上一次的输出
+        递归 recursion
+            递归 强调 函数自己调用自己
+        递推是什么？
+            递推没有对应的英文
+            递推可能是指递归也可能是指迭代
+            简中网的文章大多会强调递推是自底向上
+    算法思想 通常是来自数学上相关的学科 例如 运筹学 最优化 组合数学 这类
+    有多种方法可以对算法进行分类
+        根据应用分：
+            按照算法的应用领域，可以分为
+            基本算法，数据结构相关算法，几何算法，图论算法，规划算法，数值分析算法，加密解密算法，排序算法，查找算法，并行算法，数值算法……
+        根据确定性分：
+            确定性算法：有限时间内完成，得到结果唯一。
+            非确定性算法：有限时间内完成，得到结果不唯一，存在多值性。
+        根据算法的思路分：
+            递归算法，穷举算法，贪婪算法，分治算法，动态规划算法等。
 动态规划(Dynamic programming, DP)
     递归
     深度优先搜索
@@ -4171,6 +4226,7 @@ ELF格式
         ApacheCN 中对 kaggle 的介绍
             https://github.com/apachecn/Interview/tree/master/docs/Kaggle
             https://github.com/apachecn/Kaggle
+    现在的人工智能缺乏可解释性，可能就像过去的微积分的无穷小一样，虽然无穷小的定义在第二次数学危机才算解决了，但是并不妨碍十七，十八，十九世纪的数学家和工程师使用微积分
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
@@ -4929,6 +4985,21 @@ wordpress
             }
         }
     能用于 wp 的 dockerfile 和 docker-compose.yml ？
+    WP_HOME 和 WP_SITEURL 有什么区别
+        WP_HOME
+            是设置里的 wordpress address
+            是 wp_options 表里的 home
+            指的是 wordpress 的地址
+        WP_SITEURL
+            是设置里的 site address
+            是 wp_options 表里的 siteurl
+            指的是网站地址
+        通常这两个值是一样的
+        不一样的情况，例子
+            网站根目录下有两个文件夹
+                wordpress phpmyadmin
+            WP_SITEURL 填的是 网站域名
+            WP_HOME 填的就是 网站域名/wordpress
     如何给 woo 增加支付方式 ？
     wordpress 如何实现 国际化/多语言 ？
     wordpress 如何实现 群站 ？
@@ -4973,6 +5044,8 @@ wordpress
         https://make.wordpress.org/core/2022/09/12/lets-make-wordpress-officially-support-sqlite/
         https://wpmore.cn/wordpress-%e5%8f%91%e5%b8%83%e4%ba%86%e7%8b%ac%e7%ab%8b%e7%9a%84-sqlite-%e6%8f%92%e4%bb%b6.html
         既然可以使用 sqlite ，那么使用 PostgreSQL 也是可以的吧
+            https://wordpress.org/support/topic/configuring-wordpress-with-postgresql/
+            https://github.com/PostgreSQL-For-Wordpress/postgresql-for-wordpress
     如何寻找前1000个用户 https://github.com/naxiaoduo/1000UserGuide
 接入 alipay+ 的过程
     注册和设置
@@ -5853,6 +5926,7 @@ Hello what what is the first thing, and I am am scq000.
     描述不够详细
         问题
         解决方式
+    没有描述前置知识/背景信息
     一些信息或知识没有引用出处
     存在歧义的名词
         又有一个新问题，为什么总是出现有歧义的名词？
