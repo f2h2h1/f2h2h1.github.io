@@ -3956,24 +3956,24 @@ ELF格式
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
 算法思想
-    主要的算法思想
-        穷举
-        递归
-        贪心
-        分治
-        回溯
-        动态规划
+    主要的算法思想 (algorithmic paradigm)
+        穷举 (exhaustion) Brute 暴力
+        递归 (recursion)
+        贪心 (greedy)
+        分治 (divide and conquer)
+        回溯 (backtracking)
+        动态规划 (Dynamic programming, DP)
             动态规划 约等于 深度优先搜索 + 回溯
-        分支界限
+        分支界限 (Branch and bound, BB B&B BnB)
             分支界限 约等于 广度优先搜索 + 回溯
     算法思想之所被称为思想是因为算法思想可以应用到不同的数据结构里
-    一个具体的算法肯定是基于一个具体的数据结构
+    一个具体的算法肯定是基于至少一个具体的数据结构
     简单但不严谨的比喻
         数据结构 是 食材
         算法 是 菜谱
         算法思想 是 烹饪方式
     为什么穷举也可以算作一种算法思想？
-动态规划
+动态规划(Dynamic programming, DP)
     递归
     深度优先搜索
     回溯和剪支
@@ -4079,6 +4079,28 @@ ELF格式
     weak AI
     strong AI
     artificial general intelligence，AGI
+    相关的职业
+        数据科学家（Data scientist）
+            数据科学家分析复杂的数字数据，帮助企业做出决策。
+            他们利用数据科学培训和先进的分析技术，包括机器学习和预测建模，发掘数据中隐藏的洞察分析。
+        数据分析师（Data analyst）
+            数据分析师将数据转化为信息，将信息转化为洞察力。
+            他们使用统计方法从数据集中分析和提取有意义的趋势，通常是为了为业务策略和决策提供信息。
+        数据工程师（Data engineer）
+            数据工程师负责准备、处理和管理大数据基础设施和工具。
+            还在组织内开发、维护、测试和评估数据解决方案，经常处理大量数据集来协助分析项目。
+        机器学习工程师（Machine learning engineer）
+            机器学习工程师专注于设计和实施机器学习应用。
+            他们开发复杂的算法，可以从数据中学习并进行预测。
+        商业智能分析师（Business intelligence analyst）
+            商业智能 (BI) 分析师通过分析数据得出切实可行的洞察，帮助企业做出数据驱动的明智决策。
+            他们通常使用 BI 工具将数据转换为易于理解的报告和可视化图表，以供业务利益相关者查看。
+        数据可视化专家（Data visualization specialist）
+            这些专家专注于数据的可视化表示。
+            他们创建数据可视化，通过将数据置于可视化环境中来帮助最终用户了解数据的重要性。
+        数据构架师（Data architect）
+            数据构架师设计、创建、部署和管理组织的数据架构。
+            他们定义不同数据实体和 IT 系统如何存储、使用、集成和管理数据。
 人工智能
     概述
         是什么
@@ -4741,9 +4763,11 @@ linux 应用的一般启动套路
     HTTP 协议中的数据压缩 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Compression
         gzip
         br
+            brotli 这种算法好像没有单独的命令行工具
             https://github.com/google/brotli
-            echo "123" | ./python.exe  -c 'import sys;import brotli;print(brotli.compress(sys.stdin.read().encode()),end="")'
-            echo "123" | ./python.exe  -c 'import sys;import brotli;sys.stdout.buffer.write(brotli.compress(sys.stdin.read().encode()))'
+            https://github.com/google/brotli/blob/master/python/bro.py
+            pip install brotli
+            echo -n "123" | python -c 'import sys;import brotli;sys.stdout.buffer.write(brotli.compress(sys.stdin.buffer.read()))'
             https://docs.python.org/zh-cn/3/library/sys.html#sys.stdout
     zlib https://github.com/madler/zlib
     归档格式
@@ -5232,8 +5256,14 @@ nas
         乐谱
             五线谱：是世界上通用的一种记谱法，数字1~7来表示音的高低，用短横线、附点、升降号等符号来表示音的时值和变化
             简谱：是指一种简易的记谱法
-            六线谱：是专为吉他设计的谱。六线谱有六条线，每一条线代表一根琴弦，与吉他的弦一一对应。从上到下分别是1到6弦，上面细下面粗。线上的数字表示在吉他的第几品。六线谱主要有独奏（旋律）记谱、分解和弦伴奏记谱和扫弦节奏记谱三种方式。
-            四线谱：和吉他谱很像，主要是用于尤克里里，也是上面细，下面粗，但是四条线，而且每条线跟吉他谱的不太一样。右边标识的是空弦音。四线谱也有数字表示品格位置，x表示按住和弦拨弦，↑↓表示扫弦方向。
+            六线谱：
+                是专为吉他设计的谱。
+                六线谱有六条线，每一条线代表一根琴弦，与吉他的弦一一对应。
+                从上到下分别是1到6弦，上面细下面粗。线上的数字表示在吉他的第几品。
+                六线谱主要有独奏（旋律）记谱、分解和弦伴奏记谱和扫弦节奏记谱三种方式。
+            四线谱：
+                和吉他谱很像，主要是用于尤克里里，也是上面细，下面粗，但是四条线，而且每条线跟吉他谱的不太一样。
+                右边标识的是空弦音。四线谱也有数字表示品格位置，x表示按住和弦拨弦，↑↓表示扫弦方向。
         歌
             包含人声的
             纯音乐
