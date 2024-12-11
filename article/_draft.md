@@ -789,6 +789,10 @@ git仓库
     origin-private-file-system OPFS https://developer.mozilla.org/zh-CN/docs/Web/API/File_System_API/Origin_private_file_system
     wa-sqlite WebAssembly SQLite
         在前端使用 sqlite ，通过 WebAssembly 和 IndexedDB 和 OPFS 实现
+浏览器如何访问本地文件
+    https://developer.mozilla.org/en-US/docs/Web/API/FileSystem
+    https://developer.mozilla.org/en-US/docs/Web/API/File_and_Directory_Entries_API
+    https://developer.mozilla.org/en-US/docs/Web/API/Window/requestFileSystem
 使用 debian 作为日常用机的系统
     各类硬件驱动
         网卡
@@ -4237,6 +4241,8 @@ MySQL 和 PostgreSQL
         pg 更倾向于 OLAP 在 OLTP 的性能上可能追不上 mysql
         但因为 pg 的软件协议更加宽松，使得我在情感上更加倾向于 pg
         或许 MariaDB 是相对折中和务实的选择
+        PGsql 也有类似于mysql ON DUPLICATE KEY UPDATE 的语法，注意，ON CONFLICT 只在 PostgreSQL 9.5 以上可用。
+        https://aws.amazon.com/cn/compare/the-difference-between-mysql-vs-postgresql/
     MySQL 为什么比 PostgreSQL 流行
         pg 早期版本不支持 windows
         lamp 的流行，还有 WordPress 这类博客
@@ -5015,6 +5021,7 @@ wordpress
             一般的企业是没有进出口的资质的（这个门槛比较高，好像需要注册资本300万）
             一些快递公司也可以代理申报
                 递四方 云途 燕文
+        什么是海外仓？
         直接当普通的个人包裹寄到到外国应该也可以吧
     如何收款
         平台电商都有各自的收款渠道
@@ -5061,10 +5068,7 @@ wordpress
         javahelp 类似于 chm ，也是用 html ，最后生成的是一个 gui 程序
     documentation generator 文档生成器
     这类东西在维基百科里被称为 帮助系统(help system)
-浏览器如何访问本地文件
-    https://developer.mozilla.org/en-US/docs/Web/API/FileSystem
-    https://developer.mozilla.org/en-US/docs/Web/API/File_and_Directory_Entries_API
-    https://developer.mozilla.org/en-US/docs/Web/API/Window/requestFileSystem
+
 如何用 history 和 hash 做一个路由
     初始化
     监听路由的变化
@@ -6018,12 +6022,12 @@ java
             pom.xml
             在没有maven的年代是如何实现包管理的？
         JavaBean
-        JDBC
+        JDBC（Java Data Base Connectivity,java数据库连接）
     gui
-        AWT
+        AWT（Abstract Window Toolkit）
             Swing
-                JFC
-        swt
+                JFC （Java Foundation Classes， Java基础类）
+        swt（Standard Widget Toolkit）
             JFace
         JavaFX
     web
@@ -6036,12 +6040,32 @@ java
         tomcat
             普通的tomcat
             嵌入式的tomcat
-    spring
-        jpa
-        Thymeleaf
+        ssh
+            Struts2
+            Spring
+            Hibernate
+        ssm
+            SpringMVC
+            Spring
+            MyBatis
+        springBoot
+            JPA (Java Persistence API, JAVA持久API)
+            Thymeleaf
     eclipse
     java的debug是如何实现的？
         特别是 eclipse 里 tomcat 那种 debug
+    旧时代的java
+        java card
+        jave me
+        jave se
+        jave ee
+各种各样的版本
+    versionn
+    edition
+如何测试高并发？
+    压力机
+    测试机
+    怎样才能复现出 超卖 或 503 的情况？
 收集各种镜像站点
     大学的
     https://mirrors.tuna.tsinghua.edu.cn/
