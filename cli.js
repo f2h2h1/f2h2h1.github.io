@@ -315,7 +315,7 @@ class cli {
         let pageHtml = '';
         for (let i = 0, len = articleList.length; i < len; i++) {
             articleList[i]['md'] = fs.readFileSync('article/' + articleList[i]['title'] + '.md', {encoding:'utf8', flag:'r'});
-            pageHtml = this.application.buildConetnt(this.application.appData.sitename, this.application.buildArticle(articleList[i]));
+            pageHtml = this.application.buildConetnt(articleList[i]['title'], this.application.buildArticle(articleList[i]));
             fs.writeFileSync('article/' + articleList[i]['title'] +'.html', pageHtml);
         }
         pageHtml = this.application.buildConetnt(this.application.appData.sitename, this.application.buildIndex(articleList));
