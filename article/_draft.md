@@ -618,9 +618,12 @@
                 各种范式
                 sql
         OLAP OLTP HTAP
+        索引
+        MVCC
         ACID CAP BASE
         nosql 和 newsql
         mysql 的一般使用
+            explain sql
     计算机网络
         网络模型
         各层中的协议
@@ -1111,6 +1114,7 @@ vscode的使用技巧
                 线程和进程
                 cookie和session
                 ...
+                八股的三种类型五个方向（简称八股5·3，8·5·3）
                 八股的五个方向
                     数据传输
                         计算机网络
@@ -3692,6 +3696,7 @@ IT领域战争
         tcp/ip 和 osi
     指令集？
         精简 和 复杂
+    systemd 和 sysvinit
     主机大战（video game console war）
     从结果上看，
         开源 战胜 闭源
@@ -6020,7 +6025,10 @@ java
         Ant
         Maven
             pom.xml
+            Maven Wrapper
             在没有maven的年代是如何实现包管理的？
+        Gradle
+            Gradle Wrapper
         JavaBean
         JDBC（Java Data Base Connectivity,java数据库连接）
     gui

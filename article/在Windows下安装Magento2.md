@@ -772,4 +772,36 @@ openssl req -new -x509 -days 365 -nodes -out apache-selfsigned.crt -keyout apach
     CustomLog "logs/localhost-magento.com-access.log" common
 </VirtualHost>
 
+
+
+用于替换 nginx配置中magento根目录的命令
+newpath=$(echo "C:\Users\a\dev\magento-core\2647-magento" | sed 's/\\/\\\\/g'); \
+confpath=$(cygpath -u "C:\Users\a\dev\nginx-1.25.3\conf\nginx.conf"); \
+oldpath=$(cat $confpath | grep -o -P "(?<=MAGE_ROOT)(.*)(?=;)"); \
+oldpath=$(echo $oldpath | sed 's/\\/\\\\/g'); \
+oldpath=$(echo $oldpath | xargs ); \
+oldpath=$(echo $oldpath | sed 's/\\/\\\\/g'); \
+echo "confpath: " $confpath; \
+echo "oldpath: " $oldpath; \
+echo "newpath: " $newpath; \
+sed -i 's/'$oldpath'/'$newpath'/g' $confpath; \
+cat $confpath;
+
+用于替换 apache配置中magento根目录的命令
+newpath=$(echo "D:\code\magento-core\2121-magento" | sed 's/\\/\//g'); \
+confpath=$(cygpath -u "C:\Users\a\dev\Apache24\conf\extra\httpd-vhosts-magentoee.conf"); \
+oldpath=$(cat $confpath | grep -o -P '(?<=DocumentRoot ")(.*)(?=\/pub")'); \
+oldpath=$(echo $oldpath | sed 's/\//\\\//g'); \
+newpath=$(echo $newpath | sed 's/\//\\\//g'); \
+echo "confpath: " $confpath; \
+echo "oldpath: " $oldpath; \
+echo "newpath: " $newpath; \
+sed -i 's/'$oldpath'/'$newpath'/g' $confpath; \
+cat $confpath;
+
+额外新建了一个文件 conf\extra\httpd-vhosts-magentoee.conf
+并且在 conf/extra/httpd-vhosts.conf 里引入
+Include conf/extra/httpd-vhosts-magentoee.conf
+
+
 -->
