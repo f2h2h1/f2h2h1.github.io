@@ -4261,5 +4261,62 @@ FROM
     sales_order
 WHERE sales_order.increment_id = 3100182449 \G
 
+
+
+<?php
+
+/*
+sudo rm -rf app/code/Vendor
+sudo rm -rf app/code/Vendor/ModuleName
+php createModule.php
+*/
+
+$vendor = 'Vendor';
+$moduleName = 'ModuleName';
+$vendor = ucfirst($vendor);
+$moduleName = ucfirst($moduleName);
+
+$modulePath = 'app/code/' . $vendor . '/' . $moduleName;
+
+mkdir($modulePath . '/etc', 0755, true);
+
+$moduleContent = <<< EOF
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="{$vendor}_{$moduleName}"/>
+</config>
+EOF;
+
+$composerName = strtolower($vendor) . '/' . strtolower($moduleName);
+$composerContent = <<< EOF
+{
+    "name": "$composerName",
+    "description": "N/A",
+    "type": "magento2-module",
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "$vendor\\\\$moduleName\\\\": ""
+        }
+    }
+}
+EOF;
+
+$registrationContent = <<< EOF
+<?php
+use Magento\Framework\Component\ComponentRegistrar;
+ComponentRegistrar::register(ComponentRegistrar::MODULE, '{$vendor}_{$moduleName}', __DIR__);
+EOF;
+
+file_put_contents($modulePath . '/etc/module.xml', $moduleContent);
+file_put_contents($modulePath . '/composer.json', $composerContent);
+file_put_contents($modulePath . '/registration.php', $registrationContent);
+
+
 -->
 
