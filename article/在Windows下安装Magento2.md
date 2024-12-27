@@ -689,10 +689,42 @@ var/.maintenance.flag
 升级 magento 时要注意些什么
 
 
+magento2 不停地 302 重定向
+这个要怎么解决
+可以尝试 删除缓存后再编译一次
+可能是这个表 core_config_data 的值没设置好
+可能需要清除浏览器的缓存
+路径不要加 index.php
+
 修改 base-url
 php bin/magento setup:store-config:set --base-url="http://localhost-magento.com/"
 
+php bin/magento config:set web/secure/base_url https://domain.com/
+php bin/magento config:set web/unsecure/base_url https://domain.com/
+
+
 SELECT * FROM magento245.core_config_data WHERE value like '%localhost-magento.com%'
+
+\Magento\Framework\Debug::backtrace(false, true, false); exit();
+
+/vendor/magento/framework/HTTP/PhpEnvironment/Response.php setRedirect 在这个方法里加断点或加日志
+/vendor/magento/framework/Controller/Result/Redirect.php
+
+
+echo __FILE__ . ':' . __LINE__ . ' ';echo get_class($result);echo '<br>' . PHP_EOL;
+
+关键其实在这两个文件
+magento2/app/code/Magento/Store/App/FrontController/Plugin/RequestPreprocessor.php aroundDispatch
+magento2/app/code/Magento/Store/Model/BaseUrlChecker.php execute
+
+这个位置也可能导致 302
+lib/internal/Magento/Framework/App/Router/Base.php
+    matchAction
+    _checkShouldBeSecure
+
+网址必须和 baseurl 完全一致，才不会 302
+
+php bin/magento info:adminuri
 
 查看所有模块
 php bin/magento module:status

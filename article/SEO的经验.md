@@ -278,8 +278,13 @@ https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API
 微格式
     https://developer.mozilla.org/en-US/docs/Web/HTML/microformats
     https://microformats.org/
+JSON-LD
+
+用于添加结构化数据的工具（面向新手）
+    https://support.google.com/webmasters/topic/4599161
 
 AMP 是什么？
+    加速移动页面（Accelerated Mobile Pages）：一种由 Google 推出的开源项目，旨在提高移动网页的加载速度和性能
 
 通过写博客，在论坛发帖，在论坛回复 等形式发布软文？使得自己站点的链接出现在其它站点里？
 
