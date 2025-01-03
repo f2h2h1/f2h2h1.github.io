@@ -432,4 +432,10 @@ SurfaceFlinger
     浏览器有提供的
     浏览器没有提供的
 
+
+如何在 windows 中安装 kde 程序？
+https://community.kde.org/Windows
+
+
+
 -->

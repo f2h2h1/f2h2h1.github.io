@@ -494,6 +494,32 @@
                         \; 这个符号是一个转义字符，表示命令的结束。
                         因为在 shell 中，分号 ; 通常用于分隔命令，所以需要用反斜杠 \ 来转义，
                         以确保它被正确解析为 -exec 命令的一部分，而不是作为一个新的命令开始。
+                    find 搜索路径 条件表达式 动作
+                        条件表达式
+                            -name
+                            -type
+                            -empty
+                            -amin
+                            -atime
+                            -cmin
+                            -ctime
+                            -newermt
+                            -newerat
+                            -newerct
+                            -size
+                            -user
+                            -group
+                            -a
+                            -o
+                            !
+                        动作
+                            -print
+                            -fprint
+                            -ls
+                            -file
+                            -printf
+                            -fprintf
+                            -exec
                 查找一个命令的位置
                     通过 ps 命令查找
                     type command
@@ -681,6 +707,7 @@ frp的使用
     凹凸实验室 https://aotu.io/
     阮一峰 https://www.ruanyifeng.com/blog/
     廖雪峰 https://www.liaoxuefeng.com/
+    张鑫旭 https://www.zhangxinxu.com
     并发编程网 https://ifeve.com/
     王垠 https://www.yinwang.org/
     风雪之隅 https://www.laruence.com/
@@ -1962,11 +1989,14 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             古早版本的 Chromium = Webkit + v8 ， Webkit 中的 JavaScriptCore 被 v8 替换了
     常见的浏览器引擎
         Khtml -> Konqueror
+            Khtml 现在也停止开发了，kde转投 Chromium 了
+            KDEWebKit
         Gecko -> firefox
         Webkit -> safari
             在 webkit 的文档中有明确地提及到
             WebCore 是 Rendering Engine
             JavaScriptCore 是 JavaScript Engine
+            Webkit 一开始是 Khtml 的一个分支
         Blink -> chrome, 新版的 Edge, 新版的 Opera
         Trident -> ie
         EdgeHTML -> 旧版的 Edge
@@ -2008,11 +2038,32 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         在java中的
             Rhino
             Nashorn
+        Atom Shell -> Electron
+        Node-Webkit -> NW.js
     文本浏览器/终端浏览器/命令行浏览器
         能运行在 终端 中的浏览器
         w3m
         Lynx
         Links
+    嵌入式的浏览器
+        JavaFX WebView
+            也是用 Webkit
+        jxbrowser
+            也是基于 java
+            运行完整的 Chromium
+            但这个是商业库
+        QtWebkit 和 QtWebEngine
+            也是用 Webkit
+            Qt 5.4 QWebEngine 出现
+            Qt 5.5 QtWebEngine 和 QtWebkit 共存
+            Qt 5.6 QWebKit 废弃
+            KDE 里有两个浏览器也是用 QtWebkit
+                Falkon 用于桌面的
+                Angelfish 用于移动设备的
+        gtk 也有类似的项目 webkitgtk
+            也是用 Webkit
+        CEF
+            Chromium Embedded Framework
 程序 软件 应用 的联系与区别
     英文
         软件 software
@@ -5218,6 +5269,11 @@ wordpress
             SAS
         NAS
         DAS
+    链接文件和快捷方式
+        链接文件 是 文件系统里的概念
+        快捷方式 是 explorer.exe 里的概念
+            windows 的快捷方式 更接近于 unix 里的启动脚本
+                其实 linux 里的 窗口管理器 也会提供类似的功能，只是 linux 的桌面环境太过碎片化，很少有人留意到
 硬盘
     硬盘 Hard Disk
         HDD Hard Disk Drive
@@ -5377,9 +5433,17 @@ nas
             37 12*3+1
             25 12*2+1
         脚踏板
-            左踏板
-            中踏板
-            右踏板
+            三角琴
+                左踏板 柔音踏板
+                中踏板 不理解有什么作用，但以我的水平大概率用不到
+                右踏板 延音踏板
+            立式钢琴
+                左踏板 弱音踏板
+                中踏板 静音踏板 就是降低音量用的
+                右踏板 延音踏板
+            电子琴/电钢琴
+                单踏板 延音踏板
+                三踏板 和 三角琴相同
         88 键是标准
             一组 = 7个白键+5个黑键
             低音区
@@ -5532,6 +5596,58 @@ nas
     社会学 -> 心理学 ->  医学 -> 生物 -> 化学 -> 物理 -> 数学
     经济 -> 政治 -> 历史 -> 人类学 -> 医学 -> 生物 -> 化学 -> 物理 -> 数学
     数学和物理谁是本源？
+各种笔记软件 或 gtd 或 wiki 或 pkm 或 思维导图 的总结
+    笔记(note)
+        印象笔记
+        有道笔记
+        思源笔记
+        为知笔记
+        云雀
+        OneNote
+        Google Keep
+        Obsidian
+        Logseq
+        Roam Research
+        TiddlyWiki
+        Flomo
+    gtd (Getting Things Done)
+    pkm (Personal Knowledge Management, 个人知识管理)
+    PIM (Personal Information Management)
+    思维导图(mind map)
+        DesktopNaotu
+        jsMind
+        MyMind
+        freeMind
+        freePlane
+        TiddlyMap
+    wiki
+    各种图数据库
+        neo4j
+        JanusGraph
+        HugeGraph
+        OrientDB
+        ArangoDB
+        arcadedb
+    还有类似的
+        备忘录(memo)
+        日历(calendar)
+        任务管理(todo)
+        看板(Kanban)
+        项目管理(Project Management System, PMS)
+            Microsoft Project
+            Redmine
+            dotProject https://github.com/dotproject/dotProject
+            产品生命周期管理（Product Life Cycle Management，PLM）
+            产品数据管理（Product Data Management，PDM）
+            https://zh.wikipedia.org/wiki/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6%E6%AF%94%E8%BE%83
+    总结一下需求
+        收集 知识和信息
+        整理 知识和信息
+        方便地检索 知识和信息
+        需要做什么
+汽车，飞机和模拟器
+游戏机的模拟器
+流媒体相关的经验
 从ed到perl还有正则表达式
     qed ed ex vi vim sed sam awk grep perl
 正则表达式

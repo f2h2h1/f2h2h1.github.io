@@ -853,6 +853,22 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
 
 <!--
 
+{
+  currency {
+    available_currency_codes
+    base_currency_code
+    base_currency_symbol
+    default_display_currecy_code
+    default_display_currecy_symbol
+    default_display_currency_code
+    default_display_currency_symbol
+    exchange_rates {
+      currency_to
+      rate
+    }
+  }
+}
+
 用 get 的方式，发送的 graphql 请求，get的话可以让 http 缓存，
 graphqlquery=$(cat <<- EOF
 query {
@@ -865,9 +881,10 @@ query {
 EOF
 );
 graphqlquery=$(echo -n $graphqlquery | php -r 'print(http_build_query(["query"=>file_get_contents("php://stdin")]));');
-curl 'http://localhost-magento/graphql?'$graphqlquery \
+curl 'http://localhost-magento/graphql?query='$graphqlquery \
     -H 'accept: application/json' \
     -H 'content-type: application/json' \
+    -H 'authorization: Bearer 214dee33a45a11eeae4800e04c947949' \
     --data-raw "$graphqlquery" \
     --compressed \
     --insecure -s -k
@@ -4237,6 +4254,18 @@ FROM
 JOIN 
     sales_order_payment ON sales_order.entity_id = sales_order_payment.parent_id
 WHERE sales_order.increment_id = 3100182449 \G
+
+
+
+
+select
+    *
+FROM 
+    sales_order
+LEFT JOIN
+    sales_order_item on sales_order.entity_id = sales_order_item.order_id
+WHERE sales_order.increment_id = 3301844358 \G
+
 
 SELECT x.* FROM core_config_data x
 WHERE value like '%sales%';
