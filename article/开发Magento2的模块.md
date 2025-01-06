@@ -729,7 +729,7 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
     }
     ```
 
-0. 可以用这决 curl 命令来查看当前 magento 项目的 graphql 文档
+0. 可以用这句 curl 命令来查看当前 magento 项目的 graphql 文档
     ```
     graphqlquery=$(cat <<- EOF
     query IntrospectionQuery {
@@ -851,6 +851,107 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
     - vendor\webonyx\graphql-php\src\Executor\ReferenceExecutor.php resolveField
     - vendor\webonyx\graphql-php\src\Executor\ReferenceExecutor.php resolveOrError
 
+0. 可以用类似这样的方式直接执行 graphql 的查询
+    ```php
+    try {
+        // 引入 magento2 的引导文件
+        require __DIR__ . '/app/bootstrap.php';
+        // 创建一个应用对象
+        $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+        // 获取一个对象管理器
+        $objectManager = $bootstrap->getObjectManager();
+
+        // 如果出现这种错误 area code is not set ，则加上这两句， area 的值可以根据实际场景修改
+        $state = $objectManager->get(\Magento\Framework\App\State::class);
+        $state->setAreaCode(\Magento\Framework\App\Area::AREA_GRAPHQL);
+
+        // app\code\Magento\Authorization\Model\UserContextInterface.php
+
+        /** @var \Magento\Framework\GraphQl\Schema\SchemaGeneratorInterface */
+        $schemaGenerator = $objectManager->get(\Magento\Framework\GraphQl\Schema\SchemaGeneratorInterface::class);
+
+        $source = '';
+
+        $rootValue = null;
+
+        $contextValue = new class implements \Magento\GraphQl\Model\Query\ContextInterface {
+            public function getUserId(): ?int {
+                return 123;
+            }
+            public function getUserType(): ?int {
+                return \Magento\Authorization\Model\UserContextInterface::USER_TYPE_CUSTOMER;
+            }
+            public function getExtensionAttributes(): \Magento\GraphQl\Model\Query\ContextExtensionInterface {
+                return new class implements \Magento\GraphQl\Model\Query\ContextExtensionInterface {
+
+                    private $store;
+                    private $isCustomer;
+                    private $customerGroupId;
+
+                    public function __construct()
+                    {
+                        /** @var \Magento\Customer\Model\CustomerFactory */
+                        $customerFactory = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Customer\Model\CustomerFactory::class);
+                        // $customer = $customerFactory->create()->loadByEmail($email);
+                        // $customer->getGroupId();
+
+                        /** @var \Magento\Store\Model\StoreManager */
+                        $storeManager = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Store\Model\StoreManager::class);
+                        $storeManager->getStore();
+
+                        $this->setStore($storeManager->getStore());
+                        $this->setIsCustomer(false);
+                        $this->setCustomerGroupId(null);
+                    }
+
+                    public function getStore()
+                    {
+                        return $this->store;
+                    }
+
+                    public function setStore(\Magento\Store\Api\Data\StoreInterface $store)
+                    {
+                        $this->store = $store;
+                        return $this;
+                    }
+
+                    public function getIsCustomer()
+                    {
+                        return $this->isCustomer;
+                    }
+
+                    public function setIsCustomer($isCustomer)
+                    {
+                        $this->isCustomer = $isCustomer;
+                        return $this;
+                    }
+
+                    public function getCustomerGroupId()
+                    {
+                        return $this->customerGroupId;
+                    }
+
+                    public function setCustomerGroupId($customerGroupId)
+                    {
+                        $this->customerGroupId = $customerGroupId;
+                        return $this;
+                    }
+                };
+            }
+        };
+
+
+        $variables = [];
+        $result = \GraphQL\GraphQL::executeQuery($schemaGenerator->generate(), $source, $rootValue, $contextValue, $variables);
+        $output = $result->toArray();
+        echo json_encode($output);
+    } catch (\Throwable $e) {
+        echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+        echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+    }
+
+    ```
+
 <!--
 
 {
@@ -881,7 +982,7 @@ query {
 EOF
 );
 graphqlquery=$(echo -n $graphqlquery | php -r 'print(http_build_query(["query"=>file_get_contents("php://stdin")]));');
-curl 'http://localhost-magento/graphql?query='$graphqlquery \
+curl 'http://localhost-magento/graphql?'$graphqlquery \
     -H 'accept: application/json' \
     -H 'content-type: application/json' \
     -H 'authorization: Bearer 214dee33a45a11eeae4800e04c947949' \

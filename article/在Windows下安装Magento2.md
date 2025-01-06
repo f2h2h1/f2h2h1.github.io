@@ -701,9 +701,19 @@ php bin/magento setup:store-config:set --base-url="http://localhost-magento.com/
 
 php bin/magento config:set web/secure/base_url https://domain.com/
 php bin/magento config:set web/unsecure/base_url https://domain.com/
+php bin/magento config:show web/secure/base_url
+php bin/magento config:show web/unsecure/base_url
 
+SELECT * FROM core_config_data WHERE path like '%web/unsecure/base_url%'
 
-SELECT * FROM magento245.core_config_data WHERE value like '%localhost-magento.com%'
+SELECT * FROM core_config_data WHERE
+    `path` like '%url%' or
+    `path` like '%path%' or
+    `path` like '%domain%' or
+    `path` like '%host%' or
+    `path` like '%link%' or
+    `path` like '%web%'
+
 
 \Magento\Framework\Debug::backtrace(false, true, false); exit();
 

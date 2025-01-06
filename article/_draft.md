@@ -4900,41 +4900,6 @@ linux 应用的一般启动套路
         把当前目录下的 wp-plugin 文件或目录 压缩成 wp-plugin.zip 文件
             zip -r wp-plugin.zip wp-plugin
             7z a -tzip wp-plugin.zip wp-plugin
-富文本编辑器，页面构造器，代码编辑器
-    页面构造器（page builder）
-    富文本编辑器（rich text editor）
-    代码编辑器（code editor）
-    文本编辑器（text editor）
-        ACE
-        Atom
-        Code Mirror
-        Monaco Editor
-        codejar
-        下面这三个都是 ECD
-            Eclipse Che
-            Eclipse Theia
-            Orion
-            Eclipse Cloud Development (ECD) https://wiki.eclipse.org/ECD
-        https://en.wikipedia.org/wiki/Comparison_of_JavaScript-based_source_code_editors
-        有哪些类似于 vscode 的编辑器
-            能兼容 vscode 插件的
-                VSCodium
-                atom
-                fleet
-                ECD 三兄弟
-                    Eclipse Che
-                    Eclipse Theia
-                    Orion
-            不能兼容 vscode 插件的
-                brackets
-            vscode 是基于 Monaco Editor
-            brackets 是基于 Code Mirror
-    视图
-        源码（source code）
-        分屏预览（SV, Split View）
-        所见即所得（WYSIWYG, What You See Is What You Get）
-        即时渲染（IR, Immediate Rendering）
-    功能是否满足需求 活跃程度 是否可商用 是否免费 是否开源 文档是否完善
 wordpress
     word press 文字出版社
     word n. 文字
@@ -5647,9 +5612,96 @@ nas
         需要做什么
 汽车，飞机和模拟器
 游戏机的模拟器
-流媒体相关的经验
+    平台
+        街机 家机 掌机 pc
+媒体相关的经验
+    multimedia
+    multi-media
+    medium
+    图像
+    视频
+    音频
+    流媒体
+    媒介
+    媒体
+    多媒体
+    网络媒体
+    社交媒体
+    自媒体
+    新媒体
+    全媒体
+    融媒体
+    传统媒体或旧媒体
+        书刊
+        报纸
+        广播
+        电视
+    出版物或出版品（英语：Publication）指以传播信息、文化、知识为目的的各种产品包括印刷品、电子产品的总称，属于传播文化知识的媒体。
+    媒介 和 媒体 有什么区别？
+    在中文互联网里，解释很混乱
+    但让我感到欣慰的是，英文互联网里，解释也很混乱
+    Media vs Medium vs Mediums
+    个人的理解
+        媒介 和 媒体 在旧时代的同义词
+        媒介 和 媒体 在新时代，有不一样的含义
+            媒介 是指 信息 传播的 载体，
+                例如 报纸 广播 电视 这类
+            媒体 是指 分发 信息的 机构 或 个人，
+                例如 出版社 电台 电视台 自媒体
+    媒质 又是 什么？
 从ed到perl还有正则表达式
     qed ed ex vi vim sed sam awk grep perl
+    editor 编辑器
+    text editor 文本编辑器
+    word processor (WP) 文字处理器
+        word
+    desktop publishing (DTP)
+        Microsoft Publisher
+        Adobe InDesign
+        QuarkXPress
+        LyX
+    文本编辑器通常是处理纯文本 plain text
+    文字处理器通常是处理富文本 rich text
+    除了 vi/vim 和 emacs 的编辑器
+        Neovim
+        nano
+        Pico (Pine composer)
+    在浏览器中的富文本编辑器
+    富文本编辑器，页面构造器，代码编辑器
+        页面构造器（page builder）
+        富文本编辑器（rich text editor）
+        代码编辑器（code editor）
+        文本编辑器（text editor）
+            ACE
+            Atom
+            Code Mirror
+            Monaco Editor
+            codejar
+            下面这三个都是 ECD
+                Eclipse Che
+                Eclipse Theia
+                Orion
+                Eclipse Cloud Development (ECD) https://wiki.eclipse.org/ECD
+            https://en.wikipedia.org/wiki/Comparison_of_JavaScript-based_source_code_editors
+            有哪些类似于 vscode 的编辑器
+                能兼容 vscode 插件的
+                    VSCodium
+                    atom
+                    fleet
+                    ECD 三兄弟
+                        Eclipse Che
+                        Eclipse Theia
+                        Orion
+                不能兼容 vscode 插件的
+                    brackets
+                vscode 是基于 Monaco Editor
+                brackets 是基于 Code Mirror
+        视图
+            源码（source code）
+            分屏预览（SV, Split View）
+            所见即所得（WYSIWYG, What You See Is What You Get）
+            即时渲染（IR, Immediate Rendering）
+        功能是否满足需求 活跃程度 是否可商用 是否免费 是否开源 文档是否完善
 正则表达式
 
 
