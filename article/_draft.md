@@ -2053,15 +2053,17 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             运行完整的 Chromium
             但这个是商业库
         QtWebkit 和 QtWebEngine
-            也是用 Webkit
+            QtWebkit 用的是 Webkit
             Qt 5.4 QWebEngine 出现
             Qt 5.5 QtWebEngine 和 QtWebkit 共存
             Qt 5.6 QWebKit 废弃
-            KDE 里有两个浏览器也是用 QtWebkit
+            QtWebEngine 用的是 Chromium
+            KDE 里有两个浏览器也是用 QtWebEngine
                 Falkon 用于桌面的
                 Angelfish 用于移动设备的
         gtk 也有类似的项目 webkitgtk
             也是用 Webkit
+            GNOME Web
         CEF
             Chromium Embedded Framework
 程序 软件 应用 的联系与区别
@@ -5614,6 +5616,19 @@ nas
 游戏机的模拟器
     平台
         街机 家机 掌机 pc
+    类型
+        ACT
+        FTG
+        SLG
+        MUG
+    模拟飞行
+        DCS
+        X-Plane
+        MFS
+        FSX/P3D
+    策略或模拟经营类的游戏
+        文明 全面战争 P社四萌 城市天际线
+    小时候玩过的游戏
 媒体相关的经验
     multimedia
     multi-media
@@ -5654,7 +5669,14 @@ nas
     editor 编辑器
     text editor 文本编辑器
     word processor (WP) 文字处理器
-        word
+        AbiWord
+        Calligra Words
+        OpenOffice Writer
+        LibreOffice Writer
+        Kingsoft Writer
+        Microsoft Word
+        WordPad
+            Microsoft 在 Windows 11 24H2 中删除了写字板，并且没有继任者
     desktop publishing (DTP)
         Microsoft Publisher
         Adobe InDesign
