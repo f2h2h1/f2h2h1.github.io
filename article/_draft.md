@@ -2061,6 +2061,8 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             KDE 里有两个浏览器也是用 QtWebEngine
                 Falkon 用于桌面的
                 Angelfish 用于移动设备的
+                新版的 Konqueror 也是用 QtWebEngine 了
+                看来不止 windows 即使是 linux 也没有几个浏览器用 webkit 了
         gtk 也有类似的项目 webkitgtk
             也是用 Webkit
             GNOME Web
@@ -4593,17 +4595,6 @@ termux
                 wsl --shutdown
             停止特定发行版
                 wsl --terminate <distro name>
-            通过 wsl 的 gui
-                https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/gui-apps
-                单一窗口
-                    直接安装就可以运行了
-                        sudo apt install x11-apps -y
-                        安装完后就可以直接运行了 xeyes
-                    如果安装失败就更新一下 apt ， sudo apt-get update
-                    https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/gui-apps
-                有完整的桌面环境
-                默认是使用 Wayland ，可以通过配置文件禁用 Wayland ，然后再自己装 x11 环境
-                    https://ivonblog.com/posts/wsl-x-server/
             wsl2 支持嵌套虚拟
             导出第一个实例
                 wsl --export <发行版名称> <导出文件路径>
@@ -4615,6 +4606,16 @@ termux
                 启动新导入的实例 wsl -d debian-email
             安装完 wsl2 后就可以安装 Docker Desktop 了
             网络
+                WSL 每次启动的时候都会有不同的 IP 地址
+                获取宿主机ip 这个ip是可以用于和虚拟机通讯的
+                    cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }'
+                获取虚拟机ip 这个ip是可以用于和宿主机通讯的
+                    hostname -I | awk '{print $1}'
+                windows主机ip
+                    ip route show | grep -i default | awk '{ print $3}'
+                    在宿主机里运行 ipconfig ，网卡名字里带有 wsl 的ip也可以
+                如果无法和宿主通讯，可能是被 Windows 的防火墙给拦截了
+                如果需要从外部访问wsl2的网络服务还需要更复杂的设置
                 https://learn.microsoft.com/zh-cn/windows/wsl/networking
             gui
                 单一窗口
@@ -4623,10 +4624,58 @@ termux
                         安装完后就可以直接运行了 xeyes
                     如果安装失败就更新一下 apt ， sudo apt-get update
                     https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/gui-apps
+                安装 snap
+                    apt install snap
+                    在 /etc/wsl.conf 里加入以下内容（如果不存在就新建一个）
+                        vi /etc/wsl.conf
+                        [boot]
+                        systemd=true
+                    退出 wsl
+                    重启
+                        wsl --shoutdown
+                        wsl -d 发行版名称
+                    snap install snap
+                    snap install 需要安装的软件名
+                    例如
+                        snap install firefox
+                        安装完后直接在命令行里运行 firefox 就可以了
+                    还有字体的问题没有解决
+                安装 flatpak
+                    apt install flatpak
                 有完整的桌面环境
                 默认是使用 Wayland ，可以通过配置文件禁用 Wayland ，然后再自己装 x11 环境
                     https://ivonblog.com/posts/wsl-x-server/
                 理论上还可以通过 Waydroid 来运行安卓应用
+            取消 Windows 的路径
+                WSL2 默认会将 Windows 的 $PATH 附加到 WSL 的 $PATH 中，这样就可以了在 WSL 中直接用 Windows 的命令和程序了，
+                但 shell 中使用命令自动补全时产生了大量的无关程序。
+                在 /etc/wsl.conf 中可以进行设置（如果没有这个文件就自己新建一个），里面加上
+                [interop]
+                appendWindowsPath = false
+            跨文件系统
+                在宿主机访问wsl
+                    cmd 和 powershell
+                        dir \\wsl$\debian-email
+                    git for windows
+                        ls "\\\\wsl$\\debian-email"
+                        cygpath -u "\\\\wsl$\\debian-email"
+                        ls //wsl$/debian-email
+                    wsl$ 可以用 wsl.localhost 替代
+                    debian-email 是镜像名
+                在wsl访问宿主机
+                    ls /mnt/c
+            通过资源管理器直接访问 wsl 里的目录
+                直接在地址栏里输入
+                    \\wsl.localhost\镜像名
+                    \\wsl$\镜像名
+                例子
+                    \\wsl.localhost\debian-email
+                    \\wsl$\debian-email
+                在 此电脑 右键 添加一个网络位置，输入这个路径，就可以像访问普通盘符一样访问wsl里的目录
+            git
+                虽然 git 安装在 wsl 可以同时操作 宿主机和wsl的文件
+                但我个人还是比较倾向于宿主机和wsl各自安装一个git
+                https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/wsl-git
             新版的 wsl 支持 直连显卡，这个对 机器学习而言似乎很重要，但我不会这个
     Docker Desktop
         windows 版的 Docker Desktop 通常用 wsl2 或 Hyper-V 作为后端
@@ -5579,7 +5628,7 @@ nas
         Flomo
     gtd (Getting Things Done)
     pkm (Personal Knowledge Management, 个人知识管理)
-    PIM (Personal Information Management)
+    PIM (Personal Information Management, 个人信息管理)
     思维导图(mind map)
         DesktopNaotu
         jsMind
@@ -5600,6 +5649,7 @@ nas
         日历(calendar)
         任务管理(todo)
         看板(Kanban)
+        知识库（Knowledge base）
         项目管理(Project Management System, PMS)
             Microsoft Project
             Redmine
@@ -5607,6 +5657,10 @@ nas
             产品生命周期管理（Product Life Cycle Management，PLM）
             产品数据管理（Product Data Management，PDM）
             https://zh.wikipedia.org/wiki/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6%E6%AF%94%E8%BE%83
+            类似的软件还有非常多
+            番茄工作法
+            四象限分类和时间盒子
+            艾宾浩斯遗忘曲线
     总结一下需求
         收集 知识和信息
         整理 知识和信息

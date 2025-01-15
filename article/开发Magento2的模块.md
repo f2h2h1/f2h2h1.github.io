@@ -2339,10 +2339,65 @@ areaCode
 areaCode 的值在这个位置
 vendor\magento\framework\App\Area.php
 
+$areaList = $objectManager->get(\Magento\Framework\App\AreaList::class);
+foreach (array_unique(array_push($areaList->getCodes(), \Magento\Framework\App\Area::AREA_GLOBAL))
+     as $areaCode) {
+    echo $areaCode;echo PHP_EOL;
+}
+
 文档里没有提到 doc
 soap 的存在感比较低，似乎很少会用到
 
 https://developer.adobe.com/commerce/php/architecture/modules/areas/
+
+
+php -a <<-'EOF'
+
+try {
+// 引入 magento2 的引导文件
+require __DIR__ . '/app/bootstrap.php';
+// 创建一个应用对象
+$application = new \Magento\Framework\Console\Cli('Magento CLI');
+// 获取一个对象管理器
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+// 这两句主要用在 git for windows 的环境下，主要用在 php -a
+putenv('COLUMNS=80');
+putenv('LINES=50');
+// 允许执行多个命令，不然会只执行一个命令然后直接 exit
+$application->setAutoExit(false);
+
+
+$areaList = $objectManager->get(\Magento\Framework\App\AreaList::class);
+$areaListCodes = $areaList->getCodes();
+array_push($areaListCodes, \Magento\Framework\App\Area::AREA_GLOBAL);
+foreach (array_unique($areaListCodes)
+     as $areaCode) {
+    echo $areaCode;echo PHP_EOL;
+    if ($areaCode !== \Magento\Framework\App\Area::AREA_GLOBAL) {
+        $areaOmConfiguration = $objectManager
+            ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+            ->load($areaCode);
+
+        $objectManager->configure($areaOmConfiguration);
+
+        $objectManager->get(\Magento\Framework\Config\ScopeInterface::class)
+            ->setCurrentScope($areaCode);
+    }
+
+    $command = 'magento dev:di:info Magento\Framework\GraphQl\Query\ResolverInterface';
+    $application->run(new \Symfony\Component\Console\Input\ArgvInput(explode(' ', $command)));
+}
+
+} catch (\Throwable $e) {
+    echo join(PHP_EOL, [
+        $e->getFile() . ':' . $e->getLine(),
+        $e->getMessage(),
+        $e->getTraceAsString(),
+    ]);
+}
+
+EOF
+
 
 
 后台的渲染逻辑会不会和前台不一样？
