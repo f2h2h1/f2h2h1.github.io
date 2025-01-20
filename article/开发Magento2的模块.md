@@ -3716,6 +3716,7 @@ select * from sales_order_status_state;
 - amasty https://amasty.com/
 - vnecoms https://www.vnecoms.com/
 - webkul https://webkul.com/
+- MGT-Commerce https://www.mgt-commerce.com/
 
 <!--
 https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-cron.html

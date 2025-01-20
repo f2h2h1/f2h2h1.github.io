@@ -372,7 +372,7 @@ http {
     default_type  application/octet-stream;
 
     log_format  main  '\$remote_addr - \$remote_user [\$time_local] "\$request" '
-                    '\$status $body_bytes_sent "\$http_referer" '
+                    '\$status \$body_bytes_sent "\$http_referer" '
                     '"\$http_user_agent" "\$http_x_forwarded_for"';
 
     access_log  /var/log/nginx/access.log  main;
@@ -706,7 +706,7 @@ http {
     default_type  application/octet-stream;
 
     log_format  main  '\$remote_addr - \$remote_user [\$time_local] "\$request" '
-                    '\$status $body_bytes_sent "\$http_referer" '
+                    '\$status \$body_bytes_sent "\$http_referer" '
                     '"\$http_user_agent" "\$http_x_forwarded_for"';
 
     access_log  /var/log/nginx/access.log  main;
@@ -988,3 +988,17 @@ docker exec php /var/www/html/init.sh
 # docker rm `docker ps -a | grep Exited | awk '{print $1}'`
 
 ```
+
+<!--
+
+pecl install xdebug-3.4.1 && \
+docker-php-ext-enable xdebug && \
+echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+echo "xdebug.idekey=vscode" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+echo "xdebug.client_host=127.0.0.1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+echo "xdebug.connect_timeout_ms=2000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+echo "xdebug.start_with_request=trigger" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+
+-->

@@ -4641,7 +4641,13 @@ termux
                         安装完后直接在命令行里运行 firefox 就可以了
                     还有字体的问题没有解决
                 安装 flatpak
-                    apt install flatpak
+                        apt install flatpak
+                    安装flatpakref后缀文件
+                        flatpak install --from /path/to/flatpakref
+                    查找已安装的包
+                        flatpak list
+                    启动应用
+                        flatpak run <app id>
                 有完整的桌面环境
                 默认是使用 Wayland ，可以通过配置文件禁用 Wayland ，然后再自己装 x11 环境
                     https://ivonblog.com/posts/wsl-x-server/
@@ -4769,7 +4775,9 @@ linux 应用的一般启动套路
             默认的 < 环境变量 < 配置文件 < 命令行参数 < 运行时修改
     配置文件虽然一些有约定俗成的规定，但通常依然会散落到各个位置
     通过包管理安装的软件和编译安装的软件往往会有一些差异
-    （现在我似乎有一点理解为什么 Gentoo 会坚持编译安装软件了）
+        （现在我似乎有一点理解为什么 Gentoo 会坚持编译安装软件了）
+    程序配置的时机
+        编译时，安装时，启动时，运行时
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收

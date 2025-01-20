@@ -112,6 +112,9 @@
             git clone -b 2.4.6-p7 --single-branch --no-tags https://github.com/magento/magento2.git --depth=1 .
             ```
         - 如果 clone 速度太慢，可以在 releases 那里下载源码的压缩包（如果还是太慢就用一些下载工具来下载 releases 的压缩包）
+            ```
+            curl -L -o magento2.tar.gz --connect-timeout 120 --max-time 3600 --retry 100 --retry-delay 5 https://github.com/magento/magento2/archive/refs/tags/2.4.6-p8.tar.gz
+            ```
 1. 安装 composer 依赖
     1. 准备一个 github-oauth
         - 也可以参考这篇文章 《在Windows下配置PHP服务器》
