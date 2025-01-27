@@ -3154,6 +3154,13 @@ $productCollection->addFieldToFilter(
 );
 $productCollection->setPageSize(1);
 $product = $productCollection->getFirstItem();
+
+
+/** @var \Magento\Catalog\Api\ProductRepositoryInterface */
+$productRepository = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+$product = $productRepository->getById($productId);
+$product = $productRepository->get($sku);
+$product->getExtensionAttributes();
 ```
 
 <!--

@@ -923,6 +923,11 @@ vscode的使用技巧
             https://github.com/coder/code-server
             https://github.com/gitpod-io/openvscode-server
         直接访问 vscode.dev 也可以编辑本地文件
+    vscodium
+        没有微软 遥测/跟踪 代码的 vscode ，但也用不了 微软的vscode插件商店，安装插件似乎会更麻烦一点
+        https://vscodium.com/
+        https://github.com/VSCodium/vscodium
+        https://open-vsx.org/ 可用的插件商店
 爬虫与反爬虫的经验
     爬虫
         无视 robots.txt
@@ -5392,7 +5397,7 @@ nas
         单独建一个网站或app
             直出视频文件
             使用hls
-    除了视频之外还可以继续有 音频 图片 文档 等等
+    除了视频之外还可以继续有 音频 图片 文档 漫画 小说 游戏等等
     更多？
         连接其它设备？物联网？智能家电？软路由？htpc？电视机顶盒？游戏主机？HomeLab？all in one？算存网分离？
             忽略 猫 和 路由 ？
@@ -5727,7 +5732,56 @@ nas
                 例如 出版社 电台 电视台 自媒体
     媒质 又是 什么？
 从ed到perl还有正则表达式
-    qed ed ex vi vim sed sam awk grep perl
+    qed ed ex vi vim grep sed awk perl
+    qed
+        quick editor
+    ed
+        editor
+    ex
+        extended editor
+    vi
+        visual
+        源于ex的命令visual
+    vim
+        最初的简称是Vi IMitation（仿造的vi），随着功能的不断增加，正式名称改成了Vi IMproved（改良的vi）
+        vim 有五个版本
+            T   tiny
+            S   small
+            N   normal
+            B   big
+            H   huge
+            多数情况下预装的是 small
+            通过包管理器装的是 huge
+            多数情况下 vi 也只是 vim 的别名
+            gvim 也是 huge
+            gvim 也叫做 vim-gnome
+        windows 下的vim就是gvim
+            https://github.com/vim/vim-win32-installer
+            https://github.com/vim/vim-win32-installer/releases
+        vim 编译时可以通过这个参数来指定版本
+            --with-features=huge
+        vim 编译时可以通过这个参数来生成 gvim
+            例如
+                --enable-gui=gnome
+        ./configure --help
+            命令来查看所有可用的编译参数
+        vim --version
+            查看 vim 的版本，配置文件路径，可用的功能
+    grep
+        grep这个应用程序最早由肯·汤普逊写成。grep原先是ed下的一个应用程序，
+        名称来自于g/re/p（globally search a regular expression and print，以正则表达式进行全局查找以及打印）。
+        在ed下，输入g/re/p这个命令后，会将所有符合先定义样式的字符串，以行为单位打印出来。
+    sed
+        stream editor
+    awk
+        其名称得自于它的三位创始人的姓氏首字母
+        Alfred Aho, Peter Weinberger, Brian Kernighan
+    perl
+        Practical Extraction and Report Language
+        实用 提取 和 报告 语言
+    emacs
+        Editor Macros
+        宏编辑器
     editor 编辑器
     text editor 文本编辑器
     word processor (WP) 文字处理器
@@ -6401,6 +6455,10 @@ Hello what what is the first thing, and I am am scq000.
         telegraph 电报
         telephone 电话
         telefax 传真
+        Science n. 科学
+        Technology n. 技术
+        Engineering n. 工程
+        Science and Technology n. 科技 科学和技术
     三论
         旧三论
             系统论、控制论、信息论
@@ -6464,6 +6522,7 @@ Hello what what is the first thing, and I am am scq000.
 信息技术的本质是什么？
     现实 -> 数字？
 财政、经济、金融
+国家和社会的区别和联系
 政治
 历史
     过去发生的事
@@ -6521,12 +6580,67 @@ java
             JFace
         JavaFX
     web
+        大致包括两部分
+            客户端
+                applet 和 java web start
+                这两个都是过时的技术了
+            服务端
+                servlet 和 jsp
+                jsp 也过时了
+                servlet 虽然还活跃，但很少会直接写 servlet 了
         Applet（Application）
             Applet 是一个新造的单词，大意是小的应用程序
         servlet（Server Applet）
+            四个作用域
+                application
+                session
+                request
+                page
         jsp（Java Server Page）
+            jsp 就是 servlet ，jsp 最终都会被编译成 servlet 再执行
+            JSP的视图代码可以是任何文本内容
+                包括但不限于 html xml json txt
+            jsp 文件里有两种内容
+                模板数据/模板元素 -> 就是指 html 代码，就是指 静态内容
+                jsp 元素 -> jsp 的标签 脚本 动作 指令。。。
+            scriptlet
+                <%  %>
+                <jsp:scriptlet> </jsp:scriptlet>
+            JSP声明
+                <%!  %>
+                <jsp:declaration> </jsp:declaration>
+            JSP表达式
+                一个JSP表达式中包含的脚本语言表达式，先被转化成String，然后插入到表达式出现的地方
+                表达式元素中可以包含任何符合Java语言规范的表达式，但是不能使用分号来结束表达式
+                <%= 表达式 %>
+                <jsp:expression>表达式</jsp:expression>
+            JSP注释(Comment)
+                <%-- %>
+                <% // %>
+                <% /* */ %>
             EL（Expression Language，表达式语言）
-            JSTL(JSP Standard Tag Library，JSP标准标签库)
+                ${}
+                隐藏对象
+                el函数
+                el自定义函数
+            JSP Directives (jsp 指令)
+                <%@ %>
+                <jsp:directive.page attribute="value" />
+                page 声明页面属性
+                include 包含其它jsp页面
+                taglib 导入标签库
+                    JSTL(JSP Standard Tag Library，JSP标准标签库)
+                    第三方标签库
+                    自定义标签库
+                    不过 jstl 和 el 通常要单独引入对应的 jar
+            JSP Actions
+                jsp:include 	在页面被请求的时候引入一个文件。
+                jsp:forward 	把请求转到一个新的页面。
+                jsp:param 	设置请求参数
+                jsp:useBean 	寻找或者实例化一个JavaBean。
+                jsp:setProperty 	设置JavaBean的属性。
+                jsp:getProperty 	输出某个JavaBean的属性。
+            九个内置对象
         tomcat
             普通的tomcat
             嵌入式的tomcat
@@ -6655,6 +6769,8 @@ tar --xz -cf UrsaMinor-`date +%g%m%d%H%M`.tar.xz UrsaMinor
     update fraction 日期
     update fraction 20211223
     pwd; sleep 8000; git commit -m "update fraction "$(date +%Y%m%d); git push;
+    date +%g%m%d%H%M
+    date +%Y%m%d%H%M
 修改 错别字 标点 格式
     update format
 更新 sitemap 之类的文件
