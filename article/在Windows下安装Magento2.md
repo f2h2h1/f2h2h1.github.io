@@ -241,6 +241,8 @@
 - 可以在 magento 的根目录里运行这样的命令启动 php 的内置 web server ，但速度真的很慢，要注意修改 base-url ，可以通过修改 DEBUG_ROUTER 这个常量启用 router.php 的 debug 模式
     ```
     php -S 127.0.0.1:8082 -t ./pub/ ./phpserver/router.php
+    在 linux 环境下，可以设置这个环境变量 PHP_CLI_SERVER_WORKERS 来达到多线程的效果
+    PHP_CLI_SERVER_WORKERS="10" php -S 127.0.0.1:8082 -t ./pub/ ./phpserver/router.php
     ```
 - magento2 的缓存十分严重，如果发现一些修改没有生效，可以尝试运行这几条命令刷新缓存
     ```
@@ -720,7 +722,7 @@ SELECT * FROM core_config_data WHERE
 
 \Magento\Framework\Debug::backtrace(false, true, false); exit();
 
-/vendor/magento/framework/HTTP/PhpEnvironment/Response.php setRedirect 在这个方法里加断点或加日志
+/vendor/magento/framework/HTTP/PhpEnvironment/Response.php setRedirect 遇到302 在这个方法里加断点或加日志
 /vendor/magento/framework/Controller/Result/Redirect.php
 
 
@@ -848,5 +850,7 @@ cat $confpath;
 并且在 conf/extra/httpd-vhosts.conf 里引入
 Include conf/extra/httpd-vhosts-magentoee.conf
 
+
+删掉 app/etc/env.php 中的 install 就可以重新安装了
 
 -->
