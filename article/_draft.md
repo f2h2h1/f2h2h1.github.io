@@ -5622,6 +5622,7 @@ nas
         暗物质 暗能量
         黑洞
         宇宙起源 生命起源 意识起源
+        还有反物质
     社会学 -> 心理学 ->  医学 -> 生物 -> 化学 -> 物理 -> 数学
     经济 -> 政治 -> 历史 -> 人类学 -> 医学 -> 生物 -> 化学 -> 物理 -> 数学
     数学和物理谁是本源？
@@ -5632,6 +5633,7 @@ nas
         思源笔记
         为知笔记
         云雀
+        飞书
         OneNote
         Google Keep
         Obsidian
@@ -5639,6 +5641,7 @@ nas
         Roam Research
         TiddlyWiki
         Flomo
+        Notion
     gtd (Getting Things Done)
     pkm (Personal Knowledge Management, 个人知识管理)
     PIM (Personal Information Management, 个人信息管理)
@@ -5680,22 +5683,88 @@ nas
         方便地检索 知识和信息
         需要做什么
 汽车，飞机和模拟器
+    如何驾驶汽车
+        汽车的分类
+        汽车的组成
+        自动驾驶
+            openpilot
+    如何驾驶飞机
+        固定翼
+            执照的种类
+        直升机
+            执照的种类
 游戏机的模拟器
     平台
-        街机 家机 掌机 pc
+        街机 家机 掌机 pc 手机 其它
     类型
-        ACT
-        FTG
-        SLG
-        MUG
+        ACT	Action	动作
+        AAVG	Action Adventure Game	动作冒险
+        FTG	Fighting Game	格斗游戏
+        SLG	Simulation Game	模拟游戏
+        MUG Music Game	音乐游戏
+        RPG	Role-Playing Game	角色扮演
+        MMORPG	Massively Multiplayer Online Role-Playing Game	大型多人在线角色扮演游戏
+        RTS	Real-Time Strategy	即时战略
+        FPS	First-Person Shooter	第一人称射击游戏
+        SPG	Sports Game	运动游戏
+        RCG	Racing Game	赛车游戏
     模拟飞行
         DCS
         X-Plane
         MFS
         FSX/P3D
+    模拟汽车驾驶
+        极品飞车 ea
+        gt赛车 sony
+        极限竞速 微软
+        山脊赛车
+        岸湾
+        头文字D
+        狂野飙车
+        首都高赛车
     策略或模拟经营类的游戏
-        文明 全面战争 P社四萌 城市天际线
+        文明 全面战争 P社四萌 城市天际线 坎巴拉太空计划
     小时候玩过的游戏
+        碧海银沙
+            炸弹人
+            PANG 96
+        红警
+            95 2 尤里的复仇 3 起义时刻
+        魔兽
+            3 冰封王座
+        国家的崛起
+        帝国时代3
+        罗马的复仇
+        三国群英传
+        极品飞车6
+        fifa 2006
+        街机
+            战斧
+            拳皇
+            街头霸王
+            合金弹头
+            龙与地下城
+            名将
+            圆桌骑士
+            忍者棒球
+            恐龙快打
+        掌机
+            ga/gba
+            psp
+                三国志
+                大航海时代
+                真三国无双
+        falsh
+            闪客快打
+            拳皇win
+            死神与火影
+            绿巨人
+        暴力摩托
+        大富翁
+        qq游戏
+            祖玛 泡泡龙 连连看 对对碰 泡泡堂
+        qq空间
+        网游
 媒体相关的经验
     multimedia
     multi-media
@@ -5737,6 +5806,7 @@ nas
         quick editor
     ed
         editor
+        编辑器ed 汇编器as 外壳shell 被称为早期unix三个关键要素
     ex
         extended editor
     vi
@@ -5753,6 +5823,7 @@ nas
             多数情况下预装的是 small
             通过包管理器装的是 huge
             多数情况下 vi 也只是 vim 的别名
+            多数情况下 ex 也只是 vim 的别名
             gvim 也是 huge
             gvim 也叫做 vim-gnome
         windows 下的vim就是gvim
