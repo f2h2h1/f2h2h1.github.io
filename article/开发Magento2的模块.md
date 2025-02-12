@@ -505,6 +505,9 @@ $retSql = $entitySql . PHP_EOL . $eavSql . ';';
 echo $retSql;
 ```
 
+### 增加 eav 属性
+
+
 ## 新建命令
 
 0. 在模块目录下 etc/di.xml 加上以下内容

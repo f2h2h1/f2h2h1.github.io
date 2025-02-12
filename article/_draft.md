@@ -262,15 +262,20 @@
                 fastcgi
             代理
                 socket 双写
-                反向代理
-                正向代理
-                    RFC 2616
-                    RFC 7230
-                    RFC 7231
-                    RFC 1928 SOCKS5
+                位置
+                    反向代理
+                    正向代理
+                类型
+                    http代理
+                        RFC 2616 7230 7231 7235
+                    sockt代理
+                        RFC 1928 SOCKS5
                     pac
+                        https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Proxy_servers_and_tunneling
             websocket
                 WebSocket Secure (wss)
+            相关的rfc
+                https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Resources_and_specifications
             认证 和 授权
             流量控制
         TLS
@@ -935,9 +940,15 @@ vscode的使用技巧
         修改 ua
         构造完整的请求包
         使用代理来规避请求频率的限制
+            尽量使用住宅ip
+            ip数量要尽量地多，且每个ip要限制访问速度和频率
+                即使住宅ip也有可能被拉近黑名单
         使用无头浏览器来执行 js
-        即使速度慢也加载图片
         使用 playwright 这类工具打开页面，显示窗口，修改ua
+            检测浏览器爬虫特征 https://bot.sannysoft.com/
+            检测浏览器指纹 https://abrahamjuliot.github.io/creepjs/
+            技术足够的话，可以修改浏览器内核来隐藏爬虫特征
+        即使速度慢也加载图片
         使用 autoit 这类工具模拟鼠标在页面上的移动
         打开页面后要模拟一下人的操作，例如 移动一下鼠标 移动一下滚动条
         应对验证码
@@ -4272,8 +4283,58 @@ leetcode做题的一般套路
     深度学习（Deep Learning）
     大语言模型（Large Language Model, LLM）
         提示工程（Prompt Engineering）
-        AI Agent/bot/Generative AI
+        AI Agent/bot/Generative AI/RAG/MOE
         那些生成图片，生成视频的模型和LLM有什么关系？
+    著名的公司
+        ai 四巨头
+            openai 谷歌 Anthropic xai
+            Claude 就是来自 Anthropic
+            xai 就是 马斯克 那个 Grok
+        国内的
+            幻方量化/深度求索
+            百度 阿里 腾讯 字节 华为 科大讯飞 大多了，几乎所有公司都有大模型
+            四小龙
+                商汤、旷视、云从、依图
+            五虎？
+                四小龙 + ？
+    热门的大模型
+        gpt 2022
+        deepseek 2025
+        Claude
+        Grok
+        Gemini
+        LLaMA
+        Phi 微软的
+        BLOOM 来自法国的，也是开源的
+        通义千问
+        文心一言
+        豆包
+        kimi
+        混元
+        星火
+        大模型的排行榜
+            https://github.com/jeinlee1991/chinese-llm-benchmark
+            https://www.superclueai.com/
+            https://super.gluebenchmark.com/leaderboard
+    应用
+        生成文本 对话 生成图片 生成视频 生成音频 视频换脸
+    有影响力的华人
+        李开复
+        李宏毅
+        李飞飞
+        吴恩达
+        陆奇
+        黄仁勋
+        苏姿丰
+        梁见后 超微电脑（Super Micro Computer） 主要是做服务器的
+        梁文峰
+    相关的框架
+        Torch
+        TensorFlow
+        Keras
+        ML.NET
+        Apache SINGA
+        Apache Spark MLlib
     相关的书籍和仓库
         Deep Learning 中文翻译 https://github.com/exacity/deeplearningbook-chinese
         深度学习500问 https://github.com/scutan90/DeepLearning-500-questions
@@ -5399,6 +5460,7 @@ nas
             使用hls
     除了视频之外还可以继续有 音频 图片 文档 漫画 小说 游戏等等
     更多？
+        成品 or DIY ？
         连接其它设备？物联网？智能家电？软路由？htpc？电视机顶盒？游戏主机？HomeLab？all in one？算存网分离？
             忽略 猫 和 路由 ？
         始终至少需要一个外网的服务器
@@ -5410,6 +5472,9 @@ nas
         放在哪里？体积？噪声？辐射？
         费用？
             硬件费用，电费，网费
+    中年男人三大爱好
+        nas 路由器 充电器
+        路由器 和 充电器 有什么好折腾的？
 和声音相关的笔记
     声音
         声音是振动产生的声波，通过介质（气体、固体、液体）传播并能被人或动物听觉器官所感知的波动现象
