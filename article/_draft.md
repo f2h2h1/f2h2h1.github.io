@@ -4283,51 +4283,78 @@ leetcode做题的一般套路
     深度学习（Deep Learning）
     大语言模型（Large Language Model, LLM）
         提示工程（Prompt Engineering）
-        AI Agent/bot/Generative AI/RAG/MOE
+        AI Agent/bot/Generative AI/微调/RAG/MOE
+            微调是再训练一次并加入新数据
+            rag是在上下文或提示词里加入新数据
+        满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
+            满血就是没经过改动的
+            量化就是可以运行在内存里的
+            蒸馏就是阉割版
+            量化版，一般语境下的量化版就是蒸馏量化版，就是可以运行在内存里的蒸馏版
+            ollama 下载的都是量化版
+            满血或蒸馏版
+                显存 大于 模型的尺寸
+            量化版
+                显存+内存 大于 模型的尺寸
         那些生成图片，生成视频的模型和LLM有什么关系？
+        chat模型 和 embedding模型 有什么区别？
+        模态
+            输入或输出的类型，例如 文本 文档 图片 视频 音频
+            多模态 可以接收多种输入类型或可以输出多种类型
+        局限性
+            幻觉
+            偏差
     著名的公司
         ai 四巨头
             openai 谷歌 Anthropic xai
-            Claude 就是来自 Anthropic
+            Anthropic 就是那个 Claude
+            Anthropic 是由 openai 前员工创立的
             xai 就是 马斯克 那个 Grok
+            DeepMind 就是做 AlphaGo 那个，现在是 谷歌的全资子公司
         国内的
             幻方量化/深度求索
-            百度 阿里 腾讯 字节 华为 科大讯飞 大多了，几乎所有公司都有大模型
+            百度 阿里 腾讯 字节 华为 科大讯飞 月之暗面 太多了，几乎所有公司都有大模型
             四小龙
                 商汤、旷视、云从、依图
             五虎？
                 四小龙 + ？
     热门的大模型
         gpt 2022
-        deepseek 2025
+        deepseek 2024
         Claude
         Grok
         Gemini
-        LLaMA
+        LLaMA mate
         Phi 微软的
         BLOOM 来自法国的，也是开源的
+        Mistral 来自法国的，也是开源的
         通义千问
         文心一言
-        豆包
-        kimi
+        豆包 字节
+        kimi 月之暗面
         混元
-        星火
+        星火 科大讯飞
         大模型的排行榜
             https://github.com/jeinlee1991/chinese-llm-benchmark
             https://www.superclueai.com/
             https://super.gluebenchmark.com/leaderboard
     应用
         生成文本 对话 生成图片 生成视频 生成音频 视频换脸
-    有影响力的华人
-        李开复
-        李宏毅
-        李飞飞
-        吴恩达
-        陆奇
-        黄仁勋
-        苏姿丰
-        梁见后 超微电脑（Super Micro Computer） 主要是做服务器的
-        梁文峰
+    有影响力的人
+        AI 三巨头
+            Geoffrey Hinton：中文名是 杰弗里·辛顿
+            Yann LeCun：中文名是 杨立昆
+            Yoshua Bengio：中文名是 约书亚·本吉奥
+        华人
+            李开复
+            李宏毅
+            李飞飞
+            吴恩达
+            陆奇
+            黄仁勋
+            苏姿丰
+            梁见后 超微电脑（Super Micro Computer） 主要是做服务器的
+            梁文峰
     相关的框架
         Torch
         TensorFlow
@@ -4345,6 +4372,7 @@ leetcode做题的一般套路
             https://github.com/apachecn/Interview
             https://github.com/apachecn/ailearning
             https://github.com/apachecn/ai-roadmap
+        AI工具集 https://ai-bot.cn/
     Kaggle
         这是一个类似 leetcode 的平台，题目内容是数据分析相关的
         官网 https://www.kaggle.com/
