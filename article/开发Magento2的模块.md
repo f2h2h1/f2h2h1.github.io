@@ -507,6 +507,106 @@ echo $retSql;
 
 ### 增加 eav 属性
 
+### 通过后台新建
+
+`catalog_product_entity` 的 eav 属性可以通过 product 的设置页新建
+
+### 通过模块里的 setup 新建
+
+https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/add-product-attribute
+
+app/codeLearning/ClothingMaterial/Setup/Patch/Data/AddClothingMaterial.php
+```php
+<?php
+namespace Learning\ClothingMaterial\Setup\Patch\Data;
+
+use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Learning\ClothingMaterial\Model\Attribute\Frontend\Material as Frontend;
+use Learning\ClothingMaterial\Model\Attribute\Source\Material as Source;
+use Learning\ClothingMaterial\Model\Attribute\Backend\Material as Backend;
+use Magento\Catalog\Model\Product;
+
+class AddClothingMaterial implements DataPatchInterface
+{
+    /**
+     * @var ModuleDataSetupInterface
+     */
+    private $moduleDataSetup;
+    /**
+     * @var EavSetupFactory
+     */
+    private $eavSetupFactory;
+
+    /**
+     * AddInstallmentProductAttributes constructor.
+     * @param ModuleDataSetupInterface $moduleDataSetup
+     * @param EavSetupFactory $eavSetupFactory
+     */
+    public function __construct(
+        ModuleDataSetupInterface $moduleDataSetup,
+        EavSetupFactory $eavSetupFactory
+    ) {
+        $this->moduleDataSetup = $moduleDataSetup;
+        $this->eavSetupFactory = $eavSetupFactory;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public static function getDependencies()
+    {
+        return [];
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getAliases()
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function apply()
+    {
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
+
+        try {
+            $eavSetup->addAttribute(
+            Product::ENTITY,
+            'clothing_material',
+            [
+                'group'         => 'General',
+                'type'          => 'varchar',
+                'label'         => 'Clothing Material',
+                'input'         => 'select',
+                'source'        => Source::class,
+                'frontend'      => Frontend::class,
+                'backend'       => Backend::class,
+                'required'      => false,
+                'sort_order'    => 50,
+                'global'        => ScopedAttributeInterface::SCOPE_GLOBAL,
+                'is_used_in_grid'               => false,
+                'is_visible_in_grid'            => false,
+                'is_filterable_in_grid'         => false,
+                'visible'                       => true,
+                'is_html_allowed_on_frontend'   => true,
+                'visible_on_front'              => true,
+            ]
+            );
+        } catch (LocalizedException $e) {
+        } catch (\Zend_Validate_Exception $e) {
+        }
+    }
+}
+
+```
 
 ## 新建命令
 
@@ -4356,6 +4456,7 @@ select
     count(shipping_method) as 'count'
 FROM 
     sales_order
+group by shipping_method
 order by count desc
 
 查看订单的支付方式

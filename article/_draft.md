@@ -1672,6 +1672,7 @@ vscode的使用技巧
         如无意外，安装完后就能直接用 sendmail mail mailx 命令了
             mail 和 mailx 链接到 mail.mailutils
             sendmail 链接到 exim4
+            增加一个用户 useradd -m user1
         发送邮件给其它用户
             使用 mailx 命令发送
             echo "test mail content" | mailx -s "test mail subject" root
@@ -1689,13 +1690,16 @@ vscode的使用技巧
             mail -u root
             mail -u 用户名
             mail -f /var/spool/mail/mail
+            mail -f /var/mail/mail root用户要用这种方式才能查看接收的邮件
             mail -f 用于保存邮件的文件路径
+            mail -f /var/mail/user1
         邮件保存的位置
             目录
                 /var/spool/mail 这个目录会软连接到 /var/mail
                 /var/mail 这个是实际的目录
             文件
                 /var/mail/root
+                /var/mail/mail
                 /var/mail/用户名
         日志
             日志文件的目录
@@ -1706,12 +1710,17 @@ vscode的使用技巧
                 ls -l /var/log/exim4
                 mkdir -p /var/log/exim4
                 touch /var/log/exim4/mainlog
+                chmod 777 /var/log/exim4/mainlog
             查看日志
                 cat /var/log/exim4/mainlog
     在局域网里自娱自乐
         至少需要搭建 smtp 和 imap
             至少要开启这两个端口 smtp(25) imap(143)
             最好再加上这两个 smtps(465) imaps(993)
+        假设已经安装好 exim
+            修改配置文件
+            启动
+            尝试通过ip发送邮件
     能收发外网的邮件
         除了 搭建 smtp 和 imap 之外，还要做好域名的解释
         域名解释才是最困难的部分
@@ -1758,24 +1767,6 @@ vscode的使用技巧
                     兼容一部分 sendmail 的命令
                 exim4
                     兼容一部分 sendmail 的命令
-    php 发送邮件示例
-        使用原本的函数
-            mail 和 mb_send_mail 函数
-            windows 环境
-            linux 环境
-            关注 sendmail 这个命令
-        使用第三方库
-            https://github.com/PHPMailer/PHPMailer
-            https://github.com/symfony/mailer
-            https://github.com/laminas/laminas-mail
-            https://github.com/zetacomponents/Mail
-    使用命令行发送邮件
-        nc smtp.qq.com 25
-        telnet smtp.qq.com 25
-        openssl s_client -quiet -connect smtp.qq.com:465
-        sendmail
-        busybox sendmail
-        curl
 如何实现一个搜索引擎？
     搜索引擎的原理
         倒排索引
@@ -5692,6 +5683,26 @@ nas
         礼、乐、射、御、书、数
         四书五经六艺
         汉代以来六艺亦指六经，即诗、书、礼、乐、易、春秋
+艺术
+    视觉艺术
+        游戏
+            游戏是第九艺术？
+            五
+                建筑、雕塑、绘画、音乐、诗歌
+            六
+                建筑、雕塑、绘画、音乐、诗歌、舞蹈
+            七
+                建筑、雕塑、绘画、音乐、诗歌、舞蹈、电影
+            八
+                建筑、雕塑、绘画、音乐、诗歌、舞蹈、戏剧、电影
+            九
+                电游，中国人吴冠军于1997年指称电子游戏为第九艺术，此说流行于中国。
+                漫画，法国评论家Claude Beylie于1964年和评论家弗朗西斯·拉卡森于1971年指称漫画为第九艺术，此说流行于欧美。
+            总而言之游戏也是一种艺术
+    表演艺术
+    文学
+    生活方式
+        烹饪 茶艺 调酒 咖啡 香水
 天文（Astronomy）
     天体测量学（Astrometry） 研究天体运行的精确计算，预测日食或流星雨等现象
     天体力学（Celestial mechanics） 研究天体的力学运动和形状
