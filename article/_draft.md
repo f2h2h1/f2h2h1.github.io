@@ -1716,7 +1716,16 @@ vscode的使用技巧
     在局域网里自娱自乐
         至少需要搭建 smtp 和 imap
             至少要开启这两个端口 smtp(25) imap(143)
-            最好再加上这两个 smtps(465) imaps(993)
+            最好再加上这两个 smtps(587) imaps(993)
+            还有这几个 smtps(465) pop3(110) pop3s(995) smtp(2525)
+                587 才是标准的 smtps 端口 rfc3207
+                465 比 587 更早出现
+                    465 是一开连接就启用 tls
+                    465 很长一段时间都不是标准，直到 rfc8314
+                    587 是连接完成后再通过 STARTTLS命令 启用 tls
+                        除了 smtps 之外，还有不少的协议使用这种明文命令的形式启用 tls
+                        这种 tls 被称为 机会型TLS（Opportunistic TLS）
+                有些电子邮件服务通过端口 2525 提供 SMTP 传输。但它并不是电子邮件的标准端口
         假设已经安装好 exim
             修改配置文件
             启动
@@ -3542,6 +3551,11 @@ composer
     参考
         https://github.com/lavas-project/pwa-book
         https://lavas-project.github.io/pwa-book/
+    要怎样才能知道当前有多少缓存？
+    如何制作一个 安卓套壳app
+        调用系统内的 webview
+        自包含一个 Chromium
+        在套壳里的 pwa
 前端的模块化方案
     早期的解决方式
         闭包
@@ -4277,6 +4291,15 @@ leetcode做题的一般套路
         AI Agent/bot/Generative AI/微调/RAG/MOE
             微调是再训练一次并加入新数据
             rag是在上下文或提示词里加入新数据
+                rag 就是 知识库
+            AI Agent 就是 bot
+                提示工程 是 Agent
+                rag 是 Agent
+            插件 就是 调用外部api
+                在 工作流 里会用到 插件
+            工作流 就是 字面意思
+                和 cicd 里的工作流是一样的，只是过程中有大模型的参与
+                参考一下腾讯的 混元 元宝 元器
         满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
             满血就是没经过改动的
             量化就是可以运行在内存里的
@@ -4329,6 +4352,9 @@ leetcode做题的一般套路
             https://github.com/jeinlee1991/chinese-llm-benchmark
             https://www.superclueai.com/
             https://super.gluebenchmark.com/leaderboard
+            https://web.lmarena.ai/leaderboard
+            https://cevalbenchmark.com/static/leaderboard_zh.html
+            https://llm-stats.com/
     应用
         生成文本 对话 生成图片 生成视频 生成音频 视频换脸
     有影响力的人

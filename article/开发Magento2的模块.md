@@ -516,6 +516,14 @@ echo $retSql;
 https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/add-product-attribute
 
 app/codeLearning/ClothingMaterial/Setup/Patch/Data/AddClothingMaterial.php
+这种方式，只要 upgrade 都会生效，但重复创建属性可能会导致 upgrade 是报错
+
+app/code/Learning/ClothingMaterial/Setup/InstallData.php
+这种方式， etc/module.xml 里必须有  setup_version="0.0.1" 才会生效
+
+upgrade 之后，后台的配置页面就自动有对应的属性设置了
+
+app/codeLearning/ClothingMaterial/Setup/Patch/Data/AddClothingMaterial.php
 ```php
 <?php
 namespace Learning\ClothingMaterial\Setup\Patch\Data;
@@ -4580,7 +4588,7 @@ mkdir($modulePath . '/etc', 0755, true);
 $moduleContent = <<< EOF
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="{$vendor}_{$moduleName}"/>
+    <module name="{$vendor}_{$moduleName}" setup_version="0.0.1"/>
 </config>
 EOF;
 
