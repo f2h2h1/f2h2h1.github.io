@@ -3860,6 +3860,14 @@ linux 中的各种 id
             deferred v. 延期
         async/await
         规范 Promises/A+ https://promisesaplus.com/
+        js中的异步编程和 Promises/A+ 规范
+            回调
+            事件监听 观察者模式 发布订阅模式
+            Promises async/await
+            生成器
+            响应式编程
+            jQuery 的 deferred
+            ES6 中的原生 Promise
 多进程 和 多线程 和 协程
     多进程讲究的是进程间通讯
         管道 pipe
@@ -4284,12 +4292,13 @@ leetcode做题的一般套路
             将符号人工智能命名为GOFAI（Good Old-Fashioned Artificial Intelligence，指的是“有效的老式人工智能）。
             在机器人学领域 ，类似的术语是GOFR （“有效的老式机器人学”）。
             https://en.wikipedia.org/wiki/GOFAI
+        支持向量机 (Support Vector Machine, SVM)
     神经网络（neural network）
     深度学习（Deep Learning）
     大语言模型（Large Language Model, LLM）
         提示工程（Prompt Engineering）
         AI Agent/bot/Generative AI/微调/RAG/MOE
-            微调是再训练一次并加入新数据
+            微调（Fine-Tuning，FT）是再训练一次并加入新数据
             rag是在上下文或提示词里加入新数据
                 rag 就是 知识库
             AI Agent 就是 bot
@@ -4385,6 +4394,7 @@ leetcode做题的一般套路
         数学要素 https://github.com/Visualize-ML/Book3_Elements-of-Mathematics
             这是一套系列丛书，一共有七本 https://github.com/Visualize-ML/Book3_Elements-of-Mathematics/blob/main/鸢尾花书_整体布局.pdf
         如何入门人工智能科研 https://github.com/WengLean/hands-on-research-tutorial
+        动手学深度学习（Dive into Deep Learning，D2L.ai） https://github.com/d2l-ai/d2l-zh
         ApacheCN
             https://github.com/apachecn/Interview
             https://github.com/apachecn/ailearning
@@ -6764,7 +6774,9 @@ Hello what what is the first thing, and I am am scq000.
     什么是密码朋克(Crypto punk)
 java
     命令行
+        纯手工管理依赖和编译
         Ant
+            ant 的作用类似于 make 并不能管理依赖
         Maven
             pom.xml
             Maven Wrapper
@@ -6844,7 +6856,35 @@ java
             九个内置对象
         tomcat
             普通的tomcat
+                可以直接把 jsp 文件放进 tomcat 根目录里运行，就像 php 那样
+                war 就是 jar 只是文件后缀不一样而已，打包命令是一样的
+                war 也是直接放在tomcat根目录下的webapps
+                    tomcat 默认情况下启动后会自动解压 war 的
             嵌入式的tomcat
+            常见的 jar
+                servlet
+                jsp
+                jstl
+                jackson
+                Apache Commons
+                mysql-connector-java
+                log4j
+                sqlite-jdbc
+            servlet 的一般目录结构
+                .setting     一般的eclipse项目都有这个
+                src          就是放源码的
+                    要正确地编译servlet
+                        编译时要加上tomcat下的lib包，虽然不是全都能用上，但没心思区分哪个有用哪个没用了
+                        编译好的servlet要放在正确的目录里，一般是网站根目录的WEB-INF/classes目录下
+                WebContent   这个是网站的根目录，一般把这个目录直接放到tomcat根目录下的webapps里就可以运行了，
+                        放静态文件，jsp，lib，编译好的java类，一般会新建一些文件夹来放jsp文件
+                    META-INF 不知道是放什么的
+                    WEB-INF  放lib和编译好的servlet和其它java类的，也可以放一些不能被外部访问的文件
+                        classes 编译好的java类，包含servlet
+                        lib     放lib的，一般有servlet，jsp，和其它第三方的lib
+                        web.xml tomcat的配置文件
+                .classpath   一般的eclipse项目都有这个
+                .project     一般的eclipse项目都有这个
         ssh
             Struts2
             Spring
@@ -6989,5 +7029,7 @@ tar --xz -cf UrsaMinor-`date +%g%m%d%H%M`.tar.xz UrsaMinor
 想了解的事
 想做的事
 需要做的事
+
+学了那么多，感觉也都是 茴 字的四种写法
 
 ````

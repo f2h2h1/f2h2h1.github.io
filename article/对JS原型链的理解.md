@@ -497,6 +497,54 @@ js 的各种循环方法
         }
 
 
+节点 node
+文档 document
+元素 element
+标签 tag
+属性 attribute
+node 包含了 document element ， document element 都可以算是一种节点
+Node.nodeType
+https://developer.mozilla.org/zh-CN/docs/Web/API/Node/nodeType#%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B%E5%B8%B8%E9%87%8F
+
+
+js 中 attribute 和 property 的联系与区别？
+在 JavaScript 中，attribute 和 property 虽然都可以翻译为“属性”，
+但它们在实际使用中有一些重要的区别和联系：
+Attribute
+    定义：Attribute 是 HTML 标签上的特性，定义在 HTML 文档中。
+    类型：Attribute 的值只能是字符串。
+    访问方式：可以通过 getAttribute() 和 setAttribute() 方法来访问和修改。
+    示例：<input id="myInput" type="text" value="Hello"> 中的 id、type 和 value 都是 attributes。
+Property
+    定义：Property 是 DOM 对象的属性，是 JavaScript 对象的一部分。
+    类型：Property 的值可以是任意类型（如字符串、布尔值、对象等）。
+    访问方式：可以直接通过 JavaScript 对象的属性来访问和修改。
+    示例：document.getElementById('myInput').value 中的 value 是一个 property。
+联系与区别
+    同步关系：在元素初始化时，HTML 中的 attribute 会被同步到对应的 DOM property 中。例如，<input value="Hello"> 会将 value attribute 的值同步到 input 元素的 value property 中。
+    单向绑定：修改 attribute 不会自动更新 property，反之亦然。例如，使用 setAttribute('value', 'New Value') 修改 attribute 后，input.value 仍然保持原值，除非手动同步。
+    类型差异：Attribute 的值始终是字符串，而 property 的值可以是任意类型。例如，checked attribute 是字符串 "checked"，而 checked property 是布尔值 true 或 false。
+
+href 和 id 是两个特殊的属性
+Attribute 和 Property 是双向绑定的
+
+class 和 style 也是两个特殊的属性
+
+
+在 DOM（文档对象模型）中，节点和元素有一些关键区别：
+    节点 (Node):
+        节点是 DOM 树中的基本单元。
+        包括多种类型，如元素节点、文本节点、属性节点、注释节点等。
+        每个部分（文档、元素、文本、注释等）都是一个节点。
+    元素 (Element):
+        元素是节点的一种类型，具体来说是元素节点。
+        由 HTML 标签定义，例如 <div>、<p> 等。
+        元素节点可以包含其他类型的节点，如文本节点和注释节点。
+简单来说，所有元素都是节点，但并非所有节点都是元素。
+例如，<span> 是一个元素节点，而它内部的文本则是文本节点。
+
+
+
 
 new 运算符
 function User(name) {
