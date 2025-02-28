@@ -513,15 +513,73 @@ echo $retSql;
 
 ### 通过模块里的 setup 新建
 
-https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/add-product-attribute
-
-app/codeLearning/ClothingMaterial/Setup/Patch/Data/AddClothingMaterial.php
-这种方式，只要 upgrade 都会生效，但重复创建属性可能会导致 upgrade 是报错
+- 参考这个文档 https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/add-product-attribute
+- 在模块里的 setup 文件夹下新建 InstallData.php 或 AddClothingMaterial.php
+    - app/code/Learning/ClothingMaterial/Setup/InstallData.php
+        - 这种方式， etc/module.xml 里必须有  setup_version="0.0.1" 才会生效
+    - app/codeLearning/ClothingMaterial/Setup/Patch/Data/AddClothingMaterial.php
+        - 这种方式，只要 upgrade 都会生效，但重复创建属性可能会导致 upgrade 是报错
+- 新建好对应文件后，运行一次 upgrade 命令，后台的配置页面就自动有对应的属性设置了
 
 app/code/Learning/ClothingMaterial/Setup/InstallData.php
-这种方式， etc/module.xml 里必须有  setup_version="0.0.1" 才会生效
+```php
+<?php
+declare(strict_types=1);
 
-upgrade 之后，后台的配置页面就自动有对应的属性设置了
+namespace Learning\ClothingMaterial\Setup;
+
+use Magento\Catalog\Model\Product;
+use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
+use Magento\Framework\Setup\InstallDataInterface;
+use Magento\Framework\Setup\ModuleContextInterface;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
+
+class InstallData implements InstallDataInterface
+{
+    protected $eavSetupFactory;
+
+    public function __construct(
+        \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
+    )
+    {
+        $this->eavSetupFactory = $eavSetupFactory;
+    }
+
+    /**
+     * @param ModuleDataSetupInterface $setup
+     * @param ModuleContextInterface $context
+     * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @suppressWarnings(PHPMD.ExessiveMethodLength)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     */
+    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    {
+        $eavSetup = $this->eavSetupFactory->create();
+        $eavSetup->addAttribute(
+            Product::ENTITY,
+            'app_only',
+            [
+                'group'         => 'General',
+                'type'          => 'int',
+                'label'         => 'App Only',
+                'input'         => 'boolean',
+                'source'        => \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
+                'required'      => false,
+                'sort_order'    => 50,
+                'global'        => ScopedAttributeInterface::SCOPE_GLOBAL,
+                'is_used_in_grid'               => false,
+                'is_visible_in_grid'            => false,
+                'is_filterable_in_grid'         => false,
+                'visible'                       => true,
+                'is_html_allowed_on_frontend'   => true,
+                'visible_on_front'              => true,
+            ]
+        );
+    }
+}
+```
 
 app/codeLearning/ClothingMaterial/Setup/Patch/Data/AddClothingMaterial.php
 ```php
@@ -3463,6 +3521,28 @@ if ($logOpen) {
 这一段是硬写在这个方法里的，也可以硬写到其它方法里
 ```
 vendor\magento\zendframework1\library\Zend\Db\Adapter\Abstract.php query
+```
+
+### 使用 Debug 类来输出调用栈
+
+lib\internal\Magento\Framework\Debug.php
+```php
+/**
+ * Prints or returns a backtrace
+ *
+ * @param bool $return      return or print
+ * @param bool $html        output in HTML format
+ * @param bool $withArgs    add short arguments of methods
+ * @return string|bool
+ */
+public static function backtrace($return = false, $html = true, $withArgs = true)
+```
+
+可以像这样调用
+```php
+\Magento\Framework\Debug::backtrace();
+\Magento\Framework\Debug::backtrace(false, false, false);
+echo \Magento\Framework\Debug::backtrace(true, false, false);
 ```
 
 ### 文件搜索

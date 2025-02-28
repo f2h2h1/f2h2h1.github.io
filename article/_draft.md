@@ -4297,7 +4297,7 @@ leetcode做题的一般套路
     深度学习（Deep Learning）
     大语言模型（Large Language Model, LLM）
         提示工程（Prompt Engineering）
-        AI Agent/bot/Generative AI/微调/RAG/MOE
+        AI Agent/bot/Generative AI/上下文窗口/微调/RAG/MOE
             微调（Fine-Tuning，FT）是再训练一次并加入新数据
             rag是在上下文或提示词里加入新数据
                 rag 就是 知识库
