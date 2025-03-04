@@ -1403,6 +1403,7 @@ vscode的使用技巧
             面试时太紧张了，未能完整地向招聘的企业展示自己的能力
             一些情况下 OverQuality 也是面试失败的原因
         客观的原因
+            低代码 和 ai 的发展使得工作岗位减少
             市场已经萎缩 这是根本原因
                 求职者多，岗位少
                 招聘的企业会不断地提高入职的门槛，即使远超岗位要求
@@ -4067,6 +4068,10 @@ ELF格式
     查看文件格式 `file 文件路径`
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
+如何判断自己是否学会了某一项技能？
+    特别是数学相关的？
+        感觉看原理时一看就懂，实践时一做就错
+从零开始学习数学建模
 leetcode做题的一般套路
     要把问题抽象成数学问题
         要抽象成类似这样的函数
@@ -4124,6 +4129,7 @@ leetcode做题的一般套路
 动态规划(Dynamic programming, DP)
     递归
     深度优先搜索
+    贪心
     回溯和剪支
         回溯算法在尝试和回退中穷举所有可能的解，并通过剪枝避免不必要的搜索分支
     记忆化递归
@@ -4137,6 +4143,21 @@ leetcode做题的一般套路
     通常情况下使用 记忆 需要更多的内存，
         在力扣刷题时，一些题目有内存限制，使用 记忆 可能会无法通过，
         但存在一些问题 制表 是无法解决的，依然需要使用 记忆 的方法
+    例题
+        斐波那契数列
+        背包问题 （Knapsack Problem）
+            题干
+                假设有一个背包，
+                能够承载的最大重量为 W，
+                同时有 n 个物品，每个物品 i 具有一个重量 wi​ 和一个价值 vi​。
+                目标是选择一些物品放入背包中，使得所选物品的总重量不超过 W，并且总价值最大化。
+            分类
+                0-1背包
+                    如果限定每种物品只能选择0个或1个，则问题称为0-1背包问题
+                完全背包/无界背包问题
+                    如果不限定每种物品的数量，则问题称为无界背包问题
+                多重背包/有界背包问题
+                    如果限定物品j最多只能选择bj个，则问题称为有界背包问题
 数据分析/机器学习/数据挖掘/数据科学/大数据
     名词
         artificial intelligence AI
@@ -4899,6 +4920,7 @@ linux 应用的一般启动套路
         （现在我似乎有一点理解为什么 Gentoo 会坚持编译安装软件了）
     程序配置的时机
         编译时，安装时，启动时，运行时
+        启动时的配置还可以再细分为 可以通过重载配置更新 和 不可以通过重载配置更新
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收
@@ -5118,6 +5140,12 @@ wordpress
                 wp server --host=127.0.0.1 --port=80
             忘记密码后用来修改密码的， 1 是userid
                 php wp-cli.phar user update 1 --user_pass=password
+            wp option 修改 wp 的配置，这是对应 wp_options 表的
+                wp option list
+                wp option get {key}
+                wp option add {key} {value}
+                wp option update {key} {value}
+                wp option delete {key}
         如果是使用 composer exec 来运行 wp server 则需要设置 compoer 的 timeout ， composer 的 timeout 默认是 300 秒
             通过配置文件设置
                 {
@@ -5127,6 +5155,7 @@ wordpress
                 }
             通过环境变量设置
             export COMPOSER_PROCESS_TIMEOUT=0
+            COMPOSER_PROCESS_TIMEOUT=0 wp server --host=127.0.0.1 --port=80
     WooCommerce 安装和配置
         示例数据
             商品数据
@@ -5255,6 +5284,15 @@ wordpress
             https://wordpress.org/support/topic/configuring-wordpress-with-postgresql/
             https://github.com/PostgreSQL-For-Wordpress/postgresql-for-wordpress
     如何寻找前1000个用户 https://github.com/naxiaoduo/1000UserGuide
+    wordpress 和 Automattic 和 wpengine 之间的关系
+        wordpress 是开源原软件，由 wordpress基金会管理
+            https://wordpress.org/
+            https://wordpressfoundation.org/
+        Automattic是一家网页程序设计公司，成立于2005年8月
+            主要的产品有 wordpress.com 和 tumblr
+            Automattic会定期向wordpress贡献代码
+            WordPress.com 的免费版不能装插件
+        wpengine 类似 WordPress.com 也提供 wordpress 的托管服务
 接入 alipay+ 的过程
     注册和设置
     支付
@@ -5356,13 +5394,13 @@ wordpress
         存储层次结构
     存储介质
         光学
-            光盘
+            光盘 optical disc
                 cd dvd 蓝光
         磁性
-            磁盘
-                硬盘
-                软盘
-            磁带
+            磁盘 disk
+                硬盘 hard disk
+                软盘 soft disk
+            磁带 tape
         半导体
             Flash memory （闪存）
         其它
@@ -5857,13 +5895,15 @@ nas
         极品飞车 ea
         gt赛车 sony
         极限竞速 微软
-        山脊赛车
-        岸湾
-        头文字D
-        狂野飙车
-        首都高赛车
+        山脊赛车 Namco
+        岸湾 SEGA
+        头文字D SEGA
+        狂野飙车 Gameloft
+        首都高赛车 SEGA
     策略或模拟经营类的游戏
-        文明 全面战争 P社四萌 城市天际线 坎巴拉太空计划
+        文明 全面战争 城市天际线 坎巴拉太空计划
+        P社四萌
+            十字军之王 欧陆风云 维多利亚 钢铁雄心 群星
     小时候玩过的游戏
         碧海银沙
             炸弹人
@@ -5894,6 +5934,9 @@ nas
                 三国志
                 大航海时代
                 真三国无双
+        fc
+            坦克大战
+            俄罗斯方块
         falsh
             闪客快打
             拳皇win
@@ -6676,10 +6719,6 @@ Hello what what is the first thing, and I am am scq000.
         新三论
             结构论、协同论、突变论
         还有一个 复杂系统科学
-如何判断自己是否学会了某一项技能？
-    特别是数学相关的？
-        感觉看原理时一看就懂，实践时一做就错
-从零开始学习数学建模
 为什么网络上的文章作用不是很大？
     没有描述运行环境
     没有描述软件版本
