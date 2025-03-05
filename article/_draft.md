@@ -363,12 +363,13 @@
         计算模型 -> 计算机系统架构 -> 指令集 -> 微架构
         寄存器机 -> 冯诺依曼架构 -> x86指令集 -> Zen4
         冯诺依曼结构
-            以运算单元为中心
-            数据和指令都以二进制编码
-            数据和指令不加区别混合存储在同一个存储器中
-            指令由操作码和地址码组成
-            顺序执行程序的每一条指令
-            由五个部件构成
+            特点
+                以运算单元为中心
+                数据和指令都以二进制编码
+                数据和指令不加区别混合存储在同一个存储器中
+                指令由操作码和地址码组成
+                顺序执行程序的每一条指令
+            组成 由五个部件构成
                 运算器 控制器 存储器 输入设备 输出设备
             为什么顺序执行也可以算作冯诺依曼结构特点之一？
         计算问题（Computational problem）
@@ -757,6 +758,8 @@ frp的使用
     hello算法，一个非常好的 数据结构和算法的教程
         https://github.com/krahets/hello-algo
         https://www.hello-algo.com
+    labuladong 的算法笔记 刷算法全靠套路 https://github.com/labuladong/fucking-algorithm
+    《代码随想录》LeetCode 刷题攻略 https://github.com/youngyangyang04/leetcode-master
     ctf wiki https://github.com/ctf-wiki/ctf-wiki
     并行计算的 wiki 和 oi wiki ctf wiki 差不多 https://github.com/lcpu-club/hpc-wiki
     演算法笔记：台湾师范大学总结的教程 https://web.ntnu.edu.tw/~algo/
@@ -4072,6 +4075,8 @@ ELF格式
     特别是数学相关的？
         感觉看原理时一看就懂，实践时一做就错
 从零开始学习数学建模
+    我总想找到一种方法来应对所有类型的算法面试题
+    或者说我总想找到一种方法来应对所有考试时遇到的数学题
 leetcode做题的一般套路
     要把问题抽象成数学问题
         要抽象成类似这样的函数
@@ -4081,6 +4086,11 @@ leetcode做题的一般套路
             处理输入
             格式化输出
         多数 leetcode 的题目都会自动处理好第一步和第三步
+        实际面试时可能依然要自己处理输入和输出
+            代码随想录里把
+                不需要处理输入输出的称为 核心模式
+                需要处理输入输出的称为 ACM模式
+                https://github.com/youngyangyang04/leetcode-master/blob/master/problems/%E5%89%8D%E5%BA%8F/ACM%E6%A8%A1%E5%BC%8F.md
     要准确地理解问题，然后选择正确的数据结构和算法
     先学好理论再去做题
     如果一道题一直没思路就直接看答案
@@ -4158,6 +4168,7 @@ leetcode做题的一般套路
                     如果不限定每种物品的数量，则问题称为无界背包问题
                 多重背包/有界背包问题
                     如果限定物品j最多只能选择bj个，则问题称为有界背包问题
+    现有循环，后有表格，表格就是两层循环的数组展开后的结果
 数据分析/机器学习/数据挖掘/数据科学/大数据
     名词
         artificial intelligence AI
