@@ -409,6 +409,8 @@ https://github.com/swissup/module-search-mysql-legacy
         Magento_Elasticsearch7
         Magento_InventoryElasticsearch
         Magento_OpenSearch
+        2.4.5 是 Magento_Elasticsearch,Magento_Elasticsearch7,Magento_Elasticsearch6
+        2.4.6 是 Magento_Elasticsearch,Magento_Elasticsearch7,Magento_OpenSearch
         ```
     1. 比较完整的安装命令，但仅供参考
         ```

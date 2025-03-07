@@ -4510,7 +4510,7 @@ openbsd-inetd
     # 安装必要的软件
     apt install -y vim && \
     apt install -y net-tools && \
-    apt install -y netcat && \
+    apt install -y netcat-traditional && \
     apt install -y openbsd-inetd && \
     apt install -y procps
     # 修改 inetd 的配置，启用相关的协议
