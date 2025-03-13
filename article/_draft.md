@@ -53,6 +53,18 @@
                 ntp (Network Time Protocol) 网络时间协议
                 PTP (Precision Time Protocol) 精确时间协议
                 dhcp
+                    DHCP（Dynamic Host Configuration Protocol）动态主机配置协议
+                    DHCP 是基于客户端-服务器模式的标准协议，由RFC 2131定义
+                    它允许服务器集中管理IP地址池，自动为网络中的主机（如计算机、手机等）分配临时或永久的IP地址及相关配置
+                    服务器控制一段IP地址范围（地址池），客户端接入网络时自动获取IP地址、子网掩码、网关和DNS服务器等信息
+                    DHCP采用四步交互流程（DORA模型）完成地址分配： 
+                        Discover ：客户端广播请求，寻找可用的DHCP服务器。
+                            客户端在未获得 IP 地址时，会通过 UDP 广播 （目标地址 255.255.255.255 或子网广播地址）发送 DHCP Discover  消息，寻找可用的 DHCP 服务器。
+                            此时客户端完全不知道服务器的存在，因此使用广播确保消息能被同一链路中的所有设备（包括潜在的 DHCP 服务器）接收。
+                        Offer ：服务器响应并提供IP地址及相关配置。
+                        Request ：客户端正式请求使用提供的地址。
+                        Acknowledge ：服务器确认分配，完成绑定
+                    DHCP客户端和服务器通过UDP端口68（客户端）和67（服务器）通信
                 smtp
                 pop3
                 imap
@@ -126,9 +138,9 @@
                     udp 的数据包发出去就不管的了，没有握手，挥手，ack
                     也可以在应用层里实现 tcp 的那套可靠传输机制
                 icmp
+                    ping traceroute/tracert
             网际层
                 ip v4 v6
-                    五元组: 源地址 源端口 目标地址 目标端口 传输层协议
                 ARP
                     ARP inARP GARP RARP
                 IPsec
@@ -183,6 +195,13 @@
                 OSPF（Open Shortest Path First）和IS-IS（Intermediate System to Intermediate System），它们通过交换链路状态信息来构建网络拓扑图。
     tcp 和 udp
     什么是socket
+        socket 的中文翻译是套接字
+        network socket 网络套接字
+        五元组（five-element tuple）: 源地址 源端口 目标地址 目标端口 传输层协议
+            一个五元组，优惠称为套接字对（socket pairs）
+        SOCK_DGRAM 数据报套接字 用在UDP
+        SOCK_STREAM 流套接字 用在TCP
+        SOCK_RAW 原始套接字 除了UDP和TCP之外的传输层协议，例如 icmp
     从socket里读写内容
         一些限制
             输入输出只考虑 asni ，多字节编码不好处理，这里只关注网络连接
@@ -654,6 +673,12 @@
         MVCC
         ACID CAP BASE
         nosql 和 newsql
+            文档型数据库
+            KV数据库
+            列数据库
+            时序数据库
+            图数据库
+            向量数据库（vector database）
         mysql 的一般使用
             explain sql
     计算机网络
@@ -4341,6 +4366,9 @@ leetcode做题的一般套路
             工作流 就是 字面意思
                 和 cicd 里的工作流是一样的，只是过程中有大模型的参与
                 参考一下腾讯的 混元 元宝 元器
+            MCP（Model Context Protocol）
+                MCP 是由 Anthropic 公司（Claude 模型） 推出的一个协议，
+                它通过提供一种标准化的接口，LLM 应用可以访问外部信息、工具和资源。
         满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
             满血就是没经过改动的
             量化就是可以运行在内存里的
@@ -4379,6 +4407,7 @@ leetcode做题的一般套路
         Claude
         Grok
         Gemini
+        gemma 谷歌的，Gemma是谷歌基于Gemini技术打造的轻量级模型系列
         LLaMA mate
         Phi 微软的
         BLOOM 来自法国的，也是开源的
@@ -4778,7 +4807,7 @@ termux
                     如果安装失败就更新一下 apt ， sudo apt-get update
                     https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/gui-apps
                 安装 snap
-                    apt install snap
+                    apt install snapd
                     在 /etc/wsl.conf 里加入以下内容（如果不存在就新建一个）
                         vi /etc/wsl.conf
                         [boot]
@@ -4801,6 +4830,7 @@ termux
                         flatpak list
                     启动应用
                         flatpak run <app id>
+                    docker 的容器里不能直接运行 snap 却可以直接运行 flatpak，可能是因为 snap 依赖 systemd 的原因吧
                 有完整的桌面环境
                 默认是使用 Wayland ，可以通过配置文件禁用 Wayland ，然后再自己装 x11 环境
                     https://ivonblog.com/posts/wsl-x-server/
@@ -4932,6 +4962,11 @@ linux 应用的一般启动套路
     程序配置的时机
         编译时，安装时，启动时，运行时
         启动时的配置还可以再细分为 可以通过重载配置更新 和 不可以通过重载配置更新
+    配置是什么
+        配置是独⽴于应⽤的数据
+            可以通过配置影响程序的行为
+        配置伴随应⽤的整个⽣命周期
+        配置有多种加载⽅式
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收
@@ -5614,6 +5649,8 @@ nas
         曲 和 词
         风格 和 流派
         交响乐 就是 管弦乐
+        音乐 与 数学的联系？
+            声音和音乐计算 (Sound and music computing, SMC)
 钢琴
     分类
         三角琴 立式钢琴 电钢琴(Electric piano)、数位钢琴(Digital piano)、电子琴(Electronic piano)、合成器 的区别？
@@ -5855,6 +5892,7 @@ nas
         任务管理(todo)
         看板(Kanban)
         知识库（Knowledge base）
+        电子手账（electronic notebook）
         项目管理(Project Management System, PMS)
             Microsoft Project
             Redmine
@@ -5870,6 +5908,7 @@ nas
         收集 知识和信息
         整理 知识和信息
         方便地检索 知识和信息
+            把 知识和信息 整理成一个有向图
         需要做什么
 汽车，飞机和模拟器
     如何驾驶汽车
@@ -6996,9 +7035,10 @@ hello 算法 https://github.com/krahets/hello-algo
 微软的写作风格指南
     https://docs.microsoft.com/zh-cn/contribute/style-quick-start
     https://docs.microsoft.com/zh-cn/style-guide/welcome/
-程序员延寿指南 https://github.com/geekan/HowToLiveLonger
-人体系统调优不完全指南 https://github.com/zijie0/HumanSystemOptimization
 程序员做饭指南 https://github.com/Anduin2017/HowToCook
+人体系统调优不完全指南 https://github.com/zijie0/HumanSystemOptimization
+程序员延寿指南 https://github.com/geekan/HowToLiveLonger
+多智能体框架 https://github.com/geekan/MetaGPT
 开源软件指南
     https://github.com/github/opensource.guide
     https://opensource.guide/zh-hans/
@@ -7006,6 +7046,7 @@ GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts ht
 中国程序员容易发音错误的单词 https://github.com/shimohq/chinese-programmer-wrong-pronunciation
 收录基于Cloudflare的开源工具 https://github.com/zhuima/awesome-cloudflare
 计算机教育中缺失的一课 https://github.com/missing-semester-cn/missing-semester-cn.github.io
+各种图书的合集 https://github.com/0voice/expert_readed_books
 版本控制软件比较
     git
         github

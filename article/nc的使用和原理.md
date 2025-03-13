@@ -7,7 +7,7 @@ nc 是 netcat 的缩写。
 nc 是一个用于处理网络连接的工具。
 
 netcat 的原始版本是一个 Unix 程序。
-最后一个版本 （1.10） 于 1996 年 4 月发布。原作者叫做 Hobbit 。
+最后一个版本 （1.10） 于 1996 年 4 月发布。原作者叫做 Hobbit <hobbit@avian.org>。
 - https://nc110.sourceforge.io/
 - https://sourceforge.net/projects/nc110/
 - https://sourceforge.net/p/nc110/git/ci/master/tree/
@@ -285,7 +285,81 @@ nc 有哪些通用的语法？
 服务端部分用 /usr/lib/bash/accept 来实现。
 只有 bash 搞网络编程还是有太多限制了，因为 socket 很多选项无法通过 bash 设置。
 
+
 <!--
+
+不管是 gnu 版本还是 openbsd 版本，都有新老的区别，主要是传送文件时 stdin 发生 EOF 了，老版本会自动断开，而新的 gnu/openbsd 还会一直连着，
+两年前 debian jessie 时统一升过级，导致网上的所有教程几乎同时失效。
+
+GNU netcat 也有个 -q0 参数和 openbsd 的 -N 一样，可以在 stdin 结束时断开连接。
+
+
+linux上可以直接 cat < /dev/tcp/ip/port，没有netcat时应急下。
+cat > /dev/tcp/127.0.0.1/8081
+echo haha > /dev/tcp/127.0.0.1/8081
+
+printf 'GET / HTTP/1.0\r\nHost:www.baidu.com\r\n\r\n' | nc www.baidu.com 80
+printf 'GET / HTTP/1.0\r\nHost:www.baidu.com\r\n\r\n' > /dev/tcp/www.baidu.com/80
+cat < /dev/tcp/www.baidu.com/80
+
+h help
+e exec
+l listen
+k keep-open
+p port
+w wait
+i idle-timeout
+
+s Local source address
+v Verbose
+--version
+
+z Zero-I/O 连接成功后就关闭连接，不读写数据，一般用在扫描端口
+
+
+–idle-timeout 是一个常用于一些 Linux 命令或程序的选项，它用来设置空闲超时时间，
+即当一个连接或会话在一定时间内没有任何活动时，就会被自动断开或关闭。
+不同的命令或程序可能对 --idle-timeout 的含义和用法有所不同，
+但一般都是为了节省资源或提高安全性。
+–idle-timeout 的一些常见用法如下：
+在 nc 命令中，–idle-timeout 用来设置用户连接的超时时间。
+它后面跟一个数字，表示延迟的秒数。
+例如，nc --idle-timeout 2 192.168.0.1 80 表示每隔 2 秒向 192.168.0.1 的 80 端口发送一个数据包，
+如果超过 2 秒没有收到回应，则断开连接。
+
+-i 似乎只能用在客户端
+
+idle adj. 空闲的 v. 空转
+
+
+从源码来看 w 参数
+    客户端多少秒没有活动就关闭连接
+        busybox nc 是通过信号来实现的
+        Nmap的nc 没有看懂。。。
+    opendsb nc 是用在 poll 函数里的
+从源码来看 i 参数是直接用在 sleep 函数里的，起码 busybox nc 和 opendsb nc 都是这样的
+    类似于这样的使用
+        if (iflg)
+            sleep(iflg)
+
+
+nc 的参数
+    作为 客户端 的参数
+    作为 服务端 的参数
+        -l
+        -p
+        -k 表示重复接收并处理某个端口上的所有连接，必须与 -l 参数一起使用。指定该参数，则意味着 nc 被当作 server，侦听并接受多个连接，而非只接受一个连接后就退出
+    通用的参数
+        -h
+        -v
+        -u 使用 udp 协议，这个是通用的，默认是使用tcp
+        -e
+        -4
+        -6
+
+不加 k 参数的话，只要处理完一个连接，服务端就会跟着关闭
+
+
 用 python 和 php 实现一个 nc ，只实现 -h -l -e 这三个参数即可。
 
 理论上只要实现了 l p e 三个参数就能作为服务端运行
