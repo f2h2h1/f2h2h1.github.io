@@ -1039,7 +1039,7 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
         /** @var \Magento\Framework\GraphQl\Schema\SchemaGeneratorInterface */
         $schemaGenerator = $objectManager->get(\Magento\Framework\GraphQl\Schema\SchemaGeneratorInterface::class);
 
-        $source = '';
+        $source = ''; // 这个位置填 graphql 的 查询语句
 
         $rootValue = null;
 
@@ -1121,6 +1121,155 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
 
     ```
 
+0. 通过账号密码生成用于请求的 token
+    ```graphql
+    mutation Login {
+        generateCustomerToken(email: "test.test.test@test.com", password: "12345678") {
+            token
+            __typename
+        }
+    }
+    ```
+
+0. 通过 js 发起 graphql 请求
+    - 原生 js
+    ```js
+    (function(){
+        const query = `
+        query {
+            customer {
+                email
+                firstname
+                lastname
+            }
+        }
+        `;
+        fetch(`${window.location.origin}/graphql`, {
+            method: 'POST', // 如果不是 mutation 类型的请求，这个位置可以改成 GET
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query: query })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+    })()
+    ```
+    - jQuery
+    ```js
+    (function(){
+        const query = `
+        query {
+            customer {
+                email
+                firstname
+                lastname
+            }
+        }
+        `;
+        jQuery.ajax({
+            url: `${window.location.origin}/graphql`,
+            type: "POST", // 如果不是 mutation 类型的请求，这个位置可以改成 GET
+            contentType: "application/json",
+            data: `{"query":${JSON.stringify(query)}}`,
+            success: function(data){
+                console.log(data);
+            }
+        });
+    })();
+    ```
+    - jQuery + require
+    ```js
+    (function(){
+        require(['jquery'], function($) {
+            const query = `
+            query {
+                customer {
+                    email
+                    firstname
+                    lastname
+                }
+            }
+            `;
+            $.ajax({
+                url: `${window.location.origin}/graphql`,
+                type: "POST", // 如果不是 mutation 类型的请求，这个位置可以改成 GET
+                contentType: "application/json",
+                data: `{"query":${JSON.stringify(query)}}`,
+                success: function(data){
+                    console.log(data);
+                }
+            });
+        });
+    })();
+    ```
+
+0. 通过命令行生成用于请求的 token
+    ```php
+    try {
+        // 引入 magento2 的引导文件
+        require __DIR__ . '/app/bootstrap.php';
+        // 创建一个应用对象
+        $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+        // 获取一个对象管理器
+        $objectManager = $bootstrap->getObjectManager();
+        
+        // 如果出现这种错误 area code is not set ，则加上这两句， area 的值可以根据实际场景修改
+        $areaCode = \Magento\Framework\App\Area::AREA_GRAPHQL;
+        $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+        $objectManager->configure(
+            $objectManager
+                ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+                ->load($areaCode)
+        );
+
+        $eventManager = $objectManager->get(\Magento\Framework\Event\ManagerInterface::class);
+        $tokenParametersFactory = $objectManager->get(\Magento\Integration\Model\UserToken\UserTokenParametersFactory::class);
+        $tokenIssuer = $objectManager->get(\Magento\Integration\Api\UserTokenIssuerInterface::class);
+        $storeManager = $objectManager->get(\Magento\Store\Model\StoreManager::class);
+
+        $email = ''; // 这个位置填 customer 的 邮箱
+        /** @var \Magento\Customer\Model\CustomerFactory */
+        $customerFactory = $objectManager->get(\Magento\Customer\Model\CustomerFactory::class);
+        $customer = $customerFactory->create()->setWebsiteId($storeManager->getStore()->getWebsiteId())->loadByEmail($email);
+        $customerDataObject = $customer->getDataModel();
+
+        $eventManager->dispatch('customer_login', ['customer' => $customerDataObject]);
+        $context = new \Magento\Integration\Model\CustomUserContext(
+            (int)$customerDataObject->getId(),
+            \Magento\Integration\Model\CustomUserContext::USER_TYPE_CUSTOMER
+        );
+        $params = $tokenParametersFactory->create();
+        echo $tokenIssuer->create($context, $params);
+
+    } catch (\Throwable $e) {
+        echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+        echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+    }
+    ```
+
+0. 通过数据库生成用于请求的 token
+    - graphql 的 token 保存在这个表里 oauth_token
+    - 在数据库里运行这三句，就能直接生成 token 了
+        ```sql
+        SELECT
+            @customer_id := entity_id
+        FROM `customer_entity`
+        WHERE (email = 'test.test.test@test.com');
+
+        INSERT INTO oauth_token
+        (consumer_id,admin_id,customer_id,`type`,token,secret,verifier,callback_url,revoked,authorized,user_type,created_at,partner_id)
+        VALUES
+        (NULL,NULL,@customer_id,'access',REPLACE(UUID(), '-', ''),REPLACE(UUID(), '-', ''),NULL,'',0,0,3,now(),NULL);
+
+        select *
+        from oauth_token
+        where customer_id = @customer_id
+        order by created_at desc
+        limit 1;
+        ```
+
 <!--
 
 {
@@ -1180,22 +1329,6 @@ curl 'https://magento2.localhost.com/graphql' \
   --data-raw $'{"operationName":"Login","variables":{"email":"test.test.test@test.com","password":"passw!1234"},"query":"mutation Login($email: String\u0021, $password: String\u0021) {\\n  generateCustomerToken(email: $email, password: $password) {\\n    token\\n    __typename\\n  }\\n}\\n"}' \
   --compressed -k --no-progress-meter
 
-在数据库里运行这三句，就能直接生成 token 了
-SELECT
-    @customer_id := entity_id
-FROM `customer_entity`
-WHERE (email = 'test.test.test@test.com');
-
-INSERT INTO oauth_token
-(consumer_id,admin_id,customer_id,`type`,token,secret,verifier,callback_url,revoked,authorized,user_type,created_at,partner_id)
-VALUES
-(NULL,NULL,@customer_id,'access',REPLACE(UUID(), '-', ''),REPLACE(UUID(), '-', ''),NULL,'',0,0,3,now(),NULL);
-
-select *
-from oauth_token
-where customer_id = @customer_id
-order by created_at desc
-limit 1;
 
 可以用这句curl验证生成的token
 curl 'https://magento2.localhost.com/graphql?query=%20%20%20%20%20%20%20%20query%20\{%20%20%20%20%20%20%20%20%20%20customer%20\{%20%20%20%20%20%20%20%20%20%20%20%20email%20%20%20%20%20%20%20%20%20%20%20%20firstname%20%20%20%20%20%20%20%20%20%20%20%20lastname%20%20%20%20%20%20%20%20%20%20\}%20%20%20%20%20%20%20%20\}%20%20%20%20%20%20%20%20' \
@@ -1217,66 +1350,6 @@ curl 'https://magento2.localhost.com/graphql?query=%20%20%20%20%20%20%20%20query
   --compressed -k --no-progress-meter | json_pp
 
 如果在网页端已经登录的前提下，可以在网页的 console 里用这样的代码发送 graphql 请求
-这一种是查询
-(function(){
-    require(['jquery'], function($) {
-        const query = `
-        query {
-          customer {
-            email
-            firstname
-            lastname
-          }
-        }
-        `;
-        // 改用 post 效果是一样的
-        $.ajax({
-            url: `${window.location.origin}/graphql`,
-            type: "POST",
-            contentType: "application/json",
-            data: `{"query":${JSON.stringify(query)}}`,
-            success: function(data){
-                console.log(data);
-            }
-        });
-        // $.ajax({
-        //     url: `${window.location.origin}/graphql`,
-        //     type: "GET",
-        //     contentType: "application/json",
-        //     data: `query=`+query,
-        //     success: function(data){
-        //         console.log(data);
-        //     }
-        // });
-    });
-})();
-
-这一种是修改
-(function(){
-const graphqlEndpoint = `${window.location.origin}/graphql`;
-const query = `
-mutation CheckoutScreenReorder {
-  reorder(increment_id: "123456789") {
-    cartID: cart_id
-  }
-}
-`;
-return fetch(`${graphqlEndpoint}`, {
-    headers: {
-        'Content-Type': 'application/json',
-        store: 'en_US'
-    },
-    method: 'POST',
-    body: `{"query":${JSON.stringify(query)}}`,
-}).then(response => {
-    console.log(response);
-    if (response.status == 200) {
-        console.log(response.text());
-    } else {
-        console.log(response.status);
-    }
-});
-})();
 
 
 graphqlquery=$(cat <<- EOF
