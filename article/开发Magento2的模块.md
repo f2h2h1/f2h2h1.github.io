@@ -4324,6 +4324,37 @@ eav 模型里还有一些表无法理解？
     eav_entity_attribute
 
 
+sales_order 和金额相关的字段
+小结 subtotal
+税 tax
+运费 shipping
+折扣 discount
+实际支付的金额 total_paid
+订单的总金额 grand_total
+
+base_subtotal 基础货币的 小结 不 包含 税 运费 折扣
+base_grand_total 基础货币的 最终金额 包含 小结 税 运费 折扣
+
+有 base_ 前缀的就是 基础货币
+没有 base_ 前缀的就是 订单货币
+
+有 _incl_tax 后缀的就是 包含税
+没有 _incl_tax 后缀的就是 不包含税
+这种后缀 一般用在 运费 和 小结 里
+
+带有 compensation 的应该都是 补偿 相关的字段
+
+基础货币（Base Currency）
+全球货币（Global Currency）
+订单货币（Order Currency）
+
+区分得这么详细是为了处理国际订单和更好地生成财务报表
+
+total_due
+base_to_global_rate
+base_to_order_rate
+
+
 magento2的布局有两种类型
 1. 页面布局(page layout) -> 在 page_layout 目录里的 xml 文件
 2. 页面配置(page configuration) -> 在 layout 目录里的 xml 文件
