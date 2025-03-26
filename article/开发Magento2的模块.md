@@ -519,6 +519,7 @@ echo $retSql;
         - 这种方式， etc/module.xml 里必须有  setup_version="0.0.1" 才会生效
     - app/codeLearning/ClothingMaterial/Setup/Patch/Data/AddClothingMaterial.php
         - 这种方式，只要 upgrade 都会生效，但重复创建属性可能会导致 upgrade 是报错
+        - setup:upgrade 跑完之后 patch_list 表会有记录的，如果有记录，下次 setup:upgrade 就不会跑了
 - 新建好对应文件后，运行一次 upgrade 命令，后台的配置页面就自动有对应的属性设置了
 
 app/code/Learning/ClothingMaterial/Setup/InstallData.php
@@ -2018,7 +2019,7 @@ php -r "while(true){exec('php bin/magento cron:run --group=consumers');sleep(5);
 
 1. 参考 https://developer.adobe.com/commerce/php/development/components/plugins/
 
-## 替换其它模块里的类
+## 替换其它模块里的类 (preference)
 
 <!--
 
@@ -2593,7 +2594,8 @@ soap 的存在感比较低，似乎很少会用到
 https://developer.adobe.com/commerce/php/architecture/modules/areas/
 
 
-php -a <<-'EOF'
+一次输出全部 Area 的 di:info ，写在文件里就能顺利运行，在命令行里就只能运行一次
+php -d xdebug.start_with_request=yes -a <<-'EOF'
 
 try {
 // 引入 magento2 的引导文件
@@ -2640,6 +2642,11 @@ foreach (array_unique($areaListCodes)
 
 EOF
 
+php bin/magento dev:di:info 当前的版本只能输出 GLOBAL area
+
+虽然也有pr可以输出其它 area 
+https://github.com/magento/magento2/issues/38758
+但我需要一次输出全部 area 的
 
 
 后台的渲染逻辑会不会和前台不一样？
@@ -4750,6 +4757,298 @@ FROM
     sales_order
 WHERE sales_order.increment_id = 3100182449 \G
 
+
+
+Product 类的继承链路
+\Magento\Catalog\Model\Product
+\Magento\Catalog\Model\AbstractModel
+\Magento\Framework\Model\AbstractExtensibleModel
+\Magento\Framework\Model\AbstractModel
+\Magento\Framework\DataObject
+\ArrayAccess
+
+关注 setData 和 getData 两个方法
+数据保存在哪里
+    数据库 文件 redis es 其它api
+数据在什么时候设置
+    setData
+数据在什么时候修改
+    setData
+数据在什么时候获取
+    getData
+
+极端情况下的 \Magento\Framework\DataObject::class 的拦截日志
+    找到关键的 key
+    各个赋值位置和调用位置
+    _data 的位置
+    用这样的方式打断点或加日志
+        if ($key == '' && $this instanceof \Magento\Framework\View\Element\Template) {
+            $a = 1;
+            debug_trace_logger()
+        }
+但有一些类会重写 setData 方法
+同理可以应用在 getData 方法，查看属性在哪些地方被调用了
+
+寻找某个属性赋值的位置
+    一般的模型
+        对应的 set 方法
+        vendor\magento\framework\Model\AbstractModel.php
+            setData 可以先加断点，但不要激活，觉得运行到差不多的位置时再激活断点
+    那种 api data
+        对应的 set 方法
+        通常会有一个类似于这样的方法 populateWithArray
+
+
+用于打印 magento2 对象属性的方法
+```php
+    $trace_serialize_arr = function($var, $count = 0) use (&$trace_serialize_arr) {
+        $ret = null;
+        $count++;
+        if ($count > 6) {
+            $ret = '[MAX DEPTH]';
+        } else if (is_string($var)) {
+            $var = trim($var);
+            $var = preg_replace('/\r\n/', "\n", $var);
+            $var = preg_replace('/\n/', '\n', $var);
+            $ret = htmlspecialchars($var);
+        } else if (is_array($var)) {
+            $ret = [];
+            foreach ($var as $k => $v) {
+                $ret[$k] = $trace_serialize_arr($v, $count);
+            }
+        } else if (is_object($var)) {
+            $a = new \ReflectionClass('\\' . get_class($var));
+            if (strpos($a->getName(), 'Interceptor') !== false && strpos($a->getFileName(), 'generated') !== false) {
+                $a = $a->getParentClass();
+            }
+            $ret = ['name' => $a->getName(), 'fileName' => $a->getFileName()];
+            foreach ($a->getProperties() as $property) {
+                if ($property->isPublic()) {
+                    if ($property->isStatic()) {
+                        $ret['public static ' . $property->getName()] = $trace_serialize_arr($property->getValue(), $count);
+                    } else {
+                        $ret['public ' . $property->getName()] = $trace_serialize_arr($property->getValue($var), $count);
+                    }
+                } else {
+                    $property->setAccessible(true);
+                    if ($property->isStatic()) {
+                        $ret['Accessible static ' . $property->getName()] = $trace_serialize_arr($property->getValue(), $count);
+                    } else {
+                        $ret['Accessible ' . $property->getName()] = $trace_serialize_arr($property->getValue($var), $count);
+                    }
+                }
+            }
+            $ret['methods'] = implode(' ', array_map(
+                function($item) {return $item->getName();},
+                $a->getMethods()
+            ));
+            if ($a->hasMethod('getData')) {
+                $methodInstance = $a->getMethod('getData');
+                if ($methodInstance->isPublic()) {
+                    try {
+                        // $nextVar = $methodInstance->invoke($var, 'getData');
+                        $nextVar = $var->getData();
+                        $ret['getData'] = $trace_serialize_arr($nextVar, $count);
+                    } catch (\Throwable $e) {
+                    }
+                }
+            }
+            if ($a->hasMethod('getCustomAttributes')) {
+                $methodInstance = $a->getMethod('getCustomAttributes');
+                if ($methodInstance->isPublic()) {
+                    try {
+                        $ret['getCustomAttributes'] = [];
+                        $nextVar = $var->getCustomAttributes();
+                        if (!is_array($nextVar)) {
+                            $ret['getCustomAttributes'] = $trace_serialize_arr($nextVar, $count);
+                        } else {
+                            foreach ($nextVar as $customAttribute) {
+                                if ($customAttribute instanceof \Magento\Framework\Api\AttributeInterface) {
+                                    $ret['getCustomAttributes'][$customAttribute->getAttributeCode()] = $trace_serialize_arr($customAttribute->getValue(), $count);
+                                } else {
+                                    $ret['getCustomAttributes'][] = $trace_serialize_arr($customAttribute, $count);
+                                }
+                            }
+                        }
+                    } catch (\Throwable $e) {
+                    }
+                }
+            }
+            if ($a->hasMethod('getExtensionAttributes')) {
+                $methodInstance = $a->getMethod('getExtensionAttributes');
+                if ($methodInstance->isPublic()) {
+                    try {
+                        $nextVar = $var->getExtensionAttributes();
+                        $ret['getExtensionAttributes'] = $trace_serialize_arr($nextVar, $count);
+                    } catch (\Throwable $e) {
+                        \Magento\Customer\Api\Data\CustomerExtension::class;
+                    }
+                }
+            }
+            if ($a->hasMethod('__toArray')) {
+                $methodInstance = $a->getMethod('__toArray');
+                if ($methodInstance->isPublic()) {
+                    try {
+                        $nextVar = $var->__toArray();
+                        $ret['__toArray'] = $trace_serialize_arr($nextVar, $count);
+                    } catch (\Throwable $e) {
+                    }
+                }
+            }
+        } else {
+            $ret = $var;
+        }
+        return $ret;
+    };
+
+    print_r($trace_serialize_arr($customerDataObject));
+```
+
+<pre data-flg="debugger" style="display:none;">
+<?php
+    // vendor/magento/module-backend/view/adminhtml/templates/page/js/components.phtml 加在这个文件，那么后台几乎每个页面都会生效
+    // vendor/magento/module-theme/view/frontend/templates/js/cookie_status.phtml 加在这个文件，那么前台几乎每个页面都会生效
+    // require(['jquery'], function($){console.log($('pre[data-flg="debugger"]'))});
+    // jQuery('pre[data-flg="debugger"]');
+    // document.querySelectorAll('pre[data-flg="debugger"]');
+try {
+    $request = $block->getRequest();
+    echo 'this ' . get_class($this);echo PHP_EOL;
+    echo 'block ' . get_class($block);echo PHP_EOL;
+    echo 'request ' . get_class($request);echo PHP_EOL;
+    echo 'ModuleName ' . $request->getModuleName();echo PHP_EOL;
+    echo 'ActionName ' . $request->getActionName();echo PHP_EOL;
+    if ($request instanceof \Magento\Framework\HTTP\PhpEnvironment\Request) {
+        echo 'ModuleName '; var_dump($request->getModuleName());
+        echo 'ControllerName '; var_dump($request->getControllerName());
+        echo 'ActionName '; var_dump($request->getActionName());
+        echo 'PathInfo '; var_dump($request->getPathInfo());
+        echo 'RequestString '; var_dump($request->getRequestString());
+        echo 'Params '; var_dump($request->getParams());
+        echo 'Scheme '; var_dump($request->getScheme());
+        echo 'UserParams '; var_dump($request->getUserParams());
+        echo 'BaseUrl '; var_dump($request->getBaseUrl());
+    }
+    if ($request instanceof \Magento\Framework\App\Request\Http) {
+        echo 'OriginalPathInfo '; var_dump($request->getOriginalPathInfo());
+        echo 'PathInfo '; var_dump($request->getPathInfo());
+        echo 'BasePath '; var_dump($request->getBasePath());
+        echo 'FrontName '; var_dump($request->getFrontName());
+        echo 'RouteName '; var_dump($request->getRouteName());
+        echo 'ControllerModule '; var_dump($request->getControllerModule());
+        echo 'BeforeForwardInfo '; var_dump($request->getBeforeForwardInfo());
+        echo 'DistroBaseUrl '; var_dump($request->getDistroBaseUrl());
+        echo 'FullActionName '; var_dump($request->getFullActionName());
+    }
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+?>
+</pre>
+
+用于打印 magento2 对象属性的方法
+```php
+    $generateLayoutXml = function(\Magento\Framework\View\Layout $that, $name, $name2) use (&$generateLayoutXml) {
+        $tmpBlock = null;
+        if ($that->isUiComponent($name)) {
+            $children = [];
+            $type = 'UiComponent';
+            $tmpBlock = $that->getUiComponent($name);
+        } elseif ($that->isBlock($name)) {
+            $children = [];
+            $type = 'Block';
+            $tmpBlock = $that->getBlock($name);
+        } else {
+            $children = $that->getChildNames($name);
+            $type = 'Container';
+        }
+        $ret = [
+            'key' => $name . ' => ' . $name2,
+            // 'display' => $that->displayElement($name),
+            'type' => $type,
+        ];
+        if (is_object($tmpBlock)) {
+            $ret['block'] = get_class($tmpBlock);
+            if ($tmpBlock instanceof \Magento\Framework\View\Element\Template) {
+                $ret['template'] = $tmpBlock->getTemplate() . ' ' . $tmpBlock->getTemplateFile();
+            }
+        }
+
+        $children = $that->getChildNames($name);
+        if (count($children) > 0) {
+            $ret['children'] = [];
+            foreach ($children as $key) {
+                $ret['children'][$key] = $generateLayoutXml($that, $key, '');
+            }
+        }
+
+        return $ret;
+    };
+
+    // htmlspecialchars
+    // $pagerBlock = $block->getChildBlock('sales.order.history.pager');
+    $pagerBlock = $block->getChildBlock('pager');
+    $layout = $block->getLayout();
+    $layoutXml = $generateLayoutXml($layout, 'root', '');
+    $element = $layoutXml;
+    $mainEle = '';
+    $pathKey = ['page.wrapper', 'main.content', 'columns', 'main', 'content'];
+    while (count($pathKey) > 0) {
+        if (is_array($element['children']) && count($element['children']) > 0) {
+            $child = array_shift($pathKey);
+            if (array_key_exists($child, $element['children'])) {
+                if (count($pathKey) == 0) {
+                    $mainEle = json_encode($element['children'][$child]);
+                    break;
+                }
+                $element = $element['children'][$child];
+            } else {
+                break;
+            }
+        } else {
+            break;
+        }
+    }
+    echo json_encode($layoutXml);
+```
+
+Patch
+事件
+    vendor\magento\framework\Event\Manager.php dispatch
+    vendor\magento\module-staging\Model\Event\Manager.php dispatch
+插件
+    就是 di.xml 里的 type > plugin
+    vendor\magento\framework\Interception\Interceptor.php ___callPlugins
+视图
+配置
+sql
+    vendor\magento\zendframework1\library\Zend\Db\Adapter\Abstract.php query
+cache
+session
+redis
+es
+    vendor\elasticsearch\elasticsearch\src\Elasticsearch\Connections\Connection.php performRequest
+首选项(preference)
+    就是 di.xml 里的 preference
+依赖项替换
+    就是 di.xml 里的 type > arguments
+
+环境变量，原始输入，原始输出
+
+除了 eav 之外还有一种 extension attribute
+
+
+[
+    '_REQUEST_URI' => $_SERVER['REQUEST_URI'] ?? null,
+    '_GET' => $_GET ?? null,
+    '_POST' => $_POST ?? null,
+    '_FILES' => $_FILES ?? null,
+    '_input' => file_get_contents("php://input"),
+    '_SERVER' => $_SERVER ?? null,
+    '_SESSION' => $_SESSION ?? null,
+    // '_stdin' => file_get_contents("php://stdin") // 这一句在命令行里会等待输入
+]
 
 
 <?php

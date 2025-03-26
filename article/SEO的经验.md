@@ -261,6 +261,12 @@ https://www.google.com/advanced_search
     - 脸书
     - tiktok
     - Instagram
+<!--
+LinkedIn
+zolo
+line
+telegram
+-->
 
 这几个平台都有特定的分享标签和分享 api 。
 例如 谷歌的结构化数据， Open Graph 和 Twitter Card 标签。
