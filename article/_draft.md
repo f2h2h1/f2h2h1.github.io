@@ -5194,6 +5194,8 @@ wordpress
                 wp option add {key} {value}
                 wp option update {key} {value}
                 wp option delete {key}
+            如果以 root 用户运行需要加上 --allow-root 参数，例如这样
+                wp --allow-root option list
         如果是使用 composer exec 来运行 wp server 则需要设置 compoer 的 timeout ， composer 的 timeout 默认是 300 秒
             通过配置文件设置
                 {
@@ -5220,8 +5222,9 @@ wordpress
         缓存静态
             WP Super Cache
         全站静态
-            WP2Static
+            WP2Static 这个停更了
             Simply Static
+            自己用无头浏览器和爬虫实现一个？
     dns解释线路分组
     假设在不安装其它主题的情况下，如何合并压缩 js css 文件？
         全站静态化后，这些 js css 文件要怎么处理？
@@ -5233,6 +5236,7 @@ wordpress
             主题：决定了网站的外观、设计、界面，基本上理解为访客所看到的网站的样子；
             插件：扩展WordPress核心的各种功能，达到自己网站的功能定制。
             WordPress开发，指的是主题和插件的定制开发。
+                繁体中文里会把 插件翻译成外挂， 主题描述城外观
         插件 基本上就是 函数 和 钩子(Hook)
             钩子又分为两类 动作(Actions)和过滤器(Filters)
             do_action apply_filter

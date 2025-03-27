@@ -3172,6 +3172,15 @@ EOF
 在 k8s 多个pod的环境下，这些操作是否有效？
 在有 cdn 的环境下，这些操作是否有效？
 
+
+$cacheManager->$objectManager->get(\Magento\Framework\App\CacheInterface::class);
+$tags = []; // 虽然不知道为什么，但是这个值如果不设成空数组，那么 c:c 命令就无法清空这个位置的缓存
+$lifeTime = 3600; // 有效时间
+$cacheManager->save($data, $cacheKey, $tags, $lifeTime);
+$cacheManager->load($cacheKey);
+$cacheManager->remove($cacheKey);
+$cacheManager->clean();
+
 -->
 
 ## 发送邮件
