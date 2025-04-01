@@ -4150,9 +4150,10 @@ leetcode做题的一般套路
         递归 recursion
             递归 强调 函数自己调用自己
         递推是什么？
-            递推没有对应的英文
+            递推没有对应的英文，通常用递归的英文 recursion
             递推可能是指递归也可能是指迭代
-            简中网的文章大多会强调递推是自底向上
+            简中网的文章大多会强调递推是自底向上，递归是自定向下
+                从个人写代码的感受而言，递推和递归确实可以分成两种不同的情况
     算法思想 通常是来自数学上相关的学科 例如 运筹学 最优化 组合数学 这类
     有多种方法可以对算法进行分类
         根据应用分：
@@ -4182,6 +4183,87 @@ leetcode做题的一般套路
         但存在一些问题 制表 是无法解决的，依然需要使用 记忆 的方法
     例题
         斐波那契数列
+            // 普通递归
+            function fibonacci_1($n)
+            {
+                if ($n == 0) {
+                    return 0;
+                }
+                if ($n == 1) {
+                    return 1;
+                }
+                return fibonacci_1($n - 1) + fibonacci_1($n - 2);
+            }
+
+            // 记忆化递归 备忘录
+            function fibonacci_2($n)
+            {
+                static $ret = [];
+                if (isset($ret[$n])) {
+                    return $ret[$n];
+                }
+                if ($n == 0) {
+                    return 0;
+                }
+                if ($n == 1) {
+                    return 1;
+                }
+                return fibonacci_2($n - 1) + fibonacci_2($n - 2);
+            }
+
+            // 动态规划
+            function fibonacci_3($n)
+            {
+                $ret = new SplFixedArray($n + 1);
+                $ret[0] = 0;
+                $ret[1] = 1; // 边界条件
+                for ($i = 2; $i <= $n; $i++) {
+                    $ret[$i] = $ret[$i - 1] + $ret[$i - 2]; // 状态转移方程
+                }
+                return $ret[$n]; // 返回最优解
+            }
+
+            // 基于动态规划继续优化1 滚动数组
+            function fibonacci_3($n)
+            {
+                if ($n == 0) {
+                    return 0;
+                }
+                if ($n == 1) {
+                    return 1;
+                }
+                $ret = new SplFixedArray(3);
+                $ret[0] = 0;
+                $ret[1] = 1;
+                $n = $n - 1;
+                do {
+                    $ret[2] = $ret[1] + $ret[0];
+                    $ret[0] = $ret[1];
+                    $ret[1] = $ret[2];
+                    $n--;
+                } while ($n > 0);
+                return $ret[2];
+            }
+            // 基于动态规划继续优化2
+            function fibonacci_3($n)
+            {
+                if ($n == 0) {
+                    return 0;
+                }
+                if ($n == 1) {
+                    return 1;
+                }
+                $a = 0;
+                $b = 1;
+                $n = $n - 1;
+                do {
+                    $ret = $b + $a;
+                    $a = $b;
+                    $b = $ret;
+                    $n--;
+                } while ($n > 0);
+                return $ret;
+            }
         背包问题 （Knapsack Problem）
             题干
                 假设有一个背包，
@@ -4196,6 +4278,10 @@ leetcode做题的一般套路
                 多重背包/有界背包问题
                     如果限定物品j最多只能选择bj个，则问题称为有界背包问题
     先有循环，后有表格，表格就是两层循环的数组展开后的结果
+    参考
+        https://oi-wiki.org/dp/
+        https://github.com/labuladong/fucking-algorithm/blob/master/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.md
+        https://mp.weixin.qq.com/s/1V3aHVonWBEXlNUvK3S28w
 数据分析/机器学习/数据挖掘/数据科学/大数据
     名词
         artificial intelligence AI
@@ -4428,7 +4514,26 @@ leetcode做题的一般套路
             https://cevalbenchmark.com/static/leaderboard_zh.html
             https://llm-stats.com/
     应用
-        生成文本 对话 生成图片 生成视频 生成音频 视频换脸
+        生成文本 对话 生成视频 生成音频 视频换脸
+        生成图片
+            Midjourney
+            DALL-E 3
+            gpt4o
+            文心一格
+            Microsoft Designer
+                DALL-E 3
+            Adobe Firefly
+                DALL-E 3 + Midjourney
+        AI代码生成
+            cursor
+            Trae 也是来自字节
+            MarsCode (豆包)
+            文心快码
+            GitHub Copilot
+            通义灵码
+            代码小浣熊 商汤
+            CodeWhisperer 亚马逊
+            CodeGeeX 智谱
     有影响力的人
         AI 三巨头
             Geoffrey Hinton：中文名是 杰弗里·辛顿
@@ -4475,6 +4580,25 @@ leetcode做题的一般套路
             https://github.com/apachecn/Interview/tree/master/docs/Kaggle
             https://github.com/apachecn/Kaggle
     现在的人工智能缺乏可解释性，可能就像过去的微积分的无穷小一样，虽然无穷小的定义在第二次数学危机才算解决了，但是并不妨碍十七，十八，十九世纪的数学家和工程师使用微积分
+    ollama
+        安装
+            直接从官网下载 https://ollama.com/ ，哪种系统都适用
+        使用
+            查看帮助 ollama --help
+            拉取模型 ollama pull deepseek-r1:1.5b
+            运行模型 ollama run deepseek-r1:1.5b
+                模型运行后可以直接在命令行里和模型对话
+            列出已存在的模型 ollama list
+            启动rest服务 ollama serve
+                启动rest服务后可以通过http接口和模型对话
+                curl http://localhost:6399/api/generate -d '{
+                    "model": "deepseek-r1:32b",
+                    "prompt":"Why is the sky blue?"
+                }'
+            ollama 的命令和docker 很像
+        前端
+            openwebui
+            https://github.com/ollama-ui/ollama-ui
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
@@ -4625,6 +4749,7 @@ bash 里如何实现一个 trim
     trimmed_str=$(trim "$input")
     echo "Trimmed string: '$trimmed_str'"
 termux
+    安卓16 将会内置 终端 ，这些经验可能会过时
     下载和安装
         要先下载和安装 f-droid https://f-droid.org/
         然后 f-droid 换源 https://mirrors.tuna.tsinghua.edu.cn/help/fdroid/
