@@ -5425,6 +5425,13 @@ wordpress
             WP_HOME 填的就是 网站域名/wordpress
     如何给 woo 增加支付方式 ？
     wordpress 如何实现 国际化/多语言 ？
+        WordPress 是使用 gettext 实现翻译的，主要使用mo文件
+        WordPress 核心的翻译文件通常保存在
+            wp-content/languages/
+        插件的翻译文件通常位于插件目录下的 languages 文件夹中。
+            例如：wp-content/plugins/your-plugin/languages/
+        主题的翻译文件通常位于主题目录下的 languages 文件夹中。
+            例如：wp-content/themes/your-theme/languages/
     wordpress 如何实现 群站 ？
     如何把 wp 建设成 询盘型的外贸企业站 ？
     如何把 wp 建设成 B2C外贸卖货网站 ？
@@ -6832,9 +6839,37 @@ Hello what what is the first thing, and I am am scq000.
     需要关注的要点
         文字 语言 时间/日期格式 单位（货币，质量，体积） 法律
     最终目标都是为了满足不同市场的需求，提升用户体验和市场竞争力。
-    https://www.w3.org/International/questions/qa-i18n
-    https://blog.mozilla.org/l10n/2011/12/14/i18n-vs-l10n-whats-the-diff/
-    https://en.wikipedia.org/wiki/Internationalization_and_localization
+        https://www.w3.org/International/questions/qa-i18n
+        https://blog.mozilla.org/l10n/2011/12/14/i18n-vs-l10n-whats-the-diff/
+        https://en.wikipedia.org/wiki/Internationalization_and_localization
+    ICU
+        https://unicode-org.github.io/icu/
+        对应PHP的 Intl 扩展 https://www.php.net/manual/zh/intro.intl.php
+            magento 是用这个扩展实现翻译的
+        ICU 可以处理 文字 语言 时间/日期格式 单位 等等
+    gettext
+        https://zh.wikipedia.org/wiki/Gettext
+        https://www.gnu.org/software/gettext/
+        gettext是GNU国际化与本地化（i18n）函数库
+        对应PHP的 gettext 扩展 https://www.php.net/manual/zh/book.gettext.php
+            wordpress 是用这个扩展实现翻译的
+        gettext 只能处理文字
+        gettext 的应用比 ICU 更广泛，可能是因为出现得更早吧
+        gettext 的命令
+            xgettext
+            msgint
+            msgfmt
+            msgmerge
+            msgunfmt
+        POT (Portable Object Template)
+            该文件包含主题中的原始字符串，POT文件是需要交给翻译人员的文件
+        PO (Portable Object)
+            包含原始字符串和翻译后的字符串，一种语言一个po文件
+        MO (Machine Object) 
+            编译后的po文件，一个po文件对应一个mo文件
+    JavaScript 的国际化
+        https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl
+        这个没有翻译，但可以处理 时间/日期格式 单位
 无障碍化
     Accessibility ，简称 A11y
     Web accessibility 网页可访问性
