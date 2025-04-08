@@ -4446,6 +4446,8 @@ leetcode做题的一般套路
             微调（Fine-Tuning，FT）是再训练一次并加入新数据
             rag是在上下文或提示词里加入新数据
                 rag 就是 知识库
+                Retrieval-Augmented Generation
+                检索增强生成
             AI Agent 就是 bot
                 提示工程 是 Agent
                 rag 是 Agent
@@ -4457,6 +4459,28 @@ leetcode做题的一般套路
             MCP（Model Context Protocol）
                 MCP 是由 Anthropic 公司（Claude 模型） 推出的一个协议，
                 它通过提供一种标准化的接口，LLM 应用可以访问外部信息、工具和资源。
+                它相当于大模型的”HTTP协议”。
+                    HTTP协议：使浏览器与服务器 交互标准化
+                    MCP：使大模型与外部服务 交互标准化
+            Function Call
+            MOE
+                Mixed Expert Models
+                混合专家模型
+            上下文（context）
+                上下文窗口（context window）
+                    这是模型在生成每个新token时实际参考的前面内容的范围
+                上下文长度（context length）
+                    它限制了模型一次性交互中能够处理的最大token数量
+                    这是指模型单次可以处理的最大输入序列长度，通常以token数表示。
+                    换句话说，这是模型可以同时“看到”的内容的最大数量。
+                Context Length是一个静态的上限，涵盖了整个输入和输出过程中的所有token；
+                Context Window则是一个动态的范围，每次生成token时模型实际参考的上下文。
+                例子
+                    假设一个模型的Context Length是2048，
+                    你输入了一段包含1500个token的文本（prompt），
+                    那么模型生成的响应最多只能有548个token（1500输入 + 548输出 = 2048总长度）。
+                    如果这个模型的 Context Window是512 token，
+                    那么在生成第513个token时，模型只能参考前面的512个token，而不是全部2048个token。
         满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
             满血就是没经过改动的
             量化就是可以运行在内存里的
@@ -5065,6 +5089,17 @@ termux
         在 Linux 上使用的是 KVM、Window 上使用 Hyper-V、macOS 中使用 HyperKit
     各种镜像格式
         raw qcow qcow2 cow vdi vmdk vpc(vhd) vhdx
+linux 应用的一般安装套路
+    编译源码
+        ./configure
+        make
+        make check / make test
+        make install
+            运行这句时最好用 root 用户，因为要把一些文件复制到系统的目录里，这些目录通常需要root权限才能读写
+    通过包管理安装
+        brew pkg apt yum/dnf pacman
+    通过 docker 安装
+    通过 Snappy/Flatpak/AppImage 安装
 linux 应用的一般启动套路
     至少一个启动脚本
         检测或启动一些前置依赖
