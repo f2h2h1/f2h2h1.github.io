@@ -332,31 +332,50 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
 
 ### 配置 Apache
 1. 把 Apache 添加进环境变量
-2. 把 php 目录下的 php7apache2_4.dll 复制到 Apache 目录下的 modules
-3. 打开 Apache 的配置文件 httpd.conf，往 httpd.conf 里添加 php 的模块，httpd.conf 这个文件在 Apache 安装目录的 conf 文件夹里
-    ```plaintext
-    LoadModule php7_module modules/php7apache2_4.dll
+2. 配置 php
+    - php_module
+        1. 把 php 目录下的 php7apache2_4.dll 复制到 Apache 目录下的 modules
+        2. 打开 Apache 的配置文件 httpd.conf，往 httpd.conf 里添加 php 的模块，httpd.conf 这个文件在 Apache 安装目录的 conf 文件夹里
+            ```plaintext
+            LoadModule php7_module modules/php7apache2_4.dll
 
-    AddHandler application/x-httpd-php .php
-    PHPIniDir "C:/php"
-    ```
-    - 这段配置，加在 httpd.conf 的 179 行左右，就是加载模块那部分的尾部
-    - 如果遇到这种错误
-        ```
-        httpd.exe: Syntax error on line 187 of Apache24/conf/httpd.conf: Cannot load modules/php8apache2_4.dll into server:
-        ```
-    - 可以尝试这样解决
-        - 检查 httpd.conf 里的 SRVROOT 是否有填好
-        - 检查 Apache 与 PHP 版本的位数是否一致
-            - 必须是 都是 32 位或都是 64 位
-        - 试试 模块名由 php8_module 改成没有版本号的 php_module
-        - 试试 模块的路径填绝对路径
-            - 例如 这样 C:/php/php8apache2_4.dll
-            - 但 这样的路径却不行 C:/apache/modules/php8apache2_4.dll ，虽然不知道为什么
+            AddHandler application/x-httpd-php .php
+            PHPIniDir "C:/php"
+            ```
+            - 这段配置，加在 httpd.conf 的 179 行左右，就是加载模块那部分的尾部
+            - 如果遇到这种错误
+                ```
+                httpd.exe: Syntax error on line 187 of Apache24/conf/httpd.conf: Cannot load modules/php8apache2_4.dll into server:
+                ```
+            - 可以尝试这样解决
+                - 检查 httpd.conf 里的 SRVROOT 是否有填好
+                - 检查 Apache 与 PHP 版本的位数是否一致
+                    - 必须是 都是 32 位或都是 64 位
+                - 试试 模块名由 php8_module 改成没有版本号的 php_module
+                - 试试 模块的路径填绝对路径
+                    - 例如 这样 C:/php/php8apache2_4.dll
+                    - 但 这样的路径却不行 C:/apache/modules/php8apache2_4.dll ，虽然不知道为什么
+    - fast cgi
+        - 假设使用 mod_proxy_fcgi 模块
+            - 除了 mod_proxy_fcgi 之外，还有 mod_fcgid 和 mod_fastcgi
+        - 把这几行的注释删掉
+            ```
+            LoadModule proxy_module modules/mod_proxy.so
+            LoadModule proxy_connect_module modules/mod_proxy_connect.so
+            LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+            ```
+        - 然后在配置站点的位置加上
+            ```
+            <LocationMatch "^/(.*\.php(/.*)?)$">
+                ProxyPass fcgi://127.0.0.1:9000/var/www/html/
+            </LocationMatch>
+            ```
+        - 127.0.0.1:9000 是 fast cig 的地址
+        - /var/www/html/ 是站点根目录
 
-4. 打开 httpd.conf，将里面的 #ServerName localhost:80 注释去掉。
+3. 打开 httpd.conf，将里面的 #ServerName localhost:80 注释去掉。
 
-5. 在 httpd.conf 里找到这一段
+4. 在 httpd.conf 里找到这一段
 
 ```plaintext
 <Directory />
@@ -372,9 +391,9 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
 </Directory>
 ```
 
-6. 把 httpd.conf 里的 #Include conf/extra/httpd-vhosts.conf 注释去掉。
-7. 打开 httpd-vhosts.conf，把里面的例子删掉
-8. 在 httpd-vhosts.conf 里添加一个站点
+5. 把 httpd.conf 里的 #Include conf/extra/httpd-vhosts.conf 注释去掉。
+6. 打开 httpd-vhosts.conf，把里面的例子删掉
+7. 在 httpd-vhosts.conf 里添加一个站点
 ```plaintext
 <VirtualHost *:80>
     ServerAdmin webmaster@dummy-host3.example.com
