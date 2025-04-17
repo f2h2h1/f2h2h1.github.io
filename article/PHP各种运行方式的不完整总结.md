@@ -19,6 +19,8 @@ SAPI （Server Application Programming Interface，服务端应用编程端口�
     - 就是传统的 cgi 模式，由 php-cgi 这个文件执行
 - apahce_mod
     - apache 模块，编译时需要有这个参数 --with-apxs2
+    - apxs 是通过 `yum install httpd-devel` 或 `apt install apache2-dev` 安装的
+    - 寻找 apxs 的路径 `find / -name apxs`
 - fast-cgi
     - php-cgi
         - 可以支持 cgi 和 fastcgi 的执行文件，编译时没有这个参数 --disable-cgi 就会编译出这个执行文件
@@ -30,7 +32,7 @@ SAPI （Server Application Programming Interface，服务端应用编程端口�
     - ISAPI（Internet Server Application Program Interface）是微软提供的一套面向WEB服务的API接口。
     一般使用在 php + iis 的组合里，好像 7 之后的版本就不支持了，现在已经很少用到了。
     - 现在使用 iis + php 的组合时通常会用 FastCgiModule 这个模块， php 以 fast-cgi 形式运行
-- SAPI 还有好几种例如 phpdbg embed 这些 
+- SAPI 还有好几种例如 phpdbg embed php-win 这些 
 
 可以这样查看 php 当前的运行模式
 ```

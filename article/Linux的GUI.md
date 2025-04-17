@@ -399,6 +399,7 @@ X Window 系统核心协议
 
 如何把 gui 程序塞进 docker 里？
 真的可以这样吗？
+https://github.com/WHG555/obsidian-docker
 
 
 RDP（remote desktop protocol）协议：远程桌面协议，大部分 Windows 系统都默认支持此协议，Windows 系统中的远程桌面管理就基于该协议。

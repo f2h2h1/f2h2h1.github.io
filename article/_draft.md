@@ -1809,7 +1809,9 @@ vscode的使用技巧
     搜索引擎的原理
         倒排索引
         Lucene
-        es
+            solr
+            elasticsearch
+        sphinx
         mysql的全文搜索
 客户端的动画？
     动画是如何实现的？
@@ -4104,6 +4106,21 @@ ELF格式
     或者说我总想找到一种方法来应对所有考试时遇到的数学题
     我们为什么可以把题目归类为一类相似的问题？
     题型的数量是不是可以无限地增加？
+    数学建模需要哪些前置的知识？
+    第1步	识别问题
+    第2步	做出假设
+        a.识别变量并对变量进行分类
+        b.识别变量和子模型之间的相互关系
+    第3步	求解模型
+    第4步	验证模型
+        a.表述了问题吗？
+        b.在通常意义下它有意义吗？
+        c.用实际数据来验证该模型
+    第5步	实施模型
+    第6步	验证模型
+    数学建模 https://book.douban.com/subject/1231271/
+    数学建模方法与分析 https://book.douban.com/subject/1392709/
+    感觉数学建模的那些算法和机器学习的十分相似，可能就是同一套。。。
 leetcode做题的一般套路
     要把问题抽象成数学问题
         要抽象成类似这样的函数
@@ -4366,12 +4383,15 @@ leetcode做题的一般套路
     机器学习 和 数据挖掘 通常由it主导
     文档型数据库和关系型数据库本质上有些什么区别？文档型数据库出现的背景？
     列数据库和关系型数据库本质上有些什么区别？
-    Symbolic AI
-    Explainable AI
-    Neuro-symbolic AI
-    weak AI
-    strong AI
-    artificial general intelligence，AGI
+    Symbolic AI 符号AI
+    Explainable AI，XAI 可解释AI
+    Neuro-symbolic AI 混合式神经-符号AI
+    weak AI 弱AI
+    strong AI 强AI
+    artificial general intelligence，AGI 通用人工智能
+    traditional AI 传统AI
+        predictive AI 预测式AI
+    generative AI 生成式AI
     相关的职业
         数据科学家（Data scientist）
             数据科学家分析复杂的数字数据，帮助企业做出决策。
@@ -4437,7 +4457,17 @@ leetcode做题的一般套路
             将符号人工智能命名为GOFAI（Good Old-Fashioned Artificial Intelligence，指的是“有效的老式人工智能）。
             在机器人学领域 ，类似的术语是GOFR （“有效的老式机器人学”）。
             https://en.wikipedia.org/wiki/GOFAI
+            GOFAI 通产包含 决策树 和 搜索算法（启发式搜索，对抗搜索）
         支持向量机 (Support Vector Machine, SVM)
+        对于模型的分类，不同的标准会有不同的分类，就像对算法的分类一样
+        两条路线
+            自顶向下 从应用到原理
+            自底向上 从原理到应用
+        如何选择机器学习的算法
+            https://learn.microsoft.com/zh-cn/azure/machine-learning/how-to-select-algorithms?view=azureml-api-1
+            https://zhuanlan.zhihu.com/p/345855210
+            https://scikit-learn.org/stable/machine_learning_map.html
+        深度学习与机器学习 https://learn.microsoft.com/zh-cn/azure/machine-learning/concept-deep-learning-vs-machine-learning?view=azureml-api-2&viewFallbackFrom=azureml-api-1&WT.mc_id=docs-article-lazzeri
     神经网络（neural network）
     深度学习（Deep Learning）
     大语言模型（Large Language Model, LLM）
@@ -4577,6 +4607,7 @@ leetcode做题的一般套路
         Torch
         TensorFlow
         Keras
+        sklearn 这个主要用于学习
         ML.NET
         Apache SINGA
         Apache Spark MLlib
@@ -4887,7 +4918,18 @@ termux
         4 在远程计算机里运行这句，这样就能通过外网连回手机的 termux 了
             ssh -o ServerAliveInterval=60  用户名@127.0.0.1 -p 8022
 虚拟化技术
-    模拟器 虚拟机 容器 兼容层 kvm k8s chroot/schroot/proot
+    模拟器(emulator) 虚拟机(virtual machine) 容器(container) kvm docker k8s
+    Namespace(命名空间, name space)
+    Cgroups(控制组群, control groups)
+    chroot/schroot/proot
+    兼容层(Compatibility layer)
+        Wine
+        Cygwin
+    OpenStack
+        iaas
+    OpenShift
+        是一个基于 Kubernetes 的企业就绪型开发平台，可在许多行业中用于编排容器以及开发和大规模交付云原生应用
+        paas
     硬件 系统 软件 隔离
     目标系统/宿主系统
         windows linux Android macOS
@@ -5087,6 +5129,7 @@ termux
         运行环境支持 Linux、Windows、macOS。
         在不同的操作系统上，使用的是不同的虚拟化技术。
         在 Linux 上使用的是 KVM、Window 上使用 Hyper-V、macOS 中使用 HyperKit
+    LXC 和 LXD
     各种镜像格式
         raw qcow qcow2 cow vdi vmdk vpc(vhd) vhdx
 linux 应用的一般安装套路
@@ -5129,6 +5172,7 @@ linux 应用的一般启动套路
             可以通过配置影响程序的行为
         配置伴随应⽤的整个⽣命周期
         配置有多种加载⽅式
+基本上是一个工具一篇笔记？
 垃圾回收
     什么是垃圾
     为什么要进行垃圾回收
@@ -5481,6 +5525,11 @@ wordpress
             一些快递公司也可以代理申报
                 递四方 云途 燕文
         什么是海外仓？
+            海外仓（Overseas Warehouse）指企业在目标市场国家建立的仓储中心，
+            通过本地化存储、快速配送的模式，为跨境电商卖家提供仓储、一件代发、退货处理等全链路服务。
+            卖家自营海外仓
+            平台海外仓（如亚马逊FBA）
+            物流商运营海外仓
         直接当普通的个人包裹寄到到外国应该也可以吧
     如何收款
         平台电商都有各自的收款渠道
@@ -6990,7 +7039,10 @@ Hello what what is the first thing, and I am am scq000.
         Science and Technology n. 科技 科学和技术
     三论
         旧三论
-            系统论、控制论、信息论
+            系统论
+            控制论
+                《工程控制论》钱学森
+            信息论
         新三论
             结构论、协同论、突变论
         还有一个 复杂系统科学
