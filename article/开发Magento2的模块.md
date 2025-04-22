@@ -4011,6 +4011,45 @@ https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-
 https://devdocs.magento.com/guides/v2.4/config-guide/cron/custom-cron.html
 -->
 
+### 备份源码和数据库
+
+magento2 有备份功能，但已经弃用
+https://experienceleague.adobe.com/en/docs/commerce-operations/installation-guide/tutorials/backup
+
+- 备份源码
+    - 在 composer.json 里加上这一段
+    ```
+    "archive": {
+        "exclude": ["var", "generated", "pub/static", ".git", ".vscode"]
+    }
+    ```
+    - 然后在根目录运行这句命令
+    ```
+    composer archive --format=zip --file=magento2
+    composer archive --format=zip --file=magento2-$(date +%Y%m%d)
+    ```
+
+<!--
+tar -czvf /var/www/html/magento2.tar.gz /var/www/html/magento2
+    可以用 --exclude 参数来忽略一些目录或文件，例如这样
+    tar -czvf /var/www/html/magento2.tar.gz \
+        --exclude=var \
+        --exclude=generated \
+        --exclude=pub/static \
+        --exclude=.git \
+        --exclude=.vscode \
+        /var/www/html/magento2
+
+git archive --format=zip --output=archiveFileName.zip HEAD
+    git 会根据 .gitignore 文件的内容排除一些文件，但 .gitignore 要提交到仓库里才生效
+-->
+
+- 备份数据库
+```
+mysqldump -u root -p magento2 > backup_database.sql
+mysqldump -u root -p magento2 --no-create-info > backup_database.sql
+```
+
 ## 参考
 
 中文文档 https://experienceleague.adobe.com/docs/commerce.html?lang=zh-Hans

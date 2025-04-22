@@ -124,6 +124,10 @@ IntelliSense 的插件有两个， IntelliSense 只需要装一个就可以的�
     ```
     document.cookie="XDEBUG_SESSION=vscode"
     ```
+    <!--
+    $.cookie("XDEBUG_SESSION", "vscode");
+    require(['jquery'], function($){$.cookie('XDEBUG_SESSION', 'vscode');});
+    -->
 8. 用 postman 或 curl 这类工具测试时，只要 http 头的 cookie 带有 `XDEBUG_SESSION=vscode` ，就是触发调试的了，类似于这样
     ```
     curl -k --cookie "XDEBUG_SESSION=vscode" http://testurl
