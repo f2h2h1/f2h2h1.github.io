@@ -5839,7 +5839,20 @@ nas
             用于冷备的硬盘
             网盘上再放一份数据？
         可以自建的其它服务？
-            邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，2fa/mfa/totp，rss阅读器） 旧的游戏
+            邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，2fa/mfa/totp，rss阅读器）
+            旧的游戏
+                平台 类型
+                前端
+                    Pegasus（天马）
+                    batocera（巴托塞拉）
+                    Playnite https://playnite.link/
+                    EmulationStation（ES）
+                    coinops
+                刮削器 Scraper
+                    Scraper 的直译，英文原文 scraper 一词，结合软件作用，应该是取 “平土机” 的 “填补” 意义。
+                    信息
+                    媒体
+            影视刮削
         放在哪里？体积？噪声？辐射？
         费用？
             硬件费用，电费，网费
@@ -6204,28 +6217,55 @@ nas
         碧海银沙
             炸弹人
             PANG 96
-        红警
-            95 2 尤里的复仇 3 起义时刻
-        魔兽
-            3 冰封王座
-        国家的崛起
-        帝国时代3
-        罗马的复仇
-        三国群英传
-        极品飞车6
-        fifa 2006
+            碧海银沙 的游戏 大多都有街机游戏原型
+        pc
+            红警
+                95 2 尤里的复仇 3 起义时刻
+            魔兽
+                3 冰封王座 澄海3c
+            国家的崛起
+            帝国时代3
+            罗马的复仇
+            三国群英传
+            极品飞车6
+            侠盗猎车3
+            热血无赖
+            fifa 2006
+            胜利十一人
+            暴力摩托
+            大富翁
+            lf2
+            cs
+            恶魔之星
+            完美战机
         街机
             战斧
             拳皇
             街头霸王
             合金弹头
+            恶狼传说
             龙与地下城
             名将
             圆桌骑士
             忍者棒球
             恐龙快打
+            跨越巅峰
+            珍珠港
+            龙王战士
+            吞食天地2
+            机甲战士
+            机甲战士全金属狂潮
+            漫威vs卡普空
+            泡泡龙
+            pang大冒险
+            炸弹人
+            雷电
+            得点王
+            街头篮球
+            四国战机2
         掌机
             ga/gba
+                精灵宝可梦 龙珠 火影
             psp
                 三国志
                 大航海时代
@@ -6238,12 +6278,18 @@ nas
             拳皇win
             死神与火影
             绿巨人
-        暴力摩托
-        大富翁
         qq游戏
-            祖玛 泡泡龙 连连看 对对碰 泡泡堂
+            qq龙珠（祖玛） qq泡泡龙 连连看 对对碰 qq堂（泡泡堂）
         qq空间
+            农场 餐厅 抢车位 好友奴隶 q宠 烽火战国 七雄争霸
         网游
+            qq飞车 qq炫舞 战地之王 大明龙权 英雄联盟 机动战士敢达OL 
+        安卓
+            网游
+                天天跑酷 节奏大师 敢达争锋对决 和平精英
+            单机
+                水果忍者 愤怒的小鸟 神庙逃亡 割绳子 涂鸦跳跃 鳄鱼小顽皮爱洗澡 宝石传奇 植物大战僵尸 瘟疫公司 Cytus 极品飞车17最高通缉 战斗之心 武士2 excel杀
+            崩球传说 3d贪食蛇
 媒体相关的经验
     multimedia
     multi-media
@@ -6355,6 +6401,12 @@ nas
         nano
         Pico (Pine composer)
     在浏览器中的富文本编辑器
+        Tinymce
+        CKEditor
+        Quill
+        ueditor 和 UEditor Plus
+        wangEditor 和 wangEditor-next
+        summernote
     富文本编辑器，页面构造器，代码编辑器
         页面构造器（page builder）
         富文本编辑器（rich text editor）
@@ -6837,6 +6889,7 @@ Hello what what is the first thing, and I am am scq000.
         邮编
 
 时间
+    一秒的定义
     UTC（Universal Time Coordinated） 协调世界时
         根据原子钟计算出来的时间
     GMT（Greenwich Mean Time） 格林尼治标准时间
