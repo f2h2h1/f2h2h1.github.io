@@ -5502,6 +5502,7 @@ wordpress
                 wordpress phpmyadmin
             WP_SITEURL 填的是 网站域名
             WP_HOME 填的就是 网站域名/wordpress
+    修改wordpress默认后台登录地址
     如何给 woo 增加支付方式 ？
     wordpress 如何实现 国际化/多语言 ？
         WordPress 是使用 gettext 实现翻译的，主要使用mo文件
@@ -5843,16 +5844,26 @@ nas
             旧的游戏
                 平台 类型
                 前端
-                    Pegasus（天马）
+                    RetroArch
+                    PegasusG（天马G）
                     batocera（巴托塞拉）
                     Playnite https://playnite.link/
                     EmulationStation（ES）
                     coinops
+                    Lakka
+                    OpenDingux
+                    EmuELEC
+                    RetroBat
+                    Lauchbox
                 刮削器 Scraper
                     Scraper 的直译，英文原文 scraper 一词，结合软件作用，应该是取 “平土机” 的 “填补” 意义。
                     信息
                     媒体
+                主机bios
+                游戏rom
+                金手指
             影视刮削
+            刮削器信息的翻译？
         放在哪里？体积？噪声？辐射？
         费用？
             硬件费用，电费，网费

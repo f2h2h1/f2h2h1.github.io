@@ -11,6 +11,8 @@
         ```
         Admin > Stores > Settings > Configuration > Advanced > System > Full Page Cache
         ```
+        把 full page cache 的类型改成 varnish 后，要先保存设置再生成配置文件
+        好像还要开启url重写才有效
     - 用命令行生成
         ```
         php bin/magento varnish:vcl:generate --access-list localhost --backend-host localhost --backend-port 8080 --export-version 6 --grace-period 300 --output-file var/default.vcl
