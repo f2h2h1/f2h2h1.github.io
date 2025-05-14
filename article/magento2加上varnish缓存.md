@@ -53,6 +53,7 @@
         X-Magento-Cache-Debug: HIT
         ```
     - varnish 生效时， var/page_cache 里应该是没有文件的
+    - 可以在 varnish 的容器里运行 varnishlog 命令，更好地观察是否有生效
 1. 清除缓存
     <!-- - varnish 清理缓存的策略比想象中的要复杂不少 -->
     - varnish 可以用 命令行 telnet http 三种方式发送清除缓存的命令

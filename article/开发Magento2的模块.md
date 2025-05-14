@@ -1959,6 +1959,12 @@ php -r "while(true){exec('php bin/magento cron:run --group=default');sleep(1);}"
 php -r "while(true){exec('php bin/magento cron:run --group=index');sleep(10);}"
 php -r "while(true){exec('php bin/magento cron:run --group=consumers');sleep(5);}"
 
+
+
+queue.xml 主要用于定义消息队列的属性和配置。
+queue_consumer.xml 主要用于定义如何消费和处理这些消息。
+
+
 -->
 
 ## 新建一个插件 Plugins (Interceptors)

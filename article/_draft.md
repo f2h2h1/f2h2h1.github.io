@@ -4471,7 +4471,11 @@ leetcode做题的一般套路
     神经网络（neural network）
     深度学习（Deep Learning）
     大语言模型（Large Language Model, LLM）
+        自然语义处理 (Natural Language Processing, NLP)
         提示工程（Prompt Engineering）
+        提示链 (prompt chaining)
+            提示链通过多轮对话，引导 LLM “思考” 方向，让 LLM 从简单任务开始，沿着设计好的“思考”方向逐步完成一个复杂推理
+        思维链 (Chain of thought, CoT)
         AI Agent/bot/Generative AI/上下文窗口/微调/RAG/MOE
             微调（Fine-Tuning，FT）是再训练一次并加入新数据
             rag是在上下文或提示词里加入新数据
@@ -4481,9 +4485,9 @@ leetcode做题的一般套路
             AI Agent 就是 bot
                 提示工程 是 Agent
                 rag 是 Agent
-            插件 就是 调用外部api
+            插件 (plugins) 就是 调用外部api
                 在 工作流 里会用到 插件
-            工作流 就是 字面意思
+            工作流 (workflow) 就是 字面意思
                 和 cicd 里的工作流是一样的，只是过程中有大模型的参与
                 参考一下腾讯的 混元 元宝 元器
             MCP（Model Context Protocol）
@@ -4521,6 +4525,12 @@ leetcode做题的一般套路
                 显存 大于 模型的尺寸
             量化版
                 显存+内存 大于 模型的尺寸
+            满血 (full-powered/full-blooded/Full Version)
+            模型压缩 (Model Compression)
+                模型量化 (Model Quantization)
+                模型蒸馏 (Model Distillation)
+                模型裁剪 (Model Pruning)
+                模型稀疏化 (Model Sparsity)
         那些生成图片，生成视频的模型和LLM有什么关系？
         chat模型 和 embedding模型 有什么区别？
         模态
@@ -5572,6 +5582,9 @@ wordpress
             Automattic会定期向wordpress贡献代码
             WordPress.com 的免费版不能装插件
         wpengine 类似 WordPress.com 也提供 wordpress 的托管服务
+    可以在浏览器中运行的 wp
+        https://github.com/WordPress/wordpress-playground
+        WordPress Playground是一个实验性的浏览器WordPress,由于WebAssembly,它可以在没有PHP服务器的情况下运行。
 接入 alipay+ 的过程
     注册和设置
     支付
@@ -7043,7 +7056,7 @@ Hello what what is the first thing, and I am am scq000.
         稳定耐用的（Robust）
     可访问性除了给残障人士使用外，还可以给文本浏览器使用
 那些需要写代码但又不是软件开发的领域
-    运维 网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 多媒体处理 数据分析 人工智能 3D打印
+    测试 运维 网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 多媒体处理 数据分析 人工智能 3D打印
 那些和计算机相关的学科
     工学 engineering
         机械工程 mechanical engineering
@@ -7074,6 +7087,13 @@ Hello what what is the first thing, and I am am scq000.
         电讯 -> 电子通讯
     机器 机构 机械 零件 这几个有什么关系和区别？
     科学 技术 工程 这几个有什么关系和区别？
+        科学活动是以发现为核心
+        技术活动是以发明为核心
+        工程活动是以建造为核心
+        科学：帮助理解自然世界，解释客观规律，解决理论问题。如，结构力学。
+        技术：解决问题的方法，用来解决实际问题。如，桥梁技术，某种成品的工艺。
+        工程：设计满足社会需求、对人类有用的东西。如，修建桥梁。
+        STEM是科学(Science)、技术(Technology)、工程(Engineering)和数学(Mathematics)四门学科的简称，强调多学科的交叉融合
     强电 和 弱电
         强电 和 电线 电路 供电 相关的
         弱电 和 电相关的，需要供电的设备
@@ -7205,12 +7225,17 @@ Hello what what is the first thing, and I am am scq000.
 java
     命令行
         纯手工管理依赖和编译
+            javac
+            java
+            java -jar target/AuthorizationSignature.jar
         Ant
             ant 的作用类似于 make 并不能管理依赖
         Maven
             pom.xml
             Maven Wrapper
             在没有maven的年代是如何实现包管理的？
+            mvn clean install compile exec:java -Dexec.mainClass="Signature.AuthorizationSignature"
+            mvn --debug clean install compile exec:java -Dexec.mainClass="Signature.AuthorizationSignature"
         Gradle
             Gradle Wrapper
         JavaBean
@@ -7337,6 +7362,121 @@ java
 各种各样的版本
     versionn
     edition
+        Edition  → “出版物” ：书、画、杂志的版本，关注内容或出版批次。  
+        Version  → “迭代” ：软件、产品、故事的更新，关注技术或功能变化。
+        如果强调“内容更新”或“特殊发布形式”，用 edition；
+        如果强调“同一事物的不同阶段或变体”，用 version。
+软件测试从不同的角度有着不同的分类方式
+    按测试方法分类：
+        黑盒测试
+        白盒测试
+        灰盒测试
+    按测试方向分类：
+        1.功能测试：
+            测试功能能否使用
+            兼容性测试
+            易用性测试
+            安装、卸载、更新测试
+        2.性能测试：测试在不同的情况下软件响应的时间
+            一般的性能测试
+                性能测试方法是通过测试工具模拟用户请求系统，目的主要是为了测试系统的性能是否满足要求。
+                通俗地说，这种方法就是要在特定的运行条件下验证系统的能力状态。
+                性能测试是你在对系统性能已经有了解的前提之后进行的，并且有明确的性能指标。
+            负载测试
+                对被测试的系统继续加大请求压力，直到服务器的某个资源已经达到饱和了，
+                比如系统的缓存已经不够用了或者系统的响应时间已经不满足要求了。
+                负载测试说白点就是测试系统的上限。
+            压力测试
+                不去管系统资源的使用情况，对系统继续加大请求压力，直到服务器崩溃无法再继续提供服务。
+            稳定性测试
+        3.安全测试
+    阶段分类：
+        1.单元测试（Unit test）：检查代码判断是否有问题，一般来说单元测试都是开发自己做。
+        2.集成测试（Integration test）：测试模块和模块的连接有没有问题。
+        3.系统测试：测试软件的整个整体。功能，安全，性能等等测试
+        4.验收测试：甲方或者客户来验收这个软件是不是它要的软件，协助验收。
+    对象分类：
+        API测试
+        APP测试
+            根据操作系统来区分，还有小程序和pwa
+        WEB测试
+            需要渲染的
+            不需要渲染的
+        UI测试
+    状态分类：
+        静态测试
+            静态测试是指不运行被测程序本身，
+            通过分析或检查源程序的语法、结构、过程、接口等来检查程序的正确性。
+            其被测对象是各种与软件相关的有必要进行测试的产物，
+            是对需求规格说明书、软件设计说明书、源程序做结构分析、流程图分析、符号执行来找错。
+        动态测试
+            对软件系统运行行为进行分析，
+            包含程序在受控的环境下使用特定的输入进行正式的运行，和期望的结果比较以检查系统运行是正确还是不正确。
+            常用的动态分析技术：路径测试 分支测试 性能测试
+    其他：
+        测试用例（Test case）：
+        测试套件（Test suite）：
+        回归测试（Regression test）：检查修改后的BUG还有没有问题
+        冒烟测试：测试前的测试，检查软件是否具备可测试性
+        突变测试：
+        埋点测试：通过打日志实现，属于测试手段
+        MOCK测试（打桩测试）：做自动化测试用到的测试手段
+            使用一个假的实现来替换函数、模块或类型，屏蔽那些和测试不相关的内容。例如，您可能会“模拟网络连接” 或 “模拟硬盘”。
+        基准测试：基准测试程序(Benchmark)用来测量机器的硬件最高实际运行性能，以及软件优化的性能提升效果，可分为微基准测试程序(Microbenchmark)和宏基准测试程序(Macrobenchmark)。
+            微基准是一个旨在衡量非常小以及特定代码性能的基准，基准测试是实现对一类测试对象的某项性能指标进行定量的和可对比的测试。
+    用于测试的工具
+        api测试
+            Postman
+            Hoppscotch
+        压力测试
+            loadrunner
+            jmeter
+            ab
+            webbench
+            http_load
+            boom
+            wrk
+            locust
+            fortio
+            OpenWebLoad
+        WEB测试
+            Playwright
+            Puppeteer
+            Selenium
+    测试系统性能
+        windows
+            winsat
+                winsat 是windows自带的性能测试工具
+                要以管理员权限运行，不然会一闪而过
+                查看帮助 winsat --help
+                winsat formal
+                    WinSAT会依次评估桌面图形性能、DirectX性能、Direct3D性能、CPU性能、内存性能、磁盘性能，这与“性能信息和工具”的测试项目是一致的。
+                    最后的评估数据会保存为一个XML文件，路径为：
+                    %systemroot%\performance\WinSAT\datastore
+                winsat cpu -compression
+                    运行cpu评估
+        linux
+            sysbench
+                安装
+                    apt install -y sysbench
+                sysbench 是用来测试 mysql的，但也可以用来测试系统性能和PostgreSQL
+                测试cpu性能
+                    sysbench cpu run
+                测试内存性能
+                    sysbench memory run
+                测试io性能
+                    io性能测试主要分为以下三步
+                    准备测试文件
+                        sysbench fileio --file-num=16 --file-total-size=500M --file-test-mode=rndrw prepare
+                    测试
+                        sysbench fileio --file-num=16 --file-total-size=500M --file-test-mode=rndrw run
+                    删除测试文件
+                        sysbench fileio --file-num=16 --file-total-size=500M --file-test-mode=rndrw cleanup
+                    参数
+                        --file-num：需要创建的文件数，默认为128。
+                        --file-block-size：数据块的大小，默认为16384，即16KB。
+                        --file-total-size：需要创建的文件总大小，默认为2GB。
+                        --file-test-mode：测试模式，可指定 seqwr（顺序写）、seqrewr（顺序重写）、seqrd（顺序读）、rndrd（随机读）、rndwr（随机写）、rndrw（随机读写）。
 如何测试高并发？
     压力机
     测试机
