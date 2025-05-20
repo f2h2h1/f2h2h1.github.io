@@ -6,24 +6,31 @@
         <description>f2h2h1's blog</description>
         <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>计算机网络基础知识</title>
+            <link>https://f2h2h1.github.io/article/计算机网络基础知识.html</link>
+            <description>计算机网络基础知识</description>
+            <pubDate>Tue, 20 May 2025 18:54:59 +0800</pubDate>
+            <guid>https://f2h2h1.github.io/article/计算机网络基础知识.html</guid>
+        </item>
+        <item>
             <title>电子邮件的不完整总结</title>
             <link>https://f2h2h1.github.io/article/电子邮件的不完整总结.html</link>
             <description>电子邮件的不完整总结</description>
-            <pubDate>Thu, 07 Nov 2024 18:48:48 +0800</pubDate>
+            <pubDate>Fri, 28 Feb 2025 18:26:27 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/电子邮件的不完整总结.html</guid>
         </item>
         <item>
             <title>telnet的不完整总结</title>
             <link>https://f2h2h1.github.io/article/telnet的不完整总结.html</link>
             <description>telnet的不完整总结</description>
-            <pubDate>Sun, 20 Oct 2024 13:58:46 +0800</pubDate>
+            <pubDate>Sat, 09 Nov 2024 14:18:52 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/telnet的不完整总结.html</guid>
         </item>
         <item>
             <title>nc的使用和原理</title>
             <link>https://f2h2h1.github.io/article/nc的使用和原理.html</link>
             <description>nc的使用和原理</description>
-            <pubDate>Thu, 07 Nov 2024 18:50:01 +0800</pubDate>
+            <pubDate>Thu, 13 Mar 2025 18:38:45 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/nc的使用和原理.html</guid>
         </item>
         <item>
@@ -37,7 +44,7 @@
             <title>ACME的使用经验</title>
             <link>https://f2h2h1.github.io/article/ACME的使用经验.html</link>
             <description>ACME的使用经验</description>
-            <pubDate>Thu, 07 Nov 2024 18:50:01 +0800</pubDate>
+            <pubDate>Thu, 27 Feb 2025 18:28:30 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/ACME的使用经验.html</guid>
         </item>
         <item>
@@ -51,14 +58,14 @@
             <title>终端，控制台和外壳</title>
             <link>https://f2h2h1.github.io/article/终端，控制台和外壳.html</link>
             <description>终端，控制台和外壳</description>
-            <pubDate>Thu, 07 Nov 2024 18:50:01 +0800</pubDate>
+            <pubDate>Mon, 10 Feb 2025 00:42:53 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/终端，控制台和外壳.html</guid>
         </item>
         <item>
             <title>和颜色相关的笔记</title>
             <link>https://f2h2h1.github.io/article/和颜色相关的笔记.html</link>
             <description>和颜色相关的笔记</description>
-            <pubDate>Fri, 28 Jun 2024 18:12:23 +0800</pubDate>
+            <pubDate>Tue, 01 Apr 2025 18:07:32 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/和颜色相关的笔记.html</guid>
         </item>
         <item>
@@ -121,14 +128,14 @@
             <title>对JS原型链的理解</title>
             <link>https://f2h2h1.github.io/article/对JS原型链的理解.html</link>
             <description>对JS原型链的理解</description>
-            <pubDate>Fri, 31 May 2024 18:24:39 +0800</pubDate>
+            <pubDate>Thu, 27 Feb 2025 18:28:30 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/对JS原型链的理解.html</guid>
         </item>
         <item>
             <title>magento2加上varnish缓存</title>
             <link>https://f2h2h1.github.io/article/magento2加上varnish缓存.html</link>
             <description>magento2加上varnish缓存</description>
-            <pubDate>Sat, 07 May 2022 13:53:20 +0800</pubDate>
+            <pubDate>Wed, 14 May 2025 18:49:16 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/magento2加上varnish缓存.html</guid>
         </item>
         <item>
@@ -142,7 +149,7 @@
             <title>使用docker-compose部署magento2</title>
             <link>https://f2h2h1.github.io/article/使用docker-compose部署magento2.html</link>
             <description>使用docker-compose部署magento2</description>
-            <pubDate>Sat, 05 Mar 2022 20:29:08 +0800</pubDate>
+            <pubDate>Mon, 20 Jan 2025 18:34:45 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/使用docker-compose部署magento2.html</guid>
         </item>
         <item>
@@ -163,7 +170,7 @@
             <title>在Windows下安装Magento2</title>
             <link>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</link>
             <description>在Windows下安装Magento2</description>
-            <pubDate>Wed, 16 Oct 2024 18:59:18 +0800</pubDate>
+            <pubDate>Fri, 07 Mar 2025 18:19:14 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/在Windows下安装Magento2.html</guid>
         </item>
         <item>
@@ -177,7 +184,7 @@
             <title>Linux的GUI</title>
             <link>https://f2h2h1.github.io/article/Linux的GUI.html</link>
             <description>Linux的GUI</description>
-            <pubDate>Sat, 06 May 2023 18:49:41 +0800</pubDate>
+            <pubDate>Thu, 17 Apr 2025 18:53:09 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/Linux的GUI.html</guid>
         </item>
         <item>
@@ -191,14 +198,14 @@
             <title>开发Magento2的模块</title>
             <link>https://f2h2h1.github.io/article/开发Magento2的模块.html</link>
             <description>开发Magento2的模块</description>
-            <pubDate>Fri, 01 Nov 2024 18:58:33 +0800</pubDate>
+            <pubDate>Wed, 14 May 2025 18:49:16 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/开发Magento2的模块.html</guid>
         </item>
         <item>
             <title>浏览器和服务器通讯方式的不完整总结</title>
             <link>https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html</link>
             <description>浏览器和服务器通讯方式的不完整总结</description>
-            <pubDate>Fri, 01 Nov 2024 18:58:33 +0800</pubDate>
+            <pubDate>Fri, 27 Dec 2024 18:15:55 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/浏览器和服务器通讯方式的不完整总结.html</guid>
         </item>
         <item>
@@ -212,7 +219,7 @@
             <title>PHP各种运行方式的不完整总结</title>
             <link>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</link>
             <description>PHP各种运行方式的不完整总结</description>
-            <pubDate>Fri, 23 Aug 2024 18:18:32 +0800</pubDate>
+            <pubDate>Thu, 17 Apr 2025 18:53:09 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</guid>
         </item>
         <item>
@@ -233,7 +240,7 @@
             <title>SEO的经验</title>
             <link>https://f2h2h1.github.io/article/SEO的经验.html</link>
             <description>SEO的经验</description>
-            <pubDate>Thu, 07 Nov 2024 18:50:01 +0800</pubDate>
+            <pubDate>Thu, 03 Apr 2025 19:00:00 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/SEO的经验.html</guid>
         </item>
         <item>
@@ -254,7 +261,7 @@
             <title>观察网站性能</title>
             <link>https://f2h2h1.github.io/article/观察网站性能.html</link>
             <description>观察网站性能</description>
-            <pubDate>Fri, 01 Nov 2024 18:58:33 +0800</pubDate>
+            <pubDate>Tue, 17 Dec 2024 18:43:59 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/观察网站性能.html</guid>
         </item>
         <item>
@@ -268,7 +275,7 @@
             <title>密码学入门简明指南</title>
             <link>https://f2h2h1.github.io/article/密码学入门简明指南.html</link>
             <description>密码学入门简明指南</description>
-            <pubDate>Fri, 01 Nov 2024 18:58:33 +0800</pubDate>
+            <pubDate>Fri, 21 Feb 2025 18:27:00 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/密码学入门简明指南.html</guid>
         </item>
         <item>
@@ -310,14 +317,14 @@
             <title>一些开发笔记</title>
             <link>https://f2h2h1.github.io/article/一些开发笔记.html</link>
             <description>一些开发笔记</description>
-            <pubDate>Sun, 20 Oct 2024 14:02:19 +0800</pubDate>
+            <pubDate>Wed, 14 May 2025 18:49:16 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/一些开发笔记.html</guid>
         </item>
         <item>
             <title>一些关于Linux的笔记</title>
             <link>https://f2h2h1.github.io/article/一些关于Linux的笔记.html</link>
             <description>一些关于Linux的笔记</description>
-            <pubDate>Tue, 17 Oct 2023 18:45:52 +0800</pubDate>
+            <pubDate>Fri, 29 Nov 2024 18:11:02 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/一些关于Linux的笔记.html</guid>
         </item>
         <item>
@@ -338,21 +345,21 @@
             <title>在Windows下配置PHP服务器</title>
             <link>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</link>
             <description>在Windows下配置PHP服务器</description>
-            <pubDate>Wed, 16 Oct 2024 18:59:18 +0800</pubDate>
+            <pubDate>Wed, 09 Apr 2025 18:39:44 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</guid>
         </item>
         <item>
             <title>关于字符编码的一些坑</title>
             <link>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</link>
             <description>关于字符编码的一些坑</description>
-            <pubDate>Fri, 01 Nov 2024 18:58:33 +0800</pubDate>
+            <pubDate>Thu, 20 Mar 2025 18:37:20 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/关于字符编码的一些坑.html</guid>
         </item>
         <item>
             <title>在VSCode里调试PHP</title>
             <link>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</link>
             <description>在VSCode里调试PHP</description>
-            <pubDate>Tue, 01 Oct 2024 13:49:55 +0800</pubDate>
+            <pubDate>Tue, 22 Apr 2025 18:00:19 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/在VSCode里调试PHP.html</guid>
         </item>
         <item>
