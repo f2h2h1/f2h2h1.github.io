@@ -4,15 +4,22 @@
     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
     <link href="https://f2h2h1.github.io/" />
     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    <updated>2025-05-20T18:55:32+08:00</updated>
+    <updated>2025-05-21T18:28:16+08:00</updated>
     <author>
         <name>f2h2h1's blog</name>
     </author>
     <entry>
+        <title>socket编程</title>
+        <link href="https://f2h2h1.github.io/article/socket编程.html" />
+        <id>https://f2h2h1.github.io/article/socket编程.html</id>
+        <updated>2025-05-21T18:27:17+08:00</updated>
+        <summary>socket编程</summary>
+    </entry>
+    <entry>
         <title>计算机网络基础知识</title>
         <link href="https://f2h2h1.github.io/article/计算机网络基础知识.html" />
         <id>https://f2h2h1.github.io/article/计算机网络基础知识.html</id>
-        <updated>2025-05-20T18:54:59+08:00</updated>
+        <updated>2025-05-21T18:27:40+08:00</updated>
         <summary>计算机网络基础知识</summary>
     </entry>
     <entry>
@@ -320,7 +327,7 @@
         <title>一些开发笔记</title>
         <link href="https://f2h2h1.github.io/article/一些开发笔记.html" />
         <id>https://f2h2h1.github.io/article/一些开发笔记.html</id>
-        <updated>2025-05-14T18:49:16+08:00</updated>
+        <updated>2025-05-21T18:27:40+08:00</updated>
         <summary>一些开发笔记</summary>
     </entry>
     <entry>

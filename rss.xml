@@ -6,10 +6,17 @@
         <description>f2h2h1's blog</description>
         <atom:link href="https://f2h2h1.github.io/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>socket编程</title>
+            <link>https://f2h2h1.github.io/article/socket编程.html</link>
+            <description>socket编程</description>
+            <pubDate>Wed, 21 May 2025 18:27:17 +0800</pubDate>
+            <guid>https://f2h2h1.github.io/article/socket编程.html</guid>
+        </item>
+        <item>
             <title>计算机网络基础知识</title>
             <link>https://f2h2h1.github.io/article/计算机网络基础知识.html</link>
             <description>计算机网络基础知识</description>
-            <pubDate>Tue, 20 May 2025 18:54:59 +0800</pubDate>
+            <pubDate>Wed, 21 May 2025 18:27:40 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/计算机网络基础知识.html</guid>
         </item>
         <item>
@@ -317,7 +324,7 @@
             <title>一些开发笔记</title>
             <link>https://f2h2h1.github.io/article/一些开发笔记.html</link>
             <description>一些开发笔记</description>
-            <pubDate>Wed, 14 May 2025 18:49:16 +0800</pubDate>
+            <pubDate>Wed, 21 May 2025 18:27:40 +0800</pubDate>
             <guid>https://f2h2h1.github.io/article/一些开发笔记.html</guid>
         </item>
         <item>
