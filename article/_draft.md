@@ -1133,6 +1133,7 @@ vscode的使用技巧
                 这种方法的原理是什么
                 解决x问题还有更好的方法吗
                 解决方法a和解决方法b有什么区别，什么时候用解决方法a，什么时候用解决方法b
+                a工具的b版本和c版本有哪些区别
             根据某一技术的提问
                 可以参考这个 软件技术通用的学习套路
             递归式提问
@@ -1184,6 +1185,7 @@ vscode的使用技巧
                 tcp握手
                 线程和进程
                 cookie和session
+                数据结构和算法
                 ...
                 八股的三种类型五个方向（简称八股5·3，8·5·3）
                 八股的五个方向
@@ -1217,8 +1219,11 @@ vscode的使用技巧
                             缓存
                             队列
                             定时任务
-                    数据的可视化
-                        前端全家桶
+                    数据交互
+                        数据输入
+                        数据输出
+                            数据的可视化
+                                前端全家桶
                     系统设计
                         4S分析法
                             Scenario（场景），Service（服务），Storage（存储），Scale（扩展）
@@ -1226,6 +1231,7 @@ vscode的使用技巧
                             合适优于先进 > 演化优于一步到位 > 简单优于复杂
                         服务治理
                         集群和分布式
+                        信息安全
                         “封底计算”（Back-Of-The-Envelope Calculation）？
                 八股的三种类型
                     细节
@@ -4355,7 +4361,7 @@ leetcode做题的一般套路
         data architecture
             数据 架构
     数据分析 使用 统计学 的方法 从已有的数据中 验证预设的假设或回答特定的业务问题
-    机器学习 把已有的数据作为训练集，建立模型，用模型处理新的数据
+    机器学习 把已有的数据作为训练集(Training Set)，建立模型，用模型处理新的数据
     数据挖掘 使用 统计学 和 机器学习 的方法 从已有的数据中 发现 关联 或 趋势
     大数据
         大数据通常是指对大量的数据进行数据分析或数据挖掘
@@ -4515,6 +4521,14 @@ leetcode做题的一般套路
                     那么模型生成的响应最多只能有548个token（1500输入 + 548输出 = 2048总长度）。
                     如果这个模型的 Context Window是512 token，
                     那么在生成第513个token时，模型只能参考前面的512个token，而不是全部2048个token。
+            向量库(Vector Database)
+            参数（Parameters）
+                权重参数（Weights）
+                偏置参数（Biases）
+                嵌入参数（Embeddings） EMB
+            预训练（Pre-training）
+            注意力机制（Attention Mechanism）
+                自注意力机制（Self Attention Mechanism）
         满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
             满血就是没经过改动的
             量化就是可以运行在内存里的
@@ -4533,9 +4547,9 @@ leetcode做题的一般套路
                 模型稀疏化 (Model Sparsity)
         那些生成图片，生成视频的模型和LLM有什么关系？
         chat模型 和 embedding模型 有什么区别？
-        模态
+        模态（modal）
             输入或输出的类型，例如 文本 文档 图片 视频 音频
-            多模态 可以接收多种输入类型或可以输出多种类型
+            多模态（multi modal） 可以接收多种输入类型或可以输出多种类型
         局限性
             幻觉
             偏差
@@ -7080,6 +7094,7 @@ Hello what what is the first thing, and I am am scq000.
     Telecommunication Engineering 电信工程
     CT Communication Technology 通信技术
     IT Information Technology 信息技术
+    ICT Information Communication Technology 信息通信技术
     电子科学与技术
     微电子科学与工程
     通信 通讯 电信 电讯 这几个有什么关系和区别？
@@ -7094,6 +7109,7 @@ Hello what what is the first thing, and I am am scq000.
         技术：解决问题的方法，用来解决实际问题。如，桥梁技术，某种成品的工艺。
         工程：设计满足社会需求、对人类有用的东西。如，修建桥梁。
         STEM是科学(Science)、技术(Technology)、工程(Engineering)和数学(Mathematics)四门学科的简称，强调多学科的交叉融合
+            eSTEM 开头的小写e是 English 的意思
     强电 和 弱电
         强电 和 电线 电路 供电 相关的
         弱电 和 电相关的，需要供电的设备
