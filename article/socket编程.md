@@ -368,6 +368,109 @@ if __name__ == "__main__":
 echo daytime time discard chargen
 
 版本6 静态http
+```python
+import socket
+import signal
+import sys
+import threading
+import time
+import datetime
+
+# 定义一个信号处理函数
+def signal_handler_quit(signum, frame):
+    sys.exit(0)
+
+HTTP_VERSION = '1.0'
+SERVER_NAME = 'plusplus123'
+
+def parser_request():
+    return
+def parser_request_line():
+    return
+def parser_request_header():
+    return
+
+def read_staticfile(filepath):
+    return
+
+def builtin_response(statusCode):
+    return
+
+def build_response(statusCode, responseHeader, responseBoday):
+    return
+
+
+def work(client_socket):
+
+    RESPONSE_400
+    RESPONSE_403
+    RESPONSE_404
+    RESPONSE_500
+
+    "<h1>400 Bad Request</h1>"
+    "<h1>403 Forbidden</h1>"
+    "<h1>404 Not Found</h1>"
+    "<h1>500 Server Error</h1>"
+
+    "HTTP/1.1 404 Not Found\r\nServer: plusplus123/0.1\r\nContent-Type: text/html;charset=UTF-8\r\nContent-Length: "
+    "<html><head><title>404</title></head><body><h1>404 Not Found</h1></body></html>"
+
+    # client_socket.send(bytes("hello world\n", encoding="utf-8"))
+    # client_socket.send(bytes(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), encoding="utf-8"))
+    while True:
+        # 接收数据
+        data = client_socket.recv(2048)
+        # print(data)
+        if not data:
+            break  # 如果没有数据，退出循环
+
+        request = data
+        # 按行分割请求报文
+        lines = request.splitlines()
+        
+        # 解析请求行
+        request_line = lines[0]
+        method, path, http_version = request_line.split()
+        
+        # 解析请求头
+        headers = {}
+        for line in lines[1:]:
+            if line == '':
+                break  # 空行表示头部结束
+            key, value = line.split(': ', 1)
+            headers[key] = value
+
+        # 发送回客户端
+        # time.sleep(10)
+        client_socket.sendall(data)
+    # client_socket.send(bytes(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), encoding="utf-8"))
+    # # time.sleep(1)
+    # client_socket.close()
+
+def main():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(("127.0.0.1", 8012))
+    server.listen(5)
+    while True:
+        client_socket, client_address = server.accept()
+        work_thread = threading.Thread(target=work, args=[client_socket]) # 创建一个子线程对象
+        work_thread.daemon = True # 将子线程设置为守护线程
+        work_thread.start() # 启动子线程
+
+if __name__ == "__main__":
+    signal.signal(signal.SIGINT, signal_handler_quit) # 注册信号处理函数，处理 SIGINT 信号
+    signal.signal(signal.SIGTERM, signal_handler_quit) # 注册信号处理函数，处理 SIGTERM 信号
+
+    work_thread = threading.Thread(target=main) # 创建一个子线程对象
+    work_thread.daemon = True # 将子线程设置为守护线程
+    work_thread.start() # 启动子线程
+
+    while True: # 主线程的循环
+        time.sleep(1)
+```
+application/octet-stream
+
+
 
 版本6 有配置的静态http
 

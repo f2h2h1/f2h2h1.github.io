@@ -4529,6 +4529,8 @@ leetcode做题的一般套路
             预训练（Pre-training）
             注意力机制（Attention Mechanism）
                 自注意力机制（Self Attention Mechanism）
+            ReAct (Reasoning and Acting) 推理和执行
+            LangChain 和 LangGraph
         满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
             满血就是没经过改动的
             量化就是可以运行在内存里的
