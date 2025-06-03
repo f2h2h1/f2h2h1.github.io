@@ -4789,6 +4789,19 @@ c有哪些缺点？
     多数情况下需要自行处理跨平台的特性
     用c来写网页，到最后其实就是重新发明一次php，php就是c的模板语言
 php有哪些缺点？
+    变量需要用 $ 符号
+    没有跨平台的多线程
+    没有跨平台的多进程
+    没有跨平台的信号处理
+    内置函数 对象 的名称十分混乱（语言设计不一致）
+    扩展安装麻烦
+    不装扩展的情况下只有同步阻塞io
+    安全性问题
+    性能差 数值计算不准确 这两个算是脚本语言都有的通病
+python有哪些缺点？
+    语法和 java c# 差别有一点大，例如 强制使用缩进
+    没有强类型
+    api 十分不稳定
 php要如何实现并发？
 bash 如何实现并发
     使用 &
@@ -5893,6 +5906,7 @@ nas
                 金手指
             影视刮削
             刮削器信息的翻译？
+            nas 来接收 dtmb 的信号，或者其它信号（例如收音机，卫星电视这类）
         放在哪里？体积？噪声？辐射？
         费用？
             硬件费用，电费，网费
@@ -6209,6 +6223,38 @@ nas
         方便地检索 知识和信息
             把 知识和信息 整理成一个有向图
         需要做什么
+        资料库 -> 笔记 -> 大脑
+        外存 -> 内存 -> cpu的缓存
+    图
+        https://echarts.apache.org/examples/zh/editor.html?c=graph-label-overlap
+        https://echarts.apache.org/examples/zh/index.html#chart-type-graph
+        Cytoscape.js 和 Cytoscape https://github.com/cytoscape/cytoscape.js
+        一个基于 vscode 的笔记工具，也是有图的
+            https://foambubble.github.io/foam/
+            https://github.com/foambubble/foam
+    图表
+        graphviz
+        plantuml
+        数学公式 MathML 居然是 浏览器原生支持的。。。和 svg 一样，mathml甚至可以直接嵌入 svg 里
+        五线谱/简谱 MusicXML
+            https://www.w3.org/community/music-notation/
+            https://en.wikipedia.org/wiki/MusicXML
+            https://usermanuals.musicxml.com/MusicXML/Content/Contents.htm
+            https://www.musicxml.com/
+            https://www.himachi.cn/2018/10/18/music-xml.html
+            https://github.com/opensheetmusicdisplay/opensheetmusicdisplay
+    Evernote Web Clipper
+        https://github.com/mika-cn/maoxian-web-clipper
+        https://mika-cn.github.io/maoxian-web-clipper/index-zh-CN.html
+        https://github.com/webclipper/web-clipper
+        https://github.com/deathau/markdownload
+    阅读模式
+        https://github.com/mozilla/readability 除了这个之外，其它都是 python
+        https://github.com/codelucas/newspaper
+        https://github.com/adbar/trafilatura
+        https://github.com/buriy/python-readability
+    解释 html
+        BeautifulSoup https://www.crummy.com/software/BeautifulSoup/
 汽车，飞机和模拟器
     如何驾驶汽车
         汽车的分类
@@ -7200,7 +7246,7 @@ Hello what what is the first thing, and I am am scq000.
 
 信息技术的本质是什么？
     现实 -> 数字？
-财政、经济、金融
+财政、经济、金融、股票、基金、量化
 国家和社会的区别和联系
 政治
 历史
