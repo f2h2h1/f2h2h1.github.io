@@ -6,7 +6,8 @@
     - modules 模块
     - themes 主题
     - language packages 语言包
-- 其中 主题 只包含前端代码，模块可以包含 主题 和 语言包
+- 模块 可以包含 主题 和 语言包
+- 主题 原则上只包含前端代码 ~~实际上可以在phtml文件里搞各种奇技淫巧~~
 
 ## 新建模块的代码
 
@@ -507,11 +508,11 @@ echo $retSql;
 
 ### 增加 eav 属性
 
-### 通过后台新建
+#### 通过后台新建
 
 `catalog_product_entity` 的 eav 属性可以通过 product 的设置页新建
 
-### 通过模块里的 setup 新建
+#### 通过模块里的 setup 新建
 
 - 参考这个文档 https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/add-product-attribute
 - 在模块里的 setup 文件夹下新建 InstallData.php 或 AddClothingMaterial.php
@@ -2075,6 +2076,83 @@ vendor\magento\framework\App\FrontController.php dispatchPreDispatchEvents
 据说如果有 varnish 的缓存则不会触发这类事件
 
 -->
+
+### 直接触发事件（event）
+
+```php
+try {
+    // 引入 magento2 的引导文件
+    require __DIR__ . '/app/bootstrap.php';
+    // 创建一个应用对象
+    $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+    // 获取一个对象管理器
+    $objectManager = $bootstrap->getObjectManager();
+    
+    // 如果出现这种错误 area code is not set ，则加上这两句， area 的值可以根据实际场景修改
+    $areaCode = \Magento\Framework\App\Area::AREA_FRONTEND;
+    $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+    $objectManager->configure(
+        $objectManager
+            ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+            ->load($areaCode)
+    );
+
+    $order = '';
+    $invoice = '';
+    /** @var \Magento\Framework\Event\ManagerInterface */
+    $eventManager = $objectManager->get(\Magento\Framework\Event\ManagerInterface::class);
+    $eventManager->dispatch(
+            'sales_model_service_quote_submit_success',
+            ['order' => $order, 'invoice' => $invoice]
+        );
+
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+```
+
+### 直接运行观察者（observer）
+
+```php
+try {
+    // 引入 magento2 的引导文件
+    require __DIR__ . '/app/bootstrap.php';
+    // 创建一个应用对象
+    $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+    // 获取一个对象管理器
+    $objectManager = $bootstrap->getObjectManager();
+    
+    // 如果出现这种错误 area code is not set ，则加上这两句， area 的值可以根据实际场景修改
+    $areaCode = \Magento\Framework\App\Area::AREA_FRONTEND;
+    $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+    $objectManager->configure(
+        $objectManager
+            ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+            ->load($areaCode)
+    );
+
+    $order = '';
+    $invoice = '';
+    $data = ['order' => $order, 'invoice' => $invoice];
+    $eventName = 'sales_model_service_quote_submit_success';
+    $observerConfig = [ // 这里对应的是 events.xml 里 observer 字段的值
+        'instance' => 'Magento\CatalogInventory\Observer\ReindexQuoteInventoryObserver',
+        'name' => 'inventory',
+    ];
+    /** @var \Magento\Framework\Event\InvokerInterface */
+    $invoker = $objectManager->get(\Magento\Framework\Event\InvokerInterface::class);
+    $event = new \Magento\Framework\Event($data);
+    $event->setName($eventName);
+    $wrapper = new \Magento\Framework\Event\Observer();
+    $wrapper->setData(array_merge(['event' => $event], $data));
+    $invoker->dispatch($observerConfig, $wrapper);
+
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+```
 
 ## 新建一个后台视图
 
