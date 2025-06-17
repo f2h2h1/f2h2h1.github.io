@@ -326,10 +326,40 @@ https://dev.mysql.com/
 
 <!--
 
-https，http2
+https，http2，http长连接
 目录索引，cgi，fcgi，重定向，url重写，反向代理，负载均衡，虚拟站点
 WebSocket，WebSocket Secure
 Basic认证，Digest认证
+http压缩，http缓存，伪静态，mpm（Multi-Processing Modules）
+日志文件，SSI（Server Side Includes）
+servertype 的 standalone模式 和 inetd模式
+限速
+    mod_ratelimit
+    apache 原生的限速模块没有 nginx 的好用
+
+mod_proxy
+mod_proxy_http
+mod_proxy_connect
+
+这一段加在 VirtualHost 里
+    ProxyPreserveHost On
+    # 将客户端请求转发到后端服务器
+    ProxyPass / http://localhost:3000/
+    # 将后端服务器返回的 URL 地址替换成前端域名地址，防止暴露内部地址
+    ProxyPassReverse / http://localhost:3000/
+
+
+mod_proxy_wstunnel
+mod_rewrite
+
+这一段加在 VirtualHost 里
+    RewriteEngine On
+    RewriteCond          "%{HTTPS}" "!=on"
+    RewriteRule ^/?(.*)$ https://%{HTTP_HOST}/$1 [L,R=302]
+
+
+要实现某项功能 -> 需要写什么样的配置 -> 这些配置依赖哪个模块
+
 
 -->
 
@@ -860,6 +890,16 @@ cmd /c shutdown.bat
 timeout 2
 cmd /c startup.bat
 ```
+
+
+```
+title apache httpd
+cd C:\Users\a\dev\Apache24\bin
+httpd.exe  -t
+httpd.exe  || pause
+```
+
+
 
 加上 apache 和 nginx http 重定向到 https 的配置
 

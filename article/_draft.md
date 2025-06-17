@@ -953,6 +953,95 @@ vscode的使用技巧
                 code serve-web --port 8888
                 好像是每个端口都会新建一套配置？
                 好像没法设置密码，但可以通过http代理设置的吧
+                    当前版本 Visual Studio Code 1.100.2 ，必须用 https 或者是 127.0.0.1 ，因为前端会用到这个api Crypto.subtle ，但这个api只能在https下使用
+                        https://github.com/microsoft/vscode/issues/191276#issuecomment-1693701864
+                        https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle
+                    使用 apache 作为代理，用 摘要认证 ，需要这些启用模块
+                        mod_auth_digest mod_authn_core mod_authn_file mod_authz_core mod_ssl mod_proxy mod_proxy_http mod_proxy_connect mod_proxy_wstunnel mod_rewrite
+                    <VirtualHost localhost-vscode.com:80>
+
+                        ServerAdmin webmaster@dummy-host.example.com
+                        DocumentRoot "${SRVROOT}/htdocs"
+                        ServerName localhost-vscode.com
+                        ServerAlias localhost-vscode.com
+
+                        RewriteEngine On
+                        RewriteCond          "%{HTTPS}" "!=on"
+                        RewriteRule ^/?(.*)$ https://%{HTTP_HOST}/$1 [L,R=302]
+
+                    </VirtualHost>
+                    <VirtualHost localhost-vscode.com:443>
+
+                        ServerAdmin webmaster@dummy-host.example.com
+                        DocumentRoot "${SRVROOT}/htdocs"
+                        ServerName localhost-vscode.com
+                        ServerAlias localhost-vscode.com
+
+                        SSLEngine on
+                        SSLCertificateFile "${SRVROOT}/conf/ssl/localhost-vscode.com/localhost-vscode.com.crt"
+                        SSLCertificateKeyFile "${SRVROOT}/conf/ssl/localhost-vscode.com/localhost-vscode.com.pem"
+                        SSLProtocol -all +TLSv1.3 +TLSv1.2
+                        Protocols h2 h2c http/1.1 acme-tls/1 http/1.0
+
+                        # <Location "/">
+                        #     # AddDefaultCharset UTF-8 # 默认字符集为 UTF-8
+                        #     # 禁止使用 .htaccess 文件来覆盖当前目录下的 Apache 设置
+                        #     AllowOverride None
+                        #     # Indexes：当没有 index.html 等默认文件时显示目录列表。FollowSymLinks：允许跟随符号链接。
+                        #     Options Indexes FollowSymLinks
+                        # 
+                        #     # 基本认证对话框中显示的提示信息
+                        #     AuthName "用户名"
+                        #     # 认证类型为 HTTP Basic 认证
+                        #     AuthType Basic
+                        #     # 指定用户密码文件的位置
+                        #     # AuthUserFile .passwd
+                        #     AuthUserFile "${SRVROOT}/.passwd"
+                        #     # AuthBasicFake demo demopass
+                        #     # 要求访问者必须提供有效的用户名和密码
+                        #     Require valid-user
+                        # </Location>
+
+                        <Location "/">
+                            # AddDefaultCharset UTF-8 # 默认字符集为 UTF-8
+                            # 禁止使用 .htaccess 文件来覆盖当前目录下的 Apache 设置
+                            AllowOverride None
+                            # Indexes：当没有 index.html 等默认文件时显示目录列表。FollowSymLinks：允许跟随符号链接。
+                            Options Indexes FollowSymLinks
+
+                            # 基本认证对话框中显示的提示信息
+                            AuthName "username"
+                            # 认证类型为 HTTP Digest 认证
+                            # "http://localhost-auth-digest.com/"
+                            AuthType Digest
+                            # AuthDigestDomain "/" "http://localhost-auth-digest.com/"
+                            # AuthDigestDomain "/private/" "http://mirror.my.dom/private2/"
+                            AuthDigestDomain "/"
+                            AuthDigestProvider file
+                            AuthUserFile "./.digest_pw"
+                            # 要求访问者必须提供有效的用户名和密码
+                            Require valid-user
+                        </Location>
+
+                        RewriteEngine on
+                        RewriteCond %{HTTP:Upgrade} websocket [NC]
+                        RewriteCond %{HTTP:Connection} upgrade [NC]
+                        RewriteRule ^/?(.*) ws://localhost:8000/$1 [P,L]
+
+                        ProxyPreserveHost On
+                        # 将客户端请求转发到后端服务器
+                        ProxyPass / http://localhost:8000/
+                        # 将后端服务器返回的 URL 地址替换成前端域名地址，防止暴露内部地址
+                        ProxyPassReverse / http://localhost:8000/
+
+                        <IfModule dir_module>
+                            DirectoryIndex index.html index.php
+                        </IfModule>
+
+                        ErrorLog "logs/localhost-vscode.com-error.log"
+                        CustomLog "logs/localhost-vscode.com-access.log" common
+
+                    </VirtualHost>
             https://github.com/coder/code-server
             https://github.com/gitpod-io/openvscode-server
         直接访问 vscode.dev 也可以编辑本地文件
@@ -1813,12 +1902,14 @@ vscode的使用技巧
                     兼容一部分 sendmail 的命令
 如何实现一个搜索引擎？
     搜索引擎的原理
-        倒排索引
+        分词（word segmentation）
+        倒排索引（Inverted index）
         Lucene
             solr
             elasticsearch
         sphinx
         mysql的全文搜索
+        BM25算法
 客户端的动画？
     动画是如何实现的？
         js
