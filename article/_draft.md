@@ -2396,6 +2396,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             电磁 电气 的区别？
             电磁 简单但不严谨地理解 就是 无线信号 就是 电磁波
             电气 简单但不严谨地理解 就是 有线信号 就是 电流的高低电平
+                那么 光纤 算电气信号还是电磁信号？
             信号 -> 传输介质的变化？
 如何做一个npm库
     去npm官方文档注册账号,并验证邮箱 官网地址:https://www.npmjs.com/
@@ -4489,6 +4490,10 @@ leetcode做题的一般套路
     traditional AI 传统AI
         predictive AI 预测式AI
     generative AI 生成式AI
+    可能用到的语言或工具
+        Python R Julia Fortran SQL
+        Spyder Jupyter RStudio
+        Excel Octave MATLAB Mathematica SAS SPSS
     相关的职业
         数据科学家（Data scientist）
             数据科学家分析复杂的数字数据，帮助企业做出决策。
@@ -4621,7 +4626,7 @@ leetcode做题的一般套路
             注意力机制（Attention Mechanism）
                 自注意力机制（Self Attention Mechanism）
             ReAct (Reasoning and Acting) 推理和执行
-            LangChain 和 LangGraph
+            LangChain 和 LangGraph 和 langsmith
         满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
             满血就是没经过改动的
             量化就是可以运行在内存里的
@@ -4721,10 +4726,11 @@ leetcode做题的一般套路
             梁见后 超微电脑（Super Micro Computer） 主要是做服务器的
             梁文峰
     相关的框架
-        Torch
-        TensorFlow
-        Keras
-        sklearn 这个主要用于学习
+        python的库
+            Torch
+            TensorFlow
+            Keras
+            sklearn 这个主要用于学习
         ML.NET
         Apache SINGA
         Apache Spark MLlib
@@ -5725,6 +5731,9 @@ wordpress
     监听路由的变化
     匹配路由并渲染对应的内容
     放行不匹配的路由
+windiows里的各种常用软件
+    邮件 音频播放器 视频播放器 图片浏览器
+    微软出品的 不是微软出品但也大量装机的
 如何用一条命令关闭windows的屏幕
     这一句只能运行在 cmd 里
         powershell (Add-Type '[DllImport(\"user32.dll\")]^public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);' -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)
@@ -5935,7 +5944,7 @@ nas
         网络
             内网穿透 和 动态代理
         应用
-            网盘
+            网盘 (File-hosting service, cloud-storage service, online file-storage provider, cyberlocker)
             笔记
     硬件
         就普通的服务器，然后再加上 ups
@@ -6242,6 +6251,18 @@ nas
     物质本质上是 能量
     时间 和 空间 可以合并为 时空
     所以 物理的 本质 是 能量 和 时空
+    基本粒子
+        费米子 玻色子 快子
+    基本力
+        电磁力 弱力 强力 引力
+    弱电统一理论
+        电磁力 弱力
+    大一统理论
+        电磁力 弱力 强力
+    万有理论
+        电磁力 弱力 强力 引力
+    相对论 -> 宇宙学标准模型
+    量子物理 -> 粒子物理学标准模型
     数学和物理的交汇点在于数学为物理提供了一种语言和工具，以描述和预测自然现象。
     物理学和化学的交汇点主要在于它们都研究物质的基本组成和性质，但从不同的角度和尺度进行。物理学关注的是物质的基本粒子和力的规律，而化学则专注于物质的化学性质和反应。
     化学和生物学的交汇点在于它们共同探索生命过程中的分子机制。这一领域被称为生物化学，它研究生物体内发生的化学反应
@@ -7234,12 +7255,23 @@ Hello what what is the first thing, and I am am scq000.
     CT Communication Technology 通信技术
     IT Information Technology 信息技术
     ICT Information Communication Technology 信息通信技术
-    电子科学与技术
-    微电子科学与工程
+    Electronic Information Engineering 电子信息工程
+    Electronic science and technology 电子科学与技术
+    Microelectronics Science and Engineering 微电子 微电子科学与工程
     通信 通讯 电信 电讯 这几个有什么关系和区别？
         电信 -> 电子通信
         电讯 -> 电子通讯
+        通信 Communication
+        电信 Telecommunication
+        Communication 沟通交流
+        Telecommunication 是指通过 电报 电话 网络等技术进行的通信
+        Communication 包含 Telecommunication
+        communication 可同时对应“通信”和“通讯”，但中文需根据语境区分
     机器 机构 机械 零件 这几个有什么关系和区别？
+        零件（Part） → 机构（Mechanism） → 机器（Machine）
+            零件是基础，多个零件组成机构，多个机构组合成机器
+                例如，汽车（机器）包含发动机（机构）、传动系统（机构），而发动机由活塞、连杆、曲轴（零件）组成
+        机械（Machinery/Mechanical） 是更高层次的概念，涵盖机器、机构、零件及相关技术
     科学 技术 工程 这几个有什么关系和区别？
         科学活动是以发现为核心
         技术活动是以发明为核心
@@ -7251,7 +7283,7 @@ Hello what what is the first thing, and I am am scq000.
             eSTEM 开头的小写e是 English 的意思
     强电 和 弱电
         强电 和 电线 电路 供电 相关的
-        弱电 和 电相关的，需要供电的设备
+        弱电 和 电相关的，需要供电的设备，例如 电话 网络 监控
         电气工程 电力工程 算 强电
         电子工程 信息工程这些 算 弱电
     英文
@@ -7267,6 +7299,13 @@ Hello what what is the first thing, and I am am scq000.
         electric 和 electrical 都是形容词
         electric 和电气强相关 物体确实有电流通过 例如 电灯 electric light
         electrical 和电气弱相关 例如 电气工程 Electrical Engineering
+        embedded
+            adj. 植入的 深入的 内含的
+            v. 把...嵌入，埋入 embed 的过去式和过去分词
+        IC Integrated Circuit 集成 电路
+        circuit 
+            n. 电路 线路 巡回 环行 环行路线
+            v. 巡回
         communication 通讯
         telecommunication 电信
         telegraph 电报
@@ -7276,6 +7315,17 @@ Hello what what is the first thing, and I am am scq000.
         Technology n. 技术
         Engineering n. 工程
         Science and Technology n. 科技 科学和技术
+    电子（electric） 数码（digital） 互联网（Internet）
+        电子 19世纪末
+        数码 20世纪80年代
+        互联网 20世纪70年代，90年代才开始流行
+        电子 通常有一个 e 前缀
+        数码 通常有一个 d 或 digi 前缀
+        互联网 通常有一个 i 前缀
+        数字技术（Digital Technology）
+            从 模拟信号 转换成 数字信号
+            处理 数字信号
+        数码 数字 数位 都是 digital 的翻译
     三论
         旧三论
             系统论
