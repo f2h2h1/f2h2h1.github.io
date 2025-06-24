@@ -364,4 +364,18 @@ https://github.com/wkhtmltopdf/wkhtmltopdf
 把那个 seo 的仓库再改一下
 面向一般用户的，面向开发者的
 
+
+afterprint 和 beforeprint 事件允许页面在打印开始之前更改其内容（例如，也许是移除 banner）然后在打印完成后还原这些更改。
+window.addEventListener("beforeprint", (event) => {
+  console.log("打印前");
+});
+window.addEventListener("afterprint", (event) => {
+  console.log("打印后");
+});
+
+
+@media print { ... }
+
+<link rel="stylesheet" src="styles.css" media="print" />
+
 -->

@@ -2349,6 +2349,11 @@ $scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(Magento\
 $scopeConfig->getValue('general/file/bunch_size');
 ```
 
+用于查询配置的sql
+```sql
+select * from core_config_data where path like '%general/file/bunch_size%' limit 10
+```
+
 <!--
 php -a <<- 'EOF'
 try {
@@ -2412,7 +2417,29 @@ php bin/magento config:show path
 参考
 https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/files/config-reference-systemxml.html
 
-<!-- select * from core_config_data where path like '%promo/promotion_group/email_address%' limit 10 -->
+
+### 配置里的加密字段
+
+加密字段，就是在后台页面里不会直接显示内容，而是显示 `*****` ，即使用命令行获取字段内容也是返回 `*****`
+
+etc/system.xml 里的配置，注意 type 需要设成 obscure
+```xml
+<field id="password" translate="label" type="obscure" sortOrder="25"  showInDefault="1" showInWebsite="1" showInStore="1">
+    <label>Password</label>　　　　　　　　　　　　　　　　　　
+        <backend_model>Magento\Config\Model\Config\Backend\Encrypte</backend_model>
+    <validate>required-entry</validate>
+</field>
+```
+
+在代码里这样获取
+```php
+$scopeConfig = $objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+$secret = $scopeConfig->getValue('sales_email/general/teste_ncrypted_2'); // 这是加密后的字符串
+var_dump($secret);
+$encryptor = $objectManager->get(\Magento\Framework\Encryption\Encryptor::class); // 这才是有效的内容
+$secret = $encryptor->decrypt($secret);
+var_dump($secret);
+```
 
 <!--
 

@@ -367,7 +367,8 @@ mod_rewrite
 ```plaintext
 https://www.apachelounge.com/download/
 ```
-Apache 官方只提供源码，二进制文件都是第三方编译的，这里选择 Apache Lounge 提供的二进制文件
+Apache 官方只提供源码，二进制文件都是第三方编译的，这里选择 Apache Lounge 提供的二进制文件。
+除了 Apache Lounge 之外还有 WampServer 和 XAMPP ，选 Apache Lounge 的原因是， php 的下载页面也是推荐用 Apache Lounge 。
 
 ### 配置 Apache
 1. 把 Apache 添加进环境变量

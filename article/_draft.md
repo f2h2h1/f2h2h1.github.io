@@ -5732,7 +5732,7 @@ wordpress
     匹配路由并渲染对应的内容
     放行不匹配的路由
 windiows里的各种常用软件
-    邮件 音频播放器 视频播放器 图片浏览器
+    邮件 音频播放器 视频播放器 图片浏览器 文本编辑器
     微软出品的 不是微软出品但也大量装机的
 如何用一条命令关闭windows的屏幕
     这一句只能运行在 cmd 里
@@ -6489,16 +6489,19 @@ nas
                 水果忍者 愤怒的小鸟 神庙逃亡 割绳子 涂鸦跳跃 鳄鱼小顽皮爱洗澡 宝石传奇 植物大战僵尸 瘟疫公司 Cytus 极品飞车17最高通缉 战斗之心 武士2 excel杀
             崩球传说 3d贪食蛇
 媒体相关的经验
-    multimedia
-    multi-media
+    多媒体
+        multimedia
+        multi-media
+        文本 Text
+        图像 Images
+        视频 Video
+        音频 Audio
+        动画 Animation
     medium
-    图像
-    视频
-    音频
     流媒体
     媒介
-    媒体
-    多媒体
+    媒体 media
+    超媒体 Hypermedia
     网络媒体
     社交媒体
     自媒体
@@ -6576,6 +6579,14 @@ nas
     emacs
         Editor Macros
         宏编辑器
+    edlin
+        MS-DOS 里的行编辑器
+    MS-DOS Editor
+        在 MS-DOS 5.0 中取代 edlin
+    Microsoft Edit
+        在 2025 3 微软发布了一个现代化的 edit https://github.com/microsoft/edit
+    notepad 记事本
+    edit 编辑
     editor 编辑器
     text editor 文本编辑器
     word processor (WP) 文字处理器
@@ -6587,6 +6598,9 @@ nas
         Microsoft Word
         WordPad
             Microsoft 在 Windows 11 24H2 中删除了写字板，并且没有继任者
+        Windows Write
+            其内置于微软的Windows 1.0、Windows 2.0和Windows 3.x，Windows 95发布后，被写字板取代
+            在Windows 95之后的操作系统中，执行write.exe会开启写字板。
     desktop publishing (DTP)
         Microsoft Publisher
         Adobe InDesign
@@ -7115,7 +7129,7 @@ Hello what what is the first thing, and I am am scq000.
         长波授时
             频率范围：通常在30 kHz到300 kHz之间。
             传播方式：主要通过地波传播，覆盖范围广，信号稳定。
-        短波和长波授时指的是使用的频率范围，既可以用低频电码也可以传播授时的声音
+        短波和长波授时指的是使用的频率范围，信号形式可以是音频提示音 + 时间信息编码 ，也可以是纯数据帧
         低频电码授时
             全世界共有6个民用基站
             五地六局
@@ -7126,9 +7140,14 @@ Hello what what is the first thing, and I am am scq000.
                 https://blog.csdn.net/ufo2006/article/details/60955887
                 https://github.com/bg6cq/web-bpc
                 https://github.com/shogo82148/web-jjy
+            低频电码就是长波授时
+                低频电码 强调的是“信号形式”：是数字电码
+                长波授时 强调的是“传输方式/物理媒介”：使用长波
         卫星授时（gps授时）
             定位系统都有授时功能
                 定位就是通过时间来实现的
+            一般卫星授时精度最高
+                卫星授时 > 短波授时 > 长波授时
         网络授时
             sntp 简单网络协议（Simple Network Time Protocol）
                 ntp 的简化版，一般用在嵌入式设备
@@ -7384,7 +7403,11 @@ Hello what what is the first thing, and I am am scq000.
                 如果一个人有 a属性 b属性 c行为
                 那么这种人就是 x效应/x心理/x人格
                 这种 x效应/x心理/x人格 的人还会有 d属性 e属性 f行为
-
+为什么无法学习新知识了？
+    不知道从哪里开始学习
+    理论知识记不住
+    缺少实践机会
+    学会了，如何证明自己学会了？
 信息技术的本质是什么？
     现实 -> 数字？
 财政、经济、金融、股票、基金、量化
