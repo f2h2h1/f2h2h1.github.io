@@ -620,9 +620,7 @@
             层叠样式表
                 css
         基于字符串的数据格式
-            ini
-            yaml
-            json
+            properties ini yaml json xml toml csv HOCON HCL
         编译原理
             语义设计
                 类型系统
@@ -4741,6 +4739,10 @@ leetcode做题的一般套路
             这是一套系列丛书，一共有七本 https://github.com/Visualize-ML/Book3_Elements-of-Mathematics/blob/main/鸢尾花书_整体布局.pdf
         如何入门人工智能科研 https://github.com/WengLean/hands-on-research-tutorial
         动手学深度学习（Dive into Deep Learning，D2L.ai） https://github.com/d2l-ai/d2l-zh
+        从零开始的大语言模型原理与实践教程 https://github.com/datawhalechina/happy-llm
+        21节课教你开始构建生成式AI应用所需的一切知识
+            https://github.com/microsoft/generative-ai-for-beginners
+            https://github.com/microsoft/generative-ai-for-beginners/blob/main/translations/zh/README.md
         ApacheCN
             https://github.com/apachecn/Interview
             https://github.com/apachecn/ailearning
@@ -6502,12 +6504,16 @@ nas
     媒介
     媒体 media
     超媒体 Hypermedia
-    网络媒体
-    社交媒体
-    自媒体
-    新媒体
-    全媒体
-    融媒体
+    数字媒体（digital media）
+    网络媒体（network media）
+    社交媒体（Social media）
+    自媒体（self-media或we media）
+    新媒体（new media）
+    全媒体（omnimedia 或 All Media）
+    融媒体（Melted Media）
+    跨媒体（Cross-Media）
+    媒体融合（media convergence）
+    单媒体（Monomedia）与多媒体对应
     传统媒体或旧媒体
         书刊
         报纸
@@ -7794,6 +7800,12 @@ git checkout -- . ; git pull;
 node cli.js --build="updateMatedata|createPage" --config-host="https://blog.complexcloud.site" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
 
 node cli.js --build="updateMatedata|createPage" --config-host="http://127.0.0.1:8022" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false
+
+powershell -Command "Start-Sleep -Seconds 5 ;C:\Progra~1\Git\bin\bash.exe -c 'cd /c/blog;./mycron.sh;sleep 5;'"
+git checkout -- . ;
+git pull;
+node cli.js --build="updateMatedata|createPage" --config-host="https://blog.complexcloud.site" --config-sitename="f2h2h1's blog" --config-thirdPartyCode=false;
+
 
 tar -zcvf UrsaMinor-`date +%g%m%d%H%M`.tar.gz UrsaMinor
 tar --xz -cf UrsaMinor-`date +%g%m%d%H%M`.tar.xz UrsaMinor

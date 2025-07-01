@@ -184,6 +184,11 @@ https://github.com/acmesh-official/acme.sh/wiki#4-how-to-run-on-windows-with-cyg
 Register-ScheduledTask -TaskName "acme_cron" -AsJob -Trigger (New-ScheduledTaskTrigger -Daily -At "2:00 AM") -Action (New-ScheduledTaskAction -Execute "PowerShell" -Argument "-Nolog -NonInteractive -WindowStyle Hidden -Command `"C:\Users\a\Git\usr\bin\bash.exe -l /c/Users/a/.acme.sh/acme.sh --cron --home /c/Users/a/.acme.sh`"")
 ```
 
+<!--
+Register-ScheduledTask -TaskName "acme_cron" -Trigger (New-ScheduledTaskTrigger -Daily -At 2am) -Action (New-ScheduledTaskAction -Execute "C:\Progra~1\Git\bin\bash.exe" -Argument " -l -c `"sleep 5; ~/.acme.sh/acme.sh --cron --home '/c/Users/Administrator/.acme.sh'; sleep 5; `" ");
+
+-->
+
 
 似乎可以这样安装 计划任务 ，即使在 windows 环境里，只要在 cygwin 中运行，一样是有效的
 ```
