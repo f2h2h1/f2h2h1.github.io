@@ -206,6 +206,9 @@ app
                 Plugin
                 Setup
                 Test
+                    Fixture
+                    Mftf
+                    Unit
                 Ui
                 view
                     areaCode 区域代码 就是 frontend adminhtml 这种
@@ -4096,6 +4099,45 @@ select * from sales_order_status_state;
     - https://support.magento.com/hc/en-us/articles/360047139492
 - 也可以把下载的 patch 文件单独复制出来，然后用 cweagans/composer-patches 打补丁
 <!-- acsd mdva 补丁的前缀其实是什么的缩写？ -->
+
+### 单元测试
+
+从文档里看至少有三种命令可以运行测试
+```
+直接用 phpunit 运行测试
+php ./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist
+用 magento 的命令运行测试
+php bin/magento dev:tests:run
+用 mftf 运行测试
+php ./vendor/bin/mftf run
+```
+
+magento2 也支持使用 codecept 测试，只是不推荐
+https://developer.adobe.com/commerce/testing/functional-testing-framework/commands/codeception/
+
+MFTF(Magento Functional Testing Framework, Magento 功能 测试 框架)
+MFTF 一般是要单独安装的，
+MFTF 是一个类似于 codecept 的测试框架，但只能用在 magento2
+
+magento2 似乎有一套很完善很复杂的测试
+https://developer.adobe.com/commerce/testing/
+
+
+单独地运行一个测试用例
+```
+php vendor/phpunit/phpunit/phpunit -c dev/tests/unit/phpunit.xml.dist app/code/Magento/Indexer/Test/Unit/Model/IndexerTest.php
+php -d xdebug.remote_autostart=on vendor/phpunit/phpunit/phpunit -c dev/tests/unit/phpunit.xml.dist app/code/Magento/Indexer/Test/Unit/Model/IndexerTest.php
+composer exec -v -- phpunit -c dev/tests/unit/phpunit.xml.dist app/code/Magento/Indexer/Test/Unit/Model/IndexerTest.php
+```
+
+<!--
+ITF (Integration testing framework, 集成测试框架) 
+./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist
+
+php -f vendor/bin/phpunit -- -c dev/tests/unit/phpunit.xml.dist
+php bin/magento dev:test:run static
+    all, unit, integration, integration-all, static, static-all, integrity, legacy, default
+-->
 
 ### 从 marketplace.magento.com 下载和安装拓展
 1. 登录

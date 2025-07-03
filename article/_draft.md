@@ -7255,7 +7255,7 @@ Hello what what is the first thing, and I am am scq000.
         稳定耐用的（Robust）
     可访问性除了给残障人士使用外，还可以给文本浏览器使用
 那些需要写代码但又不是软件开发的领域
-    测试 运维 网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 多媒体处理 数据分析 人工智能 3D打印
+    测试 运维 网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 多媒体处理 数据分析 人工智能 3D打印 3D建模
 那些和计算机相关的学科
     工学 engineering
         机械工程 mechanical engineering
