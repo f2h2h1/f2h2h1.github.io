@@ -1908,6 +1908,7 @@ vscode的使用技巧
         sphinx
         mysql的全文搜索
         BM25算法
+    nutch+solr+Hadoop+Hbase
 客户端的动画？
     动画是如何实现的？
         js
@@ -5641,6 +5642,7 @@ wordpress
             WP_SITEURL 填的是 网站域名
             WP_HOME 填的就是 网站域名/wordpress
     修改wordpress默认后台登录地址
+        wp-login.php
     如何给 woo 增加支付方式 ？
     wordpress 如何实现 国际化/多语言 ？
         WordPress 是使用 gettext 实现翻译的，主要使用mo文件
@@ -5698,6 +5700,7 @@ wordpress
         https://make.wordpress.org/core/2022/09/12/lets-make-wordpress-officially-support-sqlite/
         https://wpmore.cn/wordpress-%e5%8f%91%e5%b8%83%e4%ba%86%e7%8b%ac%e7%ab%8b%e7%9a%84-sqlite-%e6%8f%92%e4%bb%b6.html
         既然可以使用 sqlite ，那么使用 PostgreSQL 也是可以的吧
+            https://wordpress.org/plugins/sqlite-database-integration
             https://wordpress.org/support/topic/configuring-wordpress-with-postgresql/
             https://github.com/PostgreSQL-For-Wordpress/postgresql-for-wordpress
     如何寻找前1000个用户 https://github.com/naxiaoduo/1000UserGuide
@@ -5713,6 +5716,35 @@ wordpress
     可以在浏览器中运行的 wp
         https://github.com/WordPress/wordpress-playground
         WordPress Playground是一个实验性的浏览器WordPress,由于WebAssembly,它可以在没有PHP服务器的情况下运行。
+    电商网站
+        客户 customer
+        产品 product
+        购物车 shopping cart
+        地址 address
+        支付 payment
+        订单 order
+        送货 shipping
+        发票 invoice
+        库存 inventory
+        优惠券 coupon
+        营销 marketing
+        分销
+        税 tax
+        商家 vendor
+        员工 staff
+        b2b b2c b2b2c c2c S2B2C中，S即是大供货商（Supply chain），B指渠道商，C为顾客
+    php的开源电商
+        WordPress + WooCommerce
+        Drupal Commerce
+        Magento
+        OpenCart
+        PrestaShop
+        OScommerce
+        ZenCart
+    php的cms
+        Drupal 2000
+        WordPress 2003
+        Joomla 2005
 接入 alipay+ 的过程
     注册和设置
     支付
@@ -5750,7 +5782,13 @@ windiows里的各种常用软件
 如何用命令行打开windows的控制面板
     按下 Win 键 + R 键，打开运行对话框，输入 control ，然后按回车键
     在 cmd 或 powershell 或 其他终端里，输入 control ，然后按回车键
-在没有管理员权限的前提下
+windows11中打开windows10的资源管理器
+    打开控制面板，
+    接着点击控制面板地址栏左侧的向上箭头两次，就会自动打开旧版文件资源管理器
+在windows中，通过 pid 获取进程的命令行
+    $process = Get-WmiObject Win32_Process -Filter "ProcessId = 49532"; if ($process) {return $process.CommandLine} else {return $null}
+    Get-WmiObject -Class Win32_Process -Filter "name = 'php-cgi.exe'"
+windows在没有管理员权限的前提下
     运行需要管理员权限的程序
         设置环境变量，通过 cmd 或 powershell 修改当前进程的环境变量，这个是不需要权限的
         set __COMPAT_LAYER=RUNASINVOKER
@@ -5799,9 +5837,6 @@ windiows里的各种常用软件
             curl -v -L --proxy 127.0.0.1:6080 https://www.google.com.hk
             curl -v -L --ssl-no-revoke --proxy 127.0.0.1:6080 https://www.google.com.hk
             curl -v -L -k --proxy 127.0.0.1:6080 https://www.google.com.hk
-在windows中，通过 pid 获取进程的命令行
-    $process = Get-WmiObject Win32_Process -Filter "ProcessId = 49532"; if ($process) {return $process.CommandLine} else {return $null}
-    Get-WmiObject -Class Win32_Process -Filter "name = 'php-cgi.exe'"
 计算机科学的五次浪潮
     大型机     1945 第一台通用的电子计算机
     个人计算机 1975 微软成立
@@ -6063,9 +6098,35 @@ nas
         交响乐 就是 管弦乐
         音乐 与 数学的联系？
             声音和音乐计算 (Sound and music computing, SMC)
-钢琴
+摇滚乐队
+    主唱
+    吉他
+        主音吉他
+        节奏吉他
+    贝斯
+        电贝斯（英语：Bass guitar），简称贝斯，又称低音电吉他
+    鼓手
+    键盘手
+    主创
+        作曲
+        填词
+    经纪人
+钢琴（piano）
     分类
-        三角琴 立式钢琴 电钢琴(Electric piano)、数位钢琴(Digital piano)、电子琴(Electronic piano)、合成器 的区别？
+        三角琴（grand piano）
+        立式钢琴（Upright piano）
+        电钢琴(Electric piano)
+        数位钢琴(Digital piano)
+        电子琴(Electronic piano)
+        合成器（synthesiser）
+        这些都有什么区别？
+        还有这些
+            电子合成器（Electronic synthesiser）
+            电子乐器（Electronic musical instrument）
+            键盘乐器（keyboard musical instrument， keyboard instrument）
+            电子键盘
+            音乐键盘（Musical keyboard）
+            效果器（Effects unit）
     组成
         琴键
             88 (1+2)+12*7+1
@@ -6324,11 +6385,15 @@ nas
             Microsoft Project
             Redmine
             dotProject https://github.com/dotproject/dotProject
+            MyLifeOrganized (MLO) - 老牌 GTD 工具
+            outline https://github.com/outline/outline 知识库管理工具
+            DooTask https://github.com/kuaifan/dootask 开源任务管理系统
+            RTM(remember the milk) 跨平台任务管理工具
             产品生命周期管理（Product Life Cycle Management，PLM）
             产品数据管理（Product Data Management，PDM）
             https://zh.wikipedia.org/wiki/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6%E6%AF%94%E8%BE%83
             类似的软件还有非常多
-            番茄工作法
+            番茄工作法(Pomodoro Technique)
             四象限分类和时间盒子
             艾宾浩斯遗忘曲线
     总结一下需求
@@ -6519,6 +6584,7 @@ nas
         报纸
         广播
         电视
+        音像制品
     出版物或出版品（英语：Publication）指以传播信息、文化、知识为目的的各种产品包括印刷品、电子产品的总称，属于传播文化知识的媒体。
     媒介 和 媒体 有什么区别？
     在中文互联网里，解释很混乱
@@ -7417,6 +7483,39 @@ Hello what what is the first thing, and I am am scq000.
 信息技术的本质是什么？
     现实 -> 数字？
 财政、经济、金融、股票、基金、量化
+    期货 etf qdii
+    有哪些可以提供数据的网站
+        新浪财经
+        东方财富
+        同化顺
+        雪球 https://xueqiu.com/stock/screener
+        微软 https://www.msn.com/zh-cn/money/explorecenter
+        腾讯证券里也有数据，但要在微信里用，感觉作用不是很大
+    同花顺都有哪些产品和服务
+        电脑软件
+            免费
+            远航
+            财富先锋
+            决策先锋
+            金融大师
+        saas平台
+            问财
+            顾投平台
+            量化回测 supermind https://quant.10jqka.com.cn/view/
+    有哪些量化交易的平台，即使只有回测或模拟盘也可以
+        www.fmz.com
+        PandaAI 量化因子库
+            https://www.pandaai.online/
+            https://github.com/PandaAI-Tech/panda_factor
+        阿布量化（ABU）
+            http://www.abuquant.com/
+            https://github.com/bbfamily/abu
+        QUANTAXIS
+            https://github.com/yutiansut/QUANTAXIS
+    github 相关的仓库
+        TradingAgents：基于多智能体大语言模型的金融交易框架 https://github.com/TauricResearch/TradingAgents
+        基于多智能体LLM的中文金融交易框架 - TradingAgents中文增强版  https://github.com/hsliuping/TradingAgents-CN
+        强化学习交易股票 https://github.com/sunnyswag/StockRL
 国家和社会的区别和联系
 政治
 历史
@@ -7441,6 +7540,8 @@ Hello what what is the first thing, and I am am scq000.
         有哪些基于区块链的应用
     数字货币
     比特币的相关介绍(Bitcoin)
+        bit 比特
+        coin 硬币
     除了比特币之外的主要的数字货币
         以太坊 (Ethereum, ETH): 以太坊是一个支持智能合约的区块链平台，允许开发者构建去中心化应用（DApps）。
         泰达币 (Tether, USDT): 作为一种稳定币，USDT 的价值与美元挂钩，通常用于在加密货币市场中作为交易媒介。
@@ -7451,11 +7552,14 @@ Hello what what is the first thing, and I am am scq000.
     以太坊(Ethereum)
     什么是智能合约(Smart Contract)
     交易所
-        币安
+        币安（Binance）
+        Bifinex
     什么是NFT(非同质化代币 Non-Fungible Token)
     什么是元宇宙(Metaverse)
         元宇宙一词起源于1992年的科幻小说《雪崩》，是“元(meta)”和“宇宙(universe)”的合成词。
     什么是密码朋克(Crypto punk)
+    什么是稳定币（Stablecoin）
+        泰达币（英语：Tether，货币代号USD₮或USDT）
 java
     命令行
         纯手工管理依赖和编译
