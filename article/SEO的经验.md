@@ -332,6 +332,29 @@ App Store Marketing
 应用商店营销
 
 
+电商平台
+    国内
+    海外
+        亚马逊 (Amazon)
+        eBay
+        Wish
+        Shopee
+        Lazada
+        阿里巴巴国际站（Alibaba.com）
+        Global Sources（环球资源网）
+        ThomasNet（美国工业产品采购平台）
+        中国制造网（made-in-china.com）
+        DHgate（敦煌网）
+        shopify
+网红营销
+线下展会
+
+要注重用户体验和互动
+要注重数据追踪与分析
+不能依赖单一推广渠道，要多几个推广渠道
+
+
+
 NavBoost
     Navboost 是 Google 搜索算法中的一个重要组成部分，
     主要用于处理用户的 导航类查询（Navigational Queries） 和优化搜索结果的个性化排序。

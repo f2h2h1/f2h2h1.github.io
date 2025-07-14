@@ -4195,6 +4195,61 @@ ELF格式
     查看文件格式 `file 文件路径`
     查看 elf 文件类型 `readelf -h 文件路径`
     32位和64位的格式会有一些差异
+为什么网络上的文章作用不是很大？
+    没有描述运行环境
+    没有描述软件版本
+    描述不够详细
+        问题
+        解决方式
+    没有描述前置知识/背景信息
+    一些信息或知识没有引用出处
+    存在歧义的名词
+        又有一个新问题，为什么总是出现有歧义的名词？
+        歧义的名词
+            从一开始就存在歧义
+            翻译的问题
+            营销名词
+                特征
+                    是新的，至少含义是新的
+                    无法从字面理解具体含义
+                    会被强调，是用来取代旧事物的新事物，是未来发现的方向
+                为什么会出现营销术语
+                    现有的市场已经饱和
+                不能麻木相信营销术语
+                不能完全否定营销术语
+                因为是新名词，所以可以自己把握解释权
+                对消费者 -> 买买买
+                对投资人 -> 加大投资
+                每隔一段时间就会有新的名词出现
+        同一个名词有多种解释，同一个事物有多个名词
+            这些都可能会导致知识的混乱
+            这似乎是很普遍的现象
+            一些是由翻译导致的，
+            一些是由缩写导致的，
+            一些是由错误的理解被广泛传播导致的，
+            一些是营销名词故意混肴普通人的理解
+        事物 和 名词
+            可能是平行关系 可能是包含关系 也可能是没有关系
+            同一事物不同部分的描述
+            不同语境下，同一名词会有不同解释
+            同一事物，在不同的发展阶段会有不同的名称
+            可能是过去的名称依然在沿用，
+            也可能是现在的名称太流行，也用于描述过去的版本
+        在 计算机科学 里这个现象特别严重，不论中文还是英文
+            其它领域也有类似的现象
+            根据维基百科中的描述，数据挖掘也是一个营销名词，
+            心理学 上的新名词，例如 x效应/x心理/x人格
+            选取 一些属性 或 一些行为 ，然后就可以把有这些属性或行为的人称为 x效应/x心理/x人格 ，最后再扩大化解释一轮，加上其它属性和行为
+            例子
+                如果一个人有 a属性 b属性 c行为
+                那么这种人就是 x效应/x心理/x人格
+                这种 x效应/x心理/x人格 的人还会有 d属性 e属性 f行为
+为什么无法学习新知识了？
+    不知道从哪里开始学习
+        没有明确的学习路径
+    理论知识记不住
+    缺少实践机会
+    学会了，如何证明自己学会了？
 如何判断自己是否学会了某一项技能？
     特别是数学相关的？
         感觉看原理时一看就懂，实践时一做就错
@@ -4218,6 +4273,10 @@ ELF格式
     数学建模 https://book.douban.com/subject/1231271/
     数学建模方法与分析 https://book.douban.com/subject/1392709/
     感觉数学建模的那些算法和机器学习的十分相似，可能就是同一套。。。
+    算法
+        预测
+        分类
+        最优化
 leetcode做题的一般套路
     要把问题抽象成数学问题
         要抽象成类似这样的函数
@@ -4515,6 +4574,13 @@ leetcode做题的一般套路
         数据构架师（Data architect）
             数据构架师设计、创建、部署和管理组织的数据架构。
             他们定义不同数据实体和 IT 系统如何存储、使用、集成和管理数据。
+    机器学习中算法/模型的分类方式
+        任务类型
+            分类 预测 最优化
+        学习类型
+            有监督 半监督 无监督 迁移学习 强化学习
+        模型结构
+            线性模型 非线性模型 集成模型
 人工智能
     概述
         是什么
@@ -4574,6 +4640,20 @@ leetcode做题的一般套路
     大语言模型（Large Language Model, LLM）
         自然语义处理 (Natural Language Processing, NLP)
         提示工程（Prompt Engineering）
+            提示词模板
+                背景介绍
+                角色设定
+                    明确角色
+                    角色赋能
+                具体任务
+                    任务指令
+                        任务步骤
+                    约束条件
+                输出格式
+            分隔符
+            ###
+            ===
+            选择哪种特殊字符并不重要，关键是这些字符足够独特，使得模型能将其识别为分隔符，而非常规标点符号
         提示链 (prompt chaining)
             提示链通过多轮对话，引导 LLM “思考” 方向，让 LLM 从简单任务开始，沿着设计好的“思考”方向逐步完成一个复杂推理
         思维链 (Chain of thought, CoT)
@@ -4591,13 +4671,19 @@ leetcode做题的一般套路
             工作流 (workflow) 就是 字面意思
                 和 cicd 里的工作流是一样的，只是过程中有大模型的参与
                 参考一下腾讯的 混元 元宝 元器
+            Function Call
             MCP（Model Context Protocol）
                 MCP 是由 Anthropic 公司（Claude 模型） 推出的一个协议，
                 它通过提供一种标准化的接口，LLM 应用可以访问外部信息、工具和资源。
                 它相当于大模型的”HTTP协议”。
                     HTTP协议：使浏览器与服务器 交互标准化
                     MCP：使大模型与外部服务 交互标准化
-            Function Call
+            A2A（Agent2Agent）
+            AG-UI（Agent-User Interaction Protocol，智能体用户交互协议）
+                MCP协议——解决AI Agent和外部工具交互问题
+                A2A协议——解决Agent间通信问题
+                AG-UI协议——解决AI Agent与前端应用之间的交互标准化问题
+            多Agent系统（Multi-Agent System, MAS）
             MOE
                 Mixed Expert Models
                 混合专家模型
@@ -4749,6 +4835,7 @@ leetcode做题的一般套路
             https://github.com/apachecn/ailearning
             https://github.com/apachecn/ai-roadmap
         AI工具集 https://ai-bot.cn/
+        google 的机器学习教程 https://developers.google.com/machine-learning?hl=zh-cn
     Kaggle
         这是一个类似 leetcode 的平台，题目内容是数据分析相关的
         官网 https://www.kaggle.com/
@@ -4780,6 +4867,40 @@ leetcode做题的一般套路
         前端
             openwebui
             https://github.com/ollama-ui/ollama-ui
+财政、经济、金融、股票、基金、量化
+    期货 etf qdii
+    有哪些可以提供数据的网站
+        新浪财经
+        东方财富
+        同化顺
+        雪球 https://xueqiu.com/stock/screener
+        微软 https://www.msn.com/zh-cn/money/explorecenter
+        腾讯证券里也有数据，但要在微信里用，感觉作用不是很大
+    同花顺都有哪些产品和服务
+        电脑软件
+            免费
+            远航
+            财富先锋
+            决策先锋
+            金融大师
+        saas平台
+            问财
+            顾投平台
+            量化回测 supermind https://quant.10jqka.com.cn/view/
+    有哪些量化交易的平台，即使只有回测或模拟盘也可以
+        www.fmz.com
+        PandaAI 量化因子库
+            https://www.pandaai.online/
+            https://github.com/PandaAI-Tech/panda_factor
+        阿布量化（ABU）
+            http://www.abuquant.com/
+            https://github.com/bbfamily/abu
+        QUANTAXIS
+            https://github.com/yutiansut/QUANTAXIS
+    github 相关的仓库
+        TradingAgents：基于多智能体大语言模型的金融交易框架 https://github.com/TauricResearch/TradingAgents
+        基于多智能体LLM的中文金融交易框架 - TradingAgents中文增强版  https://github.com/hsliuping/TradingAgents-CN
+        强化学习交易股票 https://github.com/sunnyswag/StockRL
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
@@ -4885,6 +5006,7 @@ c有哪些缺点？
         这个c++或oc可以勉强解决
     没有好用的字符串处理方式
         这个c++也解决不了
+    没有强类型？
     没有好用的包管理工具
     多数情况下需要自行处理跨平台的特性
     用c来写网页，到最后其实就是重新发明一次php，php就是c的模板语言
@@ -6175,6 +6297,12 @@ nas
         左手低音区，右手高音区
             以中央c为分界，中央c即在低音区也在高音区
             上面的谱是右手弹，下面的谱是左手弹
+    成年人学习钢琴的五步
+        认识琴键
+        学习识谱
+        了解基本指法并进行基础音阶练习
+        结合前三步进行入门乐曲练习
+        搜索自己想弹的谱，多次练习
     有哪些经典的曲目？
     怎样找到流行曲的乐谱？
     乐理是什么？
@@ -6396,6 +6524,14 @@ nas
             番茄工作法(Pomodoro Technique)
             四象限分类和时间盒子
             艾宾浩斯遗忘曲线
+        DIKW（Data Information Knowledge Wisdom）
+            概念	定义	关系
+            数据（Data）	原始的、未经加工的事实和数字。	数据是信息的原材料，是最基本的元素。
+            信息（Information）	从数据中提炼出来的，具有上下文和意义的内容。	信息是对数据进行组织和解释，使其具有意义。
+            知识（Knowledge）	人们通过经验或教育获得的认识和理解。	知识是信息的内化和理解，包括原理、规则和联系。
+            能力（Capability）	个人或系统应用知识来执行任务或解决问题的技能。	能力是通过学习和实践获得的，是知识的应用。
+            洞察（Insight）	对复杂情况的深刻理解，通常涉及对信息的深入分析和模式识别。	洞察是通过深入分析能力获得的，可以导致新的想法或解决方案。
+            智慧（Wisdom）	使用洞察来做出明智的决策和判断的最高水平的认知能力。	智慧是洞察的高级形式，结合经验、价值观和情境意识。
     总结一下需求
         收集 知识和信息
         整理 知识和信息
@@ -6655,6 +6791,7 @@ nas
         MS-DOS 里的行编辑器
     MS-DOS Editor
         在 MS-DOS 5.0 中取代 edlin
+        一直到32位win10也有这个软件，但64位的系统就没有了
     Microsoft Edit
         在 2025 3 微软发布了一个现代化的 edit https://github.com/microsoft/edit
     notepad 记事本
@@ -7426,96 +7563,8 @@ Hello what what is the first thing, and I am am scq000.
         新三论
             结构论、协同论、突变论
         还有一个 复杂系统科学
-为什么网络上的文章作用不是很大？
-    没有描述运行环境
-    没有描述软件版本
-    描述不够详细
-        问题
-        解决方式
-    没有描述前置知识/背景信息
-    一些信息或知识没有引用出处
-    存在歧义的名词
-        又有一个新问题，为什么总是出现有歧义的名词？
-        歧义的名词
-            从一开始就存在歧义
-            翻译的问题
-            营销名词
-                特征
-                    是新的，至少含义是新的
-                    无法从字面理解具体含义
-                    会被强调，是用来取代旧事物的新事物，是未来发现的方向
-                为什么会出现营销术语
-                    现有的市场已经饱和
-                不能麻木相信营销术语
-                不能完全否定营销术语
-                因为是新名词，所以可以自己把握解释权
-                对消费者 -> 买买买
-                对投资人 -> 加大投资
-                每隔一段时间就会有新的名词出现
-        同一个名词有多种解释，同一个事物有多个名词
-            这些都可能会导致知识的混乱
-            这似乎是很普遍的现象
-            一些是由翻译导致的，
-            一些是由缩写导致的，
-            一些是由错误的理解被广泛传播导致的，
-            一些是营销名词故意混肴普通人的理解
-        事物 和 名词
-            可能是平行关系 可能是包含关系 也可能是没有关系
-            同一事物不同部分的描述
-            不同语境下，同一名词会有不同解释
-            同一事物，在不同的发展阶段会有不同的名称
-            可能是过去的名称依然在沿用，
-            也可能是现在的名称太流行，也用于描述过去的版本
-        在 计算机科学 里这个现象特别严重，不论中文还是英文
-            其它领域也有类似的现象
-            根据维基百科中的描述，数据挖掘也是一个营销名词，
-            心理学 上的新名词，例如 x效应/x心理/x人格
-            选取 一些属性 或 一些行为 ，然后就可以把有这些属性或行为的人称为 x效应/x心理/x人格 ，最后再扩大化解释一轮，加上其它属性和行为
-            例子
-                如果一个人有 a属性 b属性 c行为
-                那么这种人就是 x效应/x心理/x人格
-                这种 x效应/x心理/x人格 的人还会有 d属性 e属性 f行为
-为什么无法学习新知识了？
-    不知道从哪里开始学习
-    理论知识记不住
-    缺少实践机会
-    学会了，如何证明自己学会了？
 信息技术的本质是什么？
     现实 -> 数字？
-财政、经济、金融、股票、基金、量化
-    期货 etf qdii
-    有哪些可以提供数据的网站
-        新浪财经
-        东方财富
-        同化顺
-        雪球 https://xueqiu.com/stock/screener
-        微软 https://www.msn.com/zh-cn/money/explorecenter
-        腾讯证券里也有数据，但要在微信里用，感觉作用不是很大
-    同花顺都有哪些产品和服务
-        电脑软件
-            免费
-            远航
-            财富先锋
-            决策先锋
-            金融大师
-        saas平台
-            问财
-            顾投平台
-            量化回测 supermind https://quant.10jqka.com.cn/view/
-    有哪些量化交易的平台，即使只有回测或模拟盘也可以
-        www.fmz.com
-        PandaAI 量化因子库
-            https://www.pandaai.online/
-            https://github.com/PandaAI-Tech/panda_factor
-        阿布量化（ABU）
-            http://www.abuquant.com/
-            https://github.com/bbfamily/abu
-        QUANTAXIS
-            https://github.com/yutiansut/QUANTAXIS
-    github 相关的仓库
-        TradingAgents：基于多智能体大语言模型的金融交易框架 https://github.com/TauricResearch/TradingAgents
-        基于多智能体LLM的中文金融交易框架 - TradingAgents中文增强版  https://github.com/hsliuping/TradingAgents-CN
-        强化学习交易股票 https://github.com/sunnyswag/StockRL
 国家和社会的区别和联系
 政治
 历史
