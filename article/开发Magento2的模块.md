@@ -2342,7 +2342,14 @@ system -> action logs -> report
 
 ```sql
 INSERT INTO core_config_data (`scope`,scope_id,`path`,value,updated_at) VALUES ('default',0,'general/file/bunch_size','1000', NOW());
+
+UPDATE core_config_data SET `value` = '500' WHERE `path` = 'pgeneral/file/bunch_size' and `scope` = 'default' and `scope_id` = 0;
 ```
+
+UPDATE core_config_data
+SET `value` = '0'
+WHERE path = 'product_custom_attributes/club_protection/enable_mox_card';
+
 
 上面两种写法效果是一样的，
 可以这样获取配置的值
@@ -2429,7 +2436,7 @@ etc/system.xml 里的配置，注意 type 需要设成 obscure
 ```xml
 <field id="password" translate="label" type="obscure" sortOrder="25"  showInDefault="1" showInWebsite="1" showInStore="1">
     <label>Password</label>　　　　　　　　　　　　　　　　　　
-        <backend_model>Magento\Config\Model\Config\Backend\Encrypte</backend_model>
+    <backend_model>Magento\Config\Model\Config\Backend\Encrypte</backend_model>
     <validate>required-entry</validate>
 </field>
 ```

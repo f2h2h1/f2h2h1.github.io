@@ -261,6 +261,8 @@ https://www.google.com/advanced_search
     - 脸书
     - tiktok
     - Instagram
+    - Pinterest
+    - Youtube
 <!--
 LinkedIn
 zolo

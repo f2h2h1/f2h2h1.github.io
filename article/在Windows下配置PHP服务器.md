@@ -665,9 +665,43 @@ kibana 的版本要和 elasticsearch 对应，不然 kibana 运行不了
 - kibana 的配置文件 config/kibana.yml
 
 <!--
+
+curl -v 'http://127.0.0.1:9200'
+
+查看节点信息
 curl -v --user user:passwd 'http://localhost:9200/_cat/nodes?v'
 curl -v 'http://127.0.0.1:9200/_cat/nodes?v'
-curl -v 'http://127.0.0.1:9200'
+
+ES默认的分词器是standard，对英文比较友好，
+例如：hello world 会被分解成 hello和world两个关键词，
+如果是中文会分解成一个一个字，例如：上海大学 会分解成: 上、海、大、学。
+
+analysis-smartcn 中文分词 ES官方推荐的中文分词插件
+analysis-stconvert 简体繁体转换 这个不是官方插件
+    https://github.com/infinilabs/analysis-stconvert
+
+{ES安装目录}/bin/elasticsearch-plugin install analysis-smartcn
+安装完后记得重启
+    前台运行就直接 ctrl+c 结束进程然后重新启动
+        bin/elasticsearch
+    后台启动
+        用 ps 找到进程id
+            ps -ef|grep elastic
+        用 kill 结束进程
+            kill -9 1302
+        重新启动
+            bin/elasticsearch -d
+
+docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.28
+docker exec -it elasticsearch /bin/bash
+
+查看已安装的插件
+bin/elasticsearch-plugin list
+curl -X GET "http://localhost:9200/_cat/plugins?v"
+
+查看版本信息
+curl -X GET "http://localhost:9200/_nodes/settings?pretty"
+
 -->
 
 ## 其它

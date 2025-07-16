@@ -65,6 +65,8 @@
                         Request ：客户端正式请求使用提供的地址。
                         Acknowledge ：服务器确认分配，完成绑定
                     DHCP客户端和服务器通过UDP端口68（客户端）和67（服务器）通信
+                WHOIS
+                RDAP (Registration Data Access Protocol, 注册数据访问协议)
                 smtp
                 pop3
                 imap
@@ -4654,6 +4656,7 @@ leetcode做题的一般套路
             ###
             ===
             选择哪种特殊字符并不重要，关键是这些字符足够独特，使得模型能将其识别为分隔符，而非常规标点符号
+        上下文工程（Context Engineering）
         提示链 (prompt chaining)
             提示链通过多轮对话，引导 LLM “思考” 方向，让 LLM 从简单任务开始，沿着设计好的“思考”方向逐步完成一个复杂推理
         思维链 (Chain of thought, CoT)
@@ -4836,6 +4839,7 @@ leetcode做题的一般套路
             https://github.com/apachecn/ai-roadmap
         AI工具集 https://ai-bot.cn/
         google 的机器学习教程 https://developers.google.com/machine-learning?hl=zh-cn
+        tensorflow 的教程 https://www.tensorflow.org/resources/learn-ml?hl=zh-cn
     Kaggle
         这是一个类似 leetcode 的平台，题目内容是数据分析相关的
         官网 https://www.kaggle.com/
