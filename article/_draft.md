@@ -4715,6 +4715,7 @@ leetcode做题的一般套路
                 自注意力机制（Self Attention Mechanism）
             ReAct (Reasoning and Acting) 推理和执行
             LangChain 和 LangGraph 和 langsmith
+            n8n 和 Dify
         满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
             满血就是没经过改动的
             量化就是可以运行在内存里的
@@ -4817,7 +4818,12 @@ leetcode做题的一般套路
         python的库
             Torch
             TensorFlow
+                TensorFlow Lite 只能运行模型，不能用于训练模型，一般用于移动设备或边缘设备
+                    TensorFlow Lite(TFLite) 现在改名成 LiteRT（Lite Runtime ）
+                TensorFlow.js 是 TensorFlow 的 js 版，原本有的功能 js版基本都有
+                TFX(TensorFlow Extended)
             Keras
+                Keras 是用于构建和训练深度学习模型的 TensorFlow 高阶 API
             sklearn 这个主要用于学习
         ML.NET
         Apache SINGA

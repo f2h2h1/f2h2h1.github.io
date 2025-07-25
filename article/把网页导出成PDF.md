@@ -324,6 +324,20 @@ if __name__ == '__main__':
         run(playwright)
 ```
 
+### 使用 libreoffice 的命令行把网页转换为 pdf
+
+要现在 libreoffice 的安装目录里找到这个命令 soffice
+
+```
+soffice --headless --convert-to pdf "D:\docs\网页.html"
+```
+
+注意事项
+- 需要把依赖都下载到本地
+- 无法转换在线网页
+- 除了 pdf 还可以转换其它格式，例如 把 docx 转换为 html
+- 参考文档 https://help.libreoffice.org/latest/zh-CN/text/shared/guide/pdf_params.html?&DbPAR=SHARED&System=WIN
+
 ## PS
 Opera 浏览器（77.0.4054.203）有一个把页面另存为 PDF 的功能（不是打印预览），几乎可以把页面的样式完整地保留下来（不是打印的样式就是当前渲染的样式）而且还能保持 a 标签的链接。但只能通过图形界面操作，没有命令行参数，也不能通过 Playwright 这类工具来操作浏览器生成。
 可以弄一个单独的 Windows 服务器，用 autoit 这类工具操作 Opera 浏览器把页面另存为 PDF 。

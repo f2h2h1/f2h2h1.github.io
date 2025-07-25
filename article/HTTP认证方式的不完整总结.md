@@ -64,9 +64,15 @@ https://username:password@www.example.com/
 
 ### 基本认证的 apache 配置
 
+需要启用这几个模块
+ - mod_auth_basic
+ - mod_authn_file
+ - mod_authn_core
+ - mod_authz_core
+ - mod_authz_user
+
 ```
 # Apache/2.4.62
-# mod_auth_basic mod_auth_digest mod_authn_file mod_authn_core mod_authz_core mod_authz_user 需要启用这几个模块
 <VirtualHost localhost-auth-basic.com:80>
     ServerAdmin webmaster@dummy-host.example.com
     DocumentRoot "${SRVROOT}/htdocs"
@@ -209,8 +215,10 @@ method:uri:H(entity-body)
 
 ### 摘要认证的 apache 配置
 
-```
+在 basic 认证的基础上还需要启用这几个模块
+- mod_auth_digest
 
+```
 <VirtualHost localhost-auth-digest.com:80>
     ServerAdmin webmaster@dummy-host.example.com
     DocumentRoot "${SRVROOT}/htdocs"
@@ -369,6 +377,102 @@ echo 'auth success';
 
 表单认证讨论得最多得问题是，会话状态要保存在哪里 cookie? token? jwt? session?
 本文只描述 http 的认证，这个问题就不展开了。
+
+### 表单认证的 apache 配置
+
+在 basic 认证的基础上还需要启用这几个模块
+- mod_auth_form
+- mod_request
+- mod_session
+- mod_session_cookie
+- mod_session_crypto
+
+密码文件的生成和 basic 认证的一样
+
+```
+<VirtualHost localhost-auth-form.com:80>
+    ServerAdmin webmaster@dummy-host.example.com
+    DocumentRoot "${SRVROOT}/htdocs"
+    ServerName localhost-auth-form.com
+    ServerAlias localhost-auth-form.com
+
+    <Location "/login.html">
+        Satisfy any
+        Allow from all
+        AuthType None
+        Require all granted
+    </Location>
+    <Location "/loggedout.html">
+        Satisfy any
+        Allow from all
+        AuthType None
+        Require all granted
+    </Location>
+
+    <Location "/dologin.html">
+        SetHandler form-login-handler
+        AuthFormLoginRequiredLocation "/login.html"
+        AuthFormLoginSuccessLocation "/index.html"
+        AuthFormProvider file
+        AuthUserFile "${SRVROOT}/.passwd"
+        AuthType form
+        AuthName /admin
+        Session On
+        SessionCookieName session path=/
+        SessionCryptoPassphrase secret
+    </Location>
+    <Location "/logout.html">
+        SetHandler form-logout-handler
+        AuthFormLogoutLocation "/loggedout.html"
+        Session On
+        SessionMaxAge 1
+        SessionCookieName session path=/
+        SessionCryptoPassphrase secret
+    </Location>
+
+    <Location "/">
+        AuthFormProvider file
+        AuthUserFile "${SRVROOT}/.passwd"
+        AuthType form
+        AuthName "/admin"
+        AuthFormLoginRequiredLocation "/login.html"
+
+        Session On
+        SessionCookieName session path=/
+        SessionCryptoPassphrase secret
+
+        Require valid-user
+    </Location>
+
+    <IfModule dir_module>
+        DirectoryIndex index.html index.php
+    </IfModule>
+
+    ErrorLog "logs/localhost-auth-form.com-error.log"
+    CustomLog "logs/localhost-auth-form.com-access.log" common
+</VirtualHost>
+```
+
+在这个例子里还需要在网站的更目录新建几个 html 文件
+
+login.html
+```html
+<form method="POST" action="/dologin.html">
+  Username: <input type="text" name="httpd_username" value="" />
+  Password: <input type="password" name="httpd_password" value="" />
+  <input type="submit" name="login" value="Login" />
+</form>
+```
+
+loggedout.html
+```html
+<h1>loggedout</h1>
+```
+
+index.html
+```html
+<h1>index</h1>
+```
 
 ## SSL 客户端证书
 
