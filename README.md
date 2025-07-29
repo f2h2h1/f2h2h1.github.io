@@ -89,6 +89,8 @@
 |[王子高的个人博客](https://zigaow.com)|<img alt="王子高的个人博客" src="https://zigao.wang/photo.png" width="119" />|https://zigaow.com|与时俱进，创未来。|
 |[小孙同学](https://blog.sunguoqi.com)|<img alt="小孙同学" src="https://blog.sunguoqi.com/images/avatar.jpg" width="119" />|https://blog.sunguoqi.com|路虽远行则将至，事虽难做则必成！|
 |[idealclover](https://idealclover.top)|<img alt="idealclover" src="https://image.idealclover.cn/blog/assets/icon.png" width="119" />|https://idealclover.top|Stay simple, stay naive.|
+|[LongLuo's Life Notes](https://www.longluo.me)|<img alt="LongLuo\'s Life Notes" src="https://longluo.me/assets/logo/favicon-32x32.png" width="119" />|https://www.longluo.me|每一天都是奇迹|
+|[记忆角落](https://199604.com)|<img alt="记忆角落" src="https://199604.com/wp-content/uploads/2021/03/cropped-5183443_guoliangjun17_1589767581.png" width="119" />|https://199604.com|一名广漂的运维打杂牛马,无棱角的社畜罢了.|
 <!-- exchangeList -->
 
 <!--
