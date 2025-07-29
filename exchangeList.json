@@ -112,5 +112,17 @@
         "href": "https://idealclover.top",
         "desc": "Stay simple, stay naive.",
         "avatar": "https://image.idealclover.cn/blog/assets/icon.png"
+    },
+    {
+        "name": "LongLuo's Life Notes",
+        "href": "https://www.longluo.me",
+        "desc": "每一天都是奇迹",
+        "avatar": "https://longluo.me/assets/logo/favicon-32x32.png"
+    },
+    {
+        "name": "记忆角落",
+        "href": "https://199604.com",
+        "desc": "一名广漂的运维打杂牛马,无棱角的社畜罢了.",
+        "avatar": "https://199604.com/wp-content/uploads/2021/03/cropped-5183443_guoliangjun17_1589767581.png"
     }
 ]
