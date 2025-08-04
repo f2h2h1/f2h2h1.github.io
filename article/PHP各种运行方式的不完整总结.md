@@ -7,6 +7,17 @@ TS(Thread-Safety) 即线程安全，多线程访问时，采用了加锁机制�
 
 NTS(None-Thread Safe) 即非线程安全，不提供数据访问保护，有可能出现多个线程先后或同时操作同一数据的情况，容易造成数据错乱（即脏数据），一般操作的执行时间要比 TS 短。
 
+可以用这样的命令来区分当前的 php 是 TS 还是 NTS
+```
+php -i | grep "Thread Safety"
+php -r "echo PHP_ZTS ? 'ZTS' : 'NTS';"
+```
+
+通常只在 windows 环境会区分 TS 和 NTS 。
+linux 环境下通常只有 NTS 。
+源码编译时手动指定 `--enable-maintainer-zts` 才会启用 TS
+TS 的线程锁机制在 Linux 多进程模型下是冗余开销，实测性能比 NTS 低 5%~15%。
+
 ## PHP 常用的 SAPI
 
 SAPI （Server Application Programming Interface，服务端应用编程端口）
@@ -124,3 +135,9 @@ php 的运行模式有很多种。
 因为 swoole 的发展，在 cli 下实现 http 服务的运行方式也越来越流行了。
 
 无论哪种运行方式，本质上都是 接收数据 处理数据 输出数据 三板斧。
+
+性能最好的做法依然是 `nginx + fpm`
+
+apache 以 prefork 运行时并不支持 http/2 。
+如果一定要用 apache ， 同时 apache 前面没有其它的网关，
+使用 PHP-FPM + proxy_fcgi + event MPM + mod_http2 ，这才是现代、高性能的组合。

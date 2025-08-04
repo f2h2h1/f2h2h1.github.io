@@ -326,7 +326,7 @@ if __name__ == '__main__':
 
 ### 使用 libreoffice 的命令行把网页转换为 pdf
 
-要现在 libreoffice 的安装目录里找到这个命令 soffice
+要先在 libreoffice 的安装目录里找到这个命令 soffice
 
 ```
 soffice --headless --convert-to pdf "D:\docs\网页.html"

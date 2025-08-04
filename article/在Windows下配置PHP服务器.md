@@ -336,6 +336,8 @@ servertype 的 standalone模式 和 inetd模式
 限速
     mod_ratelimit
     apache 原生的限速模块没有 nginx 的好用
+ip 白名单/黑名单
+主动返回 403 429
 
 mod_proxy
 mod_proxy_http
@@ -574,6 +576,12 @@ http://nginx.org/download/nginx-1.21.1.zip
         }
         ```
 
+<!--
+nginx 的配置文件只能用一次 include ，不能多个配置文件嵌套
+但可以用 * 作为通配符
+
+-->
+
 3. https 的配置
     - 在 server 块里加上这三句
     - ssl_certificate 是证书路径， ssl_certificate_key 是私钥路径
@@ -679,6 +687,9 @@ ES默认的分词器是standard，对英文比较友好，
 analysis-smartcn 中文分词 ES官方推荐的中文分词插件
 analysis-stconvert 简体繁体转换 这个不是官方插件
     https://github.com/infinilabs/analysis-stconvert
+
+ik分词器
+elasticsearch-plugin install https://get.infini.cloud/elasticsearch/analysis-ik/7.17.0
 
 {ES安装目录}/bin/elasticsearch-plugin install analysis-smartcn
 安装完后记得重启

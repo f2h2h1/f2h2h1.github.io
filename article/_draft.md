@@ -2511,6 +2511,20 @@ git的一般使用指南
         把 fork 的仓库 clone 到本地
         在本地修改，提交，推送到 github
         在原本的仓库新建一个 pr
+    URL地址末尾加不加 / 有什么区别
+        目录 和 文件
+            加 / 是目录
+                可能会返回该目录下的默认文件（如 index.html）
+                可能会返回目录下的文件列表
+            不加 / 是文件
+        相对路径的解析
+            假设 HTML 页面包含以下 <img> 标签：<img src="image.png">
+            访问 https://example.com/folder/
+                图片路径解析为 https://example.com/folder/image.png
+            访问 https://example.com/folder
+                图片路径解析为 https://example.com/image.png
+        对seo的影响
+            加 / 和 不加 / 通常会被认为是两个不同的页面
 一般的项目开发流程
     工具
         注册域名
@@ -4715,11 +4729,11 @@ leetcode做题的一般套路
                 自注意力机制（Self Attention Mechanism）
             ReAct (Reasoning and Acting) 推理和执行
             LangChain 和 LangGraph 和 langsmith
-            n8n 和 Dify
+            n8n 和 Dify 和 coze
         满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
             满血就是没经过改动的
             量化就是可以运行在内存里的
-            蒸馏就是阉割版
+            蒸馏(distill)就是阉割版
             量化版，一般语境下的量化版就是蒸馏量化版，就是可以运行在内存里的蒸馏版
             ollama 下载的都是量化版
             满血或蒸馏版
@@ -4911,6 +4925,8 @@ leetcode做题的一般套路
         TradingAgents：基于多智能体大语言模型的金融交易框架 https://github.com/TauricResearch/TradingAgents
         基于多智能体LLM的中文金融交易框架 - TradingAgents中文增强版  https://github.com/hsliuping/TradingAgents-CN
         强化学习交易股票 https://github.com/sunnyswag/StockRL
+        Qlib是一个面向人工智能的量化投资平台,旨在实现潜力,利用人工智能技术在定量投资中创造价值,从探索想法到实施生产。
+            https://github.com/microsoft/qlib
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
@@ -5900,6 +5916,36 @@ wordpress
 windiows里的各种常用软件
     邮件 音频播放器 视频播放器 图片浏览器 文本编辑器
     微软出品的 不是微软出品但也大量装机的
+        WinRAR/Bandizip/7z
+        Adobe Reader/Foxit Reader
+        搜狗输入法/QQ输入法
+    杀毒软件
+        国内
+            火绒
+            江民
+            360安全卫士/360杀毒
+            腾讯电脑管家
+            金山
+            瑞星
+            PC-cillin，是由趋势科技Trend Micro所研发的防毒软件。当初命名意味着PC的盘尼西林
+        国外
+            windows defender
+            Symantec 赛门铁克
+            norton 诺顿
+                诺顿 和 赛门铁克 的关系有一点复杂，
+                可以简单但不严谨地理解为曾经是同一个公司，现在是不同的公司
+            McAfee 迈克菲
+            Kaspersky 卡巴斯基 俄罗斯
+            Bitdefender 比特梵德 罗马尼亚
+            ESET 斯洛伐克
+            avira 小红伞 德国
+            Avast 捷克
+            AVG 捷克
+                avira Avast! AVG 这三款在旧时代被成为3a
+                Avast 收购了 AVG
+        AV-Test每隔一段时间都会发布不同操作系统平台上的杀软排行榜，
+        从3个方面进行评判：病毒防护；系统影响；易用程度，每个单项满分6分，总分18分。
+        如果杀软得分超过10分才会得到推荐
 如何用一条命令关闭windows的屏幕
     这一句只能运行在 cmd 里
         powershell (Add-Type '[DllImport(\"user32.dll\")]^public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);' -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)
@@ -5963,12 +6009,24 @@ windows在没有管理员权限的前提下
             这个只能在 bash 中使用，如果一直没有输出，则表示连接不通。使用Ctrl+C可以退出
     判断服务是否可用
         http服务
-            访问首页 curl -v -L http://test.com
-            访问HealthCheck curl -v -L http://test.com/HealthCheck
+            访问首页 curl -v -k -L http://test.com
+            访问HealthCheck curl -v -k -L http://test.com/HealthCheck
         代理服务
-            curl -v -L --proxy 127.0.0.1:6080 https://www.google.com.hk
-            curl -v -L --ssl-no-revoke --proxy 127.0.0.1:6080 https://www.google.com.hk
-            curl -v -L -k --proxy 127.0.0.1:6080 https://www.google.com.hk
+            curl -v -k -L --proxy 127.0.0.1:6080 https://www.google.com.hk
+            curl -v -k -L --ssl-no-revoke --proxy 127.0.0.1:6080 https://www.google.com.hk
+            curl -v -k -L -k --proxy 127.0.0.1:6080 https://www.google.com.hk
+    判断 https 证书是否过期
+        # 获取证书过期时间（转换为时间戳）
+        expiry_date=$(echo "Q" | openssl s_client -connect example.com:443 -servername example.com 2>/dev/null | openssl x509 -enddate -noout | cut -d= -f2)
+        expiry_timestamp=$(date -d "$expiry_date" +%s 2>/dev/null)
+        # 获取当前时间戳
+        current_timestamp=$(date +%s)
+        # 比较时间
+        if [ $expiry_timestamp -lt $current_timestamp ]; then
+            echo "证书已过期！"
+        else
+            echo "证书有效，过期时间：$expiry_date"
+        fi
 计算机科学的五次浪潮
     大型机     1945 第一台通用的电子计算机
     个人计算机 1975 微软成立
