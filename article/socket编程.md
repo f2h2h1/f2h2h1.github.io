@@ -1,5 +1,15 @@
 # socket编程
 
+> 这篇文章的目的是从零开始逐步写出一个功能完善的http服务。
+使用 python 3.12 。
+选择 python 是因为
+c/c++ 处理字符串很麻烦；
+java 搭建环境很麻烦；
+c# 是微软系统，笔者不喜欢；
+php 对多线程多进程的支持并不好；
+go 对新手并不友好，而且也不够流行；
+javascript 似乎没有问题，以后有空也写一个用 javascript 实现的版本。
+
 版本1
 只能处理一个请求
 ```python
@@ -375,19 +385,13 @@ import sys
 import threading
 import time
 import datetime
+import os
 from pathlib import Path
+import mimetypes
 
-# 定义一个信号处理函数
-def signal_handler_quit(signum, frame):
-    sys.exit(0)
-
-HTTP_VERSION = '1.0'
+SERVER_VERSION = '1.0'
 SERVER_NAME = 'plusplus123'
 
-def parser_request():
-    return
-def parser_request_line():
-    return
 def parser_request_header(http_request):
     lines = http_request.strip().split('\r\n')
     # 解析请求行（第一行）
@@ -413,36 +417,84 @@ def parser_request_header(http_request):
         'header': header
     }
 
-def parser_request_body(requestBody, contentType):
-    return
+def read_staticfile(fullPath):
+    # 获取文件大小
+    file_size = os.path.getsize(fullPath)
+    # 获取MIME类型
+    mime_type, _ = mimetypes.guess_type(fullPath)
+    if mime_type is None:
+        mime_type = 'application/octet-stream'
 
-def read_staticfile(filepath):
-    rootdir = '.'
-    defaultFile = 'index.html'
+    if mime_type.startswith("text"):
+        file_encoding = detect_encoding(fullPath)
+        if file_encoding is not None:
+            mime_type += '; charset=' + file_encoding
 
-    filepath = filepath.strip()
+    p = Path(fullPath)
+    filecontent = p.read_bytes()
 
-    if filepath == '':
-        fullPath = '/' + defaultFile
-    fullPath = rootdir + filepath
+    return {
+        'content': filecontent,
+        'content_length': file_size,
+        'mime_type': mime_type
+    }
 
-    fileContent = None
-    my_file = Path(fullPath)
-    if fullPath.endswith('/'):
-        if my_file.is_dir(): # 指定的目录存在
-            fullPath = fullPath + defaultFile
-            my_file = Path(fullPath)
-            if my_file.is_file(): # 指定的文件存在
-                fileContent = my_file.read_text(encoding='utf-8')
-            else:
-                fileContent = 'dir'
-    else:
-        if my_file.is_file(): # 指定的文件存在
-            fileContent = my_file.read_text(encoding='utf-8')
+def detect_encoding(file_path):
+    try:
+        with open(file_path, 'rb') as file:
+            raw_data = file.read(100)
+        # 常见编码列表
+        encodings = ['UTF-8','gbk','gb18030','gb2312','iso8859-1','UTF-16BE','UTF-16LE','UTF-32BE','UTF-32LE','big5','big5hkscs']
+        detected_encoding = None
+        for encoding in encodings:
+            try:
+                decoded_text = raw_data.decode(encoding)
+                detected_encoding = encoding.lower()
+                break
+            except UnicodeDecodeError:
+                continue
+        if detected_encoding:
+            return detected_encoding
         else:
-            fileContent = builtin_response(404)
+            return None
+    except Exception as e:
+        return None
 
-    return fileContent
+def list_directory(dir_path):
+    items = os.listdir(dir_path)
+    items.sort()
+
+    li = ''
+    if dir_path != './':
+        li += '<li><a href="../">../</a></li>'
+    for item in items:
+        item_path = os.path.join(dir_path, item)
+        if os.path.isdir(item_path):
+            li += f'<li><a href="{item}/">{item}/</a></li>'
+        else:
+            li += f'<li><a href="{item}">{item}</a></li>'
+
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Directory {dir_path}</title>
+    </head>
+    <body>
+    <h1>Directory {dir_path}</h1>
+    <ul>{li}</ul>
+    </body>
+    </html>
+    """
+
+    html_bytes = html.encode('utf-8')
+    content_length = len(html_bytes)
+
+    return {
+        'content': html_bytes,
+        'content_length': content_length,
+        'mime_type': 'text/html; charset=utf-8'
+    }
 
 def get_statusText(statusCode):
     statusText = ''
@@ -463,92 +515,123 @@ def builtin_response(statusCode):
     statusText = get_statusText(statusCode)
 
     html = f'<html><head><title>{statusCode} {statusText}</title></head><body><h1>{statusCode} {statusText}</h1></body></html>'
+    html_bytes = html.encode('utf-8')
+    content_length = len(html_bytes)
 
-    return build_response(html, 400)
+    return {
+        'content': html_bytes,
+        'content_length': content_length,
+        'mime_type': 'text/html; charset=utf-8'
+    }
 
 def build_response(responseBoday, statusCode = 200, responseHeader = {}):
 
     statusText = get_statusText(statusCode)
-    html_bytes = responseBoday.encode('utf-8')
-    content_length = len(html_bytes)
-
-    if 'Content-Type' not  in responseHeader:
-        responseHeader['Content-Type'] = 'text/html; charset=utf-8'
-    if 'Content-Length' not  in responseHeader:
-        responseHeader['Content-Length'] = content_length
+    responseHeader['Server'] = SERVER_NAME + '/' + SERVER_VERSION
     responseHeader['Connection'] = 'close'
 
-    responseText = f'HTTP/1.1 {statusCode} {statusText}' + '\r\n' + '\r\n'.join([f'{key}: {value}' for key, value in responseHeader.items()]) + '\r\n\r\n' + responseBoday
-    return responseText
+    response = bytes(f'HTTP/1.1 {statusCode} {statusText}' + '\r\n' + '\r\n'.join([f'{key}: {value}' for key, value in responseHeader.items()]) + '\r\n\r\n', encoding="utf-8") + responseBoday
+    return response
 
-def send_response(client_socket, response):
-    client_socket.sendall(bytes(response, encoding="utf-8"))
+def work(client_socket, server):
+
+    # 接收数据
+    data = client_socket.recv(8192)
+    # print(data)
+    if not data:
+        client_socket.close()
+        return
+
+    result = data.split(b'\r\n\r\n', 1)
+    print(result)
+    result_len = len(result)
+    if result_len == 1:
+        request_header = parser_request(result[0].decode('utf-8'))
+    elif result_len > 1:
+        request_header = parser_request_header(result[0].decode('utf-8'))
+        request_body = result[1]
+    else:
+        request = parser_request(result[0])
+        # 400
+        return
+
+    if request_header['line']['method'].upper() == 'GET':
+        urlpath = request_header['line']['path']
+        rootdir = '.'
+        defaultFile = 'index.html'
+        if urlpath == '':
+            fullPath = '/' + defaultFile
+        fullPath = rootdir + urlpath
+        myfile = Path(fullPath)
+        if fullPath.endswith('/'): # 目录
+            if myfile.is_dir(): # 指定的目录存在
+                defaultFile = fullPath + defaultFile
+                myfile = Path(defaultFile)
+                if myfile.is_file(): # 尝试访问默认文件
+                    statusCode = 200
+                    response = read_staticfile(defaultFile)
+                else:
+                    # 返回目录列表
+                    statusCode = 200
+                    response = list_directory(fullPath)
+            else: # 目录不存在
+                # 404
+                statusCode = 404
+                response = builtin_response(statusCode)
+                return
+        else: # 文件
+            if myfile.is_file(): # 指定的文件存在
+                statusCode = 200
+                response = read_staticfile(fullPath)
+            else:
+                # 404
+                statusCode = 404
+                response = builtin_response(statusCode)
+    else:
+        # 400
+        statusCode = 400
+        response = builtin_response(statusCode)
+
+    response = build_response(response['content'], statusCode, {
+        'Content-Type': response['mime_type'],
+        'Content-Length': response['content_length'],
+    })
+    client_socket.sendall(response)
+    time.sleep(1)
+    client_socket.close()
     return
 
-def work(client_socket):
-
-    # client_socket.send(bytes("hello world\n", encoding="utf-8"))
-    # client_socket.send(bytes(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), encoding="utf-8"))
-    ReceivedData = b''
-    while True:
-        # 接收数据
-        data = client_socket.recv(2048)
-        # print(data)
-        if not data:
-            break  # 如果没有数据，退出循环
-        ReceivedData = ReceivedData + data
-        
-        if b'\r\n\r\n' in ReceivedData:
-            result = ReceivedData.split(b'\r\n\r\n')
-            print(result)
-            result_len = len(result)
-            if result_len == 1:
-                request = parser_request(result[0].decode('utf-8'))
-            elif result_len > 1:
-                request = parser_request_header(result[0].decode('utf-8'))
-                print(request)
-            else:
-                request = parser_request(result[0])
-        else:
-            continue
-
-        send_response(client_socket, builtin_response(400))
-    #    request = data
-    #    # 按行分割请求报文
-    #    lines = request.splitlines()
-    #    
-    #    # 解析请求行
-    #    request_line = lines[0]
-    #    method, path, http_version = request_line.split()
-    #    
-    #    # 解析请求头
-    #    headers = {}
-    #    for line in lines[1:]:
-    #        if line == '':
-    #            break  # 空行表示头部结束
-    #        key, value = line.split(': ', 1)
-    #        headers[key] = value
-#
-    #    # 发送回客户端
-    #    # time.sleep(10)
-    #    client_socket.sendall(data)
-    # client_socket.send(bytes(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), encoding="utf-8"))
-    # # time.sleep(1)
-    client_socket.close()
-
 def main():
-    # socket.AF_INET 表示使用 ipv4
-    # socket.SOCK_STREAM 表示使用 tcp
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(("127.0.0.1", 8012))
-    server.listen(5)
+    global stop_thread
+    try:
+        # socket.AF_INET 表示使用 ipv4
+        # socket.SOCK_STREAM 表示使用 tcp
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.bind(("127.0.0.1", 8012))
+        server.listen(5)
+    except Exception as e:
+        stop_thread = True
+        print(f"服务器错误: {e}")
     while True:
+        if stop_thread == True:
+            break
         client_socket, client_address = server.accept()
-        work_thread = threading.Thread(target=work, args=[client_socket]) # 创建一个子线程对象
+        work_thread = threading.Thread(target=work, args=[client_socket, server]) # 创建一个子线程对象
         work_thread.daemon = True # 将子线程设置为守护线程
         work_thread.start() # 启动子线程
+    if stop_thread == True:
+        server.shutdown(socket.SHUT_RDWR)
+        server.close()
+
+stop_thread = False
+# 定义一个信号处理函数
+def signal_handler_quit(signum, frame):
+    global stop_thread
+    stop_thread = True
+    sys.exit(0)
 
 if __name__ == "__main__":
+
     signal.signal(signal.SIGINT, signal_handler_quit) # 注册信号处理函数，处理 SIGINT 信号
     signal.signal(signal.SIGTERM, signal_handler_quit) # 注册信号处理函数，处理 SIGTERM 信号
 
@@ -558,26 +641,26 @@ if __name__ == "__main__":
 
     while True: # 主线程的循环
         time.sleep(1)
+        if stop_thread == True:
+            sys.exit(0)
 ```
-application/octet-stream
 
+版本7 使用面向对象写法的 静态http
 
-
-版本6 有配置的静态http
+版本7 有配置的静态http
     ip port rootdir
     mime 这个可以用 mimetypes ，不需要配置
     才三个参数，直接用命令行就可以了吧
     默认页 目录页 日志（写入文件 命令行输出）
 
-版本6 有配置的静态http+cgi
+版本7 有配置的静态http+cgi
 
-版本6 有配置的静态http+cgi+fastcgi
+版本7 有配置的静态http+cgi+http代理
 
-版本6 有配置的静态http+cgi+fastcgi+http代理
-
-版本6 有配置的静态http+cgi+fastcgi+http代理+socks5代理
+版本7 有配置的静态http+cgi+http代理+socks5代理
 
 既然要实现 http代理 那么 https 和 ws 和 wss 的代理应该也差不多吧
+暂时先忽略 fastcgi 和 wsgi
 
 python的命令行参数
 https://docs.python.org/zh-cn/3/library/argparse.html
