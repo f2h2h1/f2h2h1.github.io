@@ -4670,6 +4670,7 @@ leetcode做题的一般套路
             ###
             ===
             选择哪种特殊字符并不重要，关键是这些字符足够独特，使得模型能将其识别为分隔符，而非常规标点符号
+            微软的教程 提示工程技术 https://learn.microsoft.com/zh-cn/azure/ai-foundry/openai/concepts/prompt-engineering
         上下文工程（Context Engineering）
         提示链 (prompt chaining)
             提示链通过多轮对话，引导 LLM “思考” 方向，让 LLM 从简单任务开始，沿着设计好的“思考”方向逐步完成一个复杂推理
@@ -4729,7 +4730,7 @@ leetcode做题的一般套路
                 自注意力机制（Self Attention Mechanism）
             ReAct (Reasoning and Acting) 推理和执行
             LangChain 和 LangGraph 和 langsmith
-            n8n 和 Dify 和 coze
+            n8n 和 Dify 和 coze 和 ComfyUI 和 Flowise 和 AutoGen 这类型的工具似乎还有很多
         满血版>满血版量化>蒸馏版>量化版(蒸馏量化版)
             满血就是没经过改动的
             量化就是可以运行在内存里的
@@ -4789,7 +4790,7 @@ leetcode做题的一般套路
             https://github.com/jeinlee1991/chinese-llm-benchmark
             https://www.superclueai.com/
             https://super.gluebenchmark.com/leaderboard
-            https://web.lmarena.ai/leaderboard
+            https://lmarena.ai/leaderboard
             https://cevalbenchmark.com/static/leaderboard_zh.html
             https://llm-stats.com/
     应用
