@@ -4567,7 +4567,7 @@ leetcode做题的一般套路
     可能用到的语言或工具
         Python R Julia Fortran SQL
         Spyder Jupyter RStudio
-        Excel Octave MATLAB Mathematica SAS SPSS
+        Excel Octave MATLAB Mathematica SAS SPSS stata
     相关的职业
         数据科学家（Data scientist）
             数据科学家分析复杂的数字数据，帮助企业做出决策。

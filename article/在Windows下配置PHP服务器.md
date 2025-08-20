@@ -327,7 +327,7 @@ https://dev.mysql.com/
 <!--
 
 https，http2，http长连接
-目录索引，cgi，fcgi，重定向，url重写，反向代理，负载均衡，虚拟站点
+目录索引，cgi，fcgi，重定向，url重写，反向代理，fpm，负载均衡，虚拟站点
 WebSocket，WebSocket Secure
 Basic认证，Digest认证
 http压缩，http缓存，伪静态，mpm（Multi-Processing Modules）
