@@ -4380,6 +4380,9 @@ leetcode做题的一般套路
             苏姿丰
             梁见后 超微电脑（Super Micro Computer） 主要是做服务器的
             梁文峰
+            Alexandr Wang
+        其它
+            Georgi Gerganov
     相关的框架
         python的库
             Torch
@@ -4449,6 +4452,8 @@ leetcode做题的一般套路
     有哪些可以提供数据的网站
         新浪财经
         东方财富
+        雅虎财经(Yahoo Finance)
+        google财经 但数据似乎比 微软和雅虎 都要少
         同化顺
         雪球 https://xueqiu.com/stock/screener
         微软 https://www.msn.com/zh-cn/money/explorecenter
@@ -6322,7 +6327,7 @@ nas
         音频 Audio
         动画 Animation
     medium
-    流媒体
+    流媒体（Streaming media）
     媒介
     媒体 media
     超媒体 Hypermedia
@@ -6355,6 +6360,8 @@ nas
             媒体 是指 分发 信息的 机构 或 个人，
                 例如 出版社 电台 电视台 自媒体
     媒质 又是 什么？
+广播和电视
+
 从ed到perl还有正则表达式
     qed ed ex vi vim grep sed awk perl
     qed

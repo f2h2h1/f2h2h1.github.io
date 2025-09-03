@@ -553,11 +553,23 @@
 百度 360 搜狗 神马 Google Bing Yahoo Yandex DuckDuckGo
 判断当前的搜索引擎？
 
-可以直接运行在 控制台 的版本
+一份源码打包出不同的版本
+可以直接运行在 控制台 的版本 可以保存在开发者工具里的“脚本代码片段”(Snippets)
     只可以获取搜索页的邮箱
+    好像没什么作用， Snippets 不能自动运行，页面转跳之后就无效了，只能获取当前页面的内容
 运行在 油猴 的版本
-调用官方api的版本
-使用 playwright 的版本
+    调用官方api的版本
+    直接请求页面
+nodejs版本
+    后端
+        调用官方api的版本
+        使用 playwright 的版本
+    前端
+        命令行
+        api
+        网页
+powershell + api 版
+python tk + api 版
 
 可以使用关键词筛选邮箱？
 允许导出成 txt 或 csv 文件
