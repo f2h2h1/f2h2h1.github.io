@@ -19,7 +19,7 @@
 
 (function() {
     'use strict';
-    // 2025-05-06
+    // 2025-09-08
 
     // 按 xpath 删除节点
     function delByXpath(xpath) {
@@ -92,7 +92,8 @@
         if (codeItem != null) {
             c.value = codeItem.innerText;
             codeArr[i].style.userSelect='auto';
-            codeArr[i].style.backgroundColor='rgba(255,255,255,0)';
+            codeArr[i].style.backgroundColor='rgba(0, 0, 0, 1)';
+            codeArr[i].style.color='rgba(255, 255, 255, 1)';
             codeArr[i].innerText = c.value;
         }
     }
@@ -113,6 +114,245 @@
 ```
 
 
+这两段 油猴脚本 是用于检测，在 gitlab 提交合并请求时，阻止目标为 master 的的合并请求。
+因为 master 是默认的分支，我总是一时手快就点 提交了 。
+```javascript
+// ==UserScript==
+// @name         GitLab Master Branch Alert before
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  油猴脚本，在 gitlab 阻止分支合共到 master ，适用于 16.11
+// @author       You
+// @match        https://gitlab.dev.com/group/subgroup/magento-ce/-/merge_requests/new
+// @match        https://gitlab.dev.com/group/subgroup/magento-ce/-/merge_requests/new?*
+// @grant        none
+// ==/UserScript==
+
+console.log('油猴脚本，在 gitlab 阻止分支合共到 master ');
+(function() {
+    'use strict';
+
+
+    var isHasMaster = true;
+
+    function checkForMaster() {
+
+        let targetBranchTitle = document.getElementById('js-target-branch-title');
+        if (targetBranchTitle && targetBranchTitle.innerText) {
+            if (targetBranchTitle.innerText.trim() == 'master') {
+                return true;
+            }
+        }
+        return false;
+
+        const parsedUrl = new URL(window.location.href);
+        const queryString = parsedUrl.search; // 包括 ?，例如 "?a=1&b=2"
+        const queryStringWithoutQuestion = queryString.slice(1); // 去掉开头的 ?
+        const decodedQueryString = decodeURIComponent(queryStringWithoutQuestion);
+        // console.log(decodedQueryString);
+
+        // 1. 按 & 分割成数组
+        const pairs = decodedQueryString.split('&');
+        // 2. 遍历数组，查找 merge_request[target_branch] 的值
+        let targetBranch = null;
+
+        for (const pair of pairs) {
+            const [key, value] = pair.split('=', 2); // 只分割第一个 =
+            if (key === 'merge_request[target_branch]') {
+                targetBranch = value;
+                break;
+            }
+        }
+    }
+    function showCustomAlert(alertText) {
+        // 创建自定义提示框
+        const alertBox = document.createElement('div');
+        alertBox.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ff5722;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        z-index: 9999;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        font-family: Arial, sans-serif;
+    `;
+        alertBox.innerHTML = alertText;
+
+        document.body.appendChild(alertBox);
+
+        // 5秒后自动移除
+        setTimeout(() => {
+            if (alertBox.parentNode) {
+                alertBox.parentNode.removeChild(alertBox);
+            }
+        }, 5000);
+
+        // 等待页面加载完成
+        window.addEventListener('load', function() {
+            // 检查页面中是否包含 "master"
+            checkForMaster();
+        });
+    }
+    function showAlert(alertText) {
+        // 弹出提示
+        console.log(alertText);
+        // alert(alertText);
+        showCustomAlert(alertText);
+    }
+
+    window.addEventListener('load', () => {
+        if (checkForMaster()) {
+
+//             // 方法1: 阻止所有表单的submit事件
+//             document.addEventListener('submit', function(event) {
+//                 event.preventDefault();
+//                 event.stopPropagation();
+//                 console.log('表单提交已被阻止:', event.target);
+//                 alert('当前页面禁止提交表单！');
+//                 return false;
+//             }, true);
+
+//             // 方法2: 重写所有表单的submit方法
+//             HTMLFormElement.prototype._submit = HTMLFormElement.prototype.submit;
+//             HTMLFormElement.prototype.submit = function() {
+//                 console.log('表单submit()方法已被阻止:', this);
+//                 alert('当前页面禁止提交表单！');
+//                 return false;
+//             };
+
+            const submitButtons = document.querySelectorAll('input[type="submit"], button[type="submit"]');
+            submitButtons.forEach(button => {
+                button.disabled = true;
+                // button.title = '当前页面禁止提交表单';
+                console.log('已禁用提交按钮:', button);
+            });
+            showAlert('警告：页面中检测到 master 分支！');
+        }
+    });
+})();
+```
+
+```javascript
+// ==UserScript==
+// @name         GitLab Master Branch Alert before
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  油猴脚本，在 gitlab 阻止分支合共到 master ，适用于 16.11
+// @author       You
+// @match        https://gitlab.dev.com/group/subgroup/magento-ce/-/merge_requests/new
+// @match        https://gitlab.dev.com/group/subgroup/magento-ce/-/merge_requests/new?*
+// @grant        none
+// ==/UserScript==
+
+console.log('油猴脚本，在 gitlab 阻止分支合共到 master ');
+(function() {
+    'use strict';
+
+
+    var isHasMaster = true;
+
+    function checkForMaster() {
+
+        let targetBranchTitle = document.getElementById('js-target-branch-title');
+        if (targetBranchTitle && targetBranchTitle.innerText) {
+            if (targetBranchTitle.innerText.trim() == 'master') {
+                return true;
+            }
+        }
+        return false;
+
+        const parsedUrl = new URL(window.location.href);
+        const queryString = parsedUrl.search; // 包括 ?，例如 "?a=1&b=2"
+        const queryStringWithoutQuestion = queryString.slice(1); // 去掉开头的 ?
+        const decodedQueryString = decodeURIComponent(queryStringWithoutQuestion);
+        // console.log(decodedQueryString);
+
+        // 1. 按 & 分割成数组
+        const pairs = decodedQueryString.split('&');
+        // 2. 遍历数组，查找 merge_request[target_branch] 的值
+        let targetBranch = null;
+
+        for (const pair of pairs) {
+            const [key, value] = pair.split('=', 2); // 只分割第一个 =
+            if (key === 'merge_request[target_branch]') {
+                targetBranch = value;
+                break;
+            }
+        }
+    }
+    function showCustomAlert(alertText) {
+        // 创建自定义提示框
+        const alertBox = document.createElement('div');
+        alertBox.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ff5722;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        z-index: 9999;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        font-family: Arial, sans-serif;
+    `;
+        alertBox.innerHTML = alertText;
+
+        document.body.appendChild(alertBox);
+
+        // 5秒后自动移除
+        setTimeout(() => {
+            if (alertBox.parentNode) {
+                alertBox.parentNode.removeChild(alertBox);
+            }
+        }, 5000);
+
+        // 等待页面加载完成
+        window.addEventListener('load', function() {
+            // 检查页面中是否包含 "master"
+            checkForMaster();
+        });
+    }
+    function showAlert(alertText) {
+        // 弹出提示
+        console.log(alertText);
+        // alert(alertText);
+        showCustomAlert(alertText);
+    }
+
+    window.addEventListener('load', () => {
+        if (checkForMaster()) {
+
+//             // 方法1: 阻止所有表单的submit事件
+//             document.addEventListener('submit', function(event) {
+//                 event.preventDefault();
+//                 event.stopPropagation();
+//                 console.log('表单提交已被阻止:', event.target);
+//                 alert('当前页面禁止提交表单！');
+//                 return false;
+//             }, true);
+
+//             // 方法2: 重写所有表单的submit方法
+//             HTMLFormElement.prototype._submit = HTMLFormElement.prototype.submit;
+//             HTMLFormElement.prototype.submit = function() {
+//                 console.log('表单submit()方法已被阻止:', this);
+//                 alert('当前页面禁止提交表单！');
+//                 return false;
+//             };
+
+            const submitButtons = document.querySelectorAll('input[type="submit"], button[type="submit"]');
+            submitButtons.forEach(button => {
+                button.disabled = true;
+                // button.title = '当前页面禁止提交表单';
+                console.log('已禁用提交按钮:', button);
+            });
+            showAlert('警告：页面中检测到 master 分支！');
+        }
+    });
+})();
+```
 
 ```html
 

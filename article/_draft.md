@@ -21,6 +21,7 @@
                 https://github.com/yujiangshui/A-Programmers-Guide-to-English
                 https://a-programmers-guide-to-english.harryyu.me/
         抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
+        总结起来就是 数学+英语+三个概念（抽象，封装，递归）
     计算机学科的相关概念
         计算理论（Theory of computation）
         计算理论的三个主要问题
@@ -141,6 +142,9 @@
             鼠标 - 输入设备
             屏幕 - 输出设备
             音箱 - 输出设备
+        计算机组成原理和计算机体系结构的区别
+            计算机组成(Computer Organization) 主要研究计算机由哪些部分组成
+            计算机体系结构(Computer Architecture) 主要研究怎么设计 CPU
     操作系统
         环境变量
         抽象的操作系统
@@ -340,6 +344,7 @@
                 解释 properties ini yaml json xml md
                 一个简单的脚本语言
                 正则表达式
+    数据结构和算法
     数据库
         抽象的数据库
             平面 flat
@@ -363,18 +368,25 @@
         mysql 的一般使用
             explain sql
     计算机网络
+        什么是通讯？
         网络模型
         各层中的协议
         使用系统api来读写网卡中的数据
-    数据结构和算法
     软件工程
+        项目管理
+            软件开发模型、软件过程模型、以及软件开发方法
+        软件测试
+        CI/CD
     中间件
+        各种网络服务（例如 http服务器）
         定时任务
         缓存
         队列
         全文搜索引擎
     虚拟机和容器
     集群和分布式
+    交互设计
+        cli tui api gui
     一些工具
         git 的一般使用
             github gitlab gitee 其它的 git 服务
