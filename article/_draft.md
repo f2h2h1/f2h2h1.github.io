@@ -386,6 +386,8 @@
     虚拟机和容器
     集群和分布式
     交互设计
+        与人交互
+        与其它程序交互
         cli tui api gui
     一些工具
         git 的一般使用
@@ -1652,21 +1654,6 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             特别是口语里只会说 xxK 或 xxM 很少会说 xxKiB 这种
         在编程开发中，尽量使用 KiB
         http://www.elecfans.com/tools/zijiehuansuan.html
-带宽 和 宽带 和 位宽 的联系与区别
-    带宽（Bandwidth）一开始的意思是电磁波频率的范围，最高频率和最低频率之间的差值
-    在计算机领域中的带宽一般是指数据传输的速度，包括但不限于，网速，内存速度，接口速度
-    计算机领域的带宽，其实是在描述理论上的最高速度
-        例如 512Kbps 的带宽，是指最高速度达到 512Kbps ，实际上的速度应该是会小于等于 512Kbps 的
-    带宽的单位是 bps
-    宽带（Broadband）是指较宽的带宽，一般是指比较快的网速
-        最开始是把 56Kbps 以上的带宽称为宽带，56kbps 以下的称为窄带（Narrowband）
-        后来又变成了 512Kbps 以上的带宽才能称为宽带
-        再后来又变成了 4Mbps 以上的带宽才能称为宽带
-        感觉宽带就是一个营销术语
-        ps 墙内的运营商的家用宽带一般都是指下行速度
-    位宽是指一次能传输的数据量，就是一次能传输的比特位数
-        例如， 64位的位宽就是指一次能传输64个比特位，通常位简称为 64位（64bit）
-        内存带宽一般是 内存频率*内存位宽 ，显存带宽也是一样的计算
 浏览器引擎 渲染引擎 js引擎 的联系与区别
     各种名词
         浏览器（Browser）
@@ -1776,6 +1763,13 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             GNOME Web
         CEF
             Chromium Embedded Framework
+    旧时代的插件
+        ActiveX
+        Silverlight
+        Flash
+        applet
+        https://github.com/ruffle-rs/ruffle 一个用Rust编程语言编写的Adobe Flash Player模拟器
+        https://github.com/leaningtech/cheerpj-meta 用 WebAssembly 来运行 java ，包括 java web start 和 applet
 程序 软件 应用 的联系与区别
     英文
         软件 software
@@ -6075,6 +6069,15 @@ nas
     航空（Aeronautical Engineering） 大气层内的飞行
     航天（Spaceflight） 大气层外的飞行
     气象（meteorology） 做天气预报的
+    天文台（Astronomical observatories）
+        研究和观测天文现象的机构
+        光学天文台
+            光学天文望远镜
+        射电天文台
+            射电天文望远镜
+    气象台（Weather station）
+        做天气预报的机构
+        香港天文台实际上是香港的气象台。虽然天文台会向市民发放天文资讯，但仍以提供气象服务为主
 物理
     物质 能量 时间 空间
     物质本质上是 能量
