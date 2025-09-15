@@ -3829,6 +3829,7 @@ ELF格式
 从零开始学习数学建模
     我总想找到一种方法来应对所有类型的算法面试题
     或者说我总想找到一种方法来应对所有考试时遇到的数学题
+    或者说我总想找到一种方法来应对所有考试时遇到的问题
     我们为什么可以把题目归类为一类相似的问题？
     题型的数量是不是可以无限地增加？
     数学建模需要哪些前置的知识？
@@ -4491,6 +4492,34 @@ leetcode做题的一般套路
         强化学习交易股票 https://github.com/sunnyswag/StockRL
         Qlib是一个面向人工智能的量化投资平台,旨在实现潜力,利用人工智能技术在定量投资中创造价值,从探索想法到实施生产。
             https://github.com/microsoft/qlib
+FIRE和财富自由和躺平
+    生活水平的分级
+        赤贫 贫穷 温饱 小康 中产 富裕 极富
+    财富自由
+        不需要工作的前提下可以一直保持 富裕或以上 的生活水平
+    躺平
+        定义1：财富自由
+        定义2：成年人不再积极赚钱/学生不再积极提高成绩
+        https://github.com/phodal/tangping
+    FIRE
+        定义
+            Financial independence,Retire early（财务独立，提早退休）
+            通过降低物欲，过极简的生活，迅速攒够生活费的25倍，靠4%的利息生活，
+            达到逃离“不开心”的工作，去追求自己喜欢的生活方式。
+            4% 是收益率减通胀率，不是理财的收益4%
+            FIRE 并没有明确提及生活水平，笔者认为至少都要有 小康 的水平吧
+        分类
+            FatFIRE 肥FIRE
+                进入 FIRE 后依然保持中产或以上的生活水平
+            RegularFIRE 传统FIRE
+                有计划地储蓄，储蓄达到一定金额后通过投资理财的被动收入支付生活成本
+                一般目标金额通常是 一年生活费的25倍 ， 一般假设投资理财一年会有 4%收益
+            LeanFIRE 瘦FIRE
+                尽力储蓄，以求尽快进入FIRE状态，强调很高的储蓄率和很低的生活费
+            BaristaFIRE 咖啡师FIRE
+                储蓄达到一定金额后，辞去传统的工作，从事某种形式的兼职，通过储蓄的投资理财和兼职收入达到FIRE的状态
+            CoastFIRE 滑行FIRE
+                储蓄达到一定金额后，不再积极储蓄，然后由投资理财让这笔储蓄通过投资理财在计划退休年龄达到可以FIRE的金额
 MySQL 和 PostgreSQL
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
@@ -4983,6 +5012,12 @@ termux
     LXC 和 LXD
     各种镜像格式
         raw qcow qcow2 cow vdi vmdk vpc(vhd) vhdx
+    在浏览器中的虚拟机
+        https://busybox.net/live_bbox/live_bbox.html
+        https://copy.sh/v86/
+        https://bellard.org/jslinux/
+        https://github.com/leaningtech/webvm/
+        但大多都无法直接联网
 linux 应用的一般安装套路
     编译源码
         ./configure
@@ -6500,6 +6535,7 @@ nas
                     brackets
                 vscode 是基于 Monaco Editor
                 brackets 是基于 Code Mirror
+                GitLab 的 编辑器也是用 CodeMirror ，GitLab 在 2019 年左右（大约 12.0 版本）将编辑器从 CodeMirror 迁移到了 Monaco Editor
         视图
             源码（source code）
             分屏预览（SV, Split View）
