@@ -3851,6 +3851,33 @@ ELF格式
         预测
         分类
         最优化
+    经典的机器学习算法
+        线性回归算法 (Linear Regression)
+        支持向量机算法 (Support Vector Machine, SVM)
+        最近邻居/k-近邻算法 (K-Nearest Neighbors, KNN)
+        逻辑回归算法 (Logistic Regression)
+        决策树算法 (Decision Tree)
+        k-平均算法 (K-Means)
+        随机森林算法 (Random Forest)
+        朴素贝叶斯算法 (Naive Bayes)
+        降维算法 (Dimensional Reduction)
+        梯度增强算法 (Gradient Boosting)
+        遗传算法（Genetic Algorithm, GA）
+        模拟退火（Simulated annealing, SA）
+        蒙特卡罗方法（Monte Carlo method）
+        马尔可夫链（Markov chain）
+        隐马尔可夫模型（Hidden Markov Model, HMM）
+    各种 人工智能/机器学习/深度学习/数据分析/数据挖掘 的模型
+    这些模型各自的应用场景和优缺点
+        这些模型有哪些经典的应用
+    这些模型所对应的算法和算法对应的数学原理
+        这些数学理论如何和机器学习的模型联系起来
+        这些机器学习的模型如何和数学理论联系起来
+        就是要双向连接
+    这些模型在不同条件下的分类
+        例如 有没有监督 训练样本有没有标签 是不是线性模型 用于分类还是用于预测 是不是概率模型 是不是生成式模型 是单模型还是集成模型
+    这些 模型/算法 的发展历史
+        例如 由谁提出的，在哪篇论文最先提到，有哪些变体
 leetcode做题的一般套路
     要把问题抽象成数学问题
         要抽象成类似这样的函数
@@ -4126,6 +4153,10 @@ leetcode做题的一般套路
         Python R Julia Fortran SQL
         Spyder Jupyter RStudio
         Excel Octave MATLAB Mathematica SAS SPSS stata
+        PowerQuery
+            excel 2010 和 2013 pq 可以作为免费的加载项
+            excel 2016 pq就内置在 excel 了
+            pq 也可以用在免费的 Power BI Desktop 里
     相关的职业
         数据科学家（Data scientist）
             数据科学家分析复杂的数字数据，帮助企业做出决策。
@@ -4455,7 +4486,39 @@ leetcode做题的一般套路
             openwebui
             https://github.com/ollama-ui/ollama-ui
 财政、经济、金融、股票、基金、量化
-    期货 etf qdii
+    交易 货币 贷款 存款 汇兑 股票 债券 外汇 期货 基金
+    基础资产（Underlying Asset）
+    ETF（Exchange Traded Fund）——交易型开放式指数基金
+    QDII（Qualified Domestic Institutional Investor）——合格境内机构投资者
+    FOF（Fund of Funds）——基金中的基金
+    LOF（Listed Open-ended Fund）——上市型开放式基金
+    CEF（Closed-End Fund）——封闭式基金
+        中国基金法规定，开放式基金必须“可申购赎回”，封闭式基金仅限于有固定期限的封闭运作（如 3 年、5 年封闭期），到期后转开放或清算。
+        中国市场上所谓的“封闭式基金”其实是定期开放式基金（如 3 年封闭期），到期后可赎回，不上市交易。
+    金融衍生品/金融衍生工具
+        Derivative（衍生品）
+        港澳称金融衍生产品
+        台湾称衍生性金融商品
+        金融衍生品是以一种或多种基础资产为标的，其价值取决于这些基础资产价格或指标表现的金融合约
+        什么是 标的 ？
+        什么是 金融合约 ？
+        四大类衍生品
+            期货 期权 远期合约 交换（Swaps）
+    什么是 回测
+    什么是 因子挖掘
+        因子（Factor） 是指能够解释资产收益差异的可量化特征
+        因子挖掘（Factor Mining） 是指通过系统化的数据科学和统计方法，
+        从原始数据中识别、构建和验证能够预测资产收益差异的特征变量（即“因子”）的过程。
+        这些因子是量化策略的核心基础，用于构建多因子模型以获取超额收益。
+        经典因子示例：
+            价值因子：市盈率（PE）、市净率（PB）、股息率。
+            动量因子：过去12个月收益率、短期价格趋势。
+            规模因子：公司市值大小。
+            质量因子：ROE（净资产收益率）、资产负债率。
+        因子挖掘的核心目标 
+            发现新因子：从传统数据（如财务报表、行情数据）或另类数据（如卫星图像、社交媒体情绪、供应链数据、文本新闻）中提取未被广泛认知的预测信号。
+            优化现有因子：改进传统因子的计算方式（如将“市盈率”与“盈利增长”结合，构建“动态价值因子”）。
+            提升策略鲁棒性：通过多因子组合降低单一因子失效的风险。
     有哪些可以提供数据的网站
         新浪财经
         东方财富
@@ -4464,7 +4527,19 @@ leetcode做题的一般套路
         同化顺
         雪球 https://xueqiu.com/stock/screener
         微软 https://www.msn.com/zh-cn/money/explorecenter
-        腾讯证券里也有数据，但要在微信里用，感觉作用不是很大
+        腾讯财经 http://qt.gtimg.cn/q=sh600000 https://sqt.gtimg.cn//?q=sh000001
+        openctp
+            https://github.com/openctp/openctp 这个仓库里有不少接口
+            http://www.openctp.cn/
+            CTP （China Trading Platform 中国交易平台）
+            CTP 是由上期技术（上海期货信息技术有限公司）开发的一套标准化金融交易接口
+                CTP 最初由中国金融期货交易所（CFFEX）推出，主要用于期货、期权等衍生品的程序化交易。
+                它提供了一套标准的 API 接口（即 CTP API），供开发者编写自动化交易程序，连接期货公司柜台系统进行行情获取、下单、撤单等操作。
+                传统上，个人开发者或机构常使用“SimNow”平台提供的模拟环境来测试基于 CTP 接口的程序。
+    股票交易和分析软件
+        同花顺 大智慧 指南针 东方财富 信达通 钱龙 腾讯自选股
+        通达信 - 被许多民间高手和游资使用，职业交易者较为青睐
+            因为最大优势就是职业抄手的通达信界面全是根据自己的看盘习惯和风格重新定制的；其次基本上所有指标都可以兼容
     同花顺都有哪些产品和服务
         电脑软件
             免费
@@ -4486,6 +4561,7 @@ leetcode做题的一般套路
             https://github.com/bbfamily/abu
         QUANTAXIS
             https://github.com/yutiansut/QUANTAXIS
+        bigquant 的知识库 https://bigquant.com/wiki/home
     github 相关的仓库
         TradingAgents：基于多智能体大语言模型的金融交易框架 https://github.com/TauricResearch/TradingAgents
         基于多智能体LLM的中文金融交易框架 - TradingAgents中文增强版  https://github.com/hsliuping/TradingAgents-CN
@@ -5235,11 +5311,13 @@ linux 应用的一般启动套路
         软件打包和分发
         容器文件技术
     一些例子
-        apt install zip unzip 7z-full 7z-rar
-            7z-full 是 7z 的常规版，如果要让 7z 支持 rar 格式还需要格外安装 7z-rar
+        apt install zip unzip p7zip-full p7zip-rar
+            p7zip-full 是 7z 的常规版，如果要让 7z 支持 rar 格式还需要格外安装 p7zip-rar
+            7z 的包名还可能是 7z-full p7z-full
         把当前目录下的 wp-plugin 文件或目录 压缩成 wp-plugin.zip 文件
             zip -r wp-plugin.zip wp-plugin
             7z a -tzip wp-plugin.zip wp-plugin
+            7z x wp-plugin.zip
 wordpress
     word press 文字出版社
     word n. 文字
@@ -5526,6 +5604,7 @@ windiows里的各种常用软件
             腾讯电脑管家
             金山
             瑞星
+            北信源
             PC-cillin，是由趋势科技Trend Micro所研发的防毒软件。当初命名意味着PC的盘尼西林
         国外
             windows defender
@@ -7252,7 +7331,7 @@ Hello what what is the first thing, and I am am scq000.
     对过去发生的事的评价
     过去的政治
 企业
-    总务 业务 管理
+    总务 业务 管理 财务 法务
 电子支付，区块链，数字货币
     名词
         数字货币 digital currency
