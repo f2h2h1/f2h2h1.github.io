@@ -9,6 +9,7 @@
 ## 列表
 
 <!-- articleList -->
+- [在magento2中使用persisted-query](/article/在magento2中使用persisted-query.md)
 - [一段CSDN文章主要内容的油猴脚本](/article/一段CSDN文章主要内容的油猴脚本.md)
 - [socket编程](/article/socket编程.md)
 - [计算机网络基础知识](/article/计算机网络基础知识.md)

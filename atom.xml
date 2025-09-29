@@ -4,36 +4,43 @@
     <link href="https://f2h2h1.github.io/atom.xml" rel="self" />
     <link href="https://f2h2h1.github.io/" />
     <id>urn:uuid:9EC21C9D-023B-2486-16D4-703D36C458B2</id>
-    <updated>2025-07-29T18:04:35+08:00</updated>
+    <updated>2025-09-29T18:36:20+08:00</updated>
     <author>
         <name>f2h2h1's blog</name>
     </author>
     <entry>
+        <title>在magento2中使用persisted-query</title>
+        <link href="https://f2h2h1.github.io/article/在magento2中使用persisted-query.html" />
+        <id>https://f2h2h1.github.io/article/在magento2中使用persisted-query.html</id>
+        <updated>2025-09-29T18:34:26+08:00</updated>
+        <summary>在magento2中使用persisted-query</summary>
+    </entry>
+    <entry>
         <title>一段CSDN文章主要内容的油猴脚本</title>
         <link href="https://f2h2h1.github.io/article/一段CSDN文章主要内容的油猴脚本.html" />
         <id>https://f2h2h1.github.io/article/一段CSDN文章主要内容的油猴脚本.html</id>
-        <updated>2025-07-04T18:08:20+08:00</updated>
+        <updated>2025-09-08T18:17:14+08:00</updated>
         <summary>一段CSDN文章主要内容的油猴脚本</summary>
     </entry>
     <entry>
         <title>socket编程</title>
         <link href="https://f2h2h1.github.io/article/socket编程.html" />
         <id>https://f2h2h1.github.io/article/socket编程.html</id>
-        <updated>2025-05-22T18:49:04+08:00</updated>
+        <updated>2025-09-15T19:03:15+08:00</updated>
         <summary>socket编程</summary>
     </entry>
     <entry>
         <title>计算机网络基础知识</title>
         <link href="https://f2h2h1.github.io/article/计算机网络基础知识.html" />
         <id>https://f2h2h1.github.io/article/计算机网络基础知识.html</id>
-        <updated>2025-05-21T18:27:40+08:00</updated>
+        <updated>2025-09-09T18:20:01+08:00</updated>
         <summary>计算机网络基础知识</summary>
     </entry>
     <entry>
         <title>电子邮件的不完整总结</title>
         <link href="https://f2h2h1.github.io/article/电子邮件的不完整总结.html" />
         <id>https://f2h2h1.github.io/article/电子邮件的不完整总结.html</id>
-        <updated>2025-02-28T18:26:27+08:00</updated>
+        <updated>2025-09-01T18:03:58+08:00</updated>
         <summary>电子邮件的不完整总结</summary>
     </entry>
     <entry>
@@ -75,7 +82,7 @@
         <title>终端，控制台和外壳</title>
         <link href="https://f2h2h1.github.io/article/终端，控制台和外壳.html" />
         <id>https://f2h2h1.github.io/article/终端，控制台和外壳.html</id>
-        <updated>2025-02-10T00:42:53+08:00</updated>
+        <updated>2025-08-07T18:49:29+08:00</updated>
         <summary>终端，控制台和外壳</summary>
     </entry>
     <entry>
@@ -236,14 +243,14 @@
         <title>PHP各种运行方式的不完整总结</title>
         <link href="https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html" />
         <id>https://f2h2h1.github.io/article/PHP各种运行方式的不完整总结.html</id>
-        <updated>2025-04-17T18:53:09+08:00</updated>
+        <updated>2025-08-04T18:12:03+08:00</updated>
         <summary>PHP各种运行方式的不完整总结</summary>
     </entry>
     <entry>
         <title>把网页导出成PDF</title>
         <link href="https://f2h2h1.github.io/article/把网页导出成PDF.html" />
         <id>https://f2h2h1.github.io/article/把网页导出成PDF.html</id>
-        <updated>2025-07-25T18:48:16+08:00</updated>
+        <updated>2025-08-04T18:12:03+08:00</updated>
         <summary>把网页导出成PDF</summary>
     </entry>
     <entry>
@@ -285,7 +292,7 @@
         <title>git的笔记</title>
         <link href="https://f2h2h1.github.io/article/git的笔记.html" />
         <id>https://f2h2h1.github.io/article/git的笔记.html</id>
-        <updated>2021-07-19T23:31:14+08:00</updated>
+        <updated>2025-09-01T18:03:58+08:00</updated>
         <summary>git的笔记</summary>
     </entry>
     <entry>
@@ -334,7 +341,7 @@
         <title>一些开发笔记</title>
         <link href="https://f2h2h1.github.io/article/一些开发笔记.html" />
         <id>https://f2h2h1.github.io/article/一些开发笔记.html</id>
-        <updated>2025-07-25T18:48:16+08:00</updated>
+        <updated>2025-09-09T18:20:01+08:00</updated>
         <summary>一些开发笔记</summary>
     </entry>
     <entry>
@@ -362,7 +369,7 @@
         <title>在Windows下配置PHP服务器</title>
         <link href="https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html" />
         <id>https://f2h2h1.github.io/article/在Windows下配置PHP服务器.html</id>
-        <updated>2025-07-16T18:51:07+08:00</updated>
+        <updated>2025-08-20T18:32:42+08:00</updated>
         <summary>在Windows下配置PHP服务器</summary>
     </entry>
     <entry>
