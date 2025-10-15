@@ -4550,7 +4550,8 @@ leetcode做题的一般套路
         saas平台
             问财
             顾投平台
-            量化回测 supermind https://quant.10jqka.com.cn/view/
+            量化回测 supermind https://quant.10jqka.com.cn/view/ 这个好像有新闻数据的
+            量化策略平台 backtest https://backtest.10jqka.com.cn/backtest/app.html
     有哪些量化交易的平台，即使只有回测或模拟盘也可以
         www.fmz.com
         PandaAI 量化因子库
@@ -7699,6 +7700,11 @@ cmd 下
 git add articleList.json sitemap.xml rss.xml README.md; git commit -m "update auxiliary"
 
 git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
+
+
+查看 github 仓库 start 数量
+https://www.star-history.com/#f2h2h1/f2h2h1.github.io&Date
+
 
 php updateMetadata.php
 

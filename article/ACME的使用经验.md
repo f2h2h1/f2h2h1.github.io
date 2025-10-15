@@ -26,6 +26,13 @@ https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E
 https://github.com/acmesh-official/acme.sh/wiki/Blogs-and-tutorials#%E4%B8%AD%E6%96%87
 ```
 
+这篇文章使用的版本
+```
+acme.sh --version
+https://github.com/acmesh-official/acme.sh
+v3.1.0
+```
+
 ## ACME 下载和安装
 
 直接下载安装

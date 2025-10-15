@@ -2679,11 +2679,113 @@ https://magento.stackexchange.com/questions/318044/magento-2-whats-the-differenc
 
 三个相关的表
 store_website -> website
+    website_id
+    code
+    name
+    sort_order
+    default_group_id
+    is_default
 store_group -> store
+    group_id
+    website_id
+    code
+    name
+    root_category_id
+    default_store_id
 store -> store view
+    store_id
+    code
+    website_id
+    group_id
+    name
+    sort_order
+    is_active
 
 store view 是根据 store 表中的 code 区分的
 
+
+scope 字段表示配置项的作用域类型，它是一个字符串，有三种可能的取值： 
+    default   
+        表示全局默认配置。
+        对整个 Magento 实例生效（除非被更具体的 scope 覆盖）。
+        此时 scope_id 必须为 0。
+    websites   
+        表示该配置针对某个网站（Website）。
+        在 Magento 中，一个 Website 可以包含多个 Store（商店视图组）。
+        此时 scope_id 是对应 Website 的 ID（可在 store_website 表中查到）。
+    stores   
+        表示该配置针对某个商店视图（Store View）。
+        Store View 通常用于多语言或多地区展示。
+        此时 scope_id 是对应 Store View 的 ID（可在 store 表中查到）。
+scope_id 是一个整数，表示在指定 scope 下的具体实体 ID：
+    scope
+        default → 固定为0
+        websites → Website 的 ID → store_website.website_id
+        stores → Store View 的 ID → store.store_id
+Magento 在读取配置时，会按照以下优先级顺序查找（从高到低）： 
+    Store View (stores) → 最具体，优先级最高  
+    Website (websites)  
+    Default (default) → 最通用，优先级最低
+
+scope 决定“在哪一级生效”
+scope_id 决定“具体是哪一个”
+
+content
+    elements
+        pages
+        blocks
+        widgets
+对应在数据库里的表
+cms_page
+    row_id
+    page_id
+    created_in
+    updated_in
+    title
+    page_layout
+    meta_keywords
+    meta_description
+    identifier
+    content_heading
+    content
+    creation_time
+    update_time
+    is_active
+    sort_order
+    layout_update_xml
+    custom_theme
+    custom_root_template
+    custom_layout_update_xml
+    custom_theme_from
+    custom_theme_to
+    meta_title
+cms_block
+    row_id
+    block_id
+    created_in
+    updated_in
+    title
+    identifier
+    content
+    creation_time
+    update_time
+    is_active
+widget_instance
+
+pages 完整的 CMS 页面（比如关于我们、常见问题、自定义着陆页
+blocks 可复用的内容片段（如页脚版权、促销横幅、侧边栏内容）
+widgets 提供一种可视化、可配置的方式来在页面中插入动态或静态内容
+pages 和 blocks 还比较容易理解
+widgets 本质上是一段配置，内容来自 blocks
+
+页面上的内容来源
+    源码
+    content 的 pages 或 blocks
+    store 的 config (core_config_data)
+    其它位置的配置
+        例如这个位置也可以插入html代码 其实这个也是保存在 core_config_data
+            content -> Design -> Configuration -> Other Settings -> HTML Head -> Scripts and Style Sheets
+    通过 ajax 加载其它外部内容
 
 
 
@@ -4915,6 +5017,11 @@ $isAjax = $this->getRequest()->isAjax() lib\internal\Magento\Framework\App\Reque
         return $result->setData(['isAjax' => $this->getRequest()->isAjax()]);
     }
 
+
+
+在 Magento 2 中，Integration（集成）是一种用于安全地授权第三方系统（如外部应用程序、服务或自定义模块）访问 Magento API 的机制。
+它基于 OAuth 1.0a 协议，允许开发者创建具有特定权限的“集成账户”，从而实现对 Magento 后台数据的安全访问，而无需使用真实用户的登录凭证。
+System > Integrations
 
 select
     *
