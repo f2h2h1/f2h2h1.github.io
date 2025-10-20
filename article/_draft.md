@@ -1749,7 +1749,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             但这个是商业库
         QtWebkit 和 QtWebEngine
             QtWebkit 用的是 Webkit
-            Qt 5.4 QWebEngine 出现
+            Qt 5.4 QtWebEngine 出现
             Qt 5.5 QtWebEngine 和 QtWebkit 共存
             Qt 5.6 QWebKit 废弃
             QtWebEngine 用的是 Chromium
@@ -1768,6 +1768,7 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         Silverlight
         Flash
         applet
+        java web start
         https://github.com/ruffle-rs/ruffle 一个用Rust编程语言编写的Adobe Flash Player模拟器
         https://github.com/leaningtech/cheerpj-meta 用 WebAssembly 来运行 java ，包括 java web start 和 applet
 程序 软件 应用 的联系与区别
@@ -4577,6 +4578,9 @@ FIRE和财富自由和躺平
     躺平
         定义1：财富自由
         定义2：成年人不再积极赚钱/学生不再积极提高成绩
+        躺平是指不再积极工作
+        贫穷有贫穷的躺平方式
+        富裕有富裕的躺平方式
         https://github.com/phodal/tangping
     FIRE
         定义
@@ -5917,8 +5921,23 @@ nas
         费用？
             硬件费用，电费，网费
     中年男人三大爱好
-        nas 路由器 充电器
+        nas 路由器 充电器 充电宝 手电筒 手机支架
         路由器 和 充电器 有什么好折腾的？
+运动
+    户外运动
+生存主义与生存狂
+    生存主义的中心思想就是为一切可能发生的灾难做准备，从而达到保全自身和家人性命，并在灾难中生存下去这个基本目标。
+    生存狂就是贯彻落实生存主义的个体。
+    PSK (personal survival kit) 个人生存工具
+    EDC (every day carry) 每天携带
+    BOB (bug out bag) 逃生背包
+        放在车上的
+        放在家里的
+    BOV (bug out vehicle) 逃生车辆
+    psk 随身携带的
+    psk 放在包里的
+            放在一般通勤的背包里
+            放在出远门的背包里
 和声音相关的笔记
     声音
         声音是振动产生的声波，通过介质（气体、固体、液体）传播并能被人或动物听觉器官所感知的波动现象
@@ -6224,6 +6243,8 @@ nas
     社会学 -> 心理学 ->  医学 -> 生物 -> 化学 -> 物理 -> 数学
     经济 -> 政治 -> 历史 -> 人类学 -> 医学 -> 生物 -> 化学 -> 物理 -> 数学
     数学和物理谁是本源？
+无线电
+
 各种笔记软件 或 gtd 或 wiki 或 pkm 或 思维导图 的总结
     笔记(note)
         印象笔记
@@ -7217,7 +7238,17 @@ Hello what what is the first thing, and I am am scq000.
         稳定耐用的（Robust）
     可访问性除了给残障人士使用外，还可以给文本浏览器使用
 那些需要写代码但又不是软件开发的领域
-    测试 运维 网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 多媒体处理 数据分析 人工智能 3D打印 3D建模
+    测试 运维 网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 数据分析 人工智能 3D打印 3D建模
+    多媒体处理
+        图片
+            位图（标量图）
+            矢量图
+            照片
+        视频
+            剪辑
+            特效
+        音频
+        格式封装和转换
 那些和计算机相关的学科
     工学 engineering
         机械工程 mechanical engineering
@@ -7750,7 +7781,6 @@ tar --xz -cf UrsaMinor-`date +%g%m%d%H%M`.tar.xz UrsaMinor
     git commit -m "update auxiliary "$(date +%Y%m%d); git push;
 
 静态文件的index.html ？
-把 title 换成文章标题
 压缩生成后的 html ？
 
 有疑问的事
