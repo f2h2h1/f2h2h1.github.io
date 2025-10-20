@@ -93,7 +93,36 @@ class cli {
         return JSON.parse(json);
     }
 
+    async runCommand(command) {
+        let result = await (function(){
+            return new Promise((resolve, reject) => {
+                child_process.exec(command.trim(), (err, stdout, stderr) => {
+                    if (err) reject(err);
+                    resolve({
+                        stdout,
+                        stderr,
+                    });
+                });
+            });
+        })();
+        if (!result.stdout || result.stderr) {
+            result = '';
+        } else {
+            result = result.stdout.trim();
+        }
+
+        return result;
+    }
+
     async updateMatedata() {
+        // 更新 appData.js
+        let appData = fs.readFileSync('appData.js', {encoding:'utf8', flag:'r'});
+        let commitid = await this.runCommand('git log -n 1 --pretty="%H"');
+        let updatetime = await this.runCommand('git log -n 1 --pretty="%at"');
+        appData = appData.replace(/(updatetime\s*=)(.*);/g, `$1${updatetime};`);
+        appData = appData.replace(/(commitid\s*=)(.*);/g, `$1'${commitid}';`);
+        fs.writeFileSync('appData.js', appData);
+
         // 获取文章列表
         var files = fs.readdirSync('./article');
         var articleList = [];
@@ -105,24 +134,10 @@ class cli {
                     continue;
                 }
                 let filePath = 'article/' + fileName;
-                let x = await (function(){
-                    return new Promise((resolve, reject) => {
-                        let command = 'git log --format=%aD ' + filePath
-                        child_process.exec(command, (err, stdout, stderr) => {
-                            if (err) reject(err);
-                            resolve({
-                                stdout,
-                                stderr,
-                            });
-                        });
-                    });
-                })();
-                // console.log(x);
-                if (!x.stdout || x.stderr) {
+                let logStr = await this.runCommand('git log --format=%aD ' + filePath);
+                if (!logStr) {
                     // throw 'get article error1 ' + fileName;
                 }
-                let logStr = x.stdout;
-                logStr = logStr.trim();
                 let logArr = logStr.split("\n");
                 if (logArr.length <= 0) {
                     throw 'get article error2 ' + fileName;
@@ -300,6 +315,7 @@ class cli {
     }
 
     beforeCreatePage() {
+        this.appData.buildtime = Math.floor(new Date().getTime() / 1000);console.log( this.appData);
         let articleList = this.getJsonObj('articleList.json');
         let exchangeList = this.getJsonObj('exchangeList.json');
 
@@ -325,14 +341,14 @@ class cli {
     /**
      * @param {string} val
      */
-    runBuildMethod(val) {
+    async runBuildMethod(val) {
         console.log(val);
         switch (val) {
             case 'updateMatedata':
-                this.updateMatedata();
+                await this.updateMatedata();
                 break;
             case 'createPage':
-                this.createPage();
+                await this.createPage();
                 break;
             default:
                 console.log('wrong type of build argument');
@@ -492,7 +508,7 @@ class cli {
         console.log(msg);
     }
 
-    main() {
+    async main() {
         process.env.TZ = 'Asia/Shanghai';
         this.appData = new AppData();
         var appData = this.appData;
@@ -538,7 +554,7 @@ class cli {
 
             // }
             for (let BuildMethod of argvArr['build'].split('|')) {
-                this.runBuildMethod(BuildMethod);
+                await this.runBuildMethod(BuildMethod);
             }
         }
         // if (argvArr.hasOwnProperty('server')) {

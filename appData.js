@@ -4,6 +4,9 @@ class AppData {
     sitename = 'blog';
     runningtime = '';
     thirdPartyCode = false;
+    updatetime =1760524177;
+    commitid ='407cb1f7bd6feafd6ac8735371c35b95f0de8887';
+    buildtime = '';
     static RT_BROWSER = 'browser';
     static RT_NODEJS = 'nodejs';
 	constructor() {
