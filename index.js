@@ -258,6 +258,23 @@ class Application {
 
         return templateInit;
     }
+    buildOnePage() {
+        this.articleList;
+        this.linkExchangeList;
+        /*
+            封面
+                头像 名称 描述 网址 更新时间 构建时间 commitid 版权声明
+            目录
+            文章
+            友链
+            封底
+        */
+
+    }
+    buildOnePagePDF() {
+        this.buildOnePage();
+        // pdf的书签
+    }
     buildPage(articleInfo) {
 
     }
