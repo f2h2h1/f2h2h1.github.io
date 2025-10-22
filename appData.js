@@ -4,9 +4,10 @@ class AppData {
     sitename = 'blog';
     runningtime = '';
     thirdPartyCode = false;
-    updatetime =1760524177;
-    commitid ='407cb1f7bd6feafd6ac8735371c35b95f0de8887';
-    buildtime = '';
+    updatetime = 1761130605;
+    commitid = '1efbf27a8ecf8b807e628ccd0cd3e6364a2486c2';
+    buildtime = 1761017814;
+    copyright = 'Copyright ©' + new Date().getFullYear() + ' f2h2h1 | All Rights Reserved';
     static RT_BROWSER = 'browser';
     static RT_NODEJS = 'nodejs';
 	constructor() {

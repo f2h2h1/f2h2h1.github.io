@@ -119,8 +119,8 @@ class cli {
         let appData = fs.readFileSync('appData.js', {encoding:'utf8', flag:'r'});
         let commitid = await this.runCommand('git log -n 1 --pretty="%H"');
         let updatetime = await this.runCommand('git log -n 1 --pretty="%at"');
-        appData = appData.replace(/(updatetime\s*=)(.*);/g, `$1${updatetime};`);
-        appData = appData.replace(/(commitid\s*=)(.*);/g, `$1'${commitid}';`);
+        appData = appData.replace(/(updatetime\s*=)(.*);/g, `$1 ${updatetime};`);
+        appData = appData.replace(/(commitid\s*=)(.*);/g, `$1 '${commitid}';`);
         fs.writeFileSync('appData.js', appData);
 
         // 获取文章列表
@@ -315,7 +315,13 @@ class cli {
     }
 
     beforeCreatePage() {
-        this.appData.buildtime = Math.floor(new Date().getTime() / 1000);console.log( this.appData);
+        let buildtime = Math.floor(new Date().getTime() / 1000);console.log( this.appData);
+        this.appData.buildtime = buildtime;
+        // 更新 appData.js
+        let appData = fs.readFileSync('appData.js', {encoding:'utf8', flag:'r'});
+        appData = appData.replace(/(buildtime\s*=)(.*);/g, `$1 ${buildtime};`);
+        fs.writeFileSync('appData.js', appData);
+
         let articleList = this.getJsonObj('articleList.json');
         let exchangeList = this.getJsonObj('exchangeList.json');
 
