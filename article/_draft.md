@@ -1469,13 +1469,24 @@ vscode的使用技巧
     搜索引擎的原理
         分词（word segmentation）
         倒排索引（Inverted index）
-        Lucene
+        Lucene java
             solr
             elasticsearch
-        sphinx
+        sphinx c
         mysql的全文搜索
         BM25算法
     nutch+solr+Hadoop+Hbase
+    搜索引擎的测试数据
+        中文
+            THUCNews （清华大学中文文本分类数据集）
+            http://thuctc.thunlp.org/?spm=a2ty_o01.29997173.0.0.317ac921UEaPYN
+        英文
+            es 提供的测试数据集
+            https://www.elastic.co/docs/manage-data/ingest/sample-data
+        自己写个爬虫去爬豆瓣的资料
+        从那些 刮削器 里获得数据
+    自己在数据库中实现一个倒排索引？
+    和数据库直接用like对比
 客户端的动画？
     动画是如何实现的？
         js
@@ -3827,6 +3838,23 @@ ELF格式
 如何判断自己是否学会了某一项技能？
     特别是数学相关的？
         感觉看原理时一看就懂，实践时一做就错
+数学
+    初等数学
+        初等代数
+        微积分之后的数学都可以叫做高等数学了
+    微积分
+    线性代数
+    概率论
+    数理统计
+    离散数学
+        数理逻辑
+        集合论
+        组合数学
+        图论
+        运筹学
+        博弈论
+        信息论
+    最优化
 从零开始学习数学建模
     我总想找到一种方法来应对所有类型的算法面试题
     或者说我总想找到一种方法来应对所有考试时遇到的数学题
@@ -3894,6 +3922,9 @@ leetcode做题的一般套路
                 需要处理输入输出的称为 ACM模式
                 https://github.com/youngyangyang04/leetcode-master/blob/master/problems/%E5%89%8D%E5%BA%8F/ACM%E6%A8%A1%E5%BC%8F.md
     要准确地理解问题，然后选择正确的数据结构和算法
+        理解 哪些是 已知 哪些是 未知 ，题目的目标是什么？要求哪个未知变量？
+        列出 已知变量 和 未知变量
+        列出 各个变量 之间的关系
     先学好理论再去做题
     如果一道题一直没思路就直接看答案
 算法思想
@@ -4487,7 +4518,7 @@ leetcode做题的一般套路
             openwebui
             https://github.com/ollama-ui/ollama-ui
 财政、经济、金融、股票、基金、量化
-    交易 货币 贷款 存款 汇兑 股票 债券 外汇 期货 基金
+    交易 货币 贷款 存款 汇兑 股票（stocks） 债券（bonds） 外汇 期货 基金（funds）
     基础资产（Underlying Asset）
     ETF（Exchange Traded Fund）——交易型开放式指数基金
     QDII（Qualified Domestic Institutional Investor）——合格境内机构投资者
@@ -4502,9 +4533,15 @@ leetcode做题的一般套路
         台湾称衍生性金融商品
         金融衍生品是以一种或多种基础资产为标的，其价值取决于这些基础资产价格或指标表现的金融合约
         什么是 标的 ？
-        什么是 金融合约 ？
+        什么是 金融合约（Financial contracts） ？
+        什么是 对冲交易 ？
+        OTC
+            Over The Counter （在柜台上）
+            中文通常译为 “场外交易”
+            源于早期股票或债券交易时，投资者直接在经纪商的柜台上进行买卖，而不是通过集中化的交易所（exchange）。
+            与之相对的是 “场内交易”（Exchange-Traded），即在正规交易所进行的交易。
         四大类衍生品
-            期货 期权 远期合约 交换（Swaps）
+            期货（futures） 期权（Options） 远期合约（Forwards） 交换（Swaps）
     什么是 回测
     什么是 因子挖掘
         因子（Factor） 是指能够解释资产收益差异的可量化特征
@@ -4570,6 +4607,7 @@ leetcode做题的一般套路
         强化学习交易股票 https://github.com/sunnyswag/StockRL
         Qlib是一个面向人工智能的量化投资平台,旨在实现潜力,利用人工智能技术在定量投资中创造价值,从探索想法到实施生产。
             https://github.com/microsoft/qlib
+        开源股票市场追踪与分析平台 https://github.com/Open-Dev-Society/OpenStock
 FIRE和财富自由和躺平
     生活水平的分级
         赤贫 贫穷 温饱 小康 中产 富裕 极富
@@ -4577,11 +4615,14 @@ FIRE和财富自由和躺平
         不需要工作的前提下可以一直保持 富裕或以上 的生活水平
     躺平
         定义1：财富自由
-        定义2：成年人不再积极赚钱/学生不再积极提高成绩
+        定义2：成年人不再积极工作/学生不再积极提高成绩
         躺平是指不再积极工作
         贫穷有贫穷的躺平方式
         富裕有富裕的躺平方式
         https://github.com/phodal/tangping
+        最低生活保障
+        最低工资
+        被动收入
     FIRE
         定义
             Financial independence,Retire early（财务独立，提早退休）
@@ -5925,6 +5966,7 @@ nas
         路由器 和 充电器 有什么好折腾的？
 运动
     户外运动
+        露营 徒步 爬山 钓鱼 探洞 越野 溯溪
 生存主义与生存狂
     生存主义的中心思想就是为一切可能发生的灾难做准备，从而达到保全自身和家人性命，并在灾难中生存下去这个基本目标。
     生存狂就是贯彻落实生存主义的个体。
@@ -5938,6 +5980,39 @@ nas
     psk 放在包里的
             放在一般通勤的背包里
             放在出远门的背包里
+    psk 要考虑能否通过安检
+        一般的安检
+        机场的安检
+    放在家里的储备
+    流浪和躺平
+    意识 技能 装备（工具，资源）
+    想象中的危机
+        严重的经济危机
+        内战 -> 能润尽润
+        世界大战
+            常规战争
+            核战争
+        自然灾害
+            瘟疫
+            海啸
+            地震
+            行星撞地球
+        外星人入侵
+            无法想象，多看一下相关电影小说的脑洞吧
+    危机发生后
+        固守在家 需要出逃
+        衣 食 住 行
+        能源 卫生 防卫
+    从零开始重建文明
+    从大自然里获取原料？
+        植物
+            木材
+        金属
+            铜 铁
+            金 银
+            铝 锌 镍
+        沙和石
+        水
 和声音相关的笔记
     声音
         声音是振动产生的声波，通过介质（气体、固体、液体）传播并能被人或动物听觉器官所感知的波动现象
@@ -6158,6 +6233,31 @@ nas
                 文学作品所反映的社会生活和人类思想感情
             文学形式
                 文学作品的外在表现方式，包括文学体裁、文学样式、文学语言等
+    学习一门自然语言，大概就是在学习
+        语音 文字 语法
+        语法 (Grammar) 大概可以分为四个部分
+            语法范畴 (Grammatical category) 或者叫做 语法特征（Grammatical feature）
+            词类 (word class) 或者叫做 词性 (part of speech)
+            词法 (Morphology)
+            句法 (Syntax)
+    英语
+        语法
+        词汇
+            核心词汇 Swadesh list
+                100
+                207
+                35
+                40
+            基础英语 Basic English
+            General Service List
+            New General Service List
+            https://en.wikipedia.org/wiki/Word_list#English
+            https://en.wikipedia.org/wiki/Most_common_words_in_English
+        认证和考试
+    脑筋急转弯/谜语/歇后语 这些的原理是什么？
+    成语 典故 迷因/梗 这些的原理是什么？
+逻辑学
+    中式诡辩
 教育学（Pedagogy）
     文理七艺
         博艺教育 Liberal arts
@@ -7237,8 +7337,11 @@ Hello what what is the first thing, and I am am scq000.
         稳定理解的（Understandable）
         稳定耐用的（Robust）
     可访问性除了给残障人士使用外，还可以给文本浏览器使用
-那些需要写代码但又不是软件开发的领域
-    测试 运维 网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 数据分析 人工智能 3D打印 3D建模
+那些需要和软件开发相关的领域
+    需要写代码的
+        测试 运维（服务器运维，桌面运维）  网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 数据分析 人工智能 3D打印 3D建模
+    不需要写代码的
+        项目管理 产品设计 UI/UX
     多媒体处理
         图片
             位图（标量图）

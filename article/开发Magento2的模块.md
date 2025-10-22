@@ -1965,9 +1965,51 @@ php -r "while(true){exec('php bin/magento cron:run --group=consumers');sleep(5);
 
 
 
+MySQL适配器将消息存储在数据库中。 三个数据库表（queue、queue_message和queue_message_status）管理消息队列工作负载
+queue
+    id
+    name 来自 queue_consumer.xml 的 consumer -> queue
+queue_message
+    id
+    topic_name 来自 communication.xml 的 topic -> name
+    body
+queue_message_status
+    id
+    queue_id -> queue 的 id
+    message_id -> queue_message 的 id
+    updated_at
+    status
+    number_of_trials
+
+SELECT * FROM queue WHERE name = 'product_alert.queue' limit 1
+SELECT * FROM queue_message x WHERE topic_name = 'product_alert' limit 10
+SELECT * FROM queue_message_status WHERE queue_id = (
+    SELECT id FROM queue WHERE name = 'product_alert.queue' limit 1
+) limit 10;
+SELECT * FROM queue_message_status WHERE message_id = (
+    SELECT id FROM queue_message WHERE topic_name = 'product_alert' limit 1
+) limit 10;
+
+status 的值在这个文件里
+vendor/magento/module-mysql-mq/Model/QueueManagement.php
+
+
+magento2 默认只支持 MySQL 或 RabbitMQ 作为 队列
+新版似乎也支持 ActiveMQ Artemis 了
+虽然也可以通过扩展实现 redis 队列
+
 queue.xml 主要用于定义消息队列的属性和配置。
+从 Magento 2.2 开始，该文件已被官方弃用（deprecated）
+https://developer.adobe.com/commerce/php/development/components/message-queues/migration/
+
+
+在 Magento 2.3 及更高版本（尤其是 2.4+）中，消息队列的配置主要通过以下文件完成：
 queue_consumer.xml 主要用于定义如何消费和处理这些消息。
 
+communication.xml 定义消息主题（Topic） 和消息接口
+queue_consumer.xml 定义消费者及其配置（如连接方式、处理类、并行数量等）
+queue_publisher.xml 将主题映射到发布者（连接/交换机）
+queue_topology.xml 定义交换器（Exchange）、队列（Queue） 以及它们之间的绑定关系（Binding）
 
 -->
 
