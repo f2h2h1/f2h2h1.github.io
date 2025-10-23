@@ -438,5 +438,10 @@ SurfaceFlinger
 https://community.kde.org/Windows
 
 
+wimp
+window icon menu pointer
+Windows（视窗）、Icon（图标）、Menu（选单）及Pointer（指标）
+
+
 
 -->

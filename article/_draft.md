@@ -359,11 +359,11 @@
         MVCC
         ACID CAP BASE
         nosql 和 newsql
-            文档型数据库
-            KV数据库
-            列数据库
-            时序数据库
-            图数据库
+            文档型数据库（Document-oriented）
+            KV数据库（key-value）
+            列数据库（column-oriented）
+            时序数据库（Temporal）
+            图数据库（Graph）
             向量数据库（vector database）
         mysql 的一般使用
             explain sql
@@ -7466,7 +7466,23 @@ Hello what what is the first thing, and I am am scq000.
     对过去发生的事的评价
     过去的政治
 企业
-    总务 业务 管理 财务 法务
+    业务部门
+        利润中心
+        直接或间接产生利润
+        研发 生产 运营 售后 客服 营销 市场 品牌 广告 宣传 推广 公关 销售
+    职能部门/非业务部门/事务部门
+        成本中心
+        没有盈利能力
+        行政 财务 人事 信息 法务
+        财务
+            会计 出纳 审计 税务
+        管理学
+            公共管理
+                行政管理
+            工商管理
+                企业管理 人力资源管理
+        总务/职能/事务/庶务 大概是打杂的
+        财务 人事 几乎所有中型机构都有
 电子支付，区块链，数字货币
     名词
         数字货币 digital currency

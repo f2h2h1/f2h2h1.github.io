@@ -1940,6 +1940,7 @@ php bin/magento queue:consumers:list
 php bin/magento queue:consumers:start sales_rule.codegenerator
 
 好像每个消费者都需要一个单独的命令
+当一个队列中的消息都处理完后，这个命令就会停止，如果需要处理新的消息需要手动重新启动或通过定时任务启动
 
 php bin/magento queue:consumers:start [--max-messages=<value>] [--batch-size=<value>] [--single-thread] [--area-code=<value>] <consumer_name>
 
