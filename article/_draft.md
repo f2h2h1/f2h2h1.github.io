@@ -1472,6 +1472,10 @@ vscode的使用技巧
         Lucene java
             solr
             elasticsearch
+            Lucene 只是一个库，要实现具体的功能需要写代码
+            Elasticsearch 和 Solr 都是基于 Lucene 的全文搜索服务器
+            Elasticsearch 内置了高可用和分布式
+            Solr 需要 ZooKeeper 才能实现高可用和分布式
         sphinx c
         mysql的全文搜索
         BM25算法
@@ -2162,7 +2166,7 @@ git的一般使用指南
                 Kafka Artemis Apollo Distributedlog
         数据库
             关系型 mysql mariadb PostgreSQL
-            文档型 MongoDB
+            文档型 MongoDB Cassandra
             图
             时序
             列
@@ -4542,6 +4546,8 @@ leetcode做题的一般套路
             与之相对的是 “场内交易”（Exchange-Traded），即在正规交易所进行的交易。
         四大类衍生品
             期货（futures） 期权（Options） 远期合约（Forwards） 交换（Swaps）
+    现代意义的银行大概在14世纪出现
+    股份制公司大概在16世纪出现
     什么是 回测
     什么是 因子挖掘
         因子（Factor） 是指能够解释资产收益差异的可量化特征
@@ -4557,6 +4563,34 @@ leetcode做题的一般套路
             发现新因子：从传统数据（如财务报表、行情数据）或另类数据（如卫星图像、社交媒体情绪、供应链数据、文本新闻）中提取未被广泛认知的预测信号。
             优化现有因子：改进传统因子的计算方式（如将“市盈率”与“盈利增长”结合，构建“动态价值因子”）。
             提升策略鲁棒性：通过多因子组合降低单一因子失效的风险。
+    关键指数
+        大A
+            上证指数
+            深证
+            创业
+            科创50
+            中证A50
+            中证A500
+            中证500
+            中证800
+            沪深300
+            上证50
+            深证100
+            具体板块的指数？
+        港股
+            恒生
+            国企
+            恒生科技
+        美股
+            指标准普尔500指数（S&P 500）
+            道琼斯工业平均指数（DJIA）
+            纳斯达克综合指数（NASDAQ Composite）
+            纳斯达克100
+        其它
+            黄金价格
+            石油价格
+            日经指数
+            富时指数
     有哪些可以提供数据的网站
         新浪财经
         东方财富
@@ -4574,6 +4608,8 @@ leetcode做题的一般套路
                 CTP 最初由中国金融期货交易所（CFFEX）推出，主要用于期货、期权等衍生品的程序化交易。
                 它提供了一套标准的 API 接口（即 CTP API），供开发者编写自动化交易程序，连接期货公司柜台系统进行行情获取、下单、撤单等操作。
                 传统上，个人开发者或机构常使用“SimNow”平台提供的模拟环境来测试基于 CTP 接口的程序。
+    交易所
+    券商
     股票交易和分析软件
         同花顺 大智慧 指南针 东方财富 信达通 钱龙 腾讯自选股
         通达信 - 被许多民间高手和游资使用，职业交易者较为青睐
@@ -4608,6 +4644,10 @@ leetcode做题的一般套路
         Qlib是一个面向人工智能的量化投资平台,旨在实现潜力,利用人工智能技术在定量投资中创造价值,从探索想法到实施生产。
             https://github.com/microsoft/qlib
         开源股票市场追踪与分析平台 https://github.com/Open-Dev-Society/OpenStock
+        面向金融K线图的开源基础模型 https://github.com/shiyu-coder/Kronos
+            可以配合 qlib 使用
+        https://github.com/emcie-co/parlant
+        https://github.com/stanfordnlp/dspy
 FIRE和财富自由和躺平
     生活水平的分级
         赤贫 贫穷 温饱 小康 中产 富裕 极富
@@ -6240,6 +6280,15 @@ nas
             词类 (word class) 或者叫做 词性 (part of speech)
             词法 (Morphology)
             句法 (Syntax)
+        CEFR
+            Common European Framework of Reference for Language
+            欧洲语言共同参考框架
+            CEFR学习者大致分为三个级别
+                初级使用者（ A ）
+                独立使用者（ B ）
+                熟练使用者（ C ）
+                并进一步细分至六个等级：
+                A1、A2、B1、B2、C1、C2
     英语
         语法
         词汇
@@ -6254,10 +6303,34 @@ nas
             https://en.wikipedia.org/wiki/Word_list#English
             https://en.wikipedia.org/wiki/Most_common_words_in_English
         认证和考试
+            中国的考试
+                CET6/4
+                TEM8 专业八级
+                CATTI 国家人事部翻译资格证书考试
+                NAETI 全国外语翻译证书考试
+                PETS 全国英语等级考试
+                NETS 国家英语考试系统
+            外国的考试
+                IELTS 雅思
+                TOEFL 托福
+                TOEIC 托业
+                Aptis 普思考试
+                BEC 剑桥商务英语
+                DET Duolingo English Test
+                ESOL
+                    English for Speakers of Other Languages
+                    其他语言使用者的英语
     脑筋急转弯/谜语/歇后语 这些的原理是什么？
     成语 典故 迷因/梗 这些的原理是什么？
 逻辑学
+    到底什么是 逻辑
+        大概可以分成三个路线去学习
+        逻辑的发展史
+        哲学上的逻辑
+        数学上的逻辑
     中式诡辩
+批判性思维（Critical thinking）
+哲学 心理学 认知神经科学 神经科学
 教育学（Pedagogy）
     文理七艺
         博艺教育 Liberal arts

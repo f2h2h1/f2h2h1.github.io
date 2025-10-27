@@ -637,6 +637,12 @@ magento 相关的博客
 
 <!--
 
+各种安装环境
+    操作系统
+    原生或docker
+    需要的组件
+    需要的插件
+
 通过 alias 设置当前命令行里的 php 版本
 alias php="/c/Users/a/dev/php-7.4.29-Win32-vc15-x64/php.exe"; \
 alias composer="php /c/Users/a/dev/php-7.4.29-Win32-vc15-x64/composer.phar";

@@ -14,6 +14,7 @@ Windows 下只能通过 PEB 来读取环境变量。
 PEB 是一个臃肿的结构体，且 msdn 里没有这个结构体的详细信息。
 PEB 的具体结构根据操作系统的版本不同而不同，也和进程的位数有关。
 PEB 里除了环境变量，还是有执行目录，可执行文件路径，命令行等信息。
+PEB 是 Process Environment Block 进程 环境 块
 
 笔者在网上搜索了很久才在这个站点里找到 PEB 详细的结构
 http://terminus.rewolf.pl/terminus
