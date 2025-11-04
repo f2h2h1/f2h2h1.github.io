@@ -884,3 +884,78 @@ python tk + api 版
 </html>
 
 ```
+
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>确认删除</title>
+    <style>
+        fieldset {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            label {
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <fieldset>
+        <legend>Form / Checkbox Required</legend>
+        <form method="post" action="/delete">
+            <label>
+                <input type="checkbox" required>
+                <span>确认删除</span>
+            </label>
+            <button type="submit">删除</button>
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>Checked CSS</legend>
+        <style>
+            .css-del-confirm button.disabled {
+                pointer-events: none;
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            /* Chrome/Edge/Safari/Firefox support :has() after 2024 */
+            .css-del-confirm:has(:checked) button.disabled {
+                /* Enable button when checkbox is checked */
+                pointer-events: auto;
+                opacity: 1;
+                cursor: pointer;
+            }
+        </style>
+        <form method="post" action="/delete">
+
+            <span class="css-del-confirm">
+                <label>
+                    <input type="checkbox" required>
+                    <span>确认删除</span>
+                </label>
+                <button type="submit" class="disabled">删除</button>
+            </span>
+        </form>
+    </fieldset>
+    <button popovertarget="my-popover">Delete</button>
+    <dialog popover id="my-popover">
+        <form method="post" action="/delete">
+            <p><strong>Delete Confirmation</strong></p>
+            <hr>
+            <p>Are you sure you want to delete</p>
+            <hr>
+            <button type="submit" class="disabled">Delete</button>
+        </form>
+    </dialog>
+
+</body>
+
+</html>
+```
