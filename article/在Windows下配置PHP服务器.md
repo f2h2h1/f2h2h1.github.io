@@ -949,4 +949,15 @@ httpd.exe  || pause
 
 加上 apache 和 nginx http 重定向到 https 的配置
 
+apache 在 Windows 环境下的 mpm
+apache 如何设置 server-status 和 server-info
+apache 2.2 和 2.4 的区别
+    关注这个模块 mod_access_compat.so
+
+mod_md.so 是 Apache HTTP 服务器的一个模块，主要用于管理域名和自动化证书管理。
+md 应该是 Managing domains 的缩写
+
+现在新版的 nginx 似乎也可以自动管理证书了
+
+
 -->

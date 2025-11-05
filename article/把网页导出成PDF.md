@@ -133,8 +133,10 @@ a 标签
         tmpNode.src = src;
         document.body.appendChild(tmpNode);
     }
-    addScript("https://cdn.bootcdn.net/ajax/libs/dom-to-image/2.6.0/dom-to-image.js");
-    addScript("https://cdn.bootcdn.net/ajax/libs/jspdf/2.1.1/jspdf.umd.js");
+    addScript("https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js");
+    addScript("https://cdn.jsdelivr.net/npm/jspdf@2.1.1/dist/jspdf.umd.js");
+    addScript("https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js");
+    addScript("https://cdn.jsdelivr.net/npm/dompurify@3.3.0/dist/purify.min.js");
     setTimeout(()=>{
 
         domtoimage.toJpeg(document.body, { quality: 0.95, bgcolor: '#FFFFFF' })
@@ -210,7 +212,7 @@ a 标签
     }
     var meta = document.createElement('meta');
     meta.setAttribute('http-equiv', 'Content-Security-Policy');
-    meta.setAttribute('content', 'script-src https://cdn.bootcdn.net');
+    meta.setAttribute('content', 'script-src https://cdn.jsdelivr.net');
     // 将新创建的 meta 标签插入到 head 标签中
     document.getElementsByTagName('head')[0].appendChild(meta);
 })();
@@ -223,7 +225,7 @@ a 标签
         tmpNode.src = src;
         document.body.appendChild(tmpNode);
     }
-    addScript("https://cdn.bootcdn.net/ajax/libs/dom-to-image/2.6.0/dom-to-image.js");
+    addScript("https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js");
     setTimeout(()=> {
         domtoimage.toJpeg(document.body, { quality: 0.95, bgcolor: '#FFFFFF' })
             .then(function (dataUrl) {
@@ -235,6 +237,10 @@ a 标签
     }, 3000)
 })();
 ```
+
+- jspdf 使用 html 生成 pdf 时，需要依赖 html2canvas 和 dompurify
+- jspdf 生成 pdf 时，如果遇到非 ascii 字符，需要有对应的字体才可以生成，不然会渲染成乱码
+    - 中文字体都非常大，基本不能直接用在客户端
 
 ### 使用 Chrome 的命令行参数来生成 PDF
 

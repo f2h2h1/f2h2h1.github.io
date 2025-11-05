@@ -19,28 +19,34 @@
 
 (function() {
     'use strict';
-    // 2025-09-08
+    // 2025-11-05
 
     // 按 xpath 删除节点
     function delByXpath(xpath) {
         try {
-            let tag = document.evaluate(xpath, document).iterateNext();
-            if (tag != null) {
-                tag.parentNode.removeChild(tag);
+            let delArr = [];
+            let tag = document.evaluate(xpath, document);
+            for (let d = tag.iterateNext(); d != null; d = tag.iterateNext()) {
+                delArr.push(d);
+            }
+            for (let i = 0; i < delArr.length; i++) {
+                delArr[i].parentNode.removeChild(delArr[i]);
             }
         } catch {
         }
     }
 
     // 删除页面内 meta 和 script 标签
-    let scriptTag = document.evaluate('//meta | //script | //iframe | //link[@rel != "stylesheet"]', document);
-    let scriptTagArr = [];
-    for (let d = scriptTag.iterateNext(); d != null; d = scriptTag.iterateNext()) {
-        scriptTagArr.push(d);
-    }
-    for (let i = 0; i < scriptTagArr.length; i++) {
-        scriptTagArr[i].parentNode.removeChild(scriptTagArr[i]);
-    }
+    delByXpath('//meta | //script | //iframe | //link[@rel != "stylesheet"]');
+    // 一般还需要删除一些无用的图片，csdn的文章很喜欢在开头或结尾加一些没有用的图片
+
+    // delByXpath('//meta | //script | //iframe | //link | //style');
+    /*
+        把所有样式都删除，以后有空再研究吧
+        图片 max-width:90%
+        code padding:10px
+        blockquote 行内code 表格 也需要修改样式
+    */
 
     // 删除文章详情的样式
     let articleTitle = document.evaluate('//descendant::div[contains(@class,"article-header")]', document).iterateNext();
@@ -50,10 +56,15 @@
         delByXpath('//descendant::a[contains(@class,"href-article-edit slide-toggle")]');
         delByXpath('//descendant::a[contains(@id,"blog_detail_zk_collection")]');
 
-        let articleInfo = document.evaluate('//descendant::div[contains(@class,"article-info-box")]', articleTitle).iterateNext();
+        // 要注意这个 xpath 开头的 . ，没有这个 . 就是全局搜索了
+        let articleInfo = document.evaluate('.//descendant::div[contains(@class,"article-info-box")]/div[contains(@class,"article-bar-top")]', articleTitle).iterateNext();
         if (articleInfo != null) {
             console.log(articleInfo.innerText);
-            articleInfo.innerHTML = "<pre>"+articleInfo.innerText+"</pre>";
+            articleInfo.innerHTML = "<p>"+articleInfo.innerText+"</p>";
+        }
+        let articleTag = document.evaluate('.//descendant::div[contains(@class,"article-info-box")]/div[contains(@class,"blog-tags-box")]', articleTitle).iterateNext();
+        if (articleTag != null) {
+            articleTag.innerHTML = "<p>"+articleTag.innerText+"</p>";
         }
     }
 
@@ -78,6 +89,8 @@
     }
 
     delByXpath('//descendant::div[contains(@id,"treeSkill")]');
+    delByXpath('//descendant::div[contains(@id,"blogExtensionBox")]');
+    delByXpath('//descendant::div[contains(@id,"blogVoteBox")]');
 
     // 令 code 可以复制
     let codeDOM = document.evaluate('//article//pre', document);
@@ -85,11 +98,12 @@
     for (let d = codeDOM.iterateNext(); d != null; d = codeDOM.iterateNext()) {
         codeArr.push(d);
     }
+    
     for (let i in codeArr) {
-        let c = document.createElement('textarea');
-        let codeItem = document.evaluate('//code', codeArr[i]).iterateNext();
+        let codeItem = document.evaluate('.//code', codeArr[i]).iterateNext();
         console.log(codeItem);
         if (codeItem != null) {
+            let c = document.createElement('textarea');
             c.value = codeItem.innerText;
             codeArr[i].style.userSelect='auto';
             codeArr[i].style.backgroundColor='rgba(0, 0, 0, 1)';
