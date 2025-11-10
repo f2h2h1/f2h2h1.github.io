@@ -363,6 +363,89 @@ mod_rewrite
 要实现某项功能 -> 需要写什么样的配置 -> 这些配置依赖哪个模块
 
 
+apache2 httpd apachectl
+service httpd
+systemctl restart apache2
+
+伪静态（Fake Static）是URL重写（URL Rewriting）的一种常见应用场景 ，但两者并非完全等同。
+除了 url重写 外可以实现伪静态的方式
+404时转发到默认页面index.php，然后用php的$_SERVER['PATH_INFO']获取路由，进而实现伪静态
+需要配置服务器，允许 PATH_INFO
+
+
+目录索引
+    直接加上这一句就可以了
+    Options +Indexes
+
+cgi
+    1 启用 cgi 模块
+        如果是 非线程化的mpm 和 windows 环境下，则启用 mod_cgi.so
+
+        如果是 线程化的mpm ，则启用 mod_cgid.so
+    2 修改配置
+    3 确保运行 apache 的用户有执行 cgi程序 或 cgi脚本的权限
+
+    参考
+    https://httpd.apache.org/docs/current/howto/htaccess.html
+    https://httpd.apache.org/docs/current/howto/cgi.html
+
+https://www.rfc-editor.org/rfc/rfc3875.html
+https://www.w3.org/CGI/
+
+
+windows 下也没有这个工具 apachectl
+信号
+    TERM stop
+    USR1 graceful
+    HUG restart
+    WINCH graceful-stop
+
+apachectl -k stop
+apachectl -k graceful
+apachectl -k restart
+apachectl -k graceful-stop
+
+apachectl 是一个控制脚本
+apachectl 有两种工作模式，一种是作为简单的控制脚本，一种是作用 initv 或 systemctl 守护进程的脚本
+
+找到 pid 文件然后直接发送信号也可以
+kill -TERM `cat /usr/local/apache2/logs/httpd.pid`
+kill -TERM `cat /usr/local/apache2/logs/httpd.pid`
+kill -TERM `cat /usr/local/apache2/logs/httpd.pid`
+kill -TERM `cat /usr/local/apache2/logs/httpd.pid`
+
+使用 httpd 程序本体也可以
+httpd -k stop
+httpd -k graceful
+httpd -k restart
+httpd -k graceful-stop
+
+apache 的文档推荐使用 apachectl
+https://httpd.apache.org/docs/2.4/stopping.html
+https://httpd.apache.org/docs/2.4/programs/httpd.html
+https://httpd.apache.org/docs/2.4/programs/apachectl.html
+
+
+一些文章里会提及 apache 有 reload 的参数，这个实质也是发送 USER1 信号，和 graceful 没有区别
+
+httpd -k graceful 好像也能用在 windows 里
+
+apache 再加上 mpm 能达到类似 nginx 的效果
+
+在 windows 环境下， apache 的 php 支持平滑重启，但 nginx 的不行，因为 windows 下的 php-cgi 没有平滑重启
+
+
+Event MPM 和 Worker MPM 都是多进程多线程模型
+总结来说，Event MPM 是 Worker MPM 的改进版本，
+特别是在处理长连接和高并发请求时表现更好。
+如果你的应用需要处理大量的并发请求，Event MPM 可能是更好的选择。
+Event MPM 在遇到不兼容的模块时，会回退到 Worker 模式。
+
+prefork 是多进程模型，性能不好，但兼容性最好
+
+
+把 apache 里的常用模块都编译成静态模块应该也能提升性能的吧？
+
 -->
 
 ### 下载 Apache

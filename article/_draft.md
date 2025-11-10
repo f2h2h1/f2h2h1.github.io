@@ -5772,6 +5772,8 @@ nas
         文明 全面战争 城市天际线 坎巴拉太空计划
         P社四萌
             十字军之王 欧陆风云 维多利亚 钢铁雄心 群星
+        有哪些和 金融 投资 相关的游戏？
+        有哪些和 电工 计算机 相关的游戏？
     小时候玩过的游戏
         碧海银沙
             炸弹人
@@ -7130,6 +7132,7 @@ GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts ht
     Perforce
 https://download.libsodium.org/libsodium/releases/
 SSL双向认证
+http和cgi，如何编译安装php？
 
 python + openssl
 c + openssl
