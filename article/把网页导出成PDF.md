@@ -59,7 +59,7 @@ a 标签
 1. 如果导出 PDF 的需求是中途出现的
     - 如果没有样式的需求，单独写一份用于打印的 html 代码，用隐藏的 iframe 标签生成 PDF
     - 如果有样式的需求，就尽量在原有的代码里修改样式适应打印，如果改不动了，还是单独写一份用于打印的 html 代码，再用隐藏的 iframe 标签生成 PDF
-1. 如果想让生成的 PDF 样式保持一致，最好还是在后台生成。但笔者认为，大部分情况下浏览器之间微小的差异是可以忽略的。
+1. 如果想让生成的 PDF 样式保持一致，最好还是在后台生成。但笔者认为，大部分情况下浏览器之间微小的差异是可以忽略的。在后台生成可以更好地支持移动端。
 
 ## 示例代码
 
@@ -330,6 +330,16 @@ if __name__ == '__main__':
         run(playwright)
 ```
 
+### 使用 docker 容器里的 chrome 来生成 PDF
+
+1. 只使用 Chrome 镜像
+    1. 原生的 Chrome 镜像 lscr.io/linuxserver/chrome
+    1. 精简过的 Chrome 镜像 zenika/alpine-chrome
+1. 使用 Chrome 镜像和 Playwright 镜像
+    既可以使用 zenika/alpine-chrome 也可以使用 lscr.io/linuxserver/chrome
+1. 自制镜像，在 Playwright 镜像中安装浏览器
+
+
 ### 使用 libreoffice 的命令行把网页转换为 pdf
 
 要先在 libreoffice 的安装目录里找到这个命令 soffice
@@ -383,6 +393,13 @@ https://github.com/wkhtmltopdf/wkhtmltopdf
 其实可以不单输出 pdf ，输出 图片 html 代码也是可以的吧
 把那个 seo 的仓库再改一下
 面向一般用户的，面向开发者的
+
+
+安卓 iOS 上浏览器的支持？
+    安卓上的 chrome 是可以用 window.print 保存pdf的
+    但 安卓上的国产浏览器基本都不行
+
+
 
 
 afterprint 和 beforeprint 事件允许页面在打印开始之前更改其内容（例如，也许是移除 banner）然后在打印完成后还原这些更改。
