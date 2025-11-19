@@ -244,6 +244,13 @@
     在 linux 环境下，可以设置这个环境变量 PHP_CLI_SERVER_WORKERS 来达到多线程的效果
     PHP_CLI_SERVER_WORKERS="10" php -S 127.0.0.1:8082 -t ./pub/ ./phpserver/router.php
     ```
+- 2.4.7 之后的版本也有一个内置的 server
+    - https://experienceleague.adobe.com/en/docs/commerce-operations/tools/cli-reference/commerce-on-premises#serverrun
+    ```
+    php bin/magento server:run
+    php bin/magento server:run --port=8080
+    php bin/magento server:run --port=8080 --workerNum=10
+    ```
 - magento2 的缓存十分严重，如果发现一些修改没有生效，可以尝试运行这几条命令刷新缓存
     ```
     php bin/magento cache:clean

@@ -4645,11 +4645,25 @@ wordpress
                     alias wp="./vendor/bin/wp "
             wp-cli 还可以通过 docker 安装
         一般命令
-            wp info
+            查看 wp-cli 信息
+                wp --info
+            查看 wordpress 信息
+                wp info
+            查看帮助 wp help
             创建 wp-config.php 文件
-                wp config create --dbname=wp --dbuser=root --dbpass=1234
+                wp config create --dbname=wp --dbuser=root --dbpass=1234 --dbhost='localhost' --dbprefix='wp_'
+                --dbprefix 数据库表名前缀 可选项
+            下载 WordPress 文件
+                wp core download --locale=zh_CN --version=6.5
+                --locale 语言 可选项 默认是 en_US
+                --version 版本 可选项 默认是最新版
+                --path 安装目录，默认是当前目录
+            安装 wordpress
+                wp core install --url="http://example.com" --title="Blog Title" --admin_user="adminuser" --admin_password="password" --admin_email="email@domain.com"
             运行 web server ，这个需要先创建 wp-config.php 文件
                 wp server --host=127.0.0.1 --port=80
+                PHP_CLI_SERVER_WORKERS="10" 这个环境变量也可以用在这里
+                PHP_CLI_SERVER_WORKERS="10" wp server --host=127.0.0.1 --port=80
             忘记密码后用来修改密码的， 1 是userid
                 php wp-cli.phar user update 1 --user_pass=password
             wp option 修改 wp 的配置，这是对应 wp_options 表的
@@ -4820,6 +4834,8 @@ wordpress
         二是已经有数据的WordPress站点。
         https://make.wordpress.org/core/2022/09/12/lets-make-wordpress-officially-support-sqlite/
         https://wpmore.cn/wordpress-%e5%8f%91%e5%b8%83%e4%ba%86%e7%8b%ac%e7%ab%8b%e7%9a%84-sqlite-%e6%8f%92%e4%bb%b6.html
+        https://github.com/WordPress/sqlite-database-integration
+        https://github.com/soulteary/docker-sqlite-wordpress
         既然可以使用 sqlite ，那么使用 PostgreSQL 也是可以的吧
             https://wordpress.org/plugins/sqlite-database-integration
             https://wordpress.org/support/topic/configuring-wordpress-with-postgresql/
@@ -4862,6 +4878,7 @@ wordpress
         PrestaShop
         OScommerce
         ZenCart
+        Shopware
     php的cms
         Drupal 2000
         WordPress 2003
