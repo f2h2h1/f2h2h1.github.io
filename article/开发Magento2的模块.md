@@ -3447,6 +3447,47 @@ $cacheManager->load($cacheKey);
 $cacheManager->remove($cacheKey);
 $cacheManager->clean();
 
+
+如何自定义一个缓存
+    新建 etc/cache.xml
+        <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Cache/etc/cache.xsd">
+            <type name="full_page" translate="label,description" instance="Magento\PageCache\Model\Cache\Type">
+                <label>Page Cache</label>
+                <description>Full page caching</description>
+            </type>
+        </config>
+        instance 就是新建的 CacheType
+    新建一个 CacheType
+        继承 \Magento\Framework\Cache\Frontend\Decorator\TagScope
+        use Magento\Framework\App\Cache\Type\FrontendPool;
+        use Magento\Framework\Cache\Frontend\Decorator\TagScope;
+
+        class CacheType extends TagScope
+        {
+            const TYPE_IDENTIFIER = 'graphql_rate_limiting';
+
+            const CACHE_TAG = 'GRAPHQL_RATE_LIMITING';
+
+            /**
+            * @param FrontendPool $cacheFrontendPool
+            */
+            public function __construct(FrontendPool $cacheFrontendPool)
+            {
+                parent::__construct(
+                    $cacheFrontendPool->get(self::TYPE_IDENTIFIER),
+                    self::CACHE_TAG
+                );
+            }
+        }
+    修改 env.php
+        cache 的配置
+        启用 cache ，只有修改 env.php 才可以实现默认启用缓存
+    参考
+        https://experienceleague.adobe.com/zh-hans/docs/commerce-operations/implementation-playbook/best-practices/planning/redis-service-configuration
+        https://developer.adobe.com/commerce/php/development/cache/partial/database-caching/
+        https://developer.adobe.com/commerce/php/development/cache/partial/cache-type/
+
+
 -->
 
 ## 发送邮件

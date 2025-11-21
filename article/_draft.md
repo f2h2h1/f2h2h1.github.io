@@ -6800,41 +6800,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
                 企业管理 人力资源管理
         总务/职能/事务/庶务 大概是打杂的
         财务 人事 几乎所有中型机构都有
-电子支付，区块链，数字货币
-    名词
-        数字货币 digital currency
-        虚拟货币 virtual currency
-        加密货币 crypto currency
-        电子货币 electronic currency
-        电子支付 electronic payment
-        电子现金 electronic cash
-        区块链 block chain
-    电子支付
-    区块链的相关介绍
-        共识算法
-        有哪些基于区块链的应用
-    数字货币
-    比特币的相关介绍(Bitcoin)
-        bit 比特
-        coin 硬币
-    除了比特币之外的主要的数字货币
-        以太坊 (Ethereum, ETH): 以太坊是一个支持智能合约的区块链平台，允许开发者构建去中心化应用（DApps）。
-        泰达币 (Tether, USDT): 作为一种稳定币，USDT 的价值与美元挂钩，通常用于在加密货币市场中作为交易媒介。
-        瑞波币 (XRP): 瑞波币旨在为银行和金融机构提供快速、低成本的跨境支付解决方案。
-        币安币 (BNB): 由币安交易所发行，最初用于支付交易手续费，现在也用于其生态系统中的多种应用。
-        卡尔达诺 (Cardano, ADA): 一个以科学研究为基础的区块链平台，旨在提供更安全和可扩展的智能合约功能。
-    比特币的衍生币
-    以太坊(Ethereum)
-    什么是智能合约(Smart Contract)
-    交易所
-        币安（Binance）
-        Bifinex
-    什么是NFT(非同质化代币 Non-Fungible Token)
-    什么是元宇宙(Metaverse)
-        元宇宙一词起源于1992年的科幻小说《雪崩》，是“元(meta)”和“宇宙(universe)”的合成词。
-    什么是密码朋克(Crypto punk)
-    什么是稳定币（Stablecoin）
-        泰达币（英语：Tether，货币代号USD₮或USDT）
 java
     命令行
         纯手工管理依赖和编译
