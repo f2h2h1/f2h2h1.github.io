@@ -1465,46 +1465,6 @@ vscode的使用技巧
     对项目发展的预期是怎样的
     大多数情况下，开发效率比运行效率重要
         因为大多数情况下，硬件成本比人力成本低
-如何实现一个搜索引擎？
-    搜索引擎的原理
-        分词（word segmentation）
-        倒排索引（Inverted index）
-        Lucene java
-            solr
-            elasticsearch
-            Lucene 只是一个库，要实现具体的功能需要写代码
-            Elasticsearch 和 Solr 都是基于 Lucene 的全文搜索服务器
-            Elasticsearch 内置了高可用和分布式
-            Solr 需要 ZooKeeper 才能实现高可用和分布式
-        sphinx c
-        mysql的全文搜索
-        BM25算法
-        Sparse（稀疏表示 / 稀疏检索）
-    nutch+solr+Hadoop+Hbase
-    搜索引擎的测试数据
-        中文
-            THUCNews （清华大学中文文本分类数据集）
-            http://thuctc.thunlp.org/?spm=a2ty_o01.29997173.0.0.317ac921UEaPYN
-        英文
-            es 提供的测试数据集
-            https://www.elastic.co/docs/manage-data/ingest/sample-data
-        自己写个爬虫去爬豆瓣的资料
-        从那些 刮削器 里获得数据
-    自己在数据库中实现一个倒排索引？
-    和数据库直接用like对比
-    SQLite的全文搜索
-        SQLite 实现全文搜索主要依赖其 FTS（Full-Text Search）模块 
-        SQLite 的 FTS 功能默认可能未启用，需在编译时添加相关参数
-        SQLite 内置分词器不支持中文，需使用扩展（如 ICU 或第三方分词器）
-            simple 是一个支持中文和拼音的 sqlite3 fts5 拓展 https://github.com/wangfenjin/simple
-    混合搜索（Hybrid Search）
-        向量搜索（semantic/Dense vector/ Embedding Search）
-        全文搜索（Sparse / BM25 / 倒排索引）
-        混合搜索是把不同类型的信息检索方法组合在一起，以提高搜索结果的相关性和覆盖面。
-        常见做法是把基于向量的语义搜索（semantic/embedding search）和
-        基于关键词或稀疏表示的传统检索（keyword / BM25 /倒排索引）结合起来。
-        这样既保留关键词检索在精确匹配与稀疏信号（比如专有名词、精确术语、元数据）的优势，
-        又利用向量搜索捕捉语义相似性、同义词和上下文信息的能力。
 客户端的动画？
     动画是如何实现的？
         js
