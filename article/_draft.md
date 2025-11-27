@@ -6679,6 +6679,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
         工程：设计满足社会需求、对人类有用的东西。如，修建桥梁。
         STEM是科学(Science)、技术(Technology)、工程(Engineering)和数学(Mathematics)四门学科的简称，强调多学科的交叉融合
             eSTEM 开头的小写e是 English 的意思
+            STEAM A（Arts 艺术）
     强电 和 弱电
         强电 和 电线 电路 供电 相关的
         弱电 和 电相关的，需要供电的设备，例如 电话 网络 监控
