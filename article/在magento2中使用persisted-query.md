@@ -22,17 +22,22 @@
 composer require scandipwa/persisted-query:^2.2
 ```
 
-2. 修改配置文件 `app/etc/env.php` ，在 `cache`中加上这一段
-```
-    'persisted-query' => [
-        'redis' => [
-            'host' => 'localhost',
-            'scheme' => 'tcp',
-            'port' => '6379',
-            'database' => '5'
-        ]
-    ],
-```
+2. 修改配置文件 `app/etc/env.php`
+    - 在 `cache`中加上这一段
+    ```
+        'persisted-query' => [
+            'redis' => [
+                'host' => 'localhost',
+                'scheme' => 'tcp',
+                'port' => '6379',
+                'database' => '5'
+            ]
+        ],
+    ```
+    - 在 cache_types 中加上这一段
+    ```
+    'persisted_query_response' => 1,
+    ```
 
 3. 修改配置文件 `app/etc/config.php`
 ```

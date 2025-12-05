@@ -19,7 +19,7 @@
 
 (function() {
     'use strict';
-    // 2025-11-05
+    // 2025-12-05
 
     // 按 xpath 删除节点
     function delByXpath(xpath) {
@@ -111,19 +111,37 @@
             codeArr[i].innerText = c.value;
         }
     }
-    // 令页面的其它内容也可以复制
-    document.querySelectorAll('*').forEach(item => {
-        item.oncopy = function(e) {
-            e.stopPropagation();
-        }
-    });
 
-    // 滚动条错误
-    document.addEventListener('scroll', function(e) {
-        // e.preventDefault(); // 阻止默认事件
-        e.stopPropagation(); // 阻止事件冒泡
-        return false;
+    let srcdoc = document.documentElement.innerHTML;
+    document.documentElement.innerHTML = ''; // 删除整个页面的内容
+    document.body.style.height = '100%';
+    document.body.style.margin = '0px';
+    var iframe = document.createElement("iframe"); // 使用 iframe 是为了使所有的 js 事件失效
+    Object.assign(iframe.style, {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100vw',
+        height: '100vh',
+        border: 'none'
     });
+    document.body.appendChild(iframe);
+    iframe.contentWindow.document.write(srcdoc);
+    iframe.contentWindow.focus();
+
+    // // 令页面的其它内容也可以复制
+    // document.querySelectorAll('*').forEach(item => {
+    //     item.oncopy = function(e) {
+    //         e.stopPropagation();
+    //     }
+    // });
+
+    // // 滚动条错误
+    // document.addEventListener('scroll', function(e) {
+    //     // e.preventDefault(); // 阻止默认事件
+    //     e.stopPropagation(); // 阻止事件冒泡
+    //     return false;
+    // });
 })();
 ```
 
