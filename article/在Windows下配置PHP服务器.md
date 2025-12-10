@@ -858,6 +858,10 @@ https 自签证书的生成，可以参考这篇文章 《密码学入门简明�
 <!--
 mailpit 的版本是 v1.20
 邮件里如何加上附件？
+
+其它类似的项目，这类项目被称为 邮件测试网关类应用
+https://github.com/maildev/maildev
+https://github.com/sj26/mailcatcher
 -->
 
 ### hosts

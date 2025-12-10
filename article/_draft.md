@@ -7127,4 +7127,27 @@ tar --xz -cf UrsaMinor-`date +%g%m%d%H%M`.tar.xz UrsaMinor
 
 学了那么多，感觉也都是 茴 字的四种写法
 
+感觉总是在低水平的重复
+
+不依赖 git 生成 articleList.json
+powershell 兼容 5.1
+
+powershell 输出时间字符串的版本
+(Get-ChildItem -Path . -Filter "article/*.md" -File | Where-Object { -not $_.Name.StartsWith("_") } | ForEach-Object { [PSCustomObject]@{ title = $_.Name; createTime = $_.CreationTime.ToString("yyyy-MM-dd HH:mm:ss"); updateTime = $_.LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss"); } }) | ConvertTo-Json | Out-File articleList2.json
+
+powershell 输出时间戳的版本
+(Get-ChildItem -Path . -Filter "article/*.md" -File | Where-Object { -not $_.Name.StartsWith("_") } | ForEach-Object { [PSCustomObject]@{ title = $_.Name; createTime = ([DateTimeOffset]$_.CreationTime).ToUnixTimeSeconds(); updateTime = ([DateTimeOffset]$_.LastWriteTime).ToUnixTimeSeconds(); } }) | ConvertTo-Json | Out-File articleList2.json
+
+bash 输出时间字符串的版本
+ls *.md 2>/dev/null | grep -v '^_' \
+| while read file; do echo "{\"title\":\"$file\",\"updateTime\":\"$(stat -c %y "$file" | cut -d. -f1)\",\"createTime\":\"$(stat -c %w "$file" | cut -d. -f1)\"}"; done \
+| printf "[$(awk 'NR > 1 { print prev "," } { prev = $0 } END { if (NR > 0) print prev }')]" \
+| python -m json.tool
+
+bash 输出时间戳的版本
+ls *.md 2>/dev/null | grep -v '^_' \
+| while read file; do echo "{\"title\":\"$file\",\"updateTime\":\"$(stat -c %Y "$file" | cut -d. -f1)\",\"createTime\":\"$(stat -c %W "$file" | cut -d. -f1)\"}"; done \
+| printf "[$(awk 'NR > 1 { print prev "," } { prev = $0 } END { if (NR > 0) print prev }')]" \
+| python -m json.tool
+
 ````

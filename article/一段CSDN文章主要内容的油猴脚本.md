@@ -85,6 +85,13 @@
             body.appendChild(articleTitle);
         }
         body.appendChild(a);
+
+        // 处理点击查看全文或关注查看全文的情况 展开全文
+        let b = document.evaluate('./div[@id="article_content"]', a).iterateNext();
+        if (b) {
+            b.style.height = 'auto';
+            b.style.height = 'overflow';
+        }
         console.log(body);
     }
 
