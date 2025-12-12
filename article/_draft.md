@@ -4829,7 +4829,8 @@ wordpress
         javadoc 是文档生成器，生成的是 html 文件
         javahelp 类似于 chm ，也是用 html ，最后生成的是一个 gui 程序
     documentation generator 文档生成器
-    这类东西在维基百科里被称为 帮助系统(help system)
+    这类东西在维基百科里被称为 帮助系统(help system) https://en.wikipedia.org/wiki/Online_help
+    HAT（Help Authoring Tool， 帮助撰写工具） https://en.wikipedia.org/wiki/Help_authoring_tool
 
 如何用 history 和 hash 做一个路由
     初始化
@@ -7052,7 +7053,7 @@ GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts ht
     Perforce
 https://download.libsodium.org/libsodium/releases/
 SSL双向认证
-http和cgi，如何编译安装php？
+http和cgi和fastcgi，如何编译安装php？
 
 python + openssl
 c + openssl
