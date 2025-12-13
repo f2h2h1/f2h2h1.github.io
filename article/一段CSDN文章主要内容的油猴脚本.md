@@ -48,6 +48,21 @@
         blockquote 行内code 表格 也需要修改样式
     */
 
+    // 获取作者信息
+    let uid = document.getElementById('uid');
+    let authorAtag = null;
+    if (uid) {
+        let authorName = uid.getAttribute('title');
+        let authorHref = uid.getAttribute('href');
+        authorAtag = document.createElement('a');
+        authorAtag.innerText = authorName;
+        authorAtag.setAttribute('href', authorHref);
+        authorAtag.style.cssText = `
+            color: rgb(0, 0, 238);
+            text-decoration-line: underline;
+        `;
+    }
+
     // 删除文章详情的样式
     let articleTitle = document.evaluate('//descendant::div[contains(@class,"article-header")]', document).iterateNext();
     if (articleTitle != null) {
@@ -65,6 +80,10 @@
         let articleTag = document.evaluate('.//descendant::div[contains(@class,"article-info-box")]/div[contains(@class,"blog-tags-box")]', articleTitle).iterateNext();
         if (articleTag != null) {
             articleTag.innerHTML = "<p>"+articleTag.innerText+"</p>";
+        }
+
+        if (authorAtag) {
+            articleTitle.appendChild(authorAtag);
         }
     }
 
@@ -136,6 +155,9 @@
     iframe.contentWindow.document.write(srcdoc);
     iframe.contentWindow.focus();
 
+    if (jQuery) {
+        jQuery(window).off('resize');
+    }
     // // 令页面的其它内容也可以复制
     // document.querySelectorAll('*').forEach(item => {
     //     item.oncopy = function(e) {
@@ -145,6 +167,12 @@
 
     // // 滚动条错误
     // document.addEventListener('scroll', function(e) {
+    //     // e.preventDefault(); // 阻止默认事件
+    //     e.stopPropagation(); // 阻止事件冒泡
+    //     return false;
+    // });
+    // document.addEventListener('resize', function(e) {
+    //     console.log(e)
     //     // e.preventDefault(); // 阻止默认事件
     //     e.stopPropagation(); // 阻止事件冒泡
     //     return false;
