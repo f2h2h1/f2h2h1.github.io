@@ -4547,275 +4547,6 @@ linux 应用的一般启动套路
             zip -r wp-plugin.zip wp-plugin
             7z a -tzip wp-plugin.zip wp-plugin
             7z x wp-plugin.zip
-wordpress
-    word press 文字出版社
-    word n. 文字
-    press n. 出版社
-    前置依赖
-        php 和 mysql
-    安装和配置
-        直接下载源码就可以啦
-        要先创建库，才能运行安装程序
-    wp-cli
-        下载和安装
-            从 github 下载 wp-cli.phar ， 这是文档推荐的，下载到 wp的根目录里
-                curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-                像这样使用 php wp-cli.phar --info
-                然后可以搞一个别名 alias wp="php wp-cli.phar"
-            通过 composer 安装
-                通过命令行 composer require wp-cli/wp-cli-bundle
-                通过配置文件，然后 composer install
-                {
-                    "require": {
-                        "wp-cli/wp-cli-bundle": "*"
-                    }
-                }
-                像这样使用
-                    composer exec -v -- wp --info
-                    ./vendor/bin/wp info
-                别名
-                    alias wp="composer exec -v -- wp "
-                    alias wp="./vendor/bin/wp "
-            wp-cli 还可以通过 docker 安装
-        一般命令
-            查看 wp-cli 信息
-                wp --info
-            查看 wordpress 信息
-                wp info
-            查看帮助 wp help
-            创建 wp-config.php 文件
-                wp config create --dbname=wp --dbuser=root --dbpass=1234 --dbhost='localhost' --dbprefix='wp_'
-                --dbprefix 数据库表名前缀 可选项
-            下载 WordPress 文件
-                wp core download --locale=zh_CN --version=6.5
-                --locale 语言 可选项 默认是 en_US
-                --version 版本 可选项 默认是最新版
-                --path 安装目录，默认是当前目录
-            安装 wordpress
-                wp core install --url="http://example.com" --title="Blog Title" --admin_user="adminuser" --admin_password="password" --admin_email="email@domain.com"
-            运行 web server ，这个需要先创建 wp-config.php 文件
-                wp server --host=127.0.0.1 --port=80
-                PHP_CLI_SERVER_WORKERS="10" 这个环境变量也可以用在这里
-                PHP_CLI_SERVER_WORKERS="10" wp server --host=127.0.0.1 --port=80
-            忘记密码后用来修改密码的， 1 是userid
-                php wp-cli.phar user update 1 --user_pass=password
-            wp option 修改 wp 的配置，这是对应 wp_options 表的
-                wp option list
-                wp option get {key}
-                wp option add {key} {value}
-                wp option update {key} {value}
-                wp option delete {key}
-            如果以 root 用户运行需要加上 --allow-root 参数，例如这样
-                wp --allow-root option list
-        如果是使用 composer exec 来运行 wp server 则需要设置 compoer 的 timeout ， composer 的 timeout 默认是 300 秒
-            通过配置文件设置
-                {
-                    "config": {
-                        "process-timeout": 0
-                    }
-                }
-            通过环境变量设置
-            export COMPOSER_PROCESS_TIMEOUT=0
-            COMPOSER_PROCESS_TIMEOUT=0 wp server --host=127.0.0.1 --port=80
-    WooCommerce 安装和配置
-        示例数据
-            商品数据
-        支付方式
-    页面构建器（page builder）
-        Gutenberg
-        Elementor
-        WPBakery Page Builder
-        Beaver
-    其它常用的插件
-        wp-cron
-    静态化
-        伪静态
-        缓存静态
-            WP Super Cache
-        全站静态
-            WP2Static 这个停更了
-            Simply Static
-            自己用无头浏览器和爬虫实现一个？
-    dns解释线路分组
-    假设在不安装其它主题的情况下，如何合并压缩 js css 文件？
-        全站静态化后，这些 js css 文件要怎么处理？
-    如何开发一个插件？
-        wp 没有composer
-        wp 核心没有面向对象
-        WordPress是由三大部分组成的，
-            即WordPress核心、主题和插件
-            主题：决定了网站的外观、设计、界面，基本上理解为访客所看到的网站的样子；
-            插件：扩展WordPress核心的各种功能，达到自己网站的功能定制。
-            WordPress开发，指的是主题和插件的定制开发。
-                繁体中文里会把 插件翻译成外挂， 主题描述城外观
-        插件 基本上就是 函数 和 钩子(Hook)
-            钩子又分为两类 动作(Actions)和过滤器(Filters)
-            do_action apply_filter
-            add_action add_filter
-            remove_action remove_filter
-            动作不需要返回值，动作是有副作用的，动作可以操作数据库和直接输出
-            过滤器需要返回值，过滤器不应该有副作用
-            简单来说，Action 用来添加功能，Filter 用来修改数据
-            其实两种 Hook 的运作方式几乎一样，只差在增加 Action Hook 函式不需回传值
-            例子
-                add_action('example_action', function(){
-                    echo 'example';
-                });
-                add_filter('example_filter', function($msg){
-                    return $msg;
-                });
-                do_action('example_action');
-                echo apply_filters('example_filter', 'example');
-        最简单的插件例子，只需要一个文件 wp-content/plugins/example.php
-        一般的例子，一个文件夹 wp-content/plugins/example/
-        创建插件时需要的 3 个基础钩子是  register_activation_hook()，register_deactivation_hook()  和 register_uninstall_hook()。
-            register_activation_hook 我们激活插件时会运行，我们可以使用这个钩子挂载一个函数来设置我们的插件，例如在数据表中添加一些默认设置。
-            register_deactivation_hook 在我们禁用插件时运行，我们可以挂载一个清理插件数据的函数来清理一些临时数据。
-            register_uninstall_hook 在我们卸载插件时运行，我们可以挂载一个清理插件所有数据的函数来清理数据库中不再需要的插件数据。
-        插件的配置保存在哪里？
-    如何开发一个主题？
-    wp 有多少个入口文件？
-    wp 的运行原理？
-    如何调试 wp ？
-    如何加速 wp ？
-    在 wp 中如何使用 composer
-        主题 和 插件 是可以通过 composer 安装的
-        主题 在 composer 中的 type 是 wordpress-theme
-        插件 在 composer 中的 type 是 wordpress-plugin 或 wordpress-muplugin ，通常都是 wordpress-plugin
-        只要正确的修改 composer 的配置，就能把插件安装到对应的目录
-        "extra": {
-            "installer-paths": {
-                "wp-content/plugins/{$name}/": [
-                    "type:wordpress-plugin"
-                ]
-                "wp-content/themes/{$name}/": [
-                    "type:wordpress-theme"
-                ]
-            }
-        }
-    能用于 wp 的 dockerfile 和 docker-compose.yml ？
-    WP_HOME 和 WP_SITEURL 有什么区别
-        WP_HOME
-            是设置里的 wordpress address
-            是 wp_options 表里的 home
-            指的是 wordpress 的地址
-        WP_SITEURL
-            是设置里的 site address
-            是 wp_options 表里的 siteurl
-            指的是网站地址
-        通常这两个值是一样的
-        不一样的情况，例子
-            网站根目录下有两个文件夹
-                wordpress phpmyadmin
-            WP_SITEURL 填的是 网站域名
-            WP_HOME 填的就是 网站域名/wordpress
-    修改wordpress默认后台登录地址
-        wp-login.php
-    如何给 woo 增加支付方式 ？
-    wordpress 如何实现 国际化/多语言 ？
-        WordPress 是使用 gettext 实现翻译的，主要使用mo文件
-        WordPress 核心的翻译文件通常保存在
-            wp-content/languages/
-        插件的翻译文件通常位于插件目录下的 languages 文件夹中。
-            例如：wp-content/plugins/your-plugin/languages/
-        主题的翻译文件通常位于主题目录下的 languages 文件夹中。
-            例如：wp-content/themes/your-theme/languages/
-    wordpress 如何实现 群站 ？
-    如何把 wp 建设成 询盘型的外贸企业站 ？
-    如何把 wp 建设成 B2C外贸卖货网站 ？
-    如何发货
-        直接用这几个快递就可以了
-            ups FedEx ems
-        还要考虑 包装 和 打包 和 在包裹外面贴一个发货标签
-        但发到海外可能需要海关申报这一类的？
-            出境的海关 和 入境的海关
-            海关申报这类需要找 申报代理
-            一般的企业是没有进出口的资质的（这个门槛比较高，好像需要注册资本300万）
-            一些快递公司也可以代理申报
-                递四方 云途 燕文
-        什么是海外仓？
-            海外仓（Overseas Warehouse）指企业在目标市场国家建立的仓储中心，
-            通过本地化存储、快速配送的模式，为跨境电商卖家提供仓储、一件代发、退货处理等全链路服务。
-            卖家自营海外仓
-            平台海外仓（如亚马逊FBA）
-            物流商运营海外仓
-        直接当普通的个人包裹寄到到外国应该也可以吧
-    如何收款
-        平台电商都有各自的收款渠道
-        独立站如何收款
-            stripe
-            paypal
-            注册需要的门槛？
-    电商平台
-        墙内
-            淘宝/天猫/1688
-            京东
-            拼多多
-        墙外
-            速卖通/Lazada/阿里巴巴国际站
-            亚马逊
-            ebay
-            shopee
-            shopify
-    在 wp 中如何跟踪物流信息？
-        这个插件 17track ？
-    遇到退款退货时要怎么处理？
-    遇到纠纷时要怎么处理？
-    WordPress如何使用SQLite？
-        分两种情况，
-        一是全新的WordPress站点，
-        二是已经有数据的WordPress站点。
-        https://make.wordpress.org/core/2022/09/12/lets-make-wordpress-officially-support-sqlite/
-        https://wpmore.cn/wordpress-%e5%8f%91%e5%b8%83%e4%ba%86%e7%8b%ac%e7%ab%8b%e7%9a%84-sqlite-%e6%8f%92%e4%bb%b6.html
-        https://github.com/WordPress/sqlite-database-integration
-        https://github.com/soulteary/docker-sqlite-wordpress
-        既然可以使用 sqlite ，那么使用 PostgreSQL 也是可以的吧
-            https://wordpress.org/plugins/sqlite-database-integration
-            https://wordpress.org/support/topic/configuring-wordpress-with-postgresql/
-            https://github.com/PostgreSQL-For-Wordpress/postgresql-for-wordpress
-    如何寻找前1000个用户 https://github.com/naxiaoduo/1000UserGuide
-    wordpress 和 Automattic 和 wpengine 之间的关系
-        wordpress 是开源原软件，由 wordpress基金会管理
-            https://wordpress.org/
-            https://wordpressfoundation.org/
-        Automattic是一家网页程序设计公司，成立于2005年8月
-            主要的产品有 wordpress.com 和 tumblr
-            Automattic会定期向wordpress贡献代码
-            WordPress.com 的免费版不能装插件
-        wpengine 类似 WordPress.com 也提供 wordpress 的托管服务
-    可以在浏览器中运行的 wp
-        https://github.com/WordPress/wordpress-playground
-        WordPress Playground是一个实验性的浏览器WordPress,由于WebAssembly,它可以在没有PHP服务器的情况下运行。
-    电商网站
-        客户 customer
-        产品 product
-        购物车 shopping cart
-        地址 address
-        支付 payment
-        订单 order
-        送货 shipping
-        发票 invoice
-        库存 inventory
-        优惠券 coupon
-        营销 marketing
-        分销
-        税 tax
-        商家 vendor
-        员工 staff
-        b2b b2c b2b2c c2c S2B2C中，S即是大供货商（Supply chain），B指渠道商，C为顾客
-    php的开源电商
-        WordPress + WooCommerce
-        Drupal Commerce
-        Magento
-        OpenCart
-        PrestaShop
-        OScommerce
-        ZenCart
-        Shopware
-    php的cms
-        Drupal 2000
-        WordPress 2003
-        Joomla 2005
 接入 alipay+ 的过程
     注册和设置
     支付
@@ -5675,6 +5406,7 @@ nas
         https://mika-cn.github.io/maoxian-web-clipper/index-zh-CN.html
         https://github.com/webclipper/web-clipper
         https://github.com/deathau/markdownload
+        https://github.com/snsogbl/clip-save
     阅读模式
         https://github.com/mozilla/readability 除了这个之外，其它都是 python
         https://github.com/codelucas/newspaper
@@ -5682,6 +5414,292 @@ nas
         https://github.com/buriy/python-readability
     解释 html
         BeautifulSoup https://www.crummy.com/software/BeautifulSoup/
+    静态博客
+        Jekyll
+        Hugo
+        Gatsby
+        Hexo
+        Eleventy
+        MkDocs
+        Docusaurus
+        VuePress
+    博客通常需要的功能
+        页面（友链，关于，首页，文章列表） 文章  菜单/导航 分类/标签 页脚 seo/sitemap 评论 搜索
+        用 powershell5.1 或 bash/awk/sed/grep 做一个 静态博客？
+            主题 模板 页面 文章 小部件
+            运行依赖？
+                语言的运行环境
+                单独的二进制文件
+wordpress
+    word press 文字出版社
+    word n. 文字
+    press n. 出版社
+    前置依赖
+        php 和 mysql
+    安装和配置
+        直接下载源码就可以啦
+        要先创建库，才能运行安装程序
+    wp-cli
+        下载和安装
+            从 github 下载 wp-cli.phar ， 这是文档推荐的，下载到 wp的根目录里
+                curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+                像这样使用 php wp-cli.phar --info
+                然后可以搞一个别名 alias wp="php wp-cli.phar"
+            通过 composer 安装
+                通过命令行 composer require wp-cli/wp-cli-bundle
+                通过配置文件，然后 composer install
+                {
+                    "require": {
+                        "wp-cli/wp-cli-bundle": "*"
+                    }
+                }
+                像这样使用
+                    composer exec -v -- wp --info
+                    ./vendor/bin/wp info
+                别名
+                    alias wp="composer exec -v -- wp "
+                    alias wp="./vendor/bin/wp "
+            wp-cli 还可以通过 docker 安装
+        一般命令
+            查看 wp-cli 信息
+                wp --info
+            查看 wordpress 信息
+                wp info
+            查看帮助 wp help
+            创建 wp-config.php 文件
+                wp config create --dbname=wp --dbuser=root --dbpass=1234 --dbhost='localhost' --dbprefix='wp_'
+                --dbprefix 数据库表名前缀 可选项
+            下载 WordPress 文件
+                wp core download --locale=zh_CN --version=6.5
+                --locale 语言 可选项 默认是 en_US
+                --version 版本 可选项 默认是最新版
+                --path 安装目录，默认是当前目录
+            安装 wordpress
+                wp core install --url="http://example.com" --title="Blog Title" --admin_user="adminuser" --admin_password="password" --admin_email="email@domain.com"
+            运行 web server ，这个需要先创建 wp-config.php 文件
+                wp server --host=127.0.0.1 --port=80
+                PHP_CLI_SERVER_WORKERS="10" 这个环境变量也可以用在这里
+                PHP_CLI_SERVER_WORKERS="10" wp server --host=127.0.0.1 --port=80
+            忘记密码后用来修改密码的， 1 是userid
+                php wp-cli.phar user update 1 --user_pass=password
+            wp option 修改 wp 的配置，这是对应 wp_options 表的
+                wp option list
+                wp option get {key}
+                wp option add {key} {value}
+                wp option update {key} {value}
+                wp option delete {key}
+            如果以 root 用户运行需要加上 --allow-root 参数，例如这样
+                wp --allow-root option list
+        如果是使用 composer exec 来运行 wp server 则需要设置 compoer 的 timeout ， composer 的 timeout 默认是 300 秒
+            通过配置文件设置
+                {
+                    "config": {
+                        "process-timeout": 0
+                    }
+                }
+            通过环境变量设置
+            export COMPOSER_PROCESS_TIMEOUT=0
+            COMPOSER_PROCESS_TIMEOUT=0 wp server --host=127.0.0.1 --port=80
+    WooCommerce 安装和配置
+        示例数据
+            商品数据
+        支付方式
+    页面构建器（page builder）
+        Gutenberg
+        Elementor
+        WPBakery Page Builder
+        Beaver
+    其它常用的插件
+        wp-cron
+    静态化
+        伪静态
+        缓存静态
+            WP Super Cache
+        全站静态
+            WP2Static 这个停更了
+            Simply Static
+            自己用无头浏览器和爬虫实现一个？
+            根据 wp的数据实现一个 ssg ？
+    dns解释线路分组
+    假设在不安装其它主题的情况下，如何合并压缩 js css 文件？
+        全站静态化后，这些 js css 文件要怎么处理？
+    如何开发一个插件？
+        wp 没有composer
+        wp 核心没有面向对象
+        WordPress是由三大部分组成的，
+            即WordPress核心、主题和插件
+            主题：决定了网站的外观、设计、界面，基本上理解为访客所看到的网站的样子；
+            插件：扩展WordPress核心的各种功能，达到自己网站的功能定制。
+            WordPress开发，指的是主题和插件的定制开发。
+                繁体中文里会把 插件翻译成外挂， 主题描述城外观
+        插件 基本上就是 函数 和 钩子(Hook)
+            钩子又分为两类 动作(Actions)和过滤器(Filters)
+            do_action apply_filter
+            add_action add_filter
+            remove_action remove_filter
+            动作不需要返回值，动作是有副作用的，动作可以操作数据库和直接输出
+            过滤器需要返回值，过滤器不应该有副作用
+            简单来说，Action 用来添加功能，Filter 用来修改数据
+            其实两种 Hook 的运作方式几乎一样，只差在增加 Action Hook 函式不需回传值
+            例子
+                add_action('example_action', function(){
+                    echo 'example';
+                });
+                add_filter('example_filter', function($msg){
+                    return $msg;
+                });
+                do_action('example_action');
+                echo apply_filters('example_filter', 'example');
+        最简单的插件例子，只需要一个文件 wp-content/plugins/example.php
+        一般的例子，一个文件夹 wp-content/plugins/example/
+        创建插件时需要的 3 个基础钩子是  register_activation_hook()，register_deactivation_hook()  和 register_uninstall_hook()。
+            register_activation_hook 我们激活插件时会运行，我们可以使用这个钩子挂载一个函数来设置我们的插件，例如在数据表中添加一些默认设置。
+            register_deactivation_hook 在我们禁用插件时运行，我们可以挂载一个清理插件数据的函数来清理一些临时数据。
+            register_uninstall_hook 在我们卸载插件时运行，我们可以挂载一个清理插件所有数据的函数来清理数据库中不再需要的插件数据。
+        插件的配置保存在哪里？
+    如何开发一个主题？
+    wp 有多少个入口文件？
+    wp 的运行原理？
+    如何调试 wp ？
+    如何加速 wp ？
+    在 wp 中如何使用 composer
+        主题 和 插件 是可以通过 composer 安装的
+        主题 在 composer 中的 type 是 wordpress-theme
+        插件 在 composer 中的 type 是 wordpress-plugin 或 wordpress-muplugin ，通常都是 wordpress-plugin
+        只要正确的修改 composer 的配置，就能把插件安装到对应的目录
+        "extra": {
+            "installer-paths": {
+                "wp-content/plugins/{$name}/": [
+                    "type:wordpress-plugin"
+                ]
+                "wp-content/themes/{$name}/": [
+                    "type:wordpress-theme"
+                ]
+            }
+        }
+    能用于 wp 的 dockerfile 和 docker-compose.yml ？
+    WP_HOME 和 WP_SITEURL 有什么区别
+        WP_HOME
+            是设置里的 wordpress address
+            是 wp_options 表里的 home
+            指的是 wordpress 的地址
+        WP_SITEURL
+            是设置里的 site address
+            是 wp_options 表里的 siteurl
+            指的是网站地址
+        通常这两个值是一样的
+        不一样的情况，例子
+            网站根目录下有两个文件夹
+                wordpress phpmyadmin
+            WP_SITEURL 填的是 网站域名
+            WP_HOME 填的就是 网站域名/wordpress
+    修改wordpress默认后台登录地址
+        wp-login.php
+    如何给 woo 增加支付方式 ？
+    wordpress 如何实现 国际化/多语言 ？
+        WordPress 是使用 gettext 实现翻译的，主要使用mo文件
+        WordPress 核心的翻译文件通常保存在
+            wp-content/languages/
+        插件的翻译文件通常位于插件目录下的 languages 文件夹中。
+            例如：wp-content/plugins/your-plugin/languages/
+        主题的翻译文件通常位于主题目录下的 languages 文件夹中。
+            例如：wp-content/themes/your-theme/languages/
+    wordpress 如何实现 群站 ？
+    如何把 wp 建设成 询盘型的外贸企业站 ？
+    如何把 wp 建设成 B2C外贸卖货网站 ？
+    如何发货
+        直接用这几个快递就可以了
+            ups FedEx ems
+        还要考虑 包装 和 打包 和 在包裹外面贴一个发货标签
+        但发到海外可能需要海关申报这一类的？
+            出境的海关 和 入境的海关
+            海关申报这类需要找 申报代理
+            一般的企业是没有进出口的资质的（这个门槛比较高，好像需要注册资本300万）
+            一些快递公司也可以代理申报
+                递四方 云途 燕文
+        什么是海外仓？
+            海外仓（Overseas Warehouse）指企业在目标市场国家建立的仓储中心，
+            通过本地化存储、快速配送的模式，为跨境电商卖家提供仓储、一件代发、退货处理等全链路服务。
+            卖家自营海外仓
+            平台海外仓（如亚马逊FBA）
+            物流商运营海外仓
+        直接当普通的个人包裹寄到到外国应该也可以吧
+    如何收款
+        平台电商都有各自的收款渠道
+        独立站如何收款
+            stripe
+            paypal
+            注册需要的门槛？
+    电商平台
+        墙内
+            淘宝/天猫/1688
+            京东
+            拼多多
+        墙外
+            速卖通/Lazada/阿里巴巴国际站
+            亚马逊
+            ebay
+            shopee
+            shopify
+    在 wp 中如何跟踪物流信息？
+        这个插件 17track ？
+    遇到退款退货时要怎么处理？
+    遇到纠纷时要怎么处理？
+    WordPress如何使用SQLite？
+        分两种情况，
+        一是全新的WordPress站点，
+        二是已经有数据的WordPress站点。
+        https://make.wordpress.org/core/2022/09/12/lets-make-wordpress-officially-support-sqlite/
+        https://wpmore.cn/wordpress-%e5%8f%91%e5%b8%83%e4%ba%86%e7%8b%ac%e7%ab%8b%e7%9a%84-sqlite-%e6%8f%92%e4%bb%b6.html
+        https://github.com/WordPress/sqlite-database-integration
+        https://github.com/soulteary/docker-sqlite-wordpress
+        既然可以使用 sqlite ，那么使用 PostgreSQL 也是可以的吧
+            https://wordpress.org/plugins/sqlite-database-integration
+            https://wordpress.org/support/topic/configuring-wordpress-with-postgresql/
+            https://github.com/PostgreSQL-For-Wordpress/postgresql-for-wordpress
+    如何寻找前1000个用户 https://github.com/naxiaoduo/1000UserGuide
+    wordpress 和 Automattic 和 wpengine 之间的关系
+        wordpress 是开源原软件，由 wordpress基金会管理
+            https://wordpress.org/
+            https://wordpressfoundation.org/
+        Automattic是一家网页程序设计公司，成立于2005年8月
+            主要的产品有 wordpress.com 和 tumblr
+            Automattic会定期向wordpress贡献代码
+            WordPress.com 的免费版不能装插件
+        wpengine 类似 WordPress.com 也提供 wordpress 的托管服务
+    可以在浏览器中运行的 wp
+        https://github.com/WordPress/wordpress-playground
+        WordPress Playground是一个实验性的浏览器WordPress,由于WebAssembly,它可以在没有PHP服务器的情况下运行。
+    电商网站
+        客户 customer
+        产品 product
+        购物车 shopping cart
+        地址 address
+        支付 payment
+        订单 order
+        送货 shipping
+        发票 invoice
+        库存 inventory
+        优惠券 coupon
+        营销 marketing
+        分销
+        税 tax
+        商家 vendor
+        员工 staff
+        b2b b2c b2b2c c2c S2B2C中，S即是大供货商（Supply chain），B指渠道商，C为顾客
+    php的开源电商
+        WordPress + WooCommerce
+        Drupal Commerce
+        Magento
+        OpenCart
+        PrestaShop
+        OScommerce
+        ZenCart
+        Shopware
+    php的cms
+        Drupal 2000
+        WordPress 2003
+        Joomla 2005
 汽车，飞机和模拟器
     如何驾驶汽车
         汽车的分类
