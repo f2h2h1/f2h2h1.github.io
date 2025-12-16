@@ -91,8 +91,35 @@ php-cgi 没有平滑重启，修改 php.ini 后要重启 php-cgi 。
 <!--
 apache 的 模块
 mod_fcgid
+    用于没有 fastcgi 管理进程的情况
+    例如
+        PHP_FCGI_CHILDREN=0 php-cgi
+        PHP_FCGI_CHILDREN保持默认值也是可以运行的，只是会浪费一点内存，毕竟会多出一个管理进程
+        FcgidWrapper 指令包装 
+        环境变量也可以使用 FcgidInitialEnv 设置，但它们将应用于所有应用程序
+        PHP 包装脚本 - /usr/local/bin/php-wrapper
+
+        #!/bin/sh
+        # 设置所需的 PHP_FCGI_* 环境变量。
+        # 示例
+        # PHP FastCGI 进程默认在处理 500 个请求后退出。
+        PHP_FCGI_MAX_REQUESTS=10000
+        export PHP_FCGI_MAX_REQUESTS
+        PHP_FCGI_CHILDREN=0
+        export PHP_FCGI_CHILDREN
+
+        # 用您启用了 FastCGI 的 PHP 可执行文件的路径替换
+        exec /usr/local/bin/php-cgi
 mod_fastcgi
+    可以简单但不严谨地理解为旧版的 mod_fcgid
 mod_proxy_fcgi
+    用有 fastcgi 管理进程的情况
+    例如
+        fpm
+        PHP_FCGI_CHILDREN=1 php-cgi
+        spawn-fcgi + php-cgi
+        fcgistarter + php-cgi
+            apache 2.4 之后就有的 fcgi 工具
 mod_cgid
 mod_cgi
 -->
