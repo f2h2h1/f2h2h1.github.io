@@ -111,6 +111,9 @@ mod_fcgid
         # 用您启用了 FastCGI 的 PHP 可执行文件的路径替换
         exec /usr/local/bin/php-cgi
 mod_fastcgi
+    mod_fastcgi 是第三方模块，也是最先出现支持 fastcgi 的模块
+    mod_fastcgi 已经很久没更新了
+    mod_fastcgi 可以支持 没有 fastcgi 管理进程的情况 也支持 有 fastcgi 管理进程的情况
     可以简单但不严谨地理解为旧版的 mod_fcgid
 mod_proxy_fcgi
     用有 fastcgi 管理进程的情况
