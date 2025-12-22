@@ -114,7 +114,10 @@ mod_fastcgi
     mod_fastcgi 是第三方模块，也是最先出现支持 fastcgi 的模块
     mod_fastcgi 已经很久没更新了
     mod_fastcgi 可以支持 没有 fastcgi 管理进程的情况 也支持 有 fastcgi 管理进程的情况
+    https://github.com/FastCGI-Archives/mod_fastcgi
+    https://fastcgi-archives.github.io/mod_fastcgi.html
     可以简单但不严谨地理解为旧版的 mod_fcgid
+    这个模块是来自 Open Market
 mod_proxy_fcgi
     用有 fastcgi 管理进程的情况
     例如

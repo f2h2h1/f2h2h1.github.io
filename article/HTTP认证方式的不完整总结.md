@@ -536,4 +536,11 @@ Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
 
 使用 Digest 认证时的请求头例子
 Authorization: Digest username="username", realm="Web Programming Secret Pages", nonce="5LtCuQxGBgA=b29baad4a44c5cf3d94d3accb4ccb5c31ce53615", uri="/", algorithm=MD5, response="4a82e31d1461bd6d9b78bc09cadc3844", qop=auth, nc=00000004, cnonce="990b2fb7edc397cc"
+
+
+实践一次 双向 TLS 认证
+怎样生成客户端证书
+curl 命令要怎么写
+浏览器要怎么设置
+
 -->
