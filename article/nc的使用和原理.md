@@ -523,4 +523,20 @@ done
 sys_exit
 
 ```
+
+socat 的端口转发
+socat tcp-listen:<port>,reuseaddr,fork \
+ TCP:<ip>:<port>
+
+socat 启动一个tls服务，这里会先处理好 tls再转发数据，配合 http 服务，可以实现 https ，应该可以作为 Stunnel 的平替
+socat OPENSSL-LISTEN:443,reuseaddr,cert=server.pem,key=privatekey.key,cafile=fullchain.cer,verify=0,openssl-min-proto-version=TLS1.2,fork \
+    TCP:127.0.0.1:80
+
+verify=0 是必须的
+cert 是 私钥+fullchain.cer
+cat privatekey.key fullchain.cer > server.pem
+
+从文档里看， socat 还支持 SOCKS5 和 http proxy
+http://www.dest-unreach.org/socat/doc/socat.html
+
 -->
