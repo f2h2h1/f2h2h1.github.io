@@ -319,7 +319,12 @@
         ]
     ],
     ```
-- 在 php 的配置文件启用命令行的 opcace `opcache.enable_cli=1`
+- 在 php 的配置文件启用命令行的 opcache `opcache.enable_cli=1`
+- 启用 jit 也能提升速度，但启用 jit 需要禁用 xdebug ，启用 jit 需要启用 opcache
+    ```
+    opcache.jit=1255
+    opcache.jit_buffer_size=128M
+    ```
 - 使用开发者模式可以不用编译，但运行速度会变得更慢
 - 关掉 xdebug 后速度也有提升
 - 运行这句 composer 命令 `composer dumpautoload -o` 后速度也有提升

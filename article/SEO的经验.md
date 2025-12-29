@@ -280,6 +280,16 @@ https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API
 针对社交平台的优化会被称为 SMO (Social Media Optimization 社交媒体优化)
 
 <!--
+
+启用 ipv6
+启用 http2 或 http3
+域名需要有 DNSSEC
+域名的tls证书等级也会有影响？
+
+给站点加上
+llms.txt llms-full.txt
+OPML https://blog.mythsman.com/opml/
+
 微数据
     https://developer.mozilla.org/en-US/docs/Web/HTML/Microdata
     https://schema.org/

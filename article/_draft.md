@@ -5903,7 +5903,106 @@ wordpress
                 例如 出版社 电台 电视台 自媒体
     媒质 又是 什么？
 广播和电视
-
+    广播 broadcast
+    电视 television
+        tele 远程的
+        vision 视力
+    有影响力的电视台
+        bbc
+        cctv/cgtn
+        日本
+            富士、朝日、TBS、TV TOKYO、NTV
+        美国
+            cnn、Fox News
+    OTT （Over The Top ）
+    OTA（Over The Air）
+    dvb（Digital Video Broadcast）
+    IPTV（Internet Protocol Television）
+        dvb 来自广电 同轴电缆
+        iptv 来自电信运营商 专用的网线
+        ott tv 来自互联网公司 普通的网线
+    分辨率
+        sd hd fhd uhd 这类描述来自电视行业
+        1080p 2k 4k 8k 这类描述来自电影行业
+        所以其实两边不是严格对应的
+        电脑的显示器好像又有一套标准
+        qvga hvga svga wvga fwvga WSVGA XGA WXGA SXGA UXGA WUXGA
+        4320p (8k)：7680x4320
+        2160p (4K)：3840x2160
+        1440p (2k)：2560x1440
+        1080p（高清）：1920x1080
+        720p（高清）：1280x720
+        480p（标清）：854x480
+        360p（标清）：640x360
+        240p（标清）：426x240
+        144p：256x144
+    帧率（fps， frame per second 帧每秒 每秒显示帧数）
+        24
+        25
+        30
+        48
+        50
+        60
+        75
+        120
+        240
+    码率（DataRate）
+        单位是kbps（千位每秒）
+        多媒体行业在指音频或者视频在单位时间内的数据传输率
+    电视的制式
+        PAL
+        NTSC
+        SECAM
+    视频格式
+        容器
+            mp4 flv avi mkv
+        视频编码
+        音频编码
+        字幕
+        dvd
+            文件系统
+                通用光盘格式（Universal Disk Format，简称UDF）
+                ISO 9660
+            目录
+                AUDIO_TS 一般为空
+                VIDEO_TS (Video Title Set)
+                    VOB（视频对象 Video Object）
+                        包含音频、视频和字幕
+                    IFO（信息文件 Information）
+                        导航信息，指示播放器如何查找和播放内容
+                    BUP（备份文件 Backup）
+                        内容和 IFO 一样，是 IFO 的备份
+                    一个 vob文件对应一个ifo文件，对应一个bup文件
+            为什么dvd中会有 游戏？
+            有没有dvd模拟器？
+            什么是dat文件？
+    显示器和电视的区别
+        面板材料
+        输入延迟
+        音响
+    OSD （on-screen display 屏幕菜单式调节方式）
+    还有 ppi dpi lpi
+    刷新率（refresh rate）
+        单位是 Hz
+        刷新率 是显示器的参数
+        帧率 是视频的参数
+        60Hz 就是每秒刷新60次
+        60fps 就是每秒显示60帧图像
+    接收
+        视像头 麦克风
+    存储
+        视频格式 音频格式
+    传输
+        接口
+            HDMI VGA DVI DP RF端子
+        模拟信号 数字信号
+        介质
+            无线电 有线（电话线 同轴电缆 网线 光纤）
+    显示
+        显示器 音响
+    各种标准 和 组织
+    隔行扫描 逐行扫描 垂直同步/防撕裂技术 hdr
+    DLSS FSR
 从ed到perl还有正则表达式
     qed ed ex vi vim grep sed awk perl
     qed
@@ -5989,6 +6088,7 @@ wordpress
     文字处理器通常是处理富文本 rich text
     除了 vi/vim 和 emacs 的编辑器
         Neovim
+        SpaceVim
         nano
         Pico (Pine composer)
     在浏览器中的富文本编辑器
