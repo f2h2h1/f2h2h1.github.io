@@ -1800,11 +1800,22 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
                 Angelfish 用于移动设备的
                 新版的 Konqueror 也是用 QtWebEngine 了
                 看来不止 windows 即使是 linux 也没有几个浏览器用 webkit 了
+                    playwright webkit 内核浏览器
+                    python -m playwright install --with-deps webkit
+                    留意命令的输出，可以找到安装路径
+                    Playwright downloads Chromium, WebKit and Firefox browsers into the OS-specific cache folders:
+                        %USERPROFILE%\AppData\Local\ms-playwright on Windows
+                        ~/Library/Caches/ms-playwright on macOS
+                        ~/.cache/ms-playwright on Linux
+                    这个就是浏览器的可执行文件 Playwright.exe
+                    估计是 playwright 团队单独维护的
         gtk 也有类似的项目 webkitgtk
             也是用 Webkit
             GNOME Web
         CEF
             Chromium Embedded Framework
+        WPE
+            WebKit port for embedded platforms
     CCT 和 TWA
         Chrome Custom Tabs (CCT 自定义标签页)
             CCT 共享 Chrome 主进程：CCT 与用户设备上已安装的 Chrome 浏览器共享同一个渲染进程
@@ -1816,7 +1827,12 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
     旧时代的插件
         ActiveX
         Silverlight
-        Flash
+        多媒体插件
+            Windows Media
+            RealPlayer
+            Quicktime
+            Flash/Shockwave/Authorware
+            旧时代的流媒体是怎么实现的？
         applet
         java web start
         https://github.com/ruffle-rs/ruffle 一个用Rust编程语言编写的Adobe Flash Player模拟器
@@ -4913,7 +4929,7 @@ nas
                     coinops
                     Lakka
                     OpenDingux
-                    EmuELEC
+                    EmuELEC （Emulation Embedded Linux Entertainment Center）
                     RetroBat
                     Lauchbox
                 刮削器 Scraper
@@ -4923,7 +4939,17 @@ nas
                 主机bios
                 游戏rom
                 金手指
-            影视刮削
+            媒体中心应用 media center application
+                Emby（前称Media Browser）
+                    以前是开源的，现在是闭源的
+                Jellyfin 在 Emby 开源版本的分支
+                Kodi （Xbox Media Center，XBMC）
+                Emby 和 Jellyfin 都是 服务端+客户端
+                Kodi 是纯粹的客户端， Kodi 可以作为 Jellyfin 或 Emby 的客户端
+                    如果是单机 nas 的话其实直接用 kodi 也不是不可以的.
+                Kodi 和 OpenELEC 和 LibreELEC 和 CoreELEC 和 EmuELEC
+
+                影视刮削
             刮削器信息的翻译？
             nas 来接收 dtmb 的信号，或者其它信号（例如收音机，卫星电视这类）
         放在哪里？体积？噪声？辐射？
@@ -5029,7 +5055,8 @@ nas
         交响乐 就是 管弦乐
         音乐 与 数学的联系？
             声音和音乐计算 (Sound and music computing, SMC)
-摇滚乐队
+摇滚乐队（Rock band）
+    摇滚（Rock and Roll，岩石和滚动，通常简称 Rock）
     主唱
     吉他
         主音吉他
@@ -5345,7 +5372,105 @@ nas
     经济 -> 政治 -> 历史 -> 人类学 -> 医学 -> 生物 -> 化学 -> 物理 -> 数学
     数学和物理谁是本源？
 无线电
-    HAM工具箱 https://ham.quickso.cn/
+    无线电 radio ，收音机的英文也是 radio
+    雷达 radar （Radio Detection and Ranging，无线电探测与测距）
+    无线电波 radio waves
+    业余无线电（英语：Amateur Radio），也被称作火腿电台（英语：ham radio）
+        HAM工具箱 https://ham.quickso.cn/
+    软件无线电 (SDR)
+        软件无线电 (SDR) 是一种无线设备，
+        通常包括一个可配置的射频前端和一个用于执行数字功能的 FPGA 或可编程的片上系统 (SoC)。
+        商用 SDR 硬件可以发射和接收不同频率的信号，
+        从而实现从 FM 无线电到 5G、LTE 和 WLAN 等多种无线标准。
+    遥控器
+        「闪光枪」（Flash-Matic Gun），
+            这是因为它能发射光线，照射到位于电视屏幕每个角落的光电管，从而控制电视
+            这是最古早的无线遥控器
+        红外线（IR，Infrared）
+        射频 （RF，Radio Frequency，无线电频率）
+            27MHz/240Mhz/315Mhz/433Mhz/868Mhz/915Mhz/2.4Ghz
+    蓝牙（Bluetooth）
+    低功耗蓝牙（Bluetooth Low Energy，BLE）
+    蓝牙Mesh（Bluetooth Mesh）
+    iBeacon
+        虽然由苹果提出，但也是开放协议，基于 BLE
+    uwb
+    nfc 和 RFID
+    AirTag
+        苹果专属
+        安卓中有哪些类似 AirTag 的技术
+            Samsung Galaxy SmartTag
+            Moto Tag
+            Tile Pro/Mate
+            Chipolo ONE
+    zigbee
+    Thread
+    Matter
+    wifi
+    移动电话？蜂窝网络？
+        1g 2g 2.5g 3g 4g 5g
+    卫星通讯
+    星链
+    磁条卡，ic卡，sim卡
+电力
+    单位
+        电流 电压 功率 电阻 
+    电力从发电厂到用电设备的流程
+        发电→升压→输电→降压→配电→进户→使用
+        进户（电表→断路器（总闸）→漏电保护→断路器（分闸）→开关→插座）→使用（电器的插头→电器本体）
+        这个是大致的流程，民用电和工业用电似乎还有一些区别
+    直流电（direct current，DC）
+        电压
+            1.5-72（1.5 3 5 6 9 12 24 36 42 48 72）
+        一般用在 汽车 干电池 消费者电子设备
+        电池
+            形状
+                圆柱状电池
+                矩形
+                纽扣
+            化学电池/干电池/湿电池
+                现在常见的电池都是化学电池
+                根据电解质来区分
+                    电解质是液体的就是湿电池
+                    电解质是糊状液体的就是干电池
+            根据是否能再次充电来区分
+            根据电解质成分来区分
+    交流电（alternating current，AC）
+        单相
+            两线
+                火线 零线
+            三线
+                火线 零线 接地线
+        三相
+            三线
+                三根火线
+            四线
+                三根火线 零线
+            五线
+                三根火线 零线 接地线
+        电压
+            低压 (Low Voltage)：1kV以下，包括 \(380V/220V\)。
+            中压 (Medium Voltage)：\(6kV,10kV,20kV,35kV\)。用于城市配电。
+            高压 (High Voltage)：\(110kV,220kV\)。用于区域电网传输。
+            超高压/特高压 (UHV)：\(330kV,500kV,750kV,1000kV\)。用于长距离、大容量传输
+        如何使用 万用表 测出 哪条是火线 哪条是零线 哪条是接地线？
+    安全电压(Safety Voltage)
+        36 以下，一些语境下 48 42 也算是安全电压
+    电流战争
+        直流电 -> 爱迪生
+        交流电 -> 西屋公司 -> 特斯拉当时是西屋公司的工程师
+    弱电 和 强电
+        强电是用作一种动力能源
+        弱电是用于信息传递
+        这些都算是弱电系统
+            电话通信系统
+                固话 传真
+            计算机局域网系统 包括 wifi
+            有线电视信号分配系统
+            保安监控系统
+            消防报警系统
+            其它电子设备
+                打印机 复印机 扫描仪 碎纸机 打卡机 门禁
 各种笔记软件 或 gtd 或 wiki 或 pkm 或 思维导图 的总结
     笔记(note)
         印象笔记
@@ -7303,5 +7428,9 @@ ls *.md 2>/dev/null | grep -v '^_' \
 | while read file; do echo "{\"title\":\"$file\",\"updateTime\":\"$(stat -c %Y "$file" | cut -d. -f1)\",\"createTime\":\"$(stat -c %W "$file" | cut -d. -f1)\"}"; done \
 | printf "[$(awk 'NR > 1 { print prev "," } { prev = $0 } END { if (NR > 0) print prev }')]" \
 | python -m json.tool
+
+
+查看GitHub仓库被谁star
+https://github.com/{{your_user_name}}/{{your_repo}}/stargazers
 
 ````

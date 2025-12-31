@@ -646,6 +646,20 @@ if __name__ == "__main__":
 ```
 
 版本7 使用面向对象写法的 静态http
+    config
+        log level
+        log target
+    log
+    http server
+        request
+            line
+            header
+                cookie
+            body
+        response
+            line
+            header
+            body
 
 版本7 有配置的静态http
     ip port rootdir
@@ -661,6 +675,7 @@ if __name__ == "__main__":
 
 既然要实现 http代理 那么 https 和 ws 和 wss 的代理应该也差不多吧
 暂时先忽略 fastcgi 和 wsgi
+还有 h2 h3 tls1.2 tls1.3
 
 python的命令行参数
 https://docs.python.org/zh-cn/3/library/argparse.html
