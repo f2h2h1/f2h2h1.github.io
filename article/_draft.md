@@ -2029,7 +2029,9 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
             电磁 简单但不严谨地理解 就是 无线信号 就是 电磁波
             电气 简单但不严谨地理解 就是 有线信号 就是 电流的高低电平
                 那么 光纤 算电气信号还是电磁信号？
-            信号 -> 传输介质的变化？
+            信号(Signal) -> 传输介质的变化？
+                模拟信号 (Analog Signal)：连续变化的信号，其幅度、频率或相位在一定范围内是连续的。
+                数字信号 (Digital Signal)：离散的信号，其幅度、频率或相位只取有限个离散值。例如，计算机内部的0和1电平信号。
 如何做一个npm库
     去npm官方文档注册账号,并验证邮箱 官网地址:https://www.npmjs.com/
     在github新建一个空仓库，并克隆到本地
@@ -6939,6 +6941,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
         电气工程 电力工程 算 强电
         电子工程 信息工程这些 算 弱电
     英文
+        electromagnetic adj. 电磁的
+        electro
+            作动词指“电镀”，作名词指被电镀物，
+            前缀“electro-”用于构成与电、电子或电解相关的复合词
+        magnetic adj. 有磁性的；磁性的；磁的
         electrical appliance 电器
         electric ：[ɪˈlektrɪk] adj.电的，带电的，通电的，电动的
         electrical ：[ɪˈlektrɪkl] adj.电的，电气的

@@ -19,7 +19,7 @@
 
 (function() {
     'use strict';
-    // 2025-12-05
+    // 2026-01-05
 
     // 按 xpath 删除节点
     function delByXpath(xpath) {
@@ -37,16 +37,13 @@
     }
 
     // 删除页面内 meta 和 script 标签
-    delByXpath('//meta | //script | //iframe | //link[@rel != "stylesheet"]');
+    // delByXpath('//meta | //script | //iframe | //link[@rel != "stylesheet"]');
     // 一般还需要删除一些无用的图片，csdn的文章很喜欢在开头或结尾加一些没有用的图片
 
-    // delByXpath('//meta | //script | //iframe | //link | //style');
-    /*
-        把所有样式都删除，以后有空再研究吧
-        图片 max-width:90%
-        code padding:10px
-        blockquote 行内code 表格 也需要修改样式
-    */
+    delByXpath('//meta | //script | //iframe | //link | //style');
+    delByXpath('//descendant::div[contains(@class,"article-header")]/descendant::div[contains(@class,"up-time")]');
+    // 正文中还有一些奇怪的 a 标签需要移除
+    // 还有要处理 katex 的公式
 
     // 获取作者信息
     let uid = document.getElementById('uid');
@@ -139,10 +136,11 @@
     }
 
     let srcdoc = document.documentElement.innerHTML;
-    document.documentElement.innerHTML = ''; // 删除整个页面的内容
     document.body.style.height = '100%';
     document.body.style.margin = '0px';
-    var iframe = document.createElement("iframe"); // 使用 iframe 是为了使所有的 js 事件失效
+    var iframe = document.createElement("iframe");
+    // 使用 iframe 是为了使所有的 js 事件失效
+    // 但使用 ifame 会使 印象笔记的剪藏插件无法选中，只能保存整个页面
     Object.assign(iframe.style, {
         position: 'fixed',
         top: '0',
@@ -151,8 +149,47 @@
         height: '100vh',
         border: 'none'
     });
+    iframe.title = document.title;
+    document.documentElement.innerHTML = ''; // 删除整个页面的内容
     document.body.appendChild(iframe);
     iframe.contentWindow.document.write(srcdoc);
+    document.title = iframe.contentWindow.document.title;
+    // 创建 style 元素
+    const styleElement = document.createElement('style');
+    // 设置 style 元素的内容（即 CSS 样式）
+    styleElement.textContent = `
+            img {
+                max-width:90%;
+                height: auto;
+            }
+            pre[name=code] { padding:20px; }
+            blockquote {
+                background: #eef0f4;
+                border-left: 8px solid #dddfe4;
+                display: block;
+                margin: 0 0 12px;
+                overflow: auto;
+                padding: 2px 2px 2px 16px;
+                word-break: break-word !important;
+            }
+            table {
+                border-top: 1px solid #999;
+                border-left: 1px solid #999;
+                border-spacing: 0;
+            }
+            td, th {
+                padding: 5px;
+                border-bottom: 1px solid #999;
+                border-right: 1px solid #999;
+            }
+            code {
+                background-color: #f9f2f4;
+                border-radius: 2px;
+                color: #c7254e;
+            }
+    `;
+    // 将 style 元素添加到 head 标签中
+    iframe.contentDocument.head.appendChild(styleElement);
     iframe.contentWindow.focus();
 
     if (jQuery) {

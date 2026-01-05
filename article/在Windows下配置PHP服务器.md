@@ -394,6 +394,7 @@ https://www.w3.org/CGI/
 
 
 windows 下也没有这个工具 apachectl
+    但windows下有ApacheMonitor.exe
 信号
     TERM stop
     USR1 graceful
@@ -446,6 +447,27 @@ prefork 是多进程模型，性能不好，但兼容性最好
 
 把 apache 里的常用模块都编译成静态模块应该也能提升性能的吧？
 
+
+apache 启用 h3
+# 全局基础配置
+Listen 443 udp  # HTTP/3需要UDP监听
+
+# 加载必要模块
+LoadModule ssl_module modules/mod_ssl.so
+LoadModule http2_module modules/mod_http2.so
+LoadModule http3_module modules/mod_http3.so
+
+# SSL全局设置
+SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1
+SSLCipherSuite TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+SSLHonorCipherOrder on
+
+# 虚拟主机配置
+<VirtualHost *:443>
+    # HTTP/3核心配置
+    EnableHTTP3 on
+    HTTP3Port 443
+    Protocols h3 h2 h2c http/1.1  # 协议优先级
 -->
 
 ### 下载 Apache
