@@ -1903,6 +1903,9 @@ KiB 和 KB 和 Kb 和 Kbps 的联系与区别
         库 library
             library 是由 用户代码 调用 库代码，整体的流程，结构 由 用户代码 决定
         包 package
+        绑定包 binding
+            指为一种编程语言提供对另一种语言（通常是 C/C++）库的调用接口
+        包装器 wrapper
         代码片段 code snippet
         函数 function
         功能 function
