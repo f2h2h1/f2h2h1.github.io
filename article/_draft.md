@@ -3948,7 +3948,7 @@ MySQL 和 PostgreSQL
         缓存
             pg 中没有类似于 mysql 的内存表
             使用RAM Disk。创建一个表空间到Ram Disk上，然后建表的时候指定表空间到该 Ram Disk
-            unlogged table
+            unlogged table (非日志表)
         定时任务
             pg_cron 扩展 或 PgAgent 扩展
         队列
@@ -5503,6 +5503,8 @@ nas
         freePlane
         TiddlyMap
     wiki
+        MediaWiki
+        DokuWiki
     各种图数据库
         neo4j
         JanusGraph
@@ -7382,6 +7384,17 @@ node cli.js --build="updateMatedata|createPage" --config-host="https://blog.comp
 
 tar -zcvf UrsaMinor-`date +%g%m%d%H%M`.tar.gz UrsaMinor
 tar --xz -cf UrsaMinor-`date +%g%m%d%H%M`.tar.xz UrsaMinor
+7z a UrsaMinor-`date +%g%m%d%H%M`.7z UrsaMinor
+7z a UrsaMinor-`date +%g%m%d%H%M`.7z -t7z -mx=9 UrsaMinor
+'/C/Program Files/7-Zip/7z.exe' a UrsaMinor-`date +%g%m%d%H%M`.7z UrsaMinor
+
+7z a UrsaMinor-`date +%g%m%d%H%M`.7z -t7z -mx=9 UrsaMinor
+    -t7z 指定压缩类型
+    -mx=9 最大的压缩率
+
+压缩完的文件大小
+    gz > 7z(默认配置) > xz > 7z(最大压缩率)
+
 
 不要同时提交两篇文章
 
