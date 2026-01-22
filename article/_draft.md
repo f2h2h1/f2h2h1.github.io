@@ -2233,6 +2233,7 @@ git的一般使用指南
             图
             时序
             列
+            向量
         日志
             elk loki
         内部文档
@@ -2269,6 +2270,8 @@ git的一般使用指南
         堡垒机
             shell 审计
             sql 审计
+        AI相关
+        软著/等保 等一系列相关的 证书/资质
 magento2 配置 paypal
 数据结构和算法的学习笔记
 数据结构
@@ -6810,6 +6813,44 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
         点灯
         入夜仪式/马刀开香槟
     和时间相关的标准有哪些
+    一年有多少天？
+        365          一般的平年
+        365 或 366    知道闰年
+        365.25        知道求平均数了             儒略历平均
+        365.2425      知道闰年不是简单的四年一润  格力高历平均
+        365.2424      知道春分点回归年
+        365.2422      知道平均回归年（春分 夏至 秋分 冬至 四点回归年的平均值）
+        365.2564      恒星年
+        春分年 -> 春分点回归年
+        分点年 -> 多数语境下指春分点回归年
+        回归年 -> 多数语境下指春分点回归年，也有可能指 平均回归年
+        平回归年 -> 平均回归年
+        恒星年（Sidereal Year）是指地球绕太阳公转一周的时间，每个恒星年为365.256363004天；
+        回归年（Solar Year）是太阳直射点在南北回归线之间移动的周期，每个回归年则为365.242189天。
+        日历年（Calendar Year） 格利高历的平均 365.2425
+        为什么 恒星年 和 回归年 不一样？
+        岁差 是什么？
+    历法
+        阳历(Solar Calendar) 阴历(Lunar Calendar) 阴阳合历(Lunisolar Calendar)
+        历法的主要作用是用来指导农业，所以四季是很重要的，
+        所以 儒略历 和 格利高历 都是参考 春分点回归年 制定的
+        儒略历 和 格利高历 本质上是一样的，只是 格利高历 误差更小
+        复活节是春分后的第一个满月后的第一个星期日
+        24节气
+    为什么一个星期是七天？
+        七颗可见天体
+            日 月 火 水 木 金 土
+        月相周期
+            大概七天一个周期
+                新月 上弦月 满月 下弦月
+            更详细的月相
+                新月 峨眉月 上弦月 盈凸月 满月 亏凸月 下弦月 亏眉月
+                朔月 望月 眉月 凸月
+            在中国的农历中
+                初一一定 是 新月
+                初七或初八 是 上弦月
+                十五或十六 是 满月
+                二十二或二十三 是 下弦月
 国际化和本地化
     i18n Internationalization 国际化
     l10n Localization 本地化
@@ -7408,8 +7449,9 @@ tar --xz -cf UrsaMinor-`date +%g%m%d%H%M`.tar.xz UrsaMinor
     update fraction 日期
     update fraction 20211223
     pwd; sleep 8000; git commit -m "update fraction "$(date +%Y%m%d); git push;
-    date +%g%m%d%H%M
-    date +%Y%m%d%H%M
+    date +%g%m%d%H%M%S
+    date +%y%m%d%H%M%S 有些情况下 %g 是无效的，只能用 %y 替代
+    date +%Y%m%d%H%M%S
 修改 错别字 标点 格式
     update format
 更新 sitemap 之类的文件

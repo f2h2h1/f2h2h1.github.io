@@ -643,4 +643,40 @@ function throttle(func, limit) {
 }
 
 
+
+js 如何准确地获取字符串的长度
+    console.log("你好，world!😊".length); // 11
+    console.log(Array.from("你好，world!😊").length); // 10
+要准确获取 JavaScript 字符串长度，关键在于区分“UTF-16 code units 长度”和“实际的 Unicode 可视字符（grapheme clusters）长度”。
+下面给出常用方法与示例。
+    String.length
+        返回 UTF-16 code unit 数（对于 BMP 字符和多数常见字符正确）
+    使用 Array.from 或扩展运算符 [...str]
+    使用 Intl.Segmenter（现代浏览器/Node 支持）
+    使用 第三方库（grapheme-splitter）
+所以 遍历 字符串 时
+    最好不要 直接用 String.length
+        for (let i = 0; i < str.length; i++) {
+            console.log(str[i]);
+        }
+    而是用 for of
+        for (const ch of str) {
+            console.log(ch);
+        }
+完整的例子
+    (function(str){
+    console.log(str.length); // 11
+    for (let i = 0; i < str.length; i++) {
+        console.log(str[i]);
+    }
+    console.log('----');
+    console.log(Array.from(str).length); // 10
+    for (const ch of str) {
+        console.log(ch);
+    }
+    })("你好，world!😊");
+
+
+
+
 -->
