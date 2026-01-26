@@ -5765,6 +5765,7 @@ wordpress
             WP_HOME 填的就是 网站域名/wordpress
     修改wordpress默认后台登录地址
         wp-login.php
+    wordpress 如何把谷歌字体下载到本地？
     如何给 woo 增加支付方式 ？
     wordpress 如何实现 国际化/多语言 ？
         WordPress 是使用 gettext 实现翻译的，主要使用mo文件
@@ -6138,6 +6139,116 @@ wordpress
     各种标准 和 组织
     隔行扫描 逐行扫描 垂直同步/防撕裂技术 hdr
     DLSS FSR
+Macromedia
+    Macro 宏
+    media 媒体
+    产品
+        FL Flash
+            FutureSplash Animator，用其制作的动画既可以导出为 GIF，也可以导出为自家的 .SPL（即 Splash）格式，.
+            SPL 因为完全基于矢量，其尺寸非常小，非常利于在 web 传播。
+            当然，用户需要安装配套的浏览器插件 FutureSplash Player 才能播放
+            Director 主要使用光栅图形,而非 Flash 中主要的矢量图形,
+            Director 的输出文件预计比 Flash 文件更大,
+            这使得在 拨号上网时代 Flash 更受欢迎
+            flash 这来自 Future 和 Splash 的混合
+            .SPL 后来成了 .swf (Shockwave Flash)
+            Flash 8 是最后一个在 Macromedia 发布的版本，后续的版本是 cs3 了
+            as
+                Action Script
+            fla
+                Flash Animate
+                这是flash的源文件格式
+        FW Fireworks
+        DW Dreamweaver
+        DI Director
+        AW Authorware
+        Shockwave
+        ColdFusion
+        RoboHelp
+        RoboDemo
+        FL 和 FW 和 DW 被称为网页三剑客
+        Authorware 和 Director 和 Flash
+            这三个都能运行在网页上
+                Authorware -> Authorware Web Player
+                Director -> Shockwave
+                Flash -> Flash Player
+            三个看上去差不多的产品，是因为这是三个公司的产品，最后通过不断收购合并在 Macromedia
+                Authorware -> Authorware
+                Director -> MacroMind
+                Flash -> FutureWave
+                这三个都能做 动画 教学软件 游戏 都能通过插件运行在浏览器里 都能导出 exe
+                在1990年代末，Macromedia为了提升Shockwave的知名度，将其名下的所有多媒体播放器都冠以了“Shockwave”的前缀。
+                Flash 也被官方短暂地称为 “Shockwave Flash”
+                虽然此举达到了预期的效果，但Shockwave和Flash变得越来越难区分。
+                2000 年前后一两年间，「闪客（Flasher）」文化开始在国内爆发了起来，
+                用 Flash 制作的动画，小到 Banner、大到 MV，席卷了整个中国互联网。
+    发展历史
+        1984 MacroMind 成立，主要产品是 VideoWorks 后来发展为著名的 Director
+        1987 MacroMind 从芝加哥搬到旧金山
+        1987 Paracomp 成立，
+        1987 Authorware 成立，主要产品是 Authorware ，一个多媒体创作工作，适合于交互式课件制作
+        1991 MacroMind 和 Paracomp 合并成 MacroMind-Paracomp
+        1993 MacroMind-Paracomp 和 Authorware 合并成 Macromedia
+        1995 1 月收购 Altsys，其旗下矢量绘图软件 FreeHand 即 1998 年发布的 Macromedia Fireworks 的基石；
+        1995 发布 Shockwave Player ，使浏览器可以运行 Director 发布的 dcr文件
+        1996 3 月收购 iBand 软件，其旗下 HTML 创作工具 Backstage 即 1997 年底发布的 Macromedia Dreamweaver 的基石；
+        1996 收购 FutureWave ，并把 FutureSplash Animator 更名为 Macromedia Flash
+        2001 收购 Allaire ，获得 ColdFusion（快速Web应用开发平台）、JRun（J2EE应用服务器）
+        2003 收购 eHelp ，获得 RoboHelp（帮助文档制作）、RoboDemo
+        2005 被 Adobe 收购
+    adobe
+        PS：Adobe Photoshop（图像处理软件）
+        LR：Adobe Lightroom（照片编辑与管理软件，注：您提到两次 "lr"，均为同一产品）
+        AI：Adobe Illustrator（矢量图形设计软件）
+        PR：Adobe Premiere Pro（视频编辑软件）
+        AE：Adobe After Effects（影视特效与动态图形设计软件）
+        AU：Adobe Audition（音频编辑与混音软件）
+        ID：Adobe InDesign（排版设计软件，常用于杂志、书籍等）
+        CP：Adobe Captivate（一种电子学习创作工具）
+        Acrobat：Adobe Acrobat（处理 PDF）
+        CS
+            Creative Suite
+            创意套件
+            CS6 是最后一个版本 2012
+        CC
+            Creative Cloud
+            创意云
+        aem/cq
+            Adobe Experience Management
+            以前叫做 Communique 简称 cq
+            一个cms
+            这个是基于 java
+        magento
+            一个电商网站
+            这个是基于 php
+    Flashpoint https://flashpointarchive.org/
+        Flashpoint 档案馆是由社区组织的保存 Web 游戏和动画的行动。
+        互联网的历史与文化是至关重要的，Web 技术的发展日新月异，今天还司空见惯的技术可能在明天就会被淘汰。
+        本项目致力于尽可能地保存这些平台的体验，以免它们随时间消逝。
+        自 2017 年 12 月以来，我们已经保存了上百个浏览器插件和 Web 技术下的超过 200,000 份游戏和动画。
+        此项目由 BlueMaxima 最早发起，试图在 Flash 寿终正寝之前阻止网页游戏的消失。
+        自此以后，它已经发展成为一个由来自全世界的上百名社区贡献者参与的重大项目，包罗为各种互联网插件、框架与标准创作的游戏与动画。
+        Flashpoint 档案馆作为非营利项目，目标为进一步努力保留游戏、动画和其他基于 Web 技术的数字交互内容，并使它们能正常运行。
+    课件制作工具
+        Macromedia
+            Flash
+            Director
+            Authorware
+        Slide show （演示文稿）
+            Microsoft PowerPoint/Apple Keynote/Google Slides/wps/LibreOffice Impress
+        Adobe Captivate
+            该软件最初是一个屏幕录制工具，名为Flashcam（Nexus Concepts 2002）
+                2003 ehelp 收购了，并改名为 RoboDemo
+                Macromedia 收购了 eHelp 以获得 RoboDemo
+                2004 发布 Macromedia Captivate
+                2006 发布 Adobe Captivate
+                Captivate 最终演变成了一种电子学习创作工具
+                Captivate 简称是 cp
+        Adobe Animate 这个是 flash 的正统续作
+        这两个是墙外专业的 课件制作工具
+            Articulate Studio
+            Lectora
+        墙内也有不少这类工具
 从ed到perl还有正则表达式
     qed ed ex vi vim grep sed awk perl
     qed
