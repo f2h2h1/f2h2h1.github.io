@@ -6215,7 +6215,9 @@ Macromedia
             创意云
         aem/cq
             Adobe Experience Management
+                Adobe 体验 管理
             以前叫做 Communique 简称 cq
+                Communique 公报
             一个cms
             这个是基于 java
         magento
