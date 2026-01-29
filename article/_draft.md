@@ -3634,8 +3634,8 @@ linux 中的各种 id
             actor
             CSP
         io复用
-            Reactor
-            Proactor
+            Reactor (反应器) 
+            Proactor (前摄器) 
         线程池
             Half-Sync/Half-Async HSHA
             Leader-Follower LF
@@ -3699,22 +3699,52 @@ io 模型
     五种模型
         阻塞 （blocking I/O）
             最传统的io
-        非阻塞 （non-blocking I/O）
+        非阻塞 （non-blocking I/O） NIO New IO
             通过 fnctl 把 fd 加上非阻塞的 flg ，read 没完成是就会返回 EAGAIN 或 EWOULDBLOCK
             这似乎只有 linux 才有的特性
         信号驱动io （signal-driven IO）
-            信号驱动io 是 边缘触发
+            信号驱动io 是 边缘触发（ET, Edge Trigger）
         io复用 （I/O Multiplexing）
-            select poll epoll
-            select 和 poll 是水平触发
+            select
+                选择，选择就绪的描述符
+            poll
+                polling，检查，轮询检查多个描述符
+            epoll
+                event & efficient poll
+                    事件驱动的 poll
+                    有效果的 poll
+            select 和 poll 是水平触发（LT, Level Trigger）
             epoll 可以支持 水平触发 和 边缘触发
             虽然 epoll 被归类在 io多路复用 ，但我认为 epoll 更像是 poll 和 信号驱动io 的合体
             和 epoll 类似的， windows 的 iocp ， freebsd 的 kqueue
+        事件驱动I/O (Event-driven I/O)
+            结合多路复用的事件循环
         异步io （asynchronous I/O）
+            AIO 早期也有被称为 NIO.2
             异步io 更严谨的描述应该是 信号驱动的异步io
             信号驱动io和异步io都需要通过信号来接收内核的通知
             信号驱动io接收到通知后，依然需要通过系统调用把数据从内核复制到用户态
             异步io收到通知后，数据就已经在用户态了，内核已经把数据复制到用户态
+            异步io的接口有两个版本
+                glibc版
+                    POSXI AIO 是在用户空间模拟异步 IO 的功能,不需要内核的支持。（asynchronous I/O control block, aiocb）
+                    在用户空间通过线程池模拟，可移植性好，但性能有限
+                linux系统调用版
+                    libaio 是原生的 linux aio，行为更为低级；
+                    性能更高，但 API 较复杂
+                Linux的AIO主要针对文件I/O，对网络编程的作用有限
+        io_uring
+            io_uring 也是一种异步io
+            u
+                可能指 universal 通用的
+                可能指 user
+            ring 环
+            liburing 是一个基于 io_uring 接口的用户空间库，
+            它是 Linux 内核开发者 Axboe 于 2019 年发布的一个开源项目
+            在 io_uring 出现之前，Linux 的异步 I/O (AIO) 存在诸多限制：
+                仅支持 Direct I/O，对 Buffered I/O 支持不佳，
+                且 API 设计复杂。大多数高性能服务（如 Nginx, Redis）依然选择 epoll。
+            io_uring 适合高并发网络场景
     两种分类
         一个IO操作其实分成了两个步骤
             发起IO请求		向 cpu 发起 io 请求
@@ -3912,6 +3942,19 @@ ELF格式
                 那么这种人就是 x效应/x心理/x人格
                 这种 x效应/x心理/x人格 的人还会有 d属性 e属性 f行为
 MySQL 和 PostgreSQL
+    mysql 有哪些导出数据的方式？
+        逻辑备份
+            sql语句
+                SELECT ... INTO OUTFILE
+            命令行
+                mysql -u user -p -e "SELECT col1, col2 FROM dbname.tablename" > result.txt
+                mysqldump
+            通过客户端工具
+            使用程序/API（Python、Go、Java 等读取后写文件）
+        物理备份
+            MySQL Enterprise Backup（MEB，官方商业产品）
+            Percona XtraBackup （第三方开源工具）
+            一般云服务商也会提供类似的功能
     比较 MySQL 和 PostgreSQL
         pg 和 mysql 在语法有一些差异
         mysql 可以使用多种存储引擎
