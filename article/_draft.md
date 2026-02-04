@@ -7528,6 +7528,7 @@ GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts ht
 收录基于Cloudflare的开源工具 https://github.com/zhuima/awesome-cloudflare
 计算机教育中缺失的一课 https://github.com/missing-semester-cn/missing-semester-cn.github.io
 各种图书的合集 https://github.com/0voice/expert_readed_books
+编程相关图书的合集 https://github.com/EbookFoundation/free-programming-books
 版本控制软件比较
     git
         github
