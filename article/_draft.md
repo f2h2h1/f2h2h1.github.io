@@ -5559,9 +5559,10 @@ nas
         ArangoDB
         arcadedb
     还有类似的
+        通讯录(contacts)
         备忘录(memo)
         日历(calendar)
-        任务管理(todo)
+        任务管理(task/todo)
         看板(Kanban)
         知识库（Knowledge base）
         电子手账（electronic notebook）
@@ -5606,6 +5607,7 @@ nas
     图表
         graphviz
         plantuml
+        mermaid
         数学公式 MathML 居然是 浏览器原生支持的。。。和 svg 一样，mathml甚至可以直接嵌入 svg 里
         五线谱/简谱 MusicXML
             https://www.w3.org/community/music-notation/
@@ -6196,6 +6198,9 @@ Macromedia
             flash 这来自 Future 和 Splash 的混合
             .SPL 后来成了 .swf (Shockwave Flash)
             Flash 8 是最后一个在 Macromedia 发布的版本，后续的版本是 cs3 了
+            cc 2015 之后，flash就改名成 Adobe Animate
+                没有重写，就是一次几乎原地的更名
+            2026 年 2 月，Adobe 宣布 Adobe Animate 进入维护模式，不再新增功能
             as
                 Action Script
             fla
@@ -7528,7 +7533,6 @@ GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts ht
 收录基于Cloudflare的开源工具 https://github.com/zhuima/awesome-cloudflare
 计算机教育中缺失的一课 https://github.com/missing-semester-cn/missing-semester-cn.github.io
 各种图书的合集 https://github.com/0voice/expert_readed_books
-编程相关图书的合集 https://github.com/EbookFoundation/free-programming-books
 版本控制软件比较
     git
         github

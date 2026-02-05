@@ -333,12 +333,93 @@ if __name__ == '__main__':
 ### 使用 docker 容器里的 chrome 来生成 PDF
 
 1. 只使用 Chrome 镜像
-    1. 原生的 Chrome 镜像 lscr.io/linuxserver/chrome
-    1. 精简过的 Chrome 镜像 zenika/alpine-chrome
+    - 原生的 Chrome 镜像 lscr.io/linuxserver/chrome
+        ```
+        docker run --rm \
+            -e LC_ALL=zh_CN.UTF-8 \
+            -e TZ="Asia/Shanghai" \
+            --entrypoint google-chrome \
+            -v `pwd`:/var \
+            --shm-size="128mb" \
+            linuxserver/chrome:143.0.7499 \
+            --incognito \
+            --no-pdf-header-footer \
+            --headless \
+            --no-sandbox \
+            --disable-gpu \
+            --ignore-certificate-errors \
+            --print-to-pdf=/var/file.pdf \
+            https://f2h2h1.github.io/article/%E6%8A%8A%E7%BD%91%E9%A1%B5%E5%AF%BC%E5%87%BA%E6%88%90PDF.html
+        ```
+    - 精简过的 Chrome 镜像 zenika/alpine-chrome ，这里要注意权限的问题
+        ```
+        docker run -it --rm \
+            --privileged=true \
+            -u root \
+            -w /home/chrome/var \
+            -v `pwd`:/home/chrome/var \
+            zenika/alpine-chrome \
+            --headless \
+            --disable-gpu \
+            --ignore-certificate-errors \
+            --no-sandbox \
+            --print-to-pdf=/home/chrome/var/file.pdf \
+            --hide-scrollbars \
+            https://f2h2h1.github.io/article/%E6%8A%8A%E7%BD%91%E9%A1%B5%E5%AF%BC%E5%87%BA%E6%88%90PDF.html
+        ```
+
+<!--
 1. 使用 Chrome 镜像和 Playwright 镜像
     既可以使用 zenika/alpine-chrome 也可以使用 lscr.io/linuxserver/chrome
-1. 自制镜像，在 Playwright 镜像中安装浏览器
+-->
 
+1. 自制镜像，使用 Playwright 安装浏览器
+    1. 安装 python
+        ```
+        apt update; \
+        apt install -y python3 python3-pip; \
+        ln -s /usr/bin/python3 /usr/bin/python;
+        ```
+    1. 安装 playwright
+        ```
+        python -m pip install playwright -i https://pypi.tuna.tsinghua.edu.cn/simple --break-system-packages;
+        ```
+    1. 使用 playwright 安装浏览器
+        ```
+        python -m playwright install --with-deps chromium;
+        ```
+    1. 使用 playwright 生成 pdf
+        ```
+        python -m playwright pdf https://f2h2h1.github.io/article/%E6%8A%8A%E7%BD%91%E9%A1%B5%E5%AF%BC%E5%87%BA%E6%88%90PDF.html file.pdf
+        ```
+    1. 查看帮助
+        ```
+        python -m playwright help
+        python -m playwright help pdf
+        python -m playwright help screenshot
+        python -m playwright help open
+        ```
+
+<!--
+
+vim /usr/bin/playwright
+#!/usr/bin/env sh
+python -m playwright $*
+chmod 755 /usr/bin/playwright
+
+vim /usr/bin/google-chrome
+#!/usr/bin/env sh
+dp0=$(dirname "$0")
+docker run --rm \
+  -e LC_ALL=zh_CN.UTF-8 \
+  -e TZ="Asia/Shanghai" \
+  --entrypoint google-chrome \
+  -v $dp0:/var \
+  --shm-size="128mb" \
+  linuxserver/chrome:143.0.7499 $*
+chmod 755 /usr/bin/google-chrome
+
+-->
 
 ### 使用 libreoffice 的命令行把网页转换为 pdf
 
