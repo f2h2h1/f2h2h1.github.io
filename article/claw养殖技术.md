@@ -75,6 +75,38 @@ vim ~/.nanobot/config.json
 
 nanobot agent -m "Hello"
 
+
+```
+nanobot/
+├── .nanobot/      
+│   ├── config.json
+└── workspace/        
+│   ├── defaults
+│   │   ├──memory
+│   │   ├──sessions
+│   │   ├──skills
+│   │   ├──AGENTS.md
+│   │   ├──HEARTBEAT.md
+│   │   ├──SOUL.md
+│   │   ├──TOOLS.md
+│   │   └──USER.md
+└── └── test1
+│   │   ├──memory
+│   │   ├──sessions
+│   │   ├──skills
+│   │   ├──AGENTS.md
+│   │   ├──HEARTBEAT.md
+│   │   ├──SOUL.md
+│   │   ├──TOOLS.md
+└── └── └──USER.md
+```
+
+这种写法可能无法读取skill 会提示 file not found
+python -m nanobot agent --config ./.nanobot/config.json -w "./workspace/test1" -m "hello"
+
+这种写法可以读取skill
+python -m nanobot agent --config ./.nanobot/config.json -w "workspace/test1" -m "hello"
+
 ## matrix安装和使用
 
 ### 服务端
