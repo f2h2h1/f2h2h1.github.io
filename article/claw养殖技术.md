@@ -114,3 +114,9 @@ python -m nanobot agent --config ./.nanobot/config.json -w "workspace/test1" -m 
 web
 安卓
 
+## chatmail安装和使用
+
+### 服务端
+### 客户端
+web
+安卓
