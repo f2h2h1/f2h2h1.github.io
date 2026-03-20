@@ -2256,6 +2256,31 @@ try {
 
 ## 在后台视图里新建一个表格
 
+<!--
+
+后台的表格是 ui组件 中的 list
+magento2 中有两个基础 ui组件
+    list
+    form
+
+
+假设已经新建好视图
+
+创建一个布局文件来加载 UI 组件
+    Vendor/Module/view/adminhtml/layout/vendor_module_yourmodel_index.xml
+ui_component 的 xml 文件
+    Vendor/Module/view/adminhtml/ui_component/vendor_module_yourmodel_listing.xml
+数据提供器 ListingDataProvider.php
+    Vendor/Module/Ui/DataProvider/YourModel/ListingDataProvider.php
+
+模块 composer.json registration.php module.xml di.xml 
+路由 控制器 菜单 权限
+模型 资源模型 集合
+布局 ui组件 DataProvider
+
+
+-->
+
 ## 添加后台日志
 
 在模块的 etc 文件夹下的 logging.xml 里加上类似这样的一段
