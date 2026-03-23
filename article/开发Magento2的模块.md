@@ -2266,12 +2266,17 @@ magento2 中有两个基础 ui组件
 
 假设已经新建好视图
 
+控制器
 创建一个布局文件来加载 UI 组件
     Vendor/Module/view/adminhtml/layout/vendor_module_yourmodel_index.xml
 ui_component 的 xml 文件
     Vendor/Module/view/adminhtml/ui_component/vendor_module_yourmodel_listing.xml
 数据提供器 ListingDataProvider.php
     Vendor/Module/Ui/DataProvider/YourModel/ListingDataProvider.php
+di.xml
+    DataProvider
+    Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory
+        Collection
 
 模块 composer.json registration.php module.xml di.xml 
 路由 控制器 菜单 权限
@@ -2280,6 +2285,192 @@ ui_component 的 xml 文件
 
 
 -->
+
+### 新建必要的文件
+
+```
+app/code/Vendor/Module/
+├── Controller/
+│   └── Adminhtml/
+│       └── Customer/
+│           └── Index.php
+├── Model/
+│   ├── Customer.php
+│   └── ResourceModel/
+│       ├── Customer.php
+│       └── Customer/
+│           └── Collection.php
+├── Ui/
+│   └── Component/
+│       └── DataProvider.php
+├── etc/
+│   ├── adminhtml/
+│   │   ├── acl.xml
+│   │   ├── menu.xml
+│   │   └── routes.xml
+│   ├── di.xml
+│   └── module.xml
+├── view/
+│   └── adminhtml/
+│       ├── layout/
+│       │   └── vendor_module_customer_index.xml
+│       └── ui_component/
+│           └── vendor_module_customer_listing.xml
+└── registration.php
+```
+
+```
+app/code/Vendor/Module/
+├── Controller/
+│   └── Adminhtml/
+│       └── Page/
+│           └── Index.php
+├── etc/
+│   ├── adminhtml/
+│   │   └── menu.xml
+│   └── di.xml
+├── view/
+│   └── adminhtml/
+│       ├── layout/
+│       │   └── vendor_module_page_index.xml
+│       └── ui_component/
+│           └── vendor_module_page_listing.xml
+```
+
+Vendor/Module/Controller/Adminhtml/Page/Index.php
+```php
+<?php
+
+namespace Vendor\Module\Controller\Adminhtml\Page;
+
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\View\Result\PageFactory;
+
+class Index extends Action
+{
+    protected $resultPageFactory;
+
+    public function __construct(Context $context, PageFactory $resultPageFactory)
+    {
+        parent::__construct($context);
+        $this->resultPageFactory = $resultPageFactory;
+    }
+
+    public function execute()
+    {
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->setActiveMenu('Vendor_Module::page_list');
+        $resultPage->getConfig()->getTitle()->prepend(__('page List'));
+
+        return $resultPage;
+    }
+
+    // protected function _isAllowed()
+    // {
+    //     return $this->_authorization->isAllowed('Vendor_Module::menu');
+    // }
+}
+```
+
+Vendor/Module/etc/adminhtml/menu.xml
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Vendor_Module::page_list" title="page Grid" module="Vendor_Module" parent="Magento_Backend::system_tools" action="vendor_module/page/index" sortOrder="10" resource="Magento_Backend::admin"/>
+    </menu>
+</config>
+```
+
+Vendor/Module/etc/di.xml
+```xml
+<config>
+    ...
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="vendor_module_page_listing_data_source" xsi:type="string">Magento\Cms\Model\ResourceModel\Page\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    ...
+</config>
+```
+
+Vendor/Module/view/adminhtml/layout/vendor_module_page_index.xml
+```xml
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="styles"/>
+    <body>
+        <referenceContainer name="content">
+            <uiComponent name="vendor_module_page_listing"/>
+        </referenceContainer>
+    </body>
+</page>
+```
+
+Vendor/Module/view/adminhtml/layout/vendor_module_page_listing.xml
+```xml
+<?xml version="1.0"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">vendor_module_page_listing.vendor_module_page_listing_data_source</item>
+            <item name="deps" xsi:type="string">vendor_module_page_listing.vendor_module_page_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">vendor_module_page_columns</item>
+    </argument>
+    
+    <dataSource name="vendor_module_page_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Cms\Ui\Component\DataProvider</argument>
+            <argument name="name" xsi:type="string">ccc_qwe_page_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">page_id</argument>
+            <argument name="requestFieldName" xsi:type="string">page_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">page_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+
+    <columns name="vendor_module_page_columns">
+        <column name="page_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">page_id</item>
+                </item>
+            </argument>
+        </column>
+        
+        <column name="title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">title</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>
+```
+
 
 ## 添加后台日志
 
