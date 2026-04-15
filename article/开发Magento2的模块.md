@@ -1045,6 +1045,23 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
         $schemaGenerator = $objectManager->get(\Magento\Framework\GraphQl\Schema\SchemaGeneratorInterface::class);
 
         $source = ''; // 这个位置填 graphql 的 查询语句
+        // $source = <<<EOF
+        //     {
+        //     currency {
+        //         available_currency_codes
+        //         base_currency_code
+        //         base_currency_symbol
+        //         default_display_currecy_code
+        //         default_display_currecy_symbol
+        //         default_display_currency_code
+        //         default_display_currency_symbol
+        //         exchange_rates {
+        //         currency_to
+        //         rate
+        //         }
+        //     }
+        //     }
+        // EOF;
 
         $rootValue = null;
 
@@ -1151,6 +1168,9 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
         `;
         fetch(`${window.location.origin}/graphql`, {
             method: 'POST', // 如果不是 mutation 类型的请求，这个位置可以改成 GET
+            // headers: { // 登录的 token 加载这个位置，如果在网页里登录了，就不需要
+            //   'authorization': 'Bearer jh1i138qywjx97yzskkji15v6oxyp2an'
+            // },
             headers: {
                 'Content-Type': 'application/json'
             },

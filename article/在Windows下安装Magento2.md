@@ -208,7 +208,12 @@
                 ```
                 php -f /d/magento2-sample-data/dev/tools/build-sample-data.php -- --sample-data-source="/d/magento2-sample-data" --ce-source="/d/magento-ce" --command=link
                 ```
-        <!-- 示例数据的图片路径好像还有一点问题，但又不是不能用 -->
+        <!--
+        示例数据的图片路径好像还有一点问题，但又不是不能用
+        还要修改 pub/get.php
+        命令行要全程有管理员权限
+        为什么即使装了示例数据，首页依然是空白的？
+        -->
     1. 更新
         ```
         php bin/magento setup:static-content:deploy -f
@@ -631,6 +636,10 @@ sed -i 's/vendor\/magento\/framework\//lib\/internal\/Magento\/Framework\//g' wi
 php -a <<- 'EOF'
 
 EOF
+
+
+pub/get.php
+str_replace('\\', '/', __DIR__);
 
 -->
 
