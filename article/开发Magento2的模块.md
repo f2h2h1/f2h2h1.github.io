@@ -1136,6 +1136,14 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
         $result = \GraphQL\GraphQL::executeQuery($schemaGenerator->generate(), $source, $rootValue, $contextValue, $variables);
         $output = $result->toArray();
         echo json_encode($output);
+
+        // 这种方式也可以
+        // $variables = [];
+        /** @var \Magento\Framework\GraphQl\Query\QueryProcessor */
+        // $queryProcessor = $objectManager->get(\Magento\Framework\GraphQl\Query\QueryProcessor\Interceptor::class);
+        // $result = $queryProcessor->process($schemaGenerator->generate(), $source, $contextValue, $variables);
+        // var_dump($result);
+
     } catch (\Throwable $e) {
         echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
         echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
@@ -5222,11 +5230,33 @@ action类的 execute 方法大概就返回四种 result
 
 如何加载 page_layout 和 layout 还是有一点模糊
 
+
+bin
+    magento
+phpserver
+    router.php
+pub
+    cron.php
+    get.php
+    health_check.php
+    indxe.php
+    static.php
+
+无论哪个入口都会引用这个文件
+app/bootstrap.php
+    app/autoload.php
+        app/etc/vendor_path.php
+
 那些可以迅速定位问题的文件？各种入口？
 http
     frontend
     backend
     rest
+        vendor/magento/module-webapi/etc/webapi_rest/di.xml
+            vendor/magento/module-webapi/Controller/Rest.php
+                vendor/magento/module-webapi/Controller/Rest/RequestProcessorPool.php
+                    vendor/magento/module-webapi/Controller/Rest/SchemaRequestProcessor.php
+                    vendor/magento/module-webapi/Controller/Rest/SynchronousRequestProcessor.php 主要是这个
     graphql
         vendor\magento\module-graph-ql\etc\graphql\di.xml 在这个文件里，把 Magento\Framework\App\FrontControllerInterface 声明为
             Magento\GraphQl\Controller\GraphQl vendor\magento\module-graph-ql\Controller\GraphQl.php
@@ -5741,5 +5771,27 @@ file_put_contents($modulePath . '/composer.json', $composerContent);
 file_put_contents($modulePath . '/registration.php', $registrationContent);
 
 
+
+在不新增文件的情况下，增加一个日志文件
+di.xml 中大概写成这样
+模块中的其它类如果要引用这个 虚拟类型 ，要在 di.xml 中显式声明
+    <virtualType name="LocalDev\HelloModule\Model\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/localdev-hellomodule.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="LocalDev\HelloModule\Model\Logger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">localdev-hellomodule</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">LocalDev\HelloModule\Model\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="LocalDev\HelloModule\Model\Limiter">
+        <arguments>
+            <argument name="logger" xsi:type="object">LocalDev\HelloModule\Model\Logger</argument>
+        </arguments>
+    </type>
 -->
 
