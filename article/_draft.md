@@ -5887,6 +5887,7 @@ wordpress
     可以在浏览器中运行的 wp
         https://github.com/WordPress/wordpress-playground
         WordPress Playground是一个实验性的浏览器WordPress,由于WebAssembly,它可以在没有PHP服务器的情况下运行。
+    wordpress studio
     电商网站
         客户 customer
         产品 product
@@ -6390,6 +6391,8 @@ Macromedia
         Pico (Pine composer)
     在浏览器中的富文本编辑器
         Tinymce
+            TinyMCE 7 改用 gpl-2 协议
+            GreatRTE 是从 TinyMCE 6 分叉，并继续使用 mit 协议
         CKEditor
         Quill
         ueditor 和 UEditor Plus

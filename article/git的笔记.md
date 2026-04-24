@@ -384,3 +384,39 @@ else
     exit 1
 fi
 ```
+
+<!--
+
+
+通过产生一个新提交，覆盖一个旧的提交
+git revert commitid
+
+覆盖多个旧的提交，每个次覆盖都产生一个新提交
+git revert commit1 commit2 commit3
+
+覆盖多个连续的旧的提交，每个次覆盖都产生一个新提交，不包含 old_commitid
+git revert old_commitid..new_commitid
+
+覆盖多个连续的旧的提交，每个次覆盖都产生一个新提交，包含 old_commitid
+git revert old_commitid^..new_commitid
+
+如果加上 -n 参数，就只会产生一个新提交
+-n
+--no-commit
+
+git revert -n old_commitid^..new_commitid
+即使是覆盖多个提交，最后也只产生一个新提交
+
+revert 的过程中可能存在冲突，需要手动处理
+可以通过 git status 查看当前状态
+
+可以通过这几个命令 继续 或 中止 revert
+git revert (--continue | --skip | --abort | --quit)
+
+重要提示
+    顺序问题：当多个提交存在代码依赖关系时，git revert 会按 从新到旧 的顺序自动应用（范围语法或列表方式均如此）。如果你手动指定顺序（如旧到新），可能产生冲突。
+    冲突处理：revert 过程中可能产生冲突，需要手动解决后 git add 并 git revert --continue（或直接 git commit，如果使用了 -n）。
+
+
+-->
+

@@ -3058,6 +3058,13 @@ cms_block
     update_time
     is_active
 widget_instance
+    instance_id
+    instance_type
+    theme_id
+    title
+    store_ids
+    widget_parameters
+    sort_order
 
 pages 完整的 CMS 页面（比如关于我们、常见问题、自定义着陆页
 blocks 可复用的内容片段（如页脚版权、促销横幅、侧边栏内容）
@@ -3723,9 +3730,42 @@ $cacheManager->clean();
                 );
             }
         }
-    修改 env.php
-        cache 的配置
-        启用 cache ，只有修改 env.php 才可以实现默认启用缓存
+    启用 cache ，
+        修改 env.php 才可以实现默认启用缓存
+            在 cache_types 数组里加上
+                'TYPE_IDENTIFIER' => 1
+        或 用命令
+            php bin/magento cache:enable TYPE_IDENTIFIER
+                运行命令后， env.php 里的注释会被删掉
+        env.php 大概改成这样
+        'cache' => [
+            ...
+            'frontend' => [
+                ...
+                'TYPE_IDENTIFIER' => [
+                    'backend' => 'Magento\\Framework\\Cache\\Backend\\Redis',
+                    'backend_options' => [
+                        'server' => 'localhost',
+                        'port' => '6379',
+                        'database' => '9',
+                        'compress_data' => '0'
+                    ]
+                ],
+                ...
+            ],
+            ...
+            'type' => [
+                'TYPE_IDENTIFIER' => ['frontend' => 'TYPE_IDENTIFIER'],
+            ],
+        ]
+        ...
+        'cache_types' => [
+            ...
+            'TYPE_IDENTIFIER' => 1
+            ...
+        ],
+
+
     参考
         https://experienceleague.adobe.com/zh-hans/docs/commerce-operations/implementation-playbook/best-practices/planning/redis-service-configuration
         https://developer.adobe.com/commerce/php/development/cache/partial/database-caching/
@@ -5250,6 +5290,7 @@ app/bootstrap.php
 那些可以迅速定位问题的文件？各种入口？
 http
     frontend
+        vendor/magento/framework/App/FrontController.php
     backend
     rest
         vendor/magento/module-webapi/etc/webapi_rest/di.xml
