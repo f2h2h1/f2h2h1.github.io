@@ -1305,6 +1305,32 @@ curl -X POST https://dev.magento.com/rest/en_US/V1/gtm-layer/mine/quote-item-dat
 
 <!--
 
+select
+    entity_id,
+    consumer_id,
+    admin_id,
+    customer_id,
+    type,
+    token,
+    verifier,
+    callback_url,
+    revoked,
+    authorized,
+    user_type,
+    created_at,
+    partner_id
+from oauth_token
+where customer_id = (SELECT
+            entity_id
+        FROM `customer_entity`
+        WHERE (email = 'test.test.test@test.com') limit 1)
+order by created_at desc
+
+
+toekn 在后台这个位置找到
+后台 → System → Integrations → 用户名（要列出全部记录） → Integration Info → Integration Details → Access Token
+
+
 {
   currency {
     available_currency_codes
@@ -1340,6 +1366,19 @@ curl 'http://localhost-magento/graphql?'$graphqlquery \
     --data-raw "$graphqlquery" \
     --compressed \
     --insecure -s -k
+
+curl -v 'http://localhost-magento/graphql' \
+  -H 'authorization: Bearer wmzjko9zdrjsxwcsn4v9aygggfj87wtb' \
+  -H 'accept: */*' \
+  -H 'content-type: application/json' \
+  --data-raw '{"query":"\n query {\n customer {\n email\n firstname\n lastname\n } \n }"}'
+
+curl 'http://localhost-magento/graphql' \
+  -H 'authorization: Bearer wmzjko9zdrjsxwcsn4v9aygggfj87wtb' \
+  -H 'accept: */*' \
+  -H 'content-type: application/json' \
+  --data-raw '{"query":"\nquery {\n appConfig {\n all_category_cms_page_id\n app_content\n {\n id\n value\n } } }"}'
+
 
 graphql 要留意输入的类型，输出的类型
 在哪个位置检测输入类型

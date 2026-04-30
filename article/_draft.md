@@ -3344,9 +3344,17 @@ composer
         Service Worker
         Manifest （应用清单）
         应用通知 （Web Push 和 Notification Api）
+    至少的文件（五个）
+        manifest
+        两个图标
+            32x32
+            512x512
+        sw.js
+        index.html
     参考
         https://github.com/lavas-project/pwa-book
         https://lavas-project.github.io/pwa-book/
+        https://developer.mozilla.org/zh-CN/docs/Web/Progressive_web_apps
     要怎样才能知道当前有多少缓存？
     如何制作一个 安卓套壳app
         调用系统内的 webview
