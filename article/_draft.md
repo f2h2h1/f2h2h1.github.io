@@ -5575,6 +5575,7 @@ nas
         看板(Kanban)
         知识库（Knowledge base）
         电子手账（electronic notebook）
+        书签管理器（bookmark manager）用来保存网页的
         项目管理(Project Management System, PMS)
             Microsoft Project
             Redmine
