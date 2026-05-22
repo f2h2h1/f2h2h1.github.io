@@ -2090,7 +2090,8 @@ git的一般使用指南
         格式检查 friendsofphp/php-cs-fixer
         突变测试 infection/infection
     php的小型框架
-        https://github.com/slimphp/Slim
+        https://github.com/slimphp/Slim https://github.com/slimphp/Slim-Psr7
+        https://github.com/flightphp/core
         https://github.com/jadephp/jade
         https://github.com/silexphp/Silex 基于 Symfony2 的，现在已经不更新了
     php的大型框架
@@ -2127,6 +2128,31 @@ git的一般使用指南
         https://learnku.com/laravel/t/9365/teach-you-to-write-modern-php-code-without-using-a-framework
     把框架做成一个 composer project template
     框架的各个部分都用了哪些设计模式
+        观察者模式（Observer Pattern）
+            就是 事件 和 监听器
+        装饰器模式（Decorator Pattern）/拦截模式（Intercepting Pattern）
+            解释 magento2 中的 plugin
+        DIP/IoC/DI/Service Locator
+            似乎不属于 传统的设计模式
+            至少和 工厂模式（Factory Pattern） 单例模式（Singleton Pattern） 这几个相关
+            DI 是从构造方法中注入
+            Service Locator 是在方法中调用 ObjectManager
+        SOLID
+            单一职责原则 (SRP Single Responsibility Principle)
+            开闭原则 (OCP Open/Closed Principle)
+            里氏替换原则 (LSP Liskov Substitution Principle)
+            接口隔离原则 (ISP Interface Segregation Principle)
+            依赖倒置原则 (DIP Dependency Inversion Principle)
+    一般的目录结构
+        assets
+        config
+        public
+            index.php
+        runtime
+        src
+        tests
+        composer.json
+        cli.php
     一般的运行流程
         先加载 composer
         再加载配置文件
@@ -2136,6 +2162,22 @@ git的一般使用指南
         根据匹配的路由实例化控制器
         执行控制器获得输出
         输出结果
+    PSR（PHP Standards Recommendations）
+        PSR-1	基础编码规范 (Basic Coding Standard)	规定 PHP 文件的基础编码要求，如 PHP 标签、文件编码、类名、方法名、常量命名等，保障代码共享互操作性。
+        PSR-3	日志接口 (Logger Interface)	提供通用的日志接口，定义了 8 种日志级别（debug～emergency）及 LoggerInterface，使日志库可互换。
+        PSR-4	自动加载标准 (Autoloading Standard)	改进的自动加载标准，通过命名空间前缀映射到基目录，取代 PSR-0，更灵活且无冲突。
+        PSR-6	缓存接口 (Caching Interface)	为缓存系统提供通用接口，支持多种后端，使缓存组件可以无缝切换，不依赖具体实现。
+        PSR-7	HTTP 消息接口 (HTTP Message Interface)	定义 HTTP 请求和响应的不可变对象接口，用于表示 HTTP 消息，促进中间件、客户端等互操作。
+        PSR-11	容器接口 (Container Interface)	定义依赖注入容器的通用接口，提供 get($id) 和 has($id) 方法，促进框架容器互操作。
+        PSR-12	扩展编码风格指南 (Extended Coding Style Guide)	替代 PSR-2 的现代编码风格规范，增加新语法结构、严格类型、declare 等规则，更全面。
+        PSR-13	超媒体链接 (Hypermedia Links)	定义表示超媒体链接关系的接口，可描述 HTML <link> 或 HTTP Link 头等，用于 RESTful API。
+        PSR-14	事件派发器 (Event Dispatcher)	提供事件派发与监听器的通用接口，包括事件对象、派发器和监听器提供者，实现解耦的事件系统。
+        PSR-15	HTTP 处理器 (HTTP Handlers)	定义服务器端 HTTP 请求处理器和中间件接口，基于 PSR-7 构建可组合的中间件管道。
+        PSR-16	简单缓存 (Simple Cache)	提供更简洁的缓存接口（增、删、查、清），比 PSR-6 更易使用，适用于大多数简单场景。
+        PSR-17	HTTP 工厂 (HTTP Factories)	定义创建 PSR-7 对象（请求、响应、URI、流等）的工厂接口，解耦消息对象的生成。
+        PSR-18	HTTP 客户端 (HTTP Client)	定义发送 HTTP 请求并返回响应的客户端接口，与 PSR-7/PSR-17 搭配，简化 HTTP 调用。
+        PSR-19	PHPDoc 标签 (PHPDoc Tags)	正式标准化 PHPDoc 标签的语法和含义（如 @param, @return, @throws 等），弥补 PSR-5 的空白。
+        PSR-20	时钟接口 (Clock Interface)	提供获取当前时间的抽象接口，便于在测试中替换时间源，避免硬编码 time() 等函数。
 一些未能分类的经验
     如何做一个 composer 包
         申请一个 composer 账号

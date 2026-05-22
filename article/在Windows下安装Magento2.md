@@ -559,6 +559,17 @@ patch 文件的内容
                  [
                      $virtualTypes,
                      $this->scopePriorityScheme,
+--- lib/internal/Magento/Framework/Interception/PluginList/PluginList.php	2026-05-21 11:54:31.838225000 +0800
++++ lib/internal/Magento/Framework/Interception/PluginList/PluginList.php	2026-05-21 17:14:00.172654000 +0800
+@@ -217,7 +217,7 @@ class PluginList extends Scoped implemen
+             }
+             $this->_scopePriorityScheme[] = $scope;
+ 
+-            $cacheId = implode('|', $this->_scopePriorityScheme) . "|" . $this->_cacheId;
++            $cacheId = implode('-', $this->_scopePriorityScheme) . "-" . $this->_cacheId;
+             $configData = $this->configLoader->load($cacheId);
+ 
+             if ($configData) {
 
 ```
 
@@ -572,6 +583,10 @@ sed -i 's/lib\/internal\/Magento\/Framework\//vendor\/magento\/framework\//g' wi
 patch --verbose -p0 --no-backup-if-mismatch < windows.patch;
 ```
 
+<!--
+php createpatch.php
+-->
+
 生成 patch 文件的方式
 ```php
 \define('PATCH_FILE', 'windows.patch');
@@ -580,6 +595,7 @@ $targetArr = [
     'lib/internal/Magento/Framework/View/Element/Template/File/Validator.php',
     'lib/internal/Magento/Framework/App/StaticResource.php',
     'lib/internal/Magento/Framework/Interception/PluginListGenerator.php',
+    'lib/internal/Magento/Framework/Interception/PluginList/PluginList.php',
 ];
 
 echo "
@@ -608,10 +624,14 @@ $sedArr = array_map(function($item) {
     return sprintf("sed -i 's/%s/%s/g' " . PATCH_FILE, $a, $b);
 }, $targetArr);
 
+$rmArr = array_map(function($item) {
+    return sprintf("rm %s ", str_replace('.php', '2.php', $item));
+}, $targetArr);
+
 array_map(function($item) {
     echo join(';' . PHP_EOL, $item) . PHP_EOL . PHP_EOL;
     return $item;
-}, [$cpArr, $diffArr, $sedArr]);
+}, [$cpArr, $diffArr, $sedArr, $rmArr]);
 
 echo 'patch --verbose -p0 --no-backup-if-mismatch < ' . PATCH_FILE . PHP_EOL;
 ```

@@ -105,7 +105,7 @@ Content-Length: 61
       -X 'PUT' \
       -H 'accept: */*' \
       -H 'content-type: application/json' \
-      --data-raw ''
+      --data-raw '{"query":"\nquery {\n appConfig {\n all_category_cms_page_id\n app_content\n {\n id\n value\n } } }"}'
     ```
 2. 后续发送 GET 请求
     ```bash

@@ -119,7 +119,7 @@ mod_fastcgi
     可以简单但不严谨地理解为旧版的 mod_fcgid
     这个模块是来自 Open Market
 mod_proxy_fcgi
-    用有 fastcgi 管理进程的情况
+    用于有 fastcgi 管理进程的情况
     例如
         fpm
         PHP_FCGI_CHILDREN=1 php-cgi
