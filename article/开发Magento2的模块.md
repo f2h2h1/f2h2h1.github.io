@@ -450,6 +450,7 @@ EOF;
 $eavSql = join('UNION ALL', array_map(function($item) use ($eavTpl, $entityTabel) {
     return sprintf($eavTpl, $item, $entityTabel . '_' . $item);
 }, $eavTable));
+$eavSql = 'select * from (' . $eavSql . ') as temptable order by attribute_code';
 
 $entityTpl = <<<'EOF'
 select
@@ -493,6 +494,7 @@ EOF;
 $eavSql = join('UNION ALL', array_map(function($item) use ($eavTpl, $entityTabel) {
     return sprintf($eavTpl, $item, $entityTabel . '_' . $item);
 }, $eavTable));
+$eavSql = 'select * from (' . $eavSql . ') as temptable order by attribute_code';
 
 $entityTpl = <<<'EOF'
 select
@@ -2818,6 +2820,14 @@ vendor\magento\module-config\Block\System\Config\Form.php
 vendor\magento\module-config\view\adminhtml\templates\system\config\edit.phtml
 vendor\magento\module-backend\view\adminhtml\templates\widget\form.phtml
 
+
+修改完 app/etc/config.php 或 app/etc/env.php 后要运行这句
+php bin/magento app:config:import
+其实运行 setup:upgrade 更保险，但 app:config:import 速度更快
+这是把配置导入数据库
+开发模式下 运行 c:c 应该也可以
+
+
 -->
 
 ## 前端
@@ -4079,6 +4089,8 @@ $product->getExtensionAttributes();
 \Magento\Customer\Model\CustomerFactory
 \Magento\Quote\Model\QuoteFactory
 shipment
+payment
+address
 -->
 
 ### 在某一个位置写日志
@@ -4095,6 +4107,16 @@ $logger->warning('=======flg debug=======' . PHP_EOL . __FILE__ . ':' . __LINE__
 
 $logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
 $logger->error('debugger ' . __FILE__ .':'.__LINE__, debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+
+try {
+    if (isset($_COOKIE) && isset($_COOKIE['PHPSESSID']) && $_COOKIE['PHPSESSID'] =='k3o5vd1ggjo6k5rfd47') {
+        $logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
+        $logger->error('debugger ' . __FILE__ .':'.__LINE__, debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+    }
+} catch (\Throwable $e) {
+    $logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
+    $logger->error('debugger ' . __FILE__ .':'.__LINE__, [echo $e->getFile(), $e->getLine(), $e->getMessage()];
+}
 ```
 
 ### 在某一个位置通过拼接的 sql 查询数据库

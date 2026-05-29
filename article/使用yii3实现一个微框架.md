@@ -408,12 +408,143 @@ php -S 127.0.0.1:8002 index.php
 curl -v http://127.0.0.1:8002/index.php
 ```
 
+## 单独的action类
+
+action类 本质上是一个普通的类，具体的处理方法只需要返回 ResponseInterface 即可
+
+声明一个 action 类
+```php
+
+class ActionController
+{
+    public function execute(ServerRequestInterface $request, ResponseFactoryInterface $responseFactory): ResponseInterface
+    {
+        $body = $request->getParsedBody() ?? [];
+        $response = $responseFactory->createResponse(Status::OK);
+        $response->getBody()->write(json_encode([
+            'method'  => $request->getMethod(),
+            'uri'     => (string) $request->getUri(),
+            'body'    => $body,
+            'query'   => $request->getQueryParams(),
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        return $response
+            ->withHeader('Content-Type', 'application/json');
+    }
+}
+
+```
+
+把 action 类加入到 容器 中
+```php
+$containerConfig = ContainerConfig::create()
+    ->withDefinitions([
+        ...
+        ActionController::class => static fn() => new ActionController(),
+    ]);
+```
+
+把 action类加入到 路由 中
+```php
+// 在 $routes 数组中加上
+$routes = [
+    ...
+    'action' => Route::get('/action')
+            ->action([ActionController::class, 'execute']),
+];
+
+// 或者直接加到 $collector 对象中
+$collector->addRoute(
+    Route::get('/action')
+            ->action([ActionController::class, 'execute']),
+);
+```
+
+请求
+```bash
+curl -v http://127.0.0.1:8002/index.php/action
+```
+
+## 使用视图
+
+安装对应的库
+```bash
+composer require yiisoft/yii-view-renderer
+```
+
+在根目录下新建要给视图文件 `template.phtml` ，并写入以下内容
+```html
+<p>The message is: <?= $message ?></p>
+```
+
+在 index.php 里引入
+```php
+use Yiisoft\Yii\View\Renderer\WebViewRenderer;
+```
+
+action类新建一个 view 方法
+```php
+    public function view(ServerRequestInterface $request, WebViewRenderer $webViewRenderer): ResponseInterface
+    {
+        return $webViewRenderer->render(__DIR__ . '/template.phtml', [
+            'message' => 'message',
+        ]);
+    }
+```
+
+加入路由
+```php
+$routes = [
+    ...
+    'view' => Route::get('/view')
+            ->action([ActionController::class, 'view']),
+];
+```
+
+其实完全不用 库 也可以的
+```php
+$routes = [
+    ...
+    'view-pure' => Route::get('/view-pure')
+        ->action(function (
+            ServerRequestInterface $request,
+            ResponseFactoryInterface $responseFactory,
+        ) {
+            ob_start();
+            try {
+                $dictionary = ['message' => 'message2'];
+                extract($dictionary, EXTR_SKIP);
+                include __DIR__ . '/template.phtml';
+            } catch (\Exception $exception) {
+                ob_end_clean();
+                throw $exception;
+            }
+            $output = ob_get_clean();
+            $response = $responseFactory->createResponse(Status::OK);
+            $response->getBody()->write($output);
+            return $response;
+        }),
+];
+```
+
+## 加入授权
+
+安装对应的库
+```bash
+composer require yiisoft/user
+```
+
 <!--
 单独的 action 类
-加入视图
+加入视图 yiisoft/yii-view-renderer
 加入带layout的视图
 加入404响应
-加入 认证 和 授权
+加入 认证 yiisoft/user
+加入 授权
+
+url 路由的形式？
+    使用参数 index.php?r=/route
+    直接拼接 index.php/route
+    隐藏文件 /route
 
 -->
 
