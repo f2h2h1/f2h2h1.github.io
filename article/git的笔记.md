@@ -385,6 +385,177 @@ else
 fi
 ```
 
+这是一段 调用 llm 分析 文件的脚本
+```bash
+#!/bin/bash
+
+set -euo pipefail
+
+script_name=$(basename "$0")
+
+# 用法提示
+usage() {
+    cat << EOF
+Usage: $script_name [OPTIONS] <file1> [file2 ...]
+
+Options:
+  -u, --url <url>           API endpoint URL (required)
+  -k, --key <key>           API Key / Bearer token (required)
+  -m, --model <name>        Model name (required)
+  -s, --system <prompt>     System prompt text (optional)
+  -h, --help                Show this help message
+
+Examples:
+  ./$script_name -u https://api.openai.com/v1/chat/completions \
+              -k sk-xxxxx \
+              -m gpt-4 \
+              -s "You are a code reviewer" \
+              file1.php file2.js
+
+  ./$script_name -u http://localhost:11434/v1/chat/completions \
+              -k "ollama" \
+              -m llama3 \
+              ./src/*.py
+EOF
+    exit 1
+}
+
+# 参数解析
+URL=""
+KEY=""
+MODEL=""
+SYSTEM_PROMPT=""
+FILES=()
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -u|--url)
+            URL="${2:-}"
+            shift 2
+            ;;
+        -k|--key)
+            KEY="${2:-}"
+            shift 2
+            ;;
+        -m|--model)
+            MODEL="${2:-}"
+            shift 2
+            ;;
+        -s|--system)
+            SYSTEM_PROMPT="${2:-}"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            ;;
+        -*)
+            echo "Error: Unknown option $1" >&2
+            usage
+            ;;
+        *)
+            FILES+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# 参数校验
+[[ -z "$URL" ]] && { echo "Error: URL is required (-u)" >&2; usage; }
+[[ -z "$KEY" ]] && { echo "Error: API Key is required (-k)" >&2; usage; }
+[[ -z "$MODEL" ]] && { echo "Error: Model name is required (-m)" >&2; usage; }
+[[ ${#FILES[@]} -eq 0 ]] && { echo "Error: At least one input file is required" >&2; usage; }
+
+# 检查文件是否存在
+for f in "${FILES[@]}"; do
+    if [[ ! -f "$f" ]]; then
+        echo "Error: File not found: $f" >&2
+        exit 1
+    fi
+done
+
+for f in "${FILES[@]}"; do
+    echo "$f"
+done
+
+# exit 1;
+
+# ── JSON 转义辅助函数 ──
+# 优先使用 jq，其次尝试 python3，最后回退到基础 sed（仅处理常见字符）
+json_escape() {
+    local text="$1"
+    if command -v jq &>/dev/null; then
+        printf '%s' "$text" | jq -Rs '.[:-1]'
+    elif command -v python3 &>/dev/null; then
+        python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()), end="")' <<< "$text"
+    else
+        # 基础转义（处理引号、反斜杠、换行、制表符）
+        printf '%s' "$text" | sed \
+            -e 's/\\/\\\\/g' \
+            -e 's/"/\\"/g' \
+            -e 's/\t/\\t/g' \
+            -e 's/\r/\\r/g' \
+            -e ':a;N;$!ba;s/\n/\\n/g'
+    fi
+}
+
+# ── 读取所有文件并合并为 user message ──
+USER_CONTENT=""
+for f in "${FILES[@]}"; do
+    [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
+    USER_CONTENT+="==== FILE: $(basename "$f") ===="$'\n'
+    USER_CONTENT+=$(cat "$f")
+done
+
+# echo "$USER_CONTENT"
+
+USER_CONTENT=$SYSTEM_PROMPT$'\n\n'$USER_CONTENT
+# echo "$USER_CONTENT"
+
+PAYLOAD=$(jq -n \
+    --arg model "$MODEL" \
+    --arg prompt "$USER_CONTENT" \
+'{
+    model: $model,
+    prompt: $prompt,
+    temperature: 0.7,
+    stream: false
+}')
+
+# echo "$PAYLOAD"
+# exit 1;
+
+RESPONSE=$(curl -s -w "\n%{http_code}" \
+    -H "Content-Type: application/json;charset=utf-8" \
+    -H "Authorization: Bearer $KEY" \
+    -d "$PAYLOAD" \
+    "$URL")
+
+HTTP_CODE=$(tail -n1 <<< "$RESPONSE")
+BODY=$(sed '$ d' <<< "$RESPONSE")
+
+# echo $BODY;
+
+AI_RESULT=$(echo $BODY | jq '.choices[0].text')
+
+if [ "$AI_RESULT" = "success" ]; then
+    echo "agent 没有发现问题"
+    exit 0
+fi
+
+echo $AI_RESULT
+
+exit 1;
+```
+
+类似这样调用
+```bash
+./mrico.sh -u http://localhost/api/v1/completions \
+            -k auth-key \
+            -m "deepseek/deepseek-v3" \
+            -s "你是一个 code reviewer ，请从 语法，性能 和 安全 角度分析以下文件；如果所有文件都没有问题请直接输出 success ，如果有问题请按以下格式逐行输出 file:lie problem" \
+            template.phtml index.php
+```
+
 <!--
 
 

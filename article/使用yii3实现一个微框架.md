@@ -537,9 +537,23 @@ composer require yiisoft/user
 单独的 action 类
 加入视图 yiisoft/yii-view-renderer
 加入带layout的视图
-加入404响应
+加入 404响应 和 其它错误处理
 加入 认证 yiisoft/user
+    安装：composer require yiisoft/user
+    绑定 IdentityRepositoryInterface 接口，并将 Session 注入 CurrentUser 服务。
+    实现接口：
+        Identity 类：implements Yiisoft\Auth\IdentityInterface，作为用户的数据载体。
+        IdentityRepository 类：implements Yiisoft\Auth\IdentityRepositoryInterface，负责从数据源（如数据库）查找并返回 Identity 对象。
+    执行登录：在控制器中通过依赖注入获取 CurrentUser 实例，然后调用 $currentUser->login($yourIdentity, $duration) 即可。
+
+    use Yiisoft\Auth\AuthenticationMethod\SessionAuth;
+    use Yiisoft\Auth\Middleware\Authentication;
+    use Yiisoft\User\CurrentUser;
 加入 授权
+数据库
+
+容器
+中间件
 
 url 路由的形式？
     使用参数 index.php?r=/route
