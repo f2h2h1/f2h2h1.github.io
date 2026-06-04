@@ -4768,6 +4768,8 @@ windiows里的各种常用软件
         (Add-Type -MemberDefinition $Code -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)
     这一句效果是一样的，能运行在 powershell 里，但一个 powershell 窗口只能运行一次，因为类型不能重复定义
         (Add-Type -MemberDefinition '[DllImport("user32.dll")] public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);' -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)
+    这一句是由 ai 生成的，10秒之后再关闭屏幕
+        Start-Sleep 10; Add-Type -TypeDefinition 'using System;using System.Runtime.InteropServices;public class S{[DllImport("user32.dll")]static extern IntPtr SendMessage(IntPtr hWnd,int Msg,int wParam,int lParam);public static void Off(){SendMessage((IntPtr)0xffff,0x112,0xF170,2);}}'; [S]::Off()
 如何用命令行打开windows的控制面板
     按下 Win 键 + R 键，打开运行对话框，输入 control ，然后按回车键
     在 cmd 或 powershell 或 其他终端里，输入 control ，然后按回车键
@@ -7029,6 +7031,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
         落球报时
         点灯
         入夜仪式/马刀开香槟
+        火计时
+        公鸡打鸣
     和时间相关的标准有哪些
     一年有多少天？
         365          一般的平年
@@ -7614,7 +7618,7 @@ cmd 下
 4、重启电脑
 5、pip install -r requirements.txt
 
-git add articleList.json sitemap.xml rss.xml README.md; git commit -m "update auxiliary"
+git add articleList.json sitemap.xml rss.xml atom.xml README.md SUMMARY.md; git commit -m "update auxiliary"
 
 git reset --soft 884444e1fe8f918ffe1ab5ee53799a9a89d98869
 

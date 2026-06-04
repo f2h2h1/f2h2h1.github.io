@@ -551,9 +551,22 @@ composer require yiisoft/user
     use Yiisoft\User\CurrentUser;
 加入 授权
 数据库
+    yiisoft/db	提供最底层的数据库操作能力
+    yiisoft/data	提供数据处理的统一“语言”和现成的 分页/排序/过滤工具 ，并不依赖 yiisoft/db ， cahce 之类的也可以用 类似于 magento2的 collection
+    yiisoft/active-record	ORM ，直接依赖 yiisoft/db 可选依赖 yiisoft/data
+    yiisoft/yii-dataview	用于显示 yiisoft/data 的 widgets
 
-容器
-中间件
+容器 Container \Yiisoft\Di\Container
+    $containerConfig = []; // 声明接口由哪个类实现，声明每个类构造函数的参数
+    $container = new Container($containerConfig);
+    $currentRoute = $container->get(CurrentRoute::class); // 根据接口名或类名获取对应的实例
+中间件 MiddlewareInterface \Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher
+    ErrorHandler
+    Session
+    Csrf
+    Router
+观察者 EventDispatcherInterface \Yiisoft\EventDispatcher\Dispatcher\Dispatcher
+
 
 url 路由的形式？
     使用参数 index.php?r=/route
