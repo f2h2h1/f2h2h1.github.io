@@ -388,6 +388,7 @@ entity attribute value
 ```
 eav_attribute 保存 eav 的属性
 eav_entity_type 保存 eav 的类
+SELECT * FROM eav_entity_type
 
 输出某个 eav 类的全部 eav 属性
 SELECT * FROM eav_attribute
@@ -680,6 +681,34 @@ class AddClothingMaterial implements DataPatchInterface
 }
 
 ```
+
+<!--
+
+eav 的缓存
+
+php bin/magento cache:status
+php bin/magento config:show dev/caching/cache_user_defined_attributes
+
+eav_attribute
+eav_attribute_group
+eav_attribute_label
+eav_attribute_option
+eav_attribute_option_switch
+eav_attribute_option_value
+eav_attribute_set
+eav_entity_attribute
+
+eav_entity ？
+eav_entity_store ？
+
+eav_form_element       
+eav_form_fieldset      
+eav_form_fieldset_label
+eav_form_type          
+eav_form_type_entity   
+
+-->
+
 
 ## 新建命令
 
@@ -4115,7 +4144,7 @@ try {
     }
 } catch (\Throwable $e) {
     $logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
-    $logger->error('debugger ' . __FILE__ .':'.__LINE__, [echo $e->getFile(), $e->getLine(), $e->getMessage()];
+    $logger->error('debugger ' . __FILE__ .':'.__LINE__, [$e->getFile(), $e->getLine(), $e->getMessage()]);
 }
 ```
 
@@ -5105,6 +5134,46 @@ eav 模型里还有一些表无法理解？
     eav_attribute_set
     eav_entity_attribute
 
+SHOW TABLES LIKE '%eav%';
+SHOW TABLES LIKE '%_entity';
+
++-------------------------------------------+
+| Tables_in_magento (%eav%)                 |
++-------------------------------------------+
+| catalog_eav_attribute                     |
+| catalog_product_index_eav                 |
+| catalog_product_index_eav_decimal         |
+| catalog_product_index_eav_decimal_idx     |
+| catalog_product_index_eav_decimal_replica |
+| catalog_product_index_eav_decimal_tmp     |
+| catalog_product_index_eav_idx             |
+| catalog_product_index_eav_replica         |
+| catalog_product_index_eav_tmp             |
+| customer_eav_attribute                    |
+| customer_eav_attribute_website            |
+| eav_attribute                             |
+| eav_attribute_group                       |
+| eav_attribute_label                       |
+| eav_attribute_option                      |
+| eav_attribute_option_swatch               |
+| eav_attribute_option_value                |
+| eav_attribute_set                         |
+| eav_entity                                |
+| eav_entity_attribute                      |
+| eav_entity_datetime                       |
+| eav_entity_decimal                        |
+| eav_entity_int                            |
+| eav_entity_store                          |
+| eav_entity_text                           |
+| eav_entity_type                           |
+| eav_entity_varchar                        |
+| eav_form_element                          |
+| eav_form_fieldset                         |
+| eav_form_fieldset_label                   |
+| eav_form_type                             |
+| eav_form_type_entity                      |
++-------------------------------------------+
+
 
 sales_order 和金额相关的字段
 小结 subtotal
@@ -5931,5 +6000,16 @@ di.xml 中大概写成这样
             <argument name="logger" xsi:type="object">LocalDev\HelloModule\Model\Logger</argument>
         </arguments>
     </type>
+
+
+
+切换分支，然后打包一个模块
+git fetch; git stash && \
+git checkout branch-name && \
+"/C/Program Files/7-Zip/7z.exe" a module-`date +%g%m%d%H%M` app/code/vendor/module && \
+git switch - && \
+git stash pop;
+
+
 -->
 

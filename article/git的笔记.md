@@ -556,6 +556,94 @@ exit 1;
             template.phtml index.php
 ```
 
+
+这是一段 列出之某个提交之后，有修改的文件，然后运行静态分析 的脚本
+```bash
+#!/bin/bash
+
+set -euo pipefail
+
+# # 使用例子
+# ./check.sh a7a1df8dc764e48f35f0bb65819597f996fc3885
+
+commit="$1^..HEAD"
+changed_files=$(git log --name-only --pretty='' $commit | awk '!seen[$0]++')
+
+# 检查是否有文件被修改
+if [ -z "$changed_files" ]; then
+    echo "没有暂存的文件"
+    exit 0
+fi
+
+# 将文件列表按换行符分割成数组
+readarray -t files <<< "$changed_files"
+
+# 创建一个数组来存储符合条件的文件
+php_files=()
+other_files=()
+
+# 筛选出以 .php 和 .phtml 结尾的文件
+echo "筛选 PHP 相关文件..."
+for file in "${files[@]}"; do
+    # 检查文件是否以 .php 或 .phtml 结尾
+    if [[ "$file" == *.php ]] || [[ "$file" == *.phtml ]]; then
+        # 检查文件是否存在（避免已删除的文件）
+        if [ -f "$file" ]; then
+            php_files+=("$file")
+        fi
+    else
+        # 检查文件是否存在（避免已删除的文件）
+        if [ -f "$file" ]; then
+            other_files+=("$file")
+        fi
+    fi
+done
+
+echo "其它文件："
+if [ ${#other_files[@]} -ne 0 ]; then
+    for file in "${other_files[@]}"; do
+        echo "  - $file"
+    done
+fi
+
+if [ ${#php_files[@]} -eq 0 ]; then
+    echo "没有找到 .php 或 .phtml 文件需要检测"
+    exit 0
+fi
+
+echo "php文件："
+for file in "${php_files[@]}"; do
+    echo "  - $file"
+done
+
+# phpcs_result=0
+# for file in "${php_files[@]}"; do
+#     echo "检测文件: $file"
+#     # vendor/bin/phpcs --standard=Magento2 --warning-severity=3 "$file"
+#     vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 "$file"
+#     if [ $? -ne 0 ]; then
+#         phpcs_result=1
+#     fi
+#     echo "------------------------"
+# done
+# if [ $phpcs_result -eq 0 ]; then
+#     echo "所有文件格式检测通过"
+# else
+#     echo "发现代码格式问题，请修复后重新提交"
+#     exit 1
+# fi
+
+vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 "${php_files[@]}"
+if [ $? -eq 0 ]; then
+    echo "所有文件格式检测通过"
+    exit 0
+else
+    echo "发现代码格式问题"
+    exit 0
+fi
+```
+
+
 <!--
 
 
@@ -589,5 +677,25 @@ git revert (--continue | --skip | --abort | --quit)
     冲突处理：revert 过程中可能产生冲突，需要手动解决后 git add 并 git revert --continue（或直接 git commit，如果使用了 -n）。
 
 
+
+
+git log --name-only --pretty='' f5abef8e35adda479477f90637e5c5812e900da6 a73458db7531ecf61c06f0f49af0e4f0cbf3d9a9 | awk '!seen[$0]++'
+
+
+git log --name-only --pretty='' f5abef8e35adda479477f90637e5c5812e900da6^..HEAD | awk '!seen[$0]++'
+
+git log --name-only --pretty='' f5abef8e35adda479477f90637e5c5812e900da6^..HEAD | awk '!seen[$0]++' | grep '\(php\|phtml\)$'
+git log --name-only --pretty='' f5abef8e35adda479477f90637e5c5812e900da6^..HEAD | awk '!seen[$0]++' | grep -vE '\.(php|phtml)$'
+
+
+git log --name-only --pretty='' f5abef8e35adda479477f90637e5c5812e900da6^..HEAD | awk '!seen[$0]++' | grep '\(php\|phtml\)$' | readarray -t array
+
+这一句是可行的，但遇到被删除的文件会报错
+vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 $(git log --name-only --pretty='' f5abef8e35adda479477f90637e5c5812e900da6^..HEAD | awk '!seen[$0]++' | grep '\(php\|phtml\)$')
+
+
+
 -->
+
+
 

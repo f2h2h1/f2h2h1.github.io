@@ -2258,6 +2258,16 @@ git的一般使用指南
             k8s
         服务器监控
             Prometheus Grafana kiali Zabbix
+            监控
+                系统的各个指标
+                    cpu 内存 硬盘 网卡
+                数据库
+                应用
+                从日志中获取数据，解释数据
+                警报
+            可观测性的三个核心支柱
+                指标（Metrics）、日志（Logs）、追踪（Traces）
+                OpenTelemetry
         中间件
             搜索引擎/全文搜索
                 ElasticSearch
