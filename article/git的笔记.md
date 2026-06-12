@@ -693,7 +693,11 @@ git log --name-only --pretty='' f5abef8e35adda479477f90637e5c5812e900da6^..HEAD 
 这一句是可行的，但遇到被删除的文件会报错
 vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 $(git log --name-only --pretty='' f5abef8e35adda479477f90637e5c5812e900da6^..HEAD | awk '!seen[$0]++' | grep '\(php\|phtml\)$')
 
+加入 staged 后运行
+vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 $(git diff --cached --name-only)
 
+提交后运行
+vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 $(git log -1 --name-only --pretty='')
 
 -->
 

@@ -693,12 +693,12 @@ eav_attribute
 eav_attribute_group
 eav_attribute_label
 eav_attribute_option
-eav_attribute_option_switch
 eav_attribute_option_value
 eav_attribute_set
 eav_entity_attribute
 
 eav_entity ？
+    此表是用来记录和生成所有 EAV 实体的统一ID的，但在 Magento 2 的实际操作中，它已经被废弃，内容为空。产品、客户等实体数据已不再通过它进行统一管理
 eav_entity_store ？
 
 eav_form_element       
@@ -5063,12 +5063,17 @@ from salesrule where rule_id = 5898;
                 |        1 |          0 | Default    |
                 +----------+------------+------------+
         cataloginventory_stock_item vendor\magento\module-catalog-inventory\Model\ResourceModel\Stock\Item.php
+            数据主表
             仓库中每个产品的库存数据
             is_in_stock
             qty
             manage_stock
             use_config_manage_stock
         cataloginventory_stock_status vendor\magento\module-catalog-inventory\Model\ResourceModel\Stock\Status.php
+            索引表
+                刷新 cataloginventory_stock 索引就能更新了
+                主要供前端（如产品列表、详情页）、API或搜索索引快速判断产品“可售”（salable）状态
+                单向同步，数据流从 cataloginventory_stock_item 指向 cataloginventory_stock_status
             stock_status
             qty
         eav 里也有一个和库存相关的值 quantity_and_stock_status
@@ -5128,11 +5133,15 @@ eav 模型里还有一些表无法理解？
     **_eav_attribute 例如 customer_eav_attribute catalog_eav_attribute
     eav_attribute_group
     eav_attribute_label
+        用于实现属性名称的多语言/多店铺视图 (Store View) 翻译。
+        eav_attribute 表中有一个默认的 frontend_label（前台标签）。
+        如果某个属性在特定的 Store View（例如法语店或中文店）需要显示不同的名称，系统就会在 eav_attribute_label 表中添加一条记录，以覆盖默认标签。
     eav_attribute_option
-    eav_attribute_option_switch
     eav_attribute_option_value 一些情况下 eav 里具体的值好像是存在这个表里的
     eav_attribute_set
     eav_entity_attribute
+
+catalog_product_index* 之一类表是用在 索引 catalog_product_attribute
 
 SHOW TABLES LIKE '%eav%';
 SHOW TABLES LIKE '%_entity';
@@ -5155,7 +5164,6 @@ SHOW TABLES LIKE '%_entity';
 | eav_attribute_group                       |
 | eav_attribute_label                       |
 | eav_attribute_option                      |
-| eav_attribute_option_swatch               |
 | eav_attribute_option_value                |
 | eav_attribute_set                         |
 | eav_entity                                |
