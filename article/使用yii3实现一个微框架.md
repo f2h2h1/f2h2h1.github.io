@@ -538,7 +538,11 @@ composer require yiisoft/user
 加入视图 yiisoft/yii-view-renderer
 加入带layout的视图
 加入 404响应 和 其它错误处理
-加入 认证 yiisoft/user
+加入 认证 yiisoft/auth
+    yiisoft/user
+        yiisoft/auth
+        yiisoft/access
+        yiisoft/session
     安装：composer require yiisoft/user
     绑定 IdentityRepositoryInterface 接口，并将 Session 注入 CurrentUser 服务。
     实现接口：
@@ -549,7 +553,7 @@ composer require yiisoft/user
     use Yiisoft\Auth\AuthenticationMethod\SessionAuth;
     use Yiisoft\Auth\Middleware\Authentication;
     use Yiisoft\User\CurrentUser;
-加入 授权
+加入 授权 yiisoft/access
 数据库
     yiisoft/db	提供最底层的数据库操作能力
     yiisoft/data	提供数据处理的统一“语言”和现成的 分页/排序/过滤工具 ，并不依赖 yiisoft/db ， cahce 之类的也可以用 类似于 magento2的 collection
@@ -557,16 +561,31 @@ composer require yiisoft/user
     yiisoft/yii-dataview	用于显示 yiisoft/data 的 widgets
 
 容器 Container \Yiisoft\Di\Container
+    PSR-11
+    yiisoft/di （容器）
+    yiisoft/injector (注入)
+    yiisoft/definitions (定义)
+    yiisoft/factory (工厂)
     $containerConfig = []; // 声明接口由哪个类实现，声明每个类构造函数的参数
     $container = new Container($containerConfig);
     $currentRoute = $container->get(CurrentRoute::class); // 根据接口名或类名获取对应的实例
+
 中间件 MiddlewareInterface \Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher
+    PSR-15
+    yiisoft/middleware-dispatcher
     ErrorHandler
     Session
     Csrf
     Router
 观察者 EventDispatcherInterface \Yiisoft\EventDispatcher\Dispatcher\Dispatcher
+    PSR-14
+    yiisoft/event-dispatcher
+    yiisoft/yii-event
+    Provider
+    Dispatcher
 
+
+di 中间件 路由 事件 其它配置
 
 url 路由的形式？
     使用参数 index.php?r=/route

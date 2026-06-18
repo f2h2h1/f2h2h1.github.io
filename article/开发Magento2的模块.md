@@ -4211,6 +4211,72 @@ echo $collection->getSelectSql(true);
 
 日志会输出到这个文件里 var/debug/db.log
 
+也可以通过命令行启用
+```
+php bin/magento dev:dev:query-log:enable
+php bin/magento dev:dev:query-log:disable
+```
+
+### database profiler
+
+启用 database profiler 后可以查看到一个请求里，执行了多少条sql，每条sql执行了多久，每条sql的参数是什么
+
+修改 `app/etc/env.php`
+```
+    'profiler' => [
+        'class' => '\Magento\Framework\DB\Profiler',
+        'enabled' => true,
+    ],
+```
+
+一个例子
+```
+    'db' => [
+        'connection' => [
+            'default' => [
+                'host' => 'localhost',
+                'dbname' => 'magento245',
+                'username' => 'root',
+                'password' => '1234',
+                'model' => 'mysql4',
+                'engine' => 'innodb',
+                'initStatements' => 'SET NAMES utf8;',
+                'active' => '1',
+                'profiler' => [
+                    'class' => \Magento\Framework\DB\Profiler::class,
+                    'enabled' => true,
+                ],
+            ],
+        'table_prefix' => '',
+    ],
+```
+
+在 `$bootstrap->run($app)` 后面加上这一段，这是文档里的例子，其实可以把输出写入文件的
+```php
+/** @var \Magento\Framework\App\ResourceConnection $res */
+$res = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\App\ResourceConnection');
+/** @var Magento\Framework\DB\Profiler $profiler */
+$profiler = $res->getConnection('read')->getProfiler();
+echo "<table cellpadding='0' cellspacing='0' border='1'>";
+echo "<tr>";
+echo "<th>Time <br/>[Total Time: ".$profiler->getTotalElapsedSecs()." secs]</th>";
+echo "<th>SQL [Total: ".$profiler->getTotalNumQueries()." queries]</th>";
+echo "<th>Query Params</th>";
+echo "</tr>";
+foreach ($profiler->getQueryProfiles() as $query) {
+    /** @var Zend_Db_Profiler_Query $query*/
+    echo '<tr>';
+    echo '<td>', number_format(1000 * $query->getElapsedSecs(), 2), 'ms', '</td>';
+    echo '<td>', $query->getQuery(), '</td>';
+    echo '<td>', json_encode($query->getQueryParams()), '</td>';
+    echo '</tr>';
+}
+echo "</table>";
+```
+
+文档
+https://experienceleague.adobe.com/en/docs/commerce-operations/configuration-guide/storage/db-profiler
+
 ### sql 语句最终的执行位置
 
 ```
@@ -4338,6 +4404,130 @@ public static function backtrace($return = false, $html = true, $withArgs = true
 \Magento\Framework\Debug::backtrace(false, false, false);
 echo \Magento\Framework\Debug::backtrace(true, false, false);
 ```
+
+### Profiler
+
+启用
+```
+php bin/magento dev:profiler:enable
+php bin/magento dev:profiler:enable html
+php bin/magento dev:profiler:enable csvfile
+```
+
+运行 enbale 命令后会新建一个 /var/profiler 文件
+
+不是在单元测试的情况下， cli 不会有 Profiler
+启用 Profiler 的代码在
+```
+app/bootstrap.php
+```
+
+`app/bootstrap.php` 会通过 `$_SERVER['MAGE_PROFILER']` 或 `/var/profiler`
+判断是否启用 Profiler
+除此之外还会判断 http 头中的 accept 是否包含 text/html ， 只有 text/html 才会启用 Profiler
+
+Profiler 的输出格式有两种类型 html 和 csv
+
+如果是通过命令行设置 `/var/profiler` 的内容是 html 或 csvfile
+
+如果是通过 `$_SERVER['MAGE_PROFILER']` 设置，MAGE_PROFILER 的值是 html 或 csvfile
+
+如果类型是 csvfile ， profiler 的数据会保存在 `/var/log/profiler.csv` ，每次请求都会覆盖
+
+如果类型是 html ，会直接输出在网页的最后面
+
+csv 的每列的含义
+```
+id 运行时间 平均运行时间 运行次数 分配的内存 实际使用的内存
+```
+
+在 cli 中强行启用 profiler
+加上这样一段
+```php
+
+\Magento\Framework\Profiler::applyConfig('html', BP, false);
+
+\Magento\Framework\Profiler::applyConfig('csvfile', BP, false);
+
+\Magento\Framework\Profiler::add(new \Magento\Framework\Profiler\Driver\Standard(
+    [
+        'outputs' => [
+            'Html' => [
+                'type' => \Magento\Framework\Profiler\Driver\Standard\Output\Html::class,
+                'baseDir' => __DIR__,
+            ]
+        ]
+    ]
+));
+
+\Magento\Framework\Profiler::add(new \Magento\Framework\Profiler\Driver\Standard(
+    [
+        'outputs' => [
+            'Csvfile' => [
+                'type' => \Magento\Framework\Profiler\Driver\Standard\Output\Csvfile::class,
+                'baseDir' => __DIR__,
+            ]
+        ]
+    ]
+));
+```
+
+`$_SERVER['MAGE_PROFILER']` 或 `/var/profiler` 的内容可以改成这样，实现更细致的配置
+```json
+{
+    "drivers": [
+        {
+            "output": "html"
+        }
+    ]
+}
+
+{
+    "drivers": [
+        {
+            "outputs": ["html", "csvfile"]
+        }
+    ]
+}
+
+{
+    "drivers": [
+        {
+            "outputs": [
+                {
+                    "type": "Magento\\Framework\\Profiler\\Driver\\Standard\\Output\\Html",
+                    "baseDir": "D:\\code\\magento2\\branch-name"
+                },
+                {
+                    "type": "Magento\\Framework\\Profiler\\Driver\\Standard\\Output\\Csvfile",
+                    "baseDir": "D:\\code\\magento2\\branch-name",
+                    "filePath": "/var/profilter.csv"
+                }
+            ]
+        }
+    ]
+}
+```
+
+加在 `bin/magento` 的 `$application->run()` 前面
+或
+加在其它脚本文件的 `\Magento\Framework\App\Bootstrap::create` 后面
+
+禁用
+```
+php bin/magento dev:profiler:disable
+或
+rm /var/profiler
+```
+
+其实只要重写 driver 就能记录每个请求的 profiler 了吧？
+```
+\Magento\Framework\Profiler\Driver\Standard\Output\Html::class
+\Magento\Framework\Profiler\Driver\Standard\Output\Csvfile::class
+```
+
+文档
+https://experienceleague.adobe.com/en/docs/commerce-operations/configuration-guide/setup/mage-profiler
 
 ### 文件搜索
 
@@ -5296,6 +5486,8 @@ bin/magento deploy:mode:show：查看当前的运行模式
 bin/magento deploy:mode:set {mode}：设置运行模式为 developer, default 或 production
 bin/magento deploy:mode:set production --skip-compilation：设置运行模式为 production 但跳过编译步骤
 
+是 app/etc/env.php 里的这个值
+    'MAGE_MODE' => 'developer',
 
 magento2 的维护模式
 php bin/magento maintenance:enable
