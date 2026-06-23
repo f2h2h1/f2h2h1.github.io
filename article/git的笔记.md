@@ -413,9 +413,17 @@ Examples:
               file1.php file2.js
 
   ./$script_name -u http://localhost:11434/v1/chat/completions \
-              -k "ollama" \
-              -m llama3 \
-              ./src/*.py
+              -k sk-xxxxx \
+              -m "deepseek/deepseek-v3" \
+              -s "You are a code reviewer" \
+              \$(git log -1 --name-only --pretty='')
+
+  ./$script_name -u http://localhost:11434/v1/chat/completions \
+              -k "sk-xxxxx" \
+              -m "deepseek/deepseek-v3" \
+              -s "You are a code reviewer" \
+              \$(git diff --cached --name-only)
+
 EOF
     exit 1
 }
@@ -465,42 +473,29 @@ done
 [[ -z "$MODEL" ]] && { echo "Error: Model name is required (-m)" >&2; usage; }
 [[ ${#FILES[@]} -eq 0 ]] && { echo "Error: At least one input file is required" >&2; usage; }
 
+target_files=()
+
 # 检查文件是否存在
 for f in "${FILES[@]}"; do
-    if [[ ! -f "$f" ]]; then
-        echo "Error: File not found: $f" >&2
-        exit 1
+    if [ -f "$f" ]; then
+        target_files+=("$f")
     fi
 done
 
-for f in "${FILES[@]}"; do
+if [ ${#target_files[@]} -eq 0 ]; then
+    echo "没有找到有效的文件需要检测"
+    exit 0
+fi
+
+for f in "${target_files[@]}"; do
     echo "$f"
 done
 
 # exit 1;
 
-# ── JSON 转义辅助函数 ──
-# 优先使用 jq，其次尝试 python3，最后回退到基础 sed（仅处理常见字符）
-json_escape() {
-    local text="$1"
-    if command -v jq &>/dev/null; then
-        printf '%s' "$text" | jq -Rs '.[:-1]'
-    elif command -v python3 &>/dev/null; then
-        python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()), end="")' <<< "$text"
-    else
-        # 基础转义（处理引号、反斜杠、换行、制表符）
-        printf '%s' "$text" | sed \
-            -e 's/\\/\\\\/g' \
-            -e 's/"/\\"/g' \
-            -e 's/\t/\\t/g' \
-            -e 's/\r/\\r/g' \
-            -e ':a;N;$!ba;s/\n/\\n/g'
-    fi
-}
-
 # ── 读取所有文件并合并为 user message ──
 USER_CONTENT=""
-for f in "${FILES[@]}"; do
+for f in "${target_files[@]}"; do
     [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
     USER_CONTENT+="==== FILE: $(basename "$f") ===="$'\n'
     USER_CONTENT+=$(cat "$f")
@@ -524,25 +519,26 @@ PAYLOAD=$(jq -n \
 # echo "$PAYLOAD"
 # exit 1;
 
-RESPONSE=$(curl -s -w "\n%{http_code}" \
+RESPONSE=$(curl -s \
     -H "Content-Type: application/json;charset=utf-8" \
     -H "Authorization: Bearer $KEY" \
     -d "$PAYLOAD" \
     "$URL")
 
-HTTP_CODE=$(tail -n1 <<< "$RESPONSE")
-BODY=$(sed '$ d' <<< "$RESPONSE")
+# HTTP_CODE=$(tail -n1 <<< "$RESPONSE")
+# BODY=$(sed '$ d' <<< "$RESPONSE")
+BODY=$RESPONSE
 
 # echo $BODY;
 
-AI_RESULT=$(echo $BODY | jq '.choices[0].text')
+AI_RESULT=$(echo "$BODY" | jq -r '.choices[0].text')
 
 if [ "$AI_RESULT" = "success" ]; then
     echo "agent 没有发现问题"
     exit 0
 fi
 
-echo $AI_RESULT
+echo "$AI_RESULT"
 
 exit 1;
 ```
@@ -552,10 +548,56 @@ exit 1;
 ./mrico.sh -u http://localhost/api/v1/completions \
             -k auth-key \
             -m "deepseek/deepseek-v3" \
-            -s "你是一个 code reviewer ，请从 语法，性能 和 安全 角度分析以下文件；如果所有文件都没有问题请直接输出 success ，如果有问题请按以下格式逐行输出 file:lie problem" \
+            -s "你是一个 code reviewer ，请从 语法，性能 和 安全 角度分析以下文件；如果所有文件都没有问题请直接输出 success ，如果有问题请按以下格式逐行输出 file:line problem" \
             template.phtml index.php
+
+./mrico.sh -u http://localhost/api/v1/completions \
+            -k auth-key \
+            -m "deepseek/deepseek-v3" \
+            -s "你是一个 code reviewer ，请从 语法，性能 和 安全 角度分析以下文件；如果所有文件都没有问题请直接输出 success ，如果有问题请输出具体的问题；请使用中文" \
+            $(git log --name-only --pretty='' -1)
+
+# 最近一次提交的文件        $(git log -1 --name-only --pretty='')
+# 特定某个提交的文件        $(git log -1 --name-only --pretty='' eaaa302ffe0421a524c5c0e8543421d2f200067c)
+# 在 staged 的文件          $(git diff --cached --name-only)
+# 从某个提交开始修改过的文件 $(git log --name-only --pretty='' eaaa302ffe0421a524c5c0e8543421d2f200067c^..HEAD | awk '!seen[$0]++')
+
 ```
 
+<!--
+PAYLOAD=$(jq -n \
+    --arg model "$MODEL" \
+    --arg prompt "$USER_CONTENT" \
+'{
+        "approach": "rtr",
+        "history": [
+            {
+                "role": "user",
+                "content": $prompt
+            }
+        ],
+        "overrides": {
+            "top": 0,
+            "model": $model,
+            "max_tokens": 65536,
+            "temperature": 0,
+            "top_p": 1,
+            "presence_penalty": 0,
+            "frequency_penalty": 0,
+            "show_reference": false,
+            "stream": false
+        }
+    }')
+
+# echo "$PAYLOAD"
+# exit 1;
+
+RESPONSE=$(curl -s -X POST \
+    -H "Content-Type: application/json;charset=utf-8" \
+    -H "x-api-key: $KEY" \
+    -d "$PAYLOAD" \
+    "$URL")
+-->
 
 这是一段 列出之某个提交之后，有修改的文件，然后运行静态分析 的脚本
 ```bash
@@ -564,23 +606,21 @@ exit 1;
 set -euo pipefail
 
 # # 使用例子
-# ./check.sh a7a1df8dc764e48f35f0bb65819597f996fc3885
+# ./check.sh $(git log --name-only --pretty='' eaaa302ffe0421a524c5c0e8543421d2f200067c^..HEAD | awk '!seen[$0]++')
 
-commit="$1^..HEAD"
-changed_files=$(git log --name-only --pretty='' $commit | awk '!seen[$0]++')
+# 读取全部参数，按空格分割成数组
+read -ra files <<< "$@"
 
 # 检查是否有文件被修改
-if [ -z "$changed_files" ]; then
+if [ -z "$files" ]; then
     echo "没有暂存的文件"
     exit 0
 fi
 
-# 将文件列表按换行符分割成数组
-readarray -t files <<< "$changed_files"
-
 # 创建一个数组来存储符合条件的文件
 php_files=()
 other_files=()
+
 
 # 筛选出以 .php 和 .phtml 结尾的文件
 echo "筛选 PHP 相关文件..."
@@ -699,6 +739,11 @@ vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 $(git diff --cached --na
 提交后运行
 vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 $(git log -1 --name-only --pretty='')
 
+
+# 最近一次提交的文件        $(git log -1 --name-only --pretty='')
+# 特定某个提交的文件        $(git log -1 --name-only --pretty='' eaaa302ffe0421a524c5c0e8543421d2f200067c)
+# 在staged的文件            $(git diff --cached --name-only)
+# 从某个提交开始修改过的文件 $(git log --name-only --pretty='' eaaa302ffe0421a524c5c0e8543421d2f200067c^..HEAD | awk '!seen[$0]++')
 -->
 
 

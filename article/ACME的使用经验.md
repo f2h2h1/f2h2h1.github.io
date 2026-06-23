@@ -105,6 +105,30 @@ acme.sh --install-cert -d www.example.com \
 - 安装证书后 --reloadcmd 不能修改，要修改 --reloadcmd 命令，就重新安装一次证书，直接改配置文件也是可以的，但文档里不推荐这样做
 - 其实安装证书这步不是必须的，可以自己手动把证书复制到对应的目录里，但没有安装证书这一步就不能自动续签
 
+配置文件的路径通常是
+```
+~/.acme.sh/www.example.com_ecc/www.example.com.conf
+```
+
+reloadcmd 的配置是这个
+```
+Le_ReloadCmd='__ACME_BASE64__START_c2VydmljZSBuZ2lueCBmb3JjZS1yZWxvYWQ=__ACME_BASE64__END_'
+
+这是 base64编码
+c2VydmljZSBuZ2lueCBmb3JjZS1yZWxvYWQ=
+
+这是解码后的字符串
+service nginx force-reload
+```
+
+<!--
+还要加上 日志 和 钩子
+日志
+    判断是否有定时运行
+钩子
+    判断续签是否成功
+-->
+
 ## 续签证书
 
 要先运行过安装证书的命令才能使用续签证书的命令。
