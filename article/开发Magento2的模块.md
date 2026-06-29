@@ -512,6 +512,20 @@ $retSql = $entitySql . PHP_EOL . $eavSql . ';';
 echo $retSql;
 ```
 
+<!--
+
+用于排除一些 attribute
+select * from (
+...
+) as tt
+where attribute_code not in (
+    'description',
+    'short_description',
+);
+
+-->
+
+
 ### 增加 eav 属性
 
 #### 通过后台新建

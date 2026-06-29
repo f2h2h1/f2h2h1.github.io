@@ -4597,6 +4597,12 @@ termux
             LZMA
             LZMA2
             brotli
+            Zstandard (ZST)
+                .zst (Zstandard 文件)
+                .tar.zst .tzst (Zstandard 压缩的 Tar 归档文件)
+                7z 对 zst 的支持并不完善
+                zstd 是 zst 的官方参考实现，zstd 来自 https://github.com/facebook/zstd
+                多数linux都支持 zst ，win11也支持 zst
             压缩 和 加密 似乎有紧密的联系
             压缩算法的专利保护，似乎只保护压缩，不保护解压
         工具
@@ -4614,6 +4620,8 @@ termux
                         tar cf - subdir | xz --threads=0 > archive.tar.xz
                     在 tar 里调用
                         tar -cf archive.tar.gz -I 'xz --threads=0' subdir
+            zstd
+                zstd 是一种基于 Zstandard 算法的压缩工具
             bzip2
                 成的文件通常以 .bz2 或 .bz 结尾
             Info-ZIP
@@ -4642,6 +4650,9 @@ termux
                 7zfm.exe（7-zip File Manager）是7-Zip软件的GUI主程序，一般来说，只使用7zfm.exe就可以了
                 7z.exe 是纯命令行工具
                 7zg.exe 是7-Zip软件的GUI模块，也可以在命令行中使用，但会显示一个图形界面的进度窗口，7zfm实际上也是调用7zg
+                7z是一种可以使用多种压缩算法进行数据压缩的档案格式
+                7z支持多种压缩算法，基本上主流的都支持
+                7z既可以归档也可以压缩
             windows 下的软件
                 windows 的 explorer 能直接支持 zip ，从windows me开始
                 现在的 win10 win11 好像也直接支持 tar 和 gzip 了
@@ -4685,6 +4696,8 @@ termux
             密码保护 加密文件名 支持unicode 分卷压缩 自解压 文件修复 是否支持多线程
         协议，价格，活跃状态比较
         xz 和 7z 的压缩率应该是最高的
+        主流的压缩算法中 LZMA 压缩率最高， LZMA2 压缩率略低于 LZMA 但速度比 LZMA 快，
+        Zstandard 的定位和 LZMA2 类似，不追求极致压缩率，在压缩率和速度之间做平衡，Zstandard 也很流行
         lzip 的压缩率低于 xz ，但 lzip 提供了一定的文件修复能力
         .iso .msi .msix .appx .deb .rpm .jar .war .crx .pkg .phar .docx 这些都是打包+压缩的文件
     HTTP 协议中的数据压缩 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Compression
@@ -4734,6 +4747,7 @@ termux
     放行不匹配的路由
 windiows里的各种常用软件
     邮件 音频播放器 视频播放器 图片浏览器 文本编辑器
+    计算器 资源管理器 浏览器 日历 终端 时钟 计划任务 设置
     微软出品的 不是微软出品但也大量装机的
         WinRAR/Bandizip/7z
         Adobe Reader/Foxit Reader
@@ -7660,8 +7674,9 @@ tar --xz -cf UrsaMinor-`date +%g%m%d%H%M`.tar.xz UrsaMinor
 7z a UrsaMinor-`date +%g%m%d%H%M`.7z -t7z -mx=9 UrsaMinor
 '/C/Program Files/7-Zip/7z.exe' a UrsaMinor-`date +%g%m%d%H%M`.7z UrsaMinor
 
-7z a UrsaMinor-`date +%g%m%d%H%M`.7z -t7z -mx=9 UrsaMinor
-    -t7z 指定压缩类型
+7z a UrsaMinor-`date +%g%m%d%H%M`.7z -t7z -m0=LZMA -mx=9 UrsaMinor
+    -t7z 指定的是 7z 格式
+    -m0=LZMA 使用 LZMA 压缩算法 ，其实这个就是默认算法
     -mx=9 最大的压缩率
 
 压缩完的文件大小
