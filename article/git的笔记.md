@@ -748,3 +748,516 @@ vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 $(git log -1 --name-only
 
 
 
+```
+
+
+#!/bin/bash
+
+# # 使用例子
+# ./check.sh  -u http://localhost:11434/v1/chat/completions \
+#               -k "api-key" \
+#               -m "kimi-k2.6" \
+#               -s "你是一个 code reviewer ，请从 性能 和 安全 角度分析以下文件；如果所有文件都没有问题请直接输出 success ，如果有问题请按以下格式逐行输出 file problem" \
+#               $(git ls-files --modified) $(git ls-files --others --exclude-standard)
+# 
+
+set -euo pipefail
+
+
+minify_php() {
+f=$1
+echo $f $1
+if [ -z "$1" ]; then
+    return ''
+fi
+
+php <<'EOF' -- $f 
+<?php
+include 'vendor/autoload.php';
+
+/**
+ * 使用 DOMDocument 处理 PHTML 文件：
+ * - 提取并保留 PHP 代码（用占位符替代）
+ * - 移除内联 CSS（style 属性和 <style> 标签）
+ * - 压缩内联 JavaScript（移除注释和多余空白）
+ * - 压缩 HTML（合并空白，移除标签间多余空格）
+ * - 最终还原 PHP 代码
+ */
+
+
+// 1. 读取文件
+if (isset($argv[1])) {
+    $filePath = $argv[1];
+    if (!file_exists($filePath)) {
+        die("文件不存在: $filePath");
+        # exit(1);
+    }
+} else {
+    $filePath = 'php://stdin';
+}
+$content = file_get_contents($filePath);
+if ($content === false) {
+    die("无法读取输入\n");
+    # exit(1);
+}
+$content = trim($content);
+if (empty($content) || strlen($content) == 0) {
+    echo '文件内容为空';
+    die("文件内容为空\n");
+    # exit(1);
+}
+
+// 2. 提取 PHP 代码块，替换为安全占位符（使用 token_get_all 精确识别）
+function extractPhpBlocks(string $code): array
+{
+    $tokens = token_get_all($code);
+    $phpBlocks = [];
+    $placeholderIndex = 0;
+    $output = '';
+    $inPhp = false;          // 是否在 PHP 代码区域内
+    $phpBuffer = '';         // 暂存当前 PHP 代码
+
+    foreach ($tokens as $token) {
+        if (is_array($token)) {
+            list($id, $text) = $token;
+            if ($id === T_OPEN_TAG || $id === T_OPEN_TAG_WITH_ECHO) {
+                // 开始 PHP 区域
+                $inPhp = true;
+                $phpBuffer = $text; // 包含开始标签
+                continue;
+            } elseif ($id === T_CLOSE_TAG) {
+                // 结束 PHP 区域
+                $phpBuffer .= $text;
+                $placeholder = "<!--PHP_BLOCK_$placeholderIndex-->";
+                $phpBlocks[$placeholder] = $phpBuffer;
+                $placeholderIndex++;
+                $output .= $placeholder;
+                $inPhp = false;
+                $phpBuffer = '';
+                continue;
+            } elseif ($inPhp) {
+                // 在 PHP 区域内的内容
+                $phpBuffer .= $text;
+                continue;
+            } else {
+                // 普通 HTML 或其它文本
+                $output .= $text;
+            }
+        } else {
+            // 单个字符（如 ; { } 等）可能在 PHP 内或外
+            if ($inPhp) {
+                $phpBuffer .= $token;
+            } else {
+                $output .= $token;
+            }
+        }
+    }
+
+    // 处理文件末尾未闭合的 PHP 代码（例如纯 PHP 文件）
+    if ($inPhp && !empty($phpBuffer)) {
+        $placeholder = "<!--PHP_BLOCK_$placeholderIndex-->";
+        $phpBlocks[$placeholder] = $phpBuffer;
+        $output .= $placeholder;
+    }
+
+    return ['html' => $output, 'map' => $phpBlocks];
+}
+
+$extracted = extractPhpBlocks($content);var_dump($extracted);
+$htmlWithPlaceholders = $extracted['html'];var_dump($htmlWithPlaceholders);
+$phpMap = $extracted['map'];var_dump($phpMap);
+
+// 3. 使用 DOMDocument 解析 HTML（避免自动添加 <html><body>）
+$doc = new DOMDocument();
+libxml_use_internal_errors(true); // 忽略解析警告
+$doc->loadHTML($htmlWithPlaceholders, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+libxml_clear_errors();
+
+// 4. 移除内联 CSS
+// 4.1 移除所有元素的 style 属性
+$xpath = new DOMXPath($doc);
+foreach ($xpath->query('//*[@style]') as $element) {
+    $element->removeAttribute('style');
+}
+
+// 4.2 移除所有 <style> 标签（内嵌样式表）
+foreach ($xpath->query('//style') as $style) {
+    $style->parentNode->removeChild($style);
+}
+
+// 5. 压缩内联 JavaScript（仅针对不含 src 的 <script>）
+function compressJs(string $js): string
+{
+    // // 移除多行注释 /* ... */
+    // $js = preg_replace('/\/\*.*?\*\//s', '', $js);
+    // // 移除单行注释 // ... 到行尾
+    // $js = preg_replace('/\/\/.*?(\n|$)/', '', $js);
+    // // 压缩多个空白为一个空格
+    // $js = preg_replace('/\s+/', ' ', $js);
+    // // 移除运算符、括号等周围的空格
+    // $js = preg_replace('/\s*([{};:,()])\s*/', '$1', $js);
+    $js = \JShrink\Minifier::minify($js);
+    return trim($js);
+}
+
+foreach ($xpath->query('//script[not(@src)]') as $script) {
+    $original = $script->textContent;
+    if (trim($original) !== '') {
+        $compressed = compressJs($original);
+        $script->textContent = $compressed;
+    }
+}
+
+// 6. 获取处理后的 HTML 字符串（不包含自动添加上下文）
+$processedHtml = $doc->saveHTML();
+
+// 7. 压缩 HTML（去除多余空白，但保留必要时空格）
+function compressHtml(string $html): string
+{
+    // 将多个空白（换行、制表、连续空格）压缩为单个空格
+    $html = preg_replace('/\s+/', ' ', $html);
+    // 移除标签之间的空白（> < 变为 ><），注意不会影响文本内容
+    $html = preg_replace('/>\s+</', '><', $html);
+    return trim($html);
+}
+
+$compressedHtml = compressHtml($processedHtml);
+
+// 8. 还原 PHP 代码
+$finalContent = str_replace(array_keys($phpMap), array_values($phpMap), $compressedHtml);
+
+// 9. 输出或保存结果
+// echo $finalContent;
+// file_put_contents('output.phtml', $finalContent);
+
+/**
+ * 使用 token_get_all 压缩 PHP 代码：
+ * - 移除所有多余的空白（空格、制表符、换行）
+ * - 保留单行注释（T_COMMENT）后的第一个换行符，防止注释影响下一行代码
+ * - 在单词型 token 之间自动插入一个空格，确保语法正确
+ *
+ * @param string $code 原始 PHP 代码
+ * @return string 压缩后的代码
+ */
+function minifyPhpCode(string $code): string
+{
+    $tokens = token_get_all($code);
+    $output = '';
+    $prevText = '';                 // 上一个非空白 token 的文本
+    $prevTokenIsComment = false;    // 上一个非空白 token 是否为单行注释
+
+    foreach ($tokens as $token) {
+        // 处理空白 token
+        if (is_array($token) && $token[0] === T_WHITESPACE) {
+            // 如果前一个 token 是单行注释，且该空白中包含换行符，则保留一个换行
+            if ($prevTokenIsComment && (
+                    strpos($token[1], "\n") !== false ||
+                    strpos($token[1], "\r") !== false
+                )) {
+                $output .= "\n";
+                // 重置标记，避免同一注释后的多个空白都输出换行
+                $prevTokenIsComment = false;
+            }
+            // 否则直接跳过该空白
+            continue;
+        }
+
+        // 非空白 token
+        $text = is_array($token) ? $token[1] : $token;
+
+        // 智能插入空格：若前后 token 均以“单词字符”（字母、数字、下划线）结尾/开头，则补一个空格
+        if ($prevText !== '') {
+            $lastChar = substr($prevText, -1);
+            $firstChar = substr($text, 0, 1);
+            if ((ctype_alnum($lastChar) || $lastChar === '_') &&
+                (ctype_alnum($firstChar) || $firstChar === '_')) {
+                $output .= ' ';
+            }
+        }
+
+        $output .= $text;
+
+        // 更新状态
+        $prevTokenIsComment = (is_array($token) && $token[0] === T_COMMENT);
+        $prevText = $text;
+    }
+
+    return $output;
+}
+
+echo minifyPhpCode($finalContent);
+
+
+
+EOF
+
+}
+
+
+# echo "$USER_CONTENT"
+# echo $(echo $USER_CONTENT | wc -c)
+
+# exit 0;
+
+script_name=$(basename "$0")
+
+# 用法提示
+usage() {
+    cat << EOF
+Usage: $script_name [OPTIONS] <file1> [file2 ...]
+
+Options:
+  -u, --url <url>           API endpoint URL (required)
+  -k, --key <key>           API Key / Bearer token (required)
+  -m, --model <name>        Model name (required)
+  -s, --system <prompt>     System prompt text (optional)
+  -h, --help                Show this help message
+
+Examples:
+  ./$script_name -u http://localhost:11434/v1/chat/completions \
+              -k sk-xxxxx \
+              -m "deepseek/deepseek-v3" \
+              -s "You are a code reviewer" \
+              file1.php file2.js
+
+  ./$script_name -u http://localhost:11434/v1/chat/completions \
+              -k sk-xxxxx \
+              -m "deepseek/deepseek-v3" \
+              -s "You are a code reviewer" \
+              \$(git log -1 --name-only --pretty='')
+
+  ./$script_name -u http://localhost:11434/v1/chat/completions \
+              -k "sk-xxxxx" \
+              -m "deepseek/deepseek-v3" \
+              -s "You are a code reviewer" \
+              \$(git diff --cached --name-only)
+
+  ./$script_name -u http://localhost:11434/v1/chat/completions \
+              -k "sk-xxxxx" \
+              -m "deepseek/deepseek-v3" \
+              -s "You are a code reviewer" \
+              \$(git ls-files --modified) \$(git ls-files --others --exclude-standard)
+EOF
+    exit 1
+}
+
+# 参数解析
+URL=""
+KEY=""
+MODEL=""
+SYSTEM_PROMPT=""
+FILES=()
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -u|--url)
+            URL="${2:-}"
+            shift 2
+            ;;
+        -k|--key)
+            KEY="${2:-}"
+            shift 2
+            ;;
+        -m|--model)
+            MODEL="${2:-}"
+            shift 2
+            ;;
+        -s|--system)
+            SYSTEM_PROMPT="${2:-}"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            ;;
+        -*)
+            echo "Error: Unknown option $1" >&2
+            usage
+            ;;
+        *)
+            FILES+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# 参数校验
+[[ -z "$URL" ]] && { echo "Error: URL is required (-u)" >&2; usage; }
+[[ -z "$KEY" ]] && { echo "Error: API Key is required (-k)" >&2; usage; }
+[[ -z "$MODEL" ]] && { echo "Error: Model name is required (-m)" >&2; usage; }
+[[ ${#FILES[@]} -eq 0 ]] && { echo "Error: At least one input file is required" >&2; usage; }
+
+
+php_files=()
+phtml_files=()
+js_files=()
+html_files=()
+xml_files=()
+json_files=()
+other_files=()
+total=0   # 有效文件总数
+
+for file in "${FILES[@]}"; do
+  if [[ ! -f "$file" ]]; then
+    # echo "Warning: $file does not exist, skipping" >&2
+    continue
+  fi
+  let total+=1
+  case "$file" in
+    *.php)  php_files+=("$file") ;;
+    *.phtml)  phtml_files+=("$file") ;;
+    *.js)   js_files+=("$file") ;;
+    *.html) html_files+=("$file") ;;
+    *.xml) xml_files+=("$file") ;;
+    *.json) json_files+=("$file") ;;
+    *)      other_files+=("$file") ;;
+  esac
+done
+
+if [ $total -eq 0 ]; then
+    echo "没有找到有效的文件需要检测"
+    # exit 0
+fi
+
+
+echo "php files:  ${php_files[@]}"
+echo "phtml files:  ${phtml_files[@]}"
+echo "js files:   ${js_files[@]}"
+echo "html files: ${html_files[@]}"
+echo "xml files: ${xml_files[@]}"
+echo "json files: ${json_files[@]}"
+echo "other files: ${other_files[@]}"
+
+# vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 "${php_files[@]}" "${phtml_files[@]}"
+
+USER_CONTENT=""
+
+for f in "${php_files[@]}"; do
+    [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
+    echo $f
+    USER_CONTENT+="==== $f ===="$'\n'
+    # USER_CONTENT+=$(php -w  "$f")
+    USER_CONTENT+=$(minify_php $f)
+done
+
+for f in "${phtml_files[@]}"; do
+    [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
+    echo $f
+    USER_CONTENT+="==== $f ===="$'\n'
+    # USER_CONTENT+=$(php -w  "$f")
+    USER_CONTENT+=$(minify_php $f)
+done
+
+for f in "${js_files[@]}"; do
+    [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
+    USER_CONTENT+="==== $f ===="$'\n'
+    USER_CONTENT+=$(php -r 'include "vendor/autoload.php"; echo trim(\JShrink\Minifier::minify(file_get_contents($argv[1])));' "$f")
+done
+
+for f in "${html_files[@]}"; do
+    [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
+    USER_CONTENT+="==== $f ===="$'\n'
+    USER_CONTENT+=$(cat "$f" | sed 's/\r$//g' | tr -d '\n' | tr -s ' ' | sed 's/<!--[^>]*-->//g')
+done
+
+for f in "${xml_files[@]}"; do
+    [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
+    USER_CONTENT+="==== $f ===="$'\n'
+    USER_CONTENT+=$(cat "$f" | sed 's/\r$//g' | tr -d '\n' | tr -s ' ' | sed 's/<!--[^>]*-->//g')
+done
+
+for f in "${json_files[@]}"; do
+    [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
+    USER_CONTENT+="==== $f ===="$'\n'
+    USER_CONTENT+=$(jq -c .  "$f")
+done
+
+# echo "$USER_CONTENT"
+
+USER_CONTENT=$SYSTEM_PROMPT$'\n\n'$USER_CONTENT
+# echo "$USER_CONTENT"
+# exit 1;
+
+php_code=$(cat<<'EOF'
+$model  = $argv[1];
+$prompt = trim(fgets(STDIN));
+$data = [
+    'approach' => 'rtr',
+    'history' => [
+        [
+            'role'    => 'user',
+            'content' => $prompt,
+        ],
+    ],
+    'overrides' => [
+        "top"               => 0,
+        'model'             => $model,
+        'max_tokens'        => 65536,
+        'temperature'       => 0,
+        'top_p'             => 1,
+        'presence_penalty'  => 0,
+        'frequency_penalty' => 0,
+        'show_reference'    => false,
+        'stream'            => false,
+    ],
+];
+echo json_encode($data, JSON_UNESCAPED_SLASHES);
+EOF
+)
+php_code=$(echo $php_code | sed 's/\r$//g' | tr -d '\n' | tr -s ' ')
+# echo $php_code;
+# exit 1;
+
+PAYLOAD=$(
+echo $USER_CONTENT | php -r "$php_code" $MODEL
+)
+
+# PAYLOAD_Length=$(echo -n "$PAYLOAD" | wc -c)
+# let PAYLOAD_Length+=1
+# echo $PAYLOAD_Length
+# exit 1;
+
+# echo $URL
+
+RESPONSE=$(echo -n "$PAYLOAD" | curl -s --proxy http://proxy.pccw.com:8080 -X POST \
+    -H "Content-Type: application/json;charset=utf-8" \
+    -H "x-api-key: $KEY" \
+    -d @- \
+    "$URL")
+
+# HTTP_CODE=$(tail -n1 <<< "$RESPONSE")
+# BODY=$(sed '$ d' <<< "$RESPONSE")
+BODY=$RESPONSE
+
+# echo $BODY;
+
+# echo "================"
+
+# echo "$BODY";
+
+# echo "================"
+
+AI_RESULT=$(echo "$BODY" | jq -r '.answer')
+
+if [ "$AI_RESULT" = "success" ]; then
+    echo "agent 没有发现问题"
+    exit 0
+fi
+
+echo "$AI_RESULT"
+
+# echo "================"
+
+# echo $AI_RESULT
+
+if [ ${#php_files[@]} -gt 0 ]; then
+    vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 "${php_files[@]}"
+fi
+if [ ${#phtml_files[@]} -gt 0 ]; then
+    vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 "${phtml_files[@]}"
+fi
+
+exit 1;
+
+
+
+```

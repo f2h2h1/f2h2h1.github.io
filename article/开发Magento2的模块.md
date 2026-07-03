@@ -540,7 +540,7 @@ where attribute_code not in (
         - 这种方式， etc/module.xml 里必须有  setup_version="0.0.1" 才会生效
     - app/codeLearning/ClothingMaterial/Setup/Patch/Data/AddClothingMaterial.php
         - 这种方式，只要 upgrade 都会生效，但重复创建属性可能会导致 upgrade 是报错
-        - setup:upgrade 跑完之后 patch_list 表会有记录的，如果有记录，下次 setup:upgrade 就不会跑了
+        - setup:upgrade 跑完之后 patch_list 表会有记录的，如果有记录，下次 setup:upgrade 就不会跑了 <!-- 似乎这种方式更好？ -->
 - 新建好对应文件后，运行一次 upgrade 命令，后台的配置页面就自动有对应的属性设置了
 
 app/code/Learning/ClothingMaterial/Setup/InstallData.php
@@ -3981,6 +3981,14 @@ $to = [
 foreach ($to as $item) {
     $message->addTo($item);
 }
+
+
+直接渲染模板
+/** @var \Magento\Framework\Filter\Template */
+$TemplateFilter = $objectManager->get(\Magento\Framework\Filter\Template::class);
+$TemplateFilter->setVariables(['asd' => 123]);
+$html=file_get_contents('b.html');
+$html = $TemplateFilter->filter(file_get_contents('b.html'));
 
 -->
 
