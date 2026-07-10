@@ -197,6 +197,8 @@
                     find / -name httpd.conf -type f
                     只查找目录
                     find / -name mysql -type d
+                    在当前目录下不区分大小写查找文件名包含noto的文件
+                    find . -iname "*noto*" -type f
                     查找以.txt结尾的文件
                     find / -regex '.*\.txt'
                     删除全部扩展名为.tmp 的文件
@@ -4886,6 +4888,9 @@ windows在没有管理员权限的前提下
                 硬盘 hard disk
                 软盘 soft disk
             磁带 tape
+            磁条 Magnetic Stripe
+            磁鼓 Magnetic Drum
+            磁芯 Magnetic Core
         半导体
             Flash memory （闪存）
         其它

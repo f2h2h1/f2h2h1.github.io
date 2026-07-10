@@ -1107,6 +1107,7 @@ for file in "${FILES[@]}"; do
     *.phtml)  phtml_files+=("$file") ;;
     *.js)   js_files+=("$file") ;;
     *.html) html_files+=("$file") ;;
+    *.htm) html_files+=("$file") ;;
     *.xml) xml_files+=("$file") ;;
     *.json) json_files+=("$file") ;;
     *)      other_files+=("$file") ;;
@@ -1133,7 +1134,6 @@ USER_CONTENT=""
 
 for f in "${php_files[@]}"; do
     [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
-    echo $f
     USER_CONTENT+="==== $f ===="$'\n'
     # USER_CONTENT+=$(php -w  "$f")
     USER_CONTENT+=$(minify_php $f)
@@ -1141,7 +1141,6 @@ done
 
 for f in "${phtml_files[@]}"; do
     [[ -n "$USER_CONTENT" ]] && USER_CONTENT+=$'\n\n'
-    echo $f
     USER_CONTENT+="==== $f ===="$'\n'
     # USER_CONTENT+=$(php -w  "$f")
     USER_CONTENT+=$(minify_php $f)

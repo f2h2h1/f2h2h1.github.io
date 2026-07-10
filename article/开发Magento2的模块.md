@@ -379,6 +379,10 @@ composer.json
 - 集合就是模型的集合，一些查询操作也是在集合里进行
 - 工厂用于创建模型或集合，工厂类一般是由 magento2 自动生成的，用编译的命令 php bin/magento setup:di:compile
 
+### 修改已存在的表
+修改 db_schema.xml
+生成 db_schema_whitelist.json
+
 ## EAV
 
 EAV（实体 - 属性 - 值）
@@ -2218,6 +2222,11 @@ di.xml
 preference 的优点是可以方便地修改或扩展已有的类或接口
 preference 的缺点是可能会导致类之间的冲突，因为一次只能有一个 preference 生效，除非你手动地让它们链式地继承
 
+声明接口的实现
+声明类的参数
+虚拟类
+替换类
+
 -->
 
 ## 事件和观察者 (Events and Observers)
@@ -3984,11 +3993,23 @@ foreach ($to as $item) {
 
 
 直接渲染模板
-/** @var \Magento\Framework\Filter\Template */
+/** @var \Magento\Email\Model\Template\Filter */
 $TemplateFilter = $objectManager->get(\Magento\Framework\Filter\Template::class);
 $TemplateFilter->setVariables(['asd' => 123]);
 $html=file_get_contents('b.html');
 $html = $TemplateFilter->filter(file_get_contents('b.html'));
+
+邮件的模板使用这个类
+\Magento\Email\Model\Template\Filter
+普通的模板使用这个类
+\Magento\Framework\Filter\Template
+
+普通的模板无法使用 翻译 trans
+
+magento2 的模板语法 在 2.3 有过一次大的更新
+
+邮件模板的语法
+https://developer.adobe.com/commerce/frontend-core/guide/templates/email
 
 -->
 
