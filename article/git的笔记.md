@@ -1207,7 +1207,7 @@ php_code=$(echo $php_code | sed 's/\r$//g' | tr -d '\n' | tr -s ' ')
 # exit 1;
 
 PAYLOAD=$(
-echo $USER_CONTENT | php -r "$php_code" $MODEL
+echo $USER_CONTENT | php -r "$php_code" $MODEL | sed 's/ \* / \\* /g'
 )
 
 # PAYLOAD_Length=$(echo -n "$PAYLOAD" | wc -c)
@@ -1217,7 +1217,7 @@ echo $USER_CONTENT | php -r "$php_code" $MODEL
 
 # echo $URL
 
-RESPONSE=$(echo -n "$PAYLOAD" | curl -s --proxy http://proxy.pccw.com:8080 -X POST \
+RESPONSE=$(echo -n "$PAYLOAD" | sed 's/ \\\* / \* /g' | curl -s -X POST \
     -H "Content-Type: application/json;charset=utf-8" \
     -H "x-api-key: $KEY" \
     -d @- \
@@ -1226,8 +1226,6 @@ RESPONSE=$(echo -n "$PAYLOAD" | curl -s --proxy http://proxy.pccw.com:8080 -X PO
 # HTTP_CODE=$(tail -n1 <<< "$RESPONSE")
 # BODY=$(sed '$ d' <<< "$RESPONSE")
 BODY=$RESPONSE
-
-# echo $BODY;
 
 # echo "================"
 
