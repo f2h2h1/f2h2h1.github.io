@@ -6253,6 +6253,16 @@ git checkout branch-name && \
 git switch - && \
 git stash pop;
 
+// 命令行里要有这句才会加载翻译
+\Magento\Framework\Phrase::setRenderer($objectManager->get(\Magento\Framework\Phrase\Renderer\Translate::class));
+
+// 这种写法可以在命令行里模拟某个环境
+/** @var \Magento\Store\Model\App\Emulation */
+$emulation = $objectManager->get(\Magento\Store\Model\App\Emulation::class);
+$emulation->startEnvironmentEmulation($storeId, \Magento\Framework\App\Area::AREA_FRONTEND, true);
+
+sleep(2);
+$emulation->stopEnvironmentEmulation();
 
 -->
 
