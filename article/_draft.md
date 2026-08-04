@@ -7838,6 +7838,12 @@ ls *.md 2>/dev/null | grep -v '^_' \
 | printf "[$(awk 'NR > 1 { print prev "," } { prev = $0 } END { if (NR > 0) print prev }')]" \
 | python -m json.tool
 
+bash 输出时间字符串 使用 git 记录
+ls article/*.md 2>/dev/null | grep -v '^_' \
+| while read file; do git log --follow --format="%ci" -- $file | awk -v awkFILE="$file" 'NR==1 {first=$0} {last=$0} END {printf "{\"title\":\"%s\",\"updateTime\":\"%s\",\"createTime\":\"%s\"}\n", awkFILE, first, last}'; done \
+| printf "[$(awk 'NR > 1 { print prev "," } { prev = $0 } END { if (NR > 0) print prev }')]" \
+| python -m json.tool
+
 
 查看GitHub仓库被谁star
 https://github.com/{{your_user_name}}/{{your_repo}}/stargazers
