@@ -60,7 +60,7 @@ http 协议又分为哑 http 协议和 smart http 协议，主要区别是哑 ht
 除此之外， git 其实还支持 ftp sftp 和 rsync 。在 git 的文档里有提及，但不建议使用 https://git-scm.com/docs/git-push/2.1.4#_git_urls
 
 ## 哑 http 协议
-要部署哑 http 协议非常简单，只要让 .git 目录能被访问到就可以的了。
+要部署哑 http 协议（Dumb HTTP Protocol）非常简单，只要让 .git 目录能被访问到就可以的了。
 
 假设仓库不是裸仓，仓库的绝对路径是 `C:\git\test`
 
@@ -202,6 +202,14 @@ gitweb 是一段 perl 的 cgi 脚本，是一个基于网页的简易查看器�
     ```
 5. 在这里 http://search.cpan.org/~markstos/CGI/ 下载 cgi.pm
 6. 下载后解压，把 lib 文件夹下全部文件复制到这个目录里 `/usr/lib/perl5/site_perl` ，这是实际的目录路径 `git的安装目录\usr\lib\perl5\site_perl` ，如果没有 site_perl 这个文件夹就新建一个。
+    - 可以通过这句命令判断有没有安装到 cgi.pm 
+        ```
+        perl -MCGI -e 'print "CGI version: $CGI::VERSION\n"'
+        ```
+
+GITWEB_PROJECTROOT 目录下，一个文件夹就是一个 仓库
+
+站点的根目录是 git 源码中 gitweb 文件夹，把 gitweb 复制到其它位置也可以的
 
 假设 gitweb 的绝对路径是 `C:\git\git\gitweb`
 
@@ -223,6 +231,19 @@ Listen 83
 ```
 
 然后使用类似这样的网址 `http://127.0.0.1:83/gitweb.cgi` 在浏览器访问 gitweb
+
+修改仓库下 `.git/description` 的内容（没有就新建一个），就能显示 description
+
+
+<!--
+
+如果页面顶部出现 ]> 这种乱码，就是删掉 gitweb.cgi 的这部分，直接在 源码里搜索就好了
+<!DOCTYPE html [
+	<!ENTITY nbsp "&#xA0;">
+	<!ENTITY sdot "&#x22C5;">
+]>
+
+-->
 
 gitweb.cgi 需要这几个环境变量
 
@@ -257,8 +278,9 @@ gitweb.cgi 需要这几个环境变量
 - gitblit
 - gitea
 - gogs
+- Forgejo
 
-cgit 的界面和 gitweb 差不多，但 cgit 已经很久没更新了。
+cgit (CGI for Git) 的界面和 gitweb 差不多，但 cgit 已经很久没更新了。
 
 gitiles 由谷歌推出的，基于 java 的， git 仓库浏览工具。是 gerrit 的一个组件。 Gerrit 是 Google 为 Android 系统研发量身定制的一套免费开源的代码审核系统。
 
@@ -266,9 +288,14 @@ gitlab 功能非常强大，但对性能的要求比较高，如果只是搞远�
 
 gitblit 这个是笔者当前在用的，后端用 java 写成，虽然功能没有 gitea 多，但速度更快。
 
-gitea 这个最近很流行，后端用 go 写成，网上不少教程都在推荐这个。
+gitea (2016) 这个最近很流行，后端用 go 写成，网上不少教程都在推荐这个。
 
-gogs 是 gitea 的原版，好像因为社区的原因，gitea 从 gogs 分裂出来，据说分裂后的 gitea 发展得更好。
+gogs (2014) 是 gitea 的原版，好像因为社区的原因，gitea 从 gogs 分裂出来，据说分裂后的 gitea 发展得更好。
+
+Forgejo (2022) 是 gitea 的分叉，	Gitea 商标/域名被转给营利公司 Gitea Ltd，社区担忧治理方向而分叉。
+Forgejo 最初是 Gitea 的"软分叉"（soft fork），保持代码同步；2024 年初正式成为硬分叉（hard fork），代码库开始独立演进
+
+gogs 不支持 ci/cd ， gitea 和 Forgejo 都支持 ci/cd 而且都兼容 github action ，Forgejo 在  github action 兼容性上投入更多，修复了若干 Gitea 尚未处理的边缘 case。
 
 ## 一段能兼容 smart http 和 gitweb 的 php 脚本
 1. 在 gitweb 的文件夹里新建一个名为 HTTPServerRequestHandler.php 的文件，并写入下面的内容
@@ -281,6 +308,7 @@ gogs 是 gitea 的原版，好像因为社区的原因，gitea 从 gogs 分裂�
 4. 然后运行这句命令
     ```
     php -S 0.0.0.0:84 HTTPServerRequestHandler.php
+    php -S 0.0.0.0:84 -t ./gitweb HTTPServerRequestHandler.php
     ```
 5. 然后使用类似这样的网址 `http://127.0.0.1:84/gitweb.cgi` 在浏览器访问 gitweb
 6. 然后使用类似这样的命令 `git clone http://127.0.0.1:84/test/.git` 来 clone 仓库
@@ -492,7 +520,7 @@ $config = [
             $env['SERVER_NAME'] = 'php server';
             $env['GIT_BIN'] = 'C:/Program Files/Git/bin/git';
             $env['GIT_PROJECT_ROOT'] = '/c/git'; // 这里要用 unix 的格式
-            $cmd = '"C:\Program Files\Git\usr\bin\perl.exe" "gitweb.cgi"';
+            $cmd = '"C:\Program Files\Git\usr\bin\perl.exe" "gitweb.cgi"'; // gitweb.cgi 填相对于php脚本的路径或全局路径
             $handler->cgiHandler($cmd, $env);
             $handler->logger("\n\n" . date('Y-m-d H:i:s') . "----------------------------------\n\n");
         },
