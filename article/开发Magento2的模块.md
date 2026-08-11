@@ -725,6 +725,10 @@ eav_form_fieldset_label
 eav_form_type          
 eav_form_type_entity   
 
+
+/** @var \Magento\Catalog\Model\ResourceModel\Product $productResource */
+$eavAttributeValue = $productResource->getAttributeRawValue($productId, 'eav_attribute', $storeId);
+
 -->
 
 

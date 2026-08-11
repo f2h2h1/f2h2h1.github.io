@@ -7198,7 +7198,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
     先国际化再本地化
         本地单一市场 -> 国际化 -> 其它地区的本地化
     需要关注的要点
-        文字 语言 时间/日期格式 单位（货币，质量，体积） 法律
+        文字 语言 时间/日期格式 单位（货币，质量，体积） 人名顺序 地址格式 排序规则 数字格式 纸张大小 服装尺码 电器（插座，电压） 交通通行方向 法律 宗教 文化
     最终目标都是为了满足不同市场的需求，提升用户体验和市场竞争力。
         https://www.w3.org/International/questions/qa-i18n
         https://blog.mozilla.org/l10n/2011/12/14/i18n-vs-l10n-whats-the-diff/
@@ -7231,6 +7231,36 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
     JavaScript 的国际化
         https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl
         这个没有翻译，但可以处理 时间/日期格式 单位
+    Locale
+        LANG
+            [language][_territory][.codeset]
+                language 是 ISO 639 语言代码, 
+                territory 是 ISO 3166 国家代码, 
+                codeset 是字符集
+            例子
+                export LANG=zh_CN.UTF-8
+                export LANG=en_US.UTF-8
+        LANGUAGE
+        LC_*
+            Locale Category
+            区域 类别
+            LC_ADDRESS
+            LC_COLLATE
+            LC_CTYPE
+            LC_IDENTIFICATION
+            LC_MEASUREMENT
+            LC_MESSAGES
+            LC_MONETARY
+            LC_NAME
+            LC_NUMERIC
+            LC_PAPER
+            LC_TELEPHONE
+            LC_TIME
+        LC_ALL
+        LC_ALL 和 LANG 优先级的关系： LC_ALL > LC_* > LANG
+            LANG     是优先级很低的一个变量，它指定所有与locale有关的变量的默认值
+            LC_ALL   它可以管所有的locale；
+            不推荐使用 export LC_ALL 来覆盖所有 locale 设置，LC_ALL 应该仅用于诊断调试，全局设置 LC_ALL 会为诊断语言设置问题带来不必要的困难。
 无障碍化
     Accessibility ，简称 A11y
     Web accessibility 网页可访问性
