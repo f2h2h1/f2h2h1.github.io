@@ -5736,7 +5736,19 @@ nas
             类似的软件还有非常多
             番茄工作法(Pomodoro Technique)
             四象限分类和时间盒子
-            艾宾浩斯遗忘曲线
+                四象限
+                    第一象限（重要且紧急）
+                    第二象限（重要但不紧急）
+                    第三象限（紧急但不重要）
+                    第四象限（不重要也不紧急）
+                时间盒子
+                    给时间设定硬边界的操作方法。它的核心规则是：只给任务分配固定的时间，时间一到就立刻停手
+                    核心步骤：
+                        列出任务：写下今天要做的事情清单。
+                        预估时间：给每件事画定一个“盒子”（例如：写报告用 45 分钟，回邮件用 15 分钟）。
+                        放入日程：把这些盒子填进你的日历里。
+                        严格执行：铃响后，如果没写完就缩减功能或延后处理，绝对不无限制地加班延时。
+            艾宾浩斯遗忘曲线 遗忘曲线（Forgetting curve）
         DIKW（Data Information Knowledge Wisdom）
             概念	定义	关系
             数据（Data）	原始的、未经加工的事实和数字。	数据是信息的原材料，是最基本的元素。
@@ -5745,6 +5757,20 @@ nas
             能力（Capability）	个人或系统应用知识来执行任务或解决问题的技能。	能力是通过学习和实践获得的，是知识的应用。
             洞察（Insight）	对复杂情况的深刻理解，通常涉及对信息的深入分析和模式识别。	洞察是通过深入分析能力获得的，可以导致新的想法或解决方案。
             智慧（Wisdom）	使用洞察来做出明智的决策和判断的最高水平的认知能力。	智慧是洞察的高级形式，结合经验、价值观和情境意识。
+        CODE
+            捕获 Capture
+            组织 Organize
+            萃取 Distill
+            表达 Express
+        PARA
+            项目 Projects
+            领域 Areas
+            资源 Resources
+            归档 Archives
+        PAI
+            项目库 Project
+            行动任务库 Action
+            资料收集箱 Inbox
     总结一下需求
         收集 知识和信息
         整理 知识和信息
@@ -5765,7 +5791,9 @@ nas
         graphviz
         plantuml
         mermaid
-        数学公式 MathML 居然是 浏览器原生支持的。。。和 svg 一样，mathml甚至可以直接嵌入 svg 里
+        数学公式
+            MathML 居然是 浏览器原生支持的。。。和 svg 一样，mathml甚至可以直接嵌入 svg 里
+            mathjax
         五线谱/简谱 MusicXML
             https://www.w3.org/community/music-notation/
             https://en.wikipedia.org/wiki/MusicXML
@@ -5802,7 +5830,7 @@ nas
             运行依赖？
                 语言的运行环境
                 单独的二进制文件
-    第二大脑
+    第二大脑（Second Brain）
         笔记 todo 看板 agent workflow 计划任务（定时 hook） 数据库（关系，向量）
 wordpress
     word press 文字出版社

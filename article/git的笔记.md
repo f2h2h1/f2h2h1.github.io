@@ -748,7 +748,7 @@ vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 $(git log -1 --name-only
 
 
 
-```
+```bash
 
 
 #!/bin/bash
@@ -863,9 +863,9 @@ function extractPhpBlocks(string $code): array
     return ['html' => $output, 'map' => $phpBlocks];
 }
 
-$extracted = extractPhpBlocks($content);var_dump($extracted);
-$htmlWithPlaceholders = $extracted['html'];var_dump($htmlWithPlaceholders);
-$phpMap = $extracted['map'];var_dump($phpMap);
+$extracted = extractPhpBlocks($content); // var_dump($extracted);
+$htmlWithPlaceholders = $extracted['html']; // var_dump($htmlWithPlaceholders);
+$phpMap = $extracted['map']; // var_dump($phpMap);
 
 // 3. 使用 DOMDocument 解析 HTML（避免自动添加 <html><body>）
 $doc = new DOMDocument();
@@ -1207,7 +1207,7 @@ php_code=$(echo $php_code | sed 's/\r$//g' | tr -d '\n' | tr -s ' ')
 # exit 1;
 
 PAYLOAD=$(
-echo $USER_CONTENT | php -r "$php_code" $MODEL | sed 's/ \* / \\* /g'
+echo $USER_CONTENT | php -r "$php_code" $MODEL | sed 's/\*/\\*/g'
 )
 
 # PAYLOAD_Length=$(echo -n "$PAYLOAD" | wc -c)
@@ -1255,6 +1255,191 @@ fi
 
 exit 1;
 
+
+
+```
+
+
+```php
+<?php
+
+declare(strict_types=1);
+
+/*
+
+curl --proxy http://proxy:8080 https://llmurl \
+  -H "x-api-key: x-api-key"
+
+*/
+
+
+$url = '';
+$proxy = '';
+$apiKey = '';
+
+
+$modelList = [];
+$ch = curl_init($url . '/models');
+curl_setopt_array($ch, [
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_PROXYTYPE => CURLPROXY_HTTP,
+    // CURLOPT_PROXY => $proxy,
+    CURLOPT_HTTPHEADER => [
+        'x-api-key: ' . $apiKey,
+    ],
+    CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_SSL_VERIFYHOST => false,
+]);
+if (!empty($proxy)) {
+    curl_setopt($ch, CURLOPT_PROXY, $proxy);
+}
+$response = curl_exec($ch);
+if ($response === false) {
+    echo 'cURL Error: ' . curl_error($ch); exit;
+} else {
+    $ret = json_decode($response, true);
+    if (empty($ret)) {
+            echo 'json Error: ' . json_last_error_msg(); exit;
+    } else {
+        if (!empty($ret['data']) && is_array($ret['data'])) {
+            foreach ($ret['data'] as $item) {
+                if (isset($item['id'])) {
+                    $modelList[] = $item['id'];
+                }
+            }
+        } else {
+            echo 'json NO DATA'; 
+            echo PHP_EOL;
+            echo $response;
+            exit;
+        }
+    }
+}
+
+// $modelList = [
+//     'gpt-5.5',
+//     'gpt-5.4-pro',
+//     'gpt-5.3-codex',
+//     'deepseek-v4-pro',
+//     'deepseek-v4-flash',
+//     'gemini-3.5-flash',
+//     'glm-5.1',
+//     'kimi-k2.6',
+//     'qwen3.7-plus',
+// ];
+
+// echo 'modelList' . PHP_EOL;
+// print_r($modelList);
+// echo PHP_EOL;
+// exit;
+
+$removedArray  = [];
+$filteredArray = [];
+foreach ($modelList as $key => $item) {
+    if (preg_match('/image|img/i', $item)) {
+        $removedArray[] = $item;
+    } else {
+        $filteredArray[] = $item;
+    }
+}
+
+echo 'ignored model' . PHP_EOL;
+print_r($removedArray);
+echo PHP_EOL;
+echo 'modelList' . PHP_EOL;
+print_r($filteredArray);
+echo PHP_EOL;
+$modelList = $filteredArray;
+
+$prompt = '9.11 和 9.9 哪个数字更大，请直接输出结果';
+$failList = [];
+$successList = [];
+foreach ($modelList as $model) {
+    echo 'chekcing ' . $model . '    ';
+    $data = [
+        'approach' => 'rtr',
+        'history' => [
+            [
+                'role'    => 'user',
+                'content' => $prompt,
+            ],
+        ],
+        'overrides' => [
+            "top"               => 0,
+            'model'             => $model,
+            'max_tokens'        => 65536,
+            'temperature'       => 0,
+            'top_p'             => 1,
+            'presence_penalty'  => 0,
+            'frequency_penalty' => 0,
+            'show_reference'    => false,
+            'stream'            => false,
+        ],
+    ];
+
+    $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+    $ch = curl_init($url . '/chat');
+
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_PROXYTYPE => CURLPROXY_HTTP,
+        // CURLOPT_PROXY => $proxy,
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'x-api-key: ' . $apiKey,
+            'Content-Length: ' . strlen($json),
+        ],
+        CURLOPT_POSTFIELDS => $json,
+
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => false,
+    ]);
+    if (!empty($proxy)) {
+        curl_setopt($ch, CURLOPT_PROXY, $proxy);
+    }
+
+    $response = curl_exec($ch);
+
+    $isSuccess = false;
+    if ($response === false) {
+        // echo 'cURL Error: ' . curl_error($ch);
+        $failList[] = [$model, 'cURL Error: ' . curl_error($ch)];
+    } else {
+        $ret = json_decode($response, true);
+        if (empty($ret)) {
+            $failList[] = [$model, 'json Error: ' . json_last_error_msg()];
+        } else {
+            if (!empty($ret['answer'])) {
+                $isSuccess = true;
+                if (is_string($ret['answer'])) {
+                    $successList[] = [$model, mb_substr(trim($ret['answer']), 0, 128, 'UTF-8')];
+                } else {
+                    $successList[] = [$model, $ret['answer']];
+                }
+            } else {
+                // echo $response;
+                $failList[] = [$model, mb_substr(trim($response), 0, 128, 'UTF-8')];
+            }
+        }
+    }
+
+    curl_close($ch);
+    if ($isSuccess) {
+        echo ' success';
+    } else {
+        echo ' fail';
+    }
+    echo PHP_EOL;
+}
+echo PHP_EOL;
+
+echo 'FAIL' . PHP_EOL;
+print_r($failList);
+echo PHP_EOL;
+echo 'SUCCESS' . PHP_EOL;
+print_r($successList);
 
 
 ```
