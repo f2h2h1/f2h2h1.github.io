@@ -375,10 +375,83 @@
         各层中的协议
         使用系统api来读写网卡中的数据
     软件工程
-        项目管理
-            软件开发模型、软件过程模型、以及软件开发方法
+        软件项目管理（Software project management）
+        软件开发生命周期(SDLC, software development life cycle)
+        软件过程模型 （software development process model）
+        软件架构
+            软件架构风格 software architecture styles
+            软件架构模式 software architecture patterns 
+        软件开发方法/软件开发方法论（Software Development Methodology, SDM）
+            面向过程设计
+            面向对象设计
+            发展过程
+                1969年，结构化编程
+                1980年，结构化系统分析与设计方法（Structured Systems Analysis and Design Method, SSADM）
+                面向对象程序设计，起步于1960年代，1990年代中期成为一种主流方法
+                1991年，快速应用程序开发
+                1995年，Scrum
+                1998年，团队软件过程
+                1998年，由IBM维护的统一软件开发过程（RUP）
+                1999年，极限编程
+                2005年，敏捷统一过程（Agile Unified Process, AUP）
+                2010年代，基于大规模的敏捷框架（Scaled Agile Framework, SAFe）
+                2010年代，大规模Scrum（Large-Scale Scrum, LeSS）
+        编程范式
+        设计模式
+        mvc/mvvm/mvp/mvi
+            控制器（Controller）
+            模型（Model）
+            视图（View）
+            视图模型（View Model）
+            展示器（Presenter）
+            意图（Intent）
+        数据库设计
+            1.需求分析
+                数据流图(DFD Data Flow Diagram)
+                数据字典(DD Data Dictionary)
+                    数据项
+                    数据结构
+                    数据流
+                    数据存储
+                    处理过程
+                    外部实体
+            2.概念结构设计
+                局部er图，是从功能出发的er图，只需要画出和对应功能相关的字段即可
+                总体er图
+            3.逻辑结构设计
+                只有表名，字段名的表设计，关系模型
+            4.物理结构设计
+                表设计的表格
+            5.数据库实施
+                sql 代码
+                创建库
+                创建表
+                插入初始化数据
+            6.数据库的运行和维护
+                数据库安装，启动，维护的命令
         软件测试
-        CI/CD
+        DevOps/DevSecOps
+            CI/CD
+        无法分类的
+            IPO model
+            CIPO model
+            C4 模型
+            4+1 视图 模型
+            面向xx的设计/编程/开发
+            xx驱动设计/编程/开发
+            AOP（Aspect-Oriented Programming，面向切面编程）
+            ddd Domain-Driven Design/Development （领域驱动设计/开发）
+            tdd Test-Driven Design/Development （领域驱动设计/开发）
+            事件驱动编程（Event-driven programming）
+            数据驱动编程（Data-driven programming）
+            行为驱动开发（英语：Behavior-driven development，缩写BDD）
+            面向服务的架构(SOA)
+            微服务 宏服务
+            分布式 单体
+            集群 单机
+            三层架构（three-tier architecture）
+            bs架构
+            cs架构
     中间件
         各种网络服务（例如 http服务器）
         定时任务
@@ -2193,20 +2266,6 @@ git的一般使用指南
         把 fork 的仓库 clone 到本地
         在本地修改，提交，推送到 github
         在原本的仓库新建一个 pr
-    URL地址末尾加不加 / 有什么区别
-        目录 和 文件
-            加 / 是目录
-                可能会返回该目录下的默认文件（如 index.html）
-                可能会返回目录下的文件列表
-            不加 / 是文件
-        相对路径的解析
-            假设 HTML 页面包含以下 <img> 标签：<img src="image.png">
-            访问 https://example.com/folder/
-                图片路径解析为 https://example.com/folder/image.png
-            访问 https://example.com/folder
-                图片路径解析为 https://example.com/image.png
-        对seo的影响
-            加 / 和 不加 / 通常会被认为是两个不同的页面
 一般的项目开发流程
     工具
         注册域名
@@ -5690,6 +5749,7 @@ nas
         Obsidian
         Logseq
         Roam Research
+        Heptabase
         TiddlyWiki
         Flomo
         Notion
@@ -5749,6 +5809,24 @@ nas
                         放入日程：把这些盒子填进你的日历里。
                         严格执行：铃响后，如果没写完就缩减功能或延后处理，绝对不无限制地加班延时。
             艾宾浩斯遗忘曲线 遗忘曲线（Forgetting curve）
+                遗忘速度节点
+                    20分钟后：遗忘约 42%
+                    1小时后：遗忘约 56%
+                    9小时后：遗忘约 64%
+                    1天后：遗忘约 74%
+                    6天后：遗忘约 77%
+                    31天后：遗忘约 79%
+                黄金复习时间
+                    第1次：学习后 20 分钟内
+                    第2次：学习后 1 天（24小时）
+                    第3次：学习后 2 天
+                    第4次：学习后 7 天（1星期）
+                    第5次：学习后 14 天（2星期）
+                    第6次：学习后 30 天（1个月）
+                高效学习方法
+                    主动回憶：合上书本自己复述，拒绝被动重读。
+                    分段练习：拒绝考前熬夜突击，拆分时间多次复习。
+                    结合睡眠：睡前复习或保证充足睡眠能显著减缓遗忘。
         DIKW（Data Information Knowledge Wisdom）
             概念	定义	关系
             数据（Data）	原始的、未经加工的事实和数字。	数据是信息的原材料，是最基本的元素。
@@ -6437,7 +6515,7 @@ Macromedia
         2005 被 Adobe 收购
     adobe
         PS：Adobe Photoshop（图像处理软件）
-        LR：Adobe Lightroom（照片编辑与管理软件，注：您提到两次 "lr"，均为同一产品）
+        LR：Adobe Lightroom（照片编辑与管理软件）
         AI：Adobe Illustrator（矢量图形设计软件）
         PR：Adobe Premiere Pro（视频编辑软件）
         AE：Adobe After Effects（影视特效与动态图形设计软件）
