@@ -3222,6 +3222,10 @@ areaCode
     webapi_soap
     graphql
 
+doc 也是一个有效的区域代码，但它并非 Magento 2 核心框架的默认配置。
+它是一个保留关键词，通常由第三方模块或自定义扩展用于管理其内部的文档、帮助页面或说明性资源。在日常开发中，极少会用到它。
+
+
 areaCode 的值在这个位置
 vendor\magento\framework\App\Area.php
 
@@ -3290,7 +3294,7 @@ php bin/magento dev:di:info 当前的版本只能输出 GLOBAL area
 虽然也有pr可以输出其它 area 
 https://github.com/magento/magento2/issues/38758
 但我需要一次输出全部 area 的
-
+这个似乎在 2.4.8 更新了
 
 后台的渲染逻辑会不会和前台不一样？
 
