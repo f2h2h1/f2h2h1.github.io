@@ -5468,6 +5468,13 @@ nas
                 ESOL
                     English for Speakers of Other Languages
                     其他语言使用者的英语
+    混合语（mixed language）
+        皮钦语（pidgin）    
+            协和语 军队中国语 洋泾浜英语
+        克里奥尔语（creole）
+            克里奥尔语也称归融语，有一致的语法体系，拥有庞大而稳定的词汇，并且能够被儿童当作母语习得。
+            土生葡语
+        在诸多中文论文中，有些学者将皮钦语和克里奥尔语统称为混合语
     脑筋急转弯/谜语/歇后语 这些的原理是什么？
     成语 典故 迷因/梗 这些的原理是什么？
 逻辑学
@@ -7172,12 +7179,31 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
         协调世界时不与任何地区位置相关，也不代表此刻某地的时间，所以在说明某地时间时要加上时区
         也就是说GMT并不等于UTC，而是等于UTC+0，只是格林尼治刚好在0时区上。
         GMT = UTC+0
-    常见的地区时间
-        GMT（格林威治时间）
-        CST（北京时间）
-        PST（太平洋时间）
-        CST（美国的中部标准时间）
-        地区时间的缩写可能有重复，写成 UTC+8 这种可以避免歧义
+    时区
+        理论上的时区：24个
+            划分原理：地球一圈360度，除以24小时，每个时区跨越15个经度，相邻两个时区的时间相差1小时。
+            分布：以英国格林尼治天文台的本初子午线为中时区（零时区），向东、向西各划分12个时区（其中东十二区和西十二区各跨7.5度，合并为一个时区）。
+            东十二区和西十二区中间是国际日期变更线，东十二区和西十二区虽然是同一天，却差了24小时
+        实际使用的标准时间：38个
+            整点时区（27个）
+            半小时时区（8个）
+            45分钟时区（3个）
+            加上夏令时（DST）后：一共有40个
+            计算机系统里的时区标识：400多个
+                系统里的时区列表（IANA tz database）包含了全球各个城市和地区在不同历史时期的时区规则，
+                同一个 UTC 偏移量在不同国家可能有不同的历史变更和夏令时规则，计算机需要为每个特定的地理区域单独定义一个时区代码
+        常见的地区时间
+            GMT（格林威治时间）
+            CST（北京时间）
+            PST（太平洋时间）
+            CST（美国的中部标准时间）
+            地区时间的缩写可能有重复，写成 UTC+8 这种可以避免歧义
+        平壤时间
+            1908年4月1日，大韩帝国启用以东经127度30分基准的东八点半区（UTC+08:30）标准时，
+            朝鲜半岛被日本吞并后，在1912年1月1日改为与日本一致的东九区（UTC+09:00）标准时。 
+            大韩民国政府曾于1954年3月21日至1961年8月9日之间恢复东八点半区（1954年-1960年）
+            2015年8月7日，朝鲜宣布为了迎接祖国解放70周年，于2015年8月15日起，改用UTC+8:30的时间
+            2018年5月5日之后，朝鲜使用UTC+09:00时区，与大韩民国和日本同一时区；
     时间戳是 UTC 的时间戳
         Unix 时间戳是从1970年1月1日（UTC/GMT的午夜）开始所经过的秒数，不考虑闰秒。
         一个小时表示为UNIX时间戳格式为：3600秒；一天表示为UNIX时间戳为86400秒，闰秒不计算。
@@ -7247,6 +7273,17 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
         火计时
         公鸡打鸣
     和时间相关的标准有哪些
+        ISO8601
+        ISO8601_EXPANDED
+        RFC822
+        RFC850
+        RFC1036
+        RFC1123
+        RFC7231
+        RFC2822
+        RFC3339
+        RFC3339_EXTENDED
+        还有 atom cookie rss w3c
     一年有多少天？
         365          一般的平年
         365 或 366    知道闰年
@@ -7255,6 +7292,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
         365.2424      知道春分点回归年
         365.2422      知道平均回归年（春分 夏至 秋分 冬至 四点回归年的平均值）
         365.2564      恒星年
+        365.2596      近点年
         春分年（Vernal Equinox Year / Spring Equinox Year） -> 春分点回归年
         分点年（Equinox Year） -> 多数语境下指春分点回归年
         回归年（tropical Year） -> 多数语境下指春分点回归年，也有可能指 平均回归年
@@ -7276,6 +7314,19 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
         岁差（Precession） 是什么？
             因为有岁差的存在所以恒星年大于回归年
             差值：约 20分24秒
+        近点年（Anomalistic year）
+            指地球中心连续两次经过轨道近日点（距离太阳最近的点）的时间间隔
+            长度：约为 365.259635 日（即 365天6小时13分钟52.5秒）
+            作用：它是用来测量地球公转速度变化的周期性单位
+            与回归年的区别：它比普通的回归年（约365.2422日）稍长一点，主要是因为地球轨道的近日点本身也在发生缓慢的进动
+        交点年（draconic year），又称食年（eclipse year）
+            是太阳沿着黄道连续两次经过同一黄白交点（升交点）所需时间
+            其长度为346.6200日
+            交点年是研究和计算日月食发生规律的重要时间单位
+            只有当太阳靠近黄白交点时，才可能发生日食或月食
+            黄白交点/月球交点
+                月球交点是月球的轨道交点，它是月球轨道在天球上穿越过黄道（太阳在以恒星为背景的天球上移动的路径）的位置。
+                升交点是月球穿越黄道进入北方的点，降交点是穿越黄道进入南方的点。
     历法
         阳历(Solar Calendar) 阴历(Lunar Calendar) 阴阳合历(Lunisolar Calendar)
         历法的主要作用是用来指导农业，所以四季是很重要的，
@@ -7297,6 +7348,21 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
                 初七或初八 是 上弦月
                 十五或十六 是 满月
                 二十二或二十三 是 下弦月
+    日期时间格式化
+        模板语法大致有两种
+            POSIX strftime
+                c python ruby date命令 jq gawk tcl
+                php的strftime函数
+                php date 函数，类似于没有 % 的 POSIX strftime
+            icu
+                java .net mysql 
+                php 的 IntlDateFormatter 类
+                php 的 DateTime 类
+            c++20里也有一套
+            excel里也有一套
+                ECMA-376 标准，理论上 Google Sheets、LibreOffice  也会遵顺相同的标准
+        javascript 原生并没有格式化字符串，原生是通过传入一个 结构化配置对象 实现格式化的
+            但js也有一些流行的库 Moment.js/Day.js/https://moment.github.io/luxon/
 国际化和本地化
     i18n Internationalization 国际化
     l10n Localization 本地化

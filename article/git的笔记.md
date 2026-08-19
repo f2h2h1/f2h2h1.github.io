@@ -744,6 +744,8 @@ vendor/bin/phpstan analyse --no-progress --no-ansi -l 4 $(git log -1 --name-only
 # 特定某个提交的文件        $(git log -1 --name-only --pretty='' eaaa302ffe0421a524c5c0e8543421d2f200067c)
 # 在staged的文件            $(git diff --cached --name-only)
 # 从某个提交开始修改过的文件 $(git log --name-only --pretty='' eaaa302ffe0421a524c5c0e8543421d2f200067c^..HEAD | awk '!seen[$0]++')
+# 列出已跟踪，已修改，不在staged的文件 $(git ls-files --modified)
+# 列出未跟踪，未被忽略的文件           $(git ls-files --others --exclude-standard)
 -->
 
 
@@ -1217,7 +1219,7 @@ echo $USER_CONTENT | php -r "$php_code" $MODEL | sed 's/\*/\\*/g'
 
 # echo $URL
 
-RESPONSE=$(echo -n "$PAYLOAD" | sed 's/ \\\* / \* /g' | curl -s -X POST \
+RESPONSE=$(echo -n "$PAYLOAD" | sed 's/\\\*/\*/g' | curl -s -X POST \
     -H "Content-Type: application/json;charset=utf-8" \
     -H "x-api-key: $KEY" \
     -d @- \

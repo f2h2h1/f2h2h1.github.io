@@ -5491,6 +5491,40 @@ $currentTimezone = @date_default_timezone_get();
 $strtime = strtotime($strtime);
 @date_default_timezone_set($currentTimezone);
 
+strtotime 的会使用 系统时区 转换 时间戳
+使用 date_default_timezone_set 设置系统时区
+使用 date_default_timezone_get 获取系统时区
+
+这是获取当前时区
+$timeZone = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\Stdlib\DateTime\TimezoneInterface::class);
+$timeZone->getConfigTimezone();
+
+这是获取默认时区，代码里写死是 utc 的
+$timeZone = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\Stdlib\DateTime\TimezoneInterface::class);
+$timeZone->getDefaultTimezone();
+
+时间戳 -> 格式化字符串
+    (new \DateTime())
+        ->setTimezone(new \DateTimeZone($this->timezone->getConfigTimezone()))
+        ->setTimestamp(1785560215)->format('Y-m-d H:i:s')
+格式化字符串 -> 时间戳
+    var_dump((new \DateTime('2026-08-01 12:56:55', new \DateTimeZone('UTC')))->getTimestamp());
+一种格式 -> 另一种格式
+    var_dump((new \DateTime('2026-08-01 12:56:55', new \DateTimeZone('UTC')))->format('Y-m-d H:i:s'));
+一种格式 -> 转换时区后
+    var_dump((new \DateTime('2026-08-01 12:56:55', new \DateTimeZone($this->timezone->getConfigTimezone())))->format('Y-m-d H:i:s'));
+
+保存在数据库里的时间
+    如果是时间戳就不用考虑时区
+    如果是格式化的字符串
+        先看看有没有包含时区
+        如果没有包含时区
+            要判断保存时是以什么时区保存的
+                其中 product eav 的 datetime 是以 utc 时区保存的
+
+关键这两个php类
+IntlDateFormatter
+DateTime
 
 在这个位置，也把时区设为 utc
 app\bootstrap.php
