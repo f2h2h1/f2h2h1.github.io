@@ -6159,6 +6159,8 @@ wordpress
         https://github.com/WordPress/wordpress-playground
         WordPress Playground是一个实验性的浏览器WordPress,由于WebAssembly,它可以在没有PHP服务器的情况下运行。
     wordpress studio
+        wordpress 本地开发工具
+        https://developer.wordpress.com/studio/
     电商网站
         客户 customer
         产品 product
@@ -7194,16 +7196,65 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
                 同一个 UTC 偏移量在不同国家可能有不同的历史变更和夏令时规则，计算机需要为每个特定的地理区域单独定义一个时区代码
         常见的地区时间
             GMT（格林威治时间）
-            CST（北京时间）
-            PST（太平洋时间）
+            CST（China Standard Time，CST，北京时间）
+            PST（美国的太平洋标准时间）
             CST（美国的中部标准时间）
             地区时间的缩写可能有重复，写成 UTC+8 这种可以避免歧义
+        1912年划分之时区为中国标准时区，分别为：
+            昆仑时区 GMT+5.5 新疆西部与部分西藏 喀什（Asia/Kashgar） 
+            新藏时区 GMT+6 新疆及西藏 乌鲁木齐（Asia/Urumqi） 
+            陇蜀时区 GMT+7 华西 重庆（Asia/Chongqing） 
+            中原标准时区 GMT+8 华东 上海（Asia/Shanghai）
+            长白时区 GMT+8.5 中国东北 哈尔滨 （Asia/Harbin）
+        新疆时间
+            UTC+6
+            在1970－80年代间，新疆时间曾被多次废除后再恢复。1986年2月，中国政府批准了在新疆民间采用新疆时间
+            新疆广播电视台亦曾长期使用两套时间标准，其维吾尔语和哈萨克语频道采用新疆时间，但汉语频道却采用北京时间
+            汉族采用北京时间，大部分维吾尔族等其他民族的人，则采用乌鲁木齐时间以配合当地习俗，部分当地政府部门同时使用两个时间
         平壤时间
             1908年4月1日，大韩帝国启用以东经127度30分基准的东八点半区（UTC+08:30）标准时，
             朝鲜半岛被日本吞并后，在1912年1月1日改为与日本一致的东九区（UTC+09:00）标准时。 
             大韩民国政府曾于1954年3月21日至1961年8月9日之间恢复东八点半区（1954年-1960年）
             2015年8月7日，朝鲜宣布为了迎接祖国解放70周年，于2015年8月15日起，改用UTC+8:30的时间
             2018年5月5日之后，朝鲜使用UTC+09:00时区，与大韩民国和日本同一时区；
+        酒店大堂里的时间
+            本地时间
+            五常首都时间
+                伦敦 utc+0 Europe/London
+                巴黎 utc+1 Europe/Paris
+                莫斯科 utc+3 Europe/Moscow
+                上海，北京 utc+8 Asia/Shanghai
+                纽约，华盛顿 utc-5 EST America/New_York
+            其它主要城市
+                洛杉矶 utc-8 PST America/Los_Angeles
+                芝加哥 utc-6 CST America/Chicago
+                东京 utc+9 Asia/Tokyo
+                迪拜 utc+4 Asia/Dubai
+                悉尼 utc+10 Australia/Sydney
+    时区信息数据库
+        TZ database、Zoneinfo database、该数据库由David Olson创立，因而有些地方也将其称作Olson数据库
+        TZ database 是一个主要应用于电脑程序以及操作系统的，可协作编辑世界时区信息的数据库
+        该数据库目前由互联网号码分配机构（IANA）负责维护和发布
+        TZ database 的记录大致分为三部分
+            Time Zone identifier 时区标识符
+                由两部分组成 region 和 city
+                    region 只有 11个
+                        这几个是常用的
+                        America 美洲
+                        Asia 亚洲
+                        Europe 欧洲
+                    city 有很多个
+                        首字母大写，没有空格，用_连接单词
+            UTC offset UTC偏移
+                这些是 UTC偏移
+                utc-8 utc+8 utc+06:30
+                有些时候还要区分 SDT 和 DST
+                SDT Standard Time 标准时间
+                DST Daylight Saving Time 夏令时
+                不过东亚地区都不用夏令时，先不管了
+            Time Zone abbreviations 时区缩写
+                这些是时区缩写，时区缩写有重复的，最好还是用 UTC偏移 表示时区
+                    GMT CST PST CST EST
     时间戳是 UTC 的时间戳
         Unix 时间戳是从1970年1月1日（UTC/GMT的午夜）开始所经过的秒数，不考虑闰秒。
         一个小时表示为UNIX时间戳格式为：3600秒；一天表示为UNIX时间戳为86400秒，闰秒不计算。
@@ -7334,6 +7385,14 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
         儒略历 和 格利高历 本质上是一样的，只是 格利高历 误差更小
         复活节是春分后的第一个满月后的第一个星期日
         24节气
+            春
+                立春 雨水 惊蛰 春分 清明 谷雨
+            夏
+                立夏 小满 芒种 夏至 小暑 大暑
+            秋
+                立秋 处暑 白露 秋分 寒露 霜降
+            冬
+                立冬 小雪 大雪 冬至 小寒 大寒
     为什么一个星期是七天？
         七颗可见天体
             日 月 火 水 木 金 土
@@ -7348,6 +7407,19 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
                 初七或初八 是 上弦月
                 十五或十六 是 满月
                 二十二或二十三 是 下弦月
+        七曜 七政 七纬 七耀
+            太阳（日）、太阴（月）、金（太白星）、木（岁星）、水（辰星）、火（荧惑星）、土（镇星）
+        七星神
+            七星神是古巴比伦闪米特人将七曜天体与其主神信仰相结合形成的宗教崇拜体系
+            太阳神沙马什（司法神） 月神辛（牧神） 火星神涅尔加（战神） 水星神纳布（智慧神） 木星神马尔都克（众神之王） 金星神伊丝妲（爱情神） 土星神尼努尔达（胜利神）
+        剧集
+            周一、周二播出的剧叫月火剧；
+            周三、周四播出的剧叫水木剧；
+            周五播出两集的剧叫金曜剧；
+            周五、周六播出的剧叫金土剧；
+            周六、周日播出的剧叫土日剧，在韩国叫周末剧；
+            周一到周五晚上播出的剧叫日日剧；
+            周一到周五早上播出的剧叫晨间剧
     日期时间格式化
         模板语法大致有两种
             POSIX strftime
@@ -7363,6 +7435,52 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
                 ECMA-376 标准，理论上 Google Sheets、LibreOffice  也会遵顺相同的标准
         javascript 原生并没有格式化字符串，原生是通过传入一个 结构化配置对象 实现格式化的
             但js也有一些流行的库 Moment.js/Day.js/https://moment.github.io/luxon/
+    时间单位
+        现代的
+            飞秒（fs Femto）
+            皮秒（ps milli）
+            纳秒（ns micro）
+            微秒（µs nano）
+            毫秒（ms pico）
+            秒（second）
+            分（Minute）
+            时
+            日
+            周
+            月
+            季
+            年
+            年代
+            世纪
+        中国古代的
+            秒
+            分   60秒
+            字   5分钟
+            刻   15分钟
+            点   24分钟 五点等于一更，现代语境下1点是1小时
+            辰   2小时
+            更   2小时 特指晚上的时间 晚上七点到第二天五点
+            日   
+            周   7日
+            旬   10日
+            月   
+            季   3个月
+            岁   1年
+            秩   10年
+            纪   12年
+            世   30年
+            甲子 60年
+    时间等级
+        小时级   
+        亚小时级 
+        分钟级   
+        亚分钟级 
+        秒级     
+        亚秒级   
+        毫秒级 (Millisecond level)
+        亚毫秒级 (Sub-millisecond level) 
+        微秒级 （micro level）
+        亚微秒级 （Sub-micro level）
 国际化和本地化
     i18n Internationalization 国际化
     l10n Localization 本地化
