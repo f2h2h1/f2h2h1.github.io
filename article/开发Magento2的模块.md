@@ -5844,6 +5844,60 @@ WHERE sales_order.increment_id = 3100182449;
 WHERE sales_order.entity_id = 28546;
 3100182449
 
+
+-- 寻找可以下单的产品
+select
+	cpe.entity_id,
+	cpe.sku,
+	cpe.type_id,
+	csi.item_id,
+    csi.is_in_stock,
+	csi.qty,
+	css.stock_status,
+	css.qty,
+	cpei_status.value as 'prodcut status',
+	cpei_stock.value as 'quantity_and_stock_status',
+	cpei_approval.value as 'approval',
+	cpei_visibility.value as 'visibility',
+	cpe.created_at,
+	cpe.updated_at
+from catalog_product_entity cpe
+left join catalog_product_entity_int cpei_status
+    on cpe.row_id = cpei_status.row_id and cpei_status.attribute_id = (
+        select attribute_id from eav_attribute where attribute_code = 'status' and backend_type = 'int'
+    )
+left join catalog_product_entity_int cpei_stock
+    on cpe.row_id = cpei_stock.row_id and cpei_stock.attribute_id = (
+        select attribute_id from eav_attribute where attribute_code = 'quantity_and_stock_status' and backend_type = 'int'
+    )
+left join catalog_product_entity_int cpei_approval
+    on cpe.row_id = cpei_approval.row_id and cpei_approval.attribute_id = (
+        select attribute_id from eav_attribute where attribute_code = 'approval' and backend_type = 'int'
+    )
+left join catalog_product_entity_int cpei_visibility
+    on cpe.row_id = cpei_visibility.row_id and cpei_visibility.attribute_id = (
+        select attribute_id from eav_attribute where attribute_code = 'visibility' and backend_type = 'int'
+    )
+left join cataloginventory_stock_item csi on cpe.entity_id = csi.product_id
+left join cataloginventory_stock_status css on cpe.entity_id = css.product_id
+WHERE
+    cpei_status.value = 1 AND
+    cpei_stock.value =1 AND
+    csi.is_in_stock = 1 AND
+    css.stock_status = 1 AND
+    csi.qty > 0 AND
+    cpei_visibility.value IN (4, 2) AND
+    cpei_approval.value IN (4, 2) AND
+    ((cpe.created_in <= UNIX_TIMESTAMP(NOW())) AND (cpe.updated_in > UNIX_TIMESTAMP(NOW())))
+ORDER BY cpe.entity_id desc
+limit 100;
+
+这句sql 修改一下可以用作 eav 属性的筛选，查看产品库存，筛选有库存或没有库存的产品
+
+更新库存后，产品依然在不可售状态，额可以试试刷新索引 cataloginventory_stock
+
+
+
 如果 http 头里存在这个字段 X-Requested-With ，而且这个字段的值是 XMLHttpRequest 那么这就是一个 ajax 请求
 在控制器里可以这样判断
 $isAjax = $this->getRequest()->isXmlHttpRequest() vendor\laminas\laminas-http\src\Request.php

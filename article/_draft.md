@@ -5421,6 +5421,8 @@ nas
                 文学作品所反映的社会生活和人类思想感情
             文学形式
                 文学作品的外在表现方式，包括文学体裁、文学样式、文学语言等
+            古代文学
+                蒙学 小学 大学
     学习一门自然语言，大概就是在学习
         语音 文字 语法
         语法 (Grammar) 大概可以分为四个部分
@@ -6577,6 +6579,34 @@ Macromedia
             Articulate Studio
             Lectora
         墙内也有不少这类工具
+erp
+    TinyERP Tryton OpenERP Odoo
+    主线：TinyERP → OpenERP → Odoo（同一产品的三次更名）
+    分支：Tryton（2008 至今）
+        发起人是 Tiny 公司的两名前员工 Cédric Krier 和 Bertrand Chenal（总部在比利时列日）。
+        两人在公司工作约两年后，对客户服务质量和代码技术问题深感不满——他们识别的架构缺陷在公司内部得不到资源去修复，公司更热衷于拉客户而非打磨产品，于是辞职单干
+        技术上，他们以 TinyERP 4.2 的代码为基础
+        名字取自海卫一 Triton，把字母 i 换成了 Python 的 y，即 Tryton
+    时间线
+        2002~2004  Fabien Pinckaers 在比利时开始开发
+        2005       TinyERP 正式发布（公司名 Tiny sprl）
+        2008.06    TinyERP 更名 OpenERP ──┐
+        2008.11    Tryton 从 TinyERP 4.2 分叉（独立发展）←──┘ 两个项目从此分道扬镳
+        2009.02    OpenERP 5.0 发布
+        2010       公司获 300 万欧元风投，更名 OpenERP S.A.
+        2014.05    OpenERP 更名 Odoo（OpenERP 7 → Odoo 8）
+    Odoo 名字的由来
+        2014 年更名后不久，有人在 Odoo 官方论坛问"Odoo 是什么意思"，公司方面的回答是："Odoo 本身不代表任何意思。这个词的词根来自 On Demand Open Object，但我们不会拿这个做宣传"
+            On Demand = 按需取用 指 Odoo 的模块化理念，企业需要什么应用（CRM、会计、电商……）就装什么，随需扩展，也暗合其云端 SaaS
+            Open Object = 开放对象：这其实是技术遗产——OpenERP 底层的 Python 开发框架就叫 OpenObject Framework（那套 ORM + 模块化的对象体系）
+        在 2014 年的官方更名博客中，团队提到他们研究了全球顶尖公司的名字，发现很多都含有字母 O（比如 Google、Yahoo 等），于是干脆选了一个一口气塞了三个 O 的名字
+        2014 年的官方新闻稿明确写道：这个名字完全不包含 'ERP'，以摆脱“ERP”。产品早已超越 ERP（建站、电商、POS、营销自动化都不是 ERP），名字不能再画地为牢
+    2BizBox
+        2BizBox（现也称途必云）是一款面向中小企业的ERP
+        基于java
+        基础功能免费，源代码不公开，可以自己开发插件
+        现在似乎也不宣传这个，在推广 cloud 版
+        大学时遇到过这个 erp
 从ed到perl还有正则表达式
     qed ed ex vi vim grep sed awk perl
     qed
@@ -7437,11 +7467,11 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
             但js也有一些流行的库 Moment.js/Day.js/https://moment.github.io/luxon/
     时间单位
         现代的
-            飞秒（fs Femto）
-            皮秒（ps milli）
-            纳秒（ns micro）
-            微秒（µs nano）
-            毫秒（ms pico）
+            飞秒（fs femto）
+            皮秒（ps pico）
+            纳秒（ns nano）
+            微秒（µs micro）
+            毫秒（ms milli）
             秒（second）
             分（Minute）
             时
@@ -7488,7 +7518,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
     先国际化再本地化
         本地单一市场 -> 国际化 -> 其它地区的本地化
     需要关注的要点
-        文字 语言 时间/日期格式 单位（货币，质量，体积） 人名顺序 地址格式 排序规则 数字格式 纸张大小 服装尺码 电器（插座，电压） 交通通行方向 法律 宗教 文化
+        文字 语言 时间/日期格式 星期从哪天开始 单位（货币，质量，体积） 人名顺序 地址格式 排序规则 数字格式 纸张大小 书写顺序 服装尺码 电器（插座，电压） 交通通行方向 法律 宗教 文化
     最终目标都是为了满足不同市场的需求，提升用户体验和市场竞争力。
         https://www.w3.org/International/questions/qa-i18n
         https://blog.mozilla.org/l10n/2011/12/14/i18n-vs-l10n-whats-the-diff/
