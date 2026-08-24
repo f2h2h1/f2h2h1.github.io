@@ -663,6 +663,8 @@ vscode的使用技巧
         php
             PHP Debug
             PHP Intelephense
+        AI
+            Kilo https://github.com/Kilo-Org/kilocode
         其它
             vscode-icons
             sftp https://marketplace.visualstudio.com/items?itemName=Natizyskunk.sftp
@@ -820,6 +822,13 @@ vscode的使用技巧
         https://vscodium.com/
         https://github.com/VSCodium/vscodium
         https://open-vsx.org/ 可用的插件商店
+    不通过插件市场安装插件
+        下载vsix
+            从 https://open-vsx.org/ 下载 vsix
+            从 github releases下载 vsix
+        安装
+            界面: VS Code → 扩展面板（Ctrl+Shift+X）→ 右上角 ... → Install from VSIX... → 选中文件
+            CLI: code --install-extension vsix文件路径
 爬虫与反爬虫的经验
     爬虫
         无视 robots.txt
@@ -7609,7 +7618,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expression
     需要写代码的
         测试 运维（服务器运维，桌面运维）  网络 信息安全 嵌入式 物联网 游戏 gis 生物信息 高频交易 数据分析 人工智能 3D打印 3D建模
     不需要写代码的
-        项目管理 产品设计 UI/UX
+        项目管理
+        产品设计
+        UI/UX/ID
+            UI：User Interface（用户界面设计），负责软件或屏幕的视觉、排版和外观。
+            UX：User Experience（用户体验设计），负责研究用户心理，优化逻辑、易用性和整体感受。
+            ID：Industrial Design（工业设计，硬件领域）或 Interaction Design（交互设计，部分语境缩写为 IxD，指数字产品的人机交互逻辑）
     多媒体处理
         图片
             位图（标量图）
