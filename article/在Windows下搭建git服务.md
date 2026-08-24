@@ -18,6 +18,157 @@
 - 但使用 sdk 的话又无法把 git 的选项加入到右键菜单里
 - 其实在 msys2 中 安装 git 也不是不可以的
 
+## 使用 msys2 安装 git
+
+- 假设已经安装好 msys2
+- 以下所有命令都运行在 `mingw-w64-ucrt-x86_64`
+
+### 安装 git
+```
+pacman -Su
+pacman -S "$MINGW_PACKAGE_PREFIX-git"
+pacman -S "$MINGW_PACKAGE_PREFIX-git-gui"
+pacman -S "$MINGW_PACKAGE_PREFIX-gitk"
+```
+
+运行 `git --version` ，如果输出中有 windows ，是成功安装了。
+
+git gui 的作用是制作 commit ；
+gitk 的作用是浏览 commit 历史
+
+通过 git 启动 git gui
+```
+git gui
+```
+
+通过 git gui 启动 gitk ，
+在 git-gui 窗口的菜单栏中选择
+| 菜单项                                         | 等效命令 | 效果                     |
+|----------------------------------------------|----------|--------------------------|
+| Repository → Visualize All Branch History    | `gitk --all` | 启动 gitk，显示所有分支的历史 |
+| Repository → Visualize Current Branch's History | `gitk`      | 启动 gitk，只显示当前分支的历史 |
+
+### 安装 gcm （git credential manager）
+
+1. 从 github 中下载 https://github.com/git-ecosystem/git-credential-manager
+1. 下载 zip 压缩包就可以了
+1. 下载完 zip 后，解压，找到 git-credential-manager.exe
+1. 先通过 git --exec-path 找到 git-core 文件夹的位置
+1. 再在 git-core 文件夹里新建一个名为 git-credential-manager-core 的文件，写入以下内容
+    ```
+    #!/bin/sh
+    git-credential-manager.exe的绝对路径 $*
+    #例子 /C/Users/a/Downloads/gcm-win-x64-2.9.1/git-credential-manager.exe $*
+    ```
+1. 修改全局的 credential.helper
+    ```
+    git config --global credential.helper credential-manager-core
+    ```
+1. 模拟一次凭据查询
+    ```
+    echo -e "protocol=https\nhost=github.com\n" | git credential fill
+    # github 如果已经有账号，会输出账号信息，所以可以用 gitee.com 测试
+    echo -e "protocol=https\nhost=gitee.com\n" | git credential fill
+    ```
+
+ credential.helper 配置的位置
+```
+git config --show-origin --get-all credential.helper
+```
+
+credential.helper 的配置大概写成这样
+```
+credential.helper 的配置大概写成这样
+[credential]
+	helper = credential helper 的 name
+例子
+[credential]
+	helper = manager-core
+这个位置填可执行文件也可以，这里要注意文件分隔符
+[credential]
+	helper = C:/Users/a/Downloads/gcm-win-x64-2.9.1/git-credential-manager.exe
+```
+
+如何查看当前的 git 有哪些 credential helper 可用
+```
+ls "$(git --exec-path)" | grep credential
+```
+
+credential helper 的名称就是 credential- 后面那部分
+例如
+- git-credential-store 的名称就是 store
+- git-credential-manager 的名称就是 manager
+- git-credential-manager-core 的名称就是 manager-core
+
+
+git fow windows 里还有一个 专用于 windows 的 credential helper `credential-wincred`
+这里装了 gcm 就够用了
+
+### 安装 gitweb
+
+安装必要的依赖 perl perl-CPAN gitweb
+```
+pacman -Su
+pacman -S perl perl-CPAN
+pacman -S "$MINGW_PACKAGE_PREFIX-gitweb"
+#  用 cpan 安装 CGI 模块
+cpan CGI
+# 第一次运行 cpan 时，它会提示你进行配置，一路按回车使用默认设置即可
+# 配置 gitwebdir的路径
+git config  --global instaweb.gitwebdir /ucrt64/share/gitweb
+```
+
+启动 gitweb ，在项目根目录运行
+```
+git instaweb --httpd=python
+```
+
+如果启动 gitweb 失败，可以尝试运行以下命令
+```
+# 先停止 git instaweb（如果还在运行）
+git instaweb --stop
+
+# 删除残留的 gitweb 目录
+rm -rf .git/gitweb/
+
+# 重新启动
+git instaweb --httpd=python
+```
+
+### 其它一些配置
+
+- 环境变量
+- 右键菜单
+- vscode 的终端
+    ```
+    "terminal.integrated.profiles.windows": {
+        "UCRT64 (MSYS2)": {
+            "path": "C:\\msys64\\usr\\bin\\bash.exe",
+            "args": ["--login", "-i"],
+            "env": {
+                "MSYSTEM": "UCRT64",
+                "CHERE_INVOKING": "1"
+            },
+            "icon": "terminal-bash"
+        }
+    }
+    ```
+- Windows Terminal 
+    ```
+    {
+        "guid": "{2c4de342-38b7-51cf-940f-3c2a6a6e5a5a}",
+        "name": "UCRT64 (MSYS2)",
+        "commandline": "C:/msys64/msys2_shell.cmd -defterm -here -no-start -ucrt64",
+        "icon": "C:/msys64/ucrt64.ico",
+        "startingDirectory": "%USERPROFILE%"
+    }
+    ```
+- 命令行提示符的分支名
+- 开始菜单
+- 桌面
+- 任务栏
+
+
 ## git 的仓库
 git 有两种仓库，普通仓库和裸仓。普通仓库有工作目录，裸仓没有工作目录。
 

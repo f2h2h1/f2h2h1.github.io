@@ -112,6 +112,10 @@
         早期工具
             算盘
             计算尺
+        计算器
+            机械式计算器
+            电子化的桌上型计算器
+        制表机 Tabulating machine
         模拟计算机
             机械式
             电动式
@@ -680,6 +684,8 @@ vscode的使用技巧
         },
     在 Windows 环境下，复制相对路径时使用斜杠
         "explorer.copyRelativePathSeparator"："/"
+    在 Windows 环境下，复制绝对路径时使用斜杠
+        "explorer.copyPathSeparator": "/",
     使用 git
         关闭自动刷新
             选项->扩展->git->autorefresh
@@ -912,6 +918,12 @@ vscode的使用技巧
         爬虫和反爬虫搞到最后都是人工智能。。。
             爬虫最大的难点是验证码和ip限制
                 解决验证码最后依然是依赖计算机视觉
+    浏览器指纹
+        ip ua tls Canvas AudioContext webgl Navigator对象上的硬件参数
+        所谓的前端指纹技术，本质上就是找不同的一种方式。
+        开发者利用一切可以调用的 API（Canvas, Audio, WebGL, 硬件信息），强迫浏览器进行某种复杂的运算。
+        由于硬件和驱动的细微差别，运算结果必然存在差异。
+        这些差异被收集起来，生成了一个字符串。
 寻找工作
     寻找合适的 岗位 和 公司
         各个招聘平台
