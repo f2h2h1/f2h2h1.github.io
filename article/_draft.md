@@ -5805,8 +5805,13 @@ nas
         arcadedb
     还有类似的
         通讯录(contacts)
+            CardDAV vCard hCard
         备忘录(memo)
         日历(calendar)
+            数字日历(digital calendar)
+            也是一种专门的软件 https://en.wikipedia.org/wiki/Digital_calendar
+            在旧时代有专门的 Calendar Server
+            CalDAV hCalendar
         任务管理(task/todo)
         看板(Kanban)
         知识库（Knowledge base）

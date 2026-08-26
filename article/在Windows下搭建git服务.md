@@ -48,6 +48,18 @@ git gui
 | Repository → Visualize All Branch History    | `gitk --all` | 启动 gitk，显示所有分支的历史 |
 | Repository → Visualize Current Branch's History | `gitk`      | 启动 gitk，只显示当前分支的历史 |
 
+
+git gui 设置 utf-8 编码
+```
+git gui
+    edit
+        options
+            左边是当前仓库的，右边是全局的，最好两边都改
+            default file contents encodeing
+                change
+                    uitf-8
+```
+
 ### 安装 gcm （git credential manager）
 
 1. 从 github 中下载 https://github.com/git-ecosystem/git-credential-manager
@@ -70,6 +82,7 @@ git gui
     # github 如果已经有账号，会输出账号信息，所以可以用 gitee.com 测试
     echo -e "protocol=https\nhost=gitee.com\n" | git credential fill
     ```
+
 
  credential.helper 配置的位置
 ```
@@ -101,7 +114,7 @@ credential helper 的名称就是 credential- 后面那部分
 - git-credential-manager-core 的名称就是 manager-core
 
 
-git fow windows 里还有一个 专用于 windows 的 credential helper `credential-wincred`
+git fow windows 里还有一个 专用于 windows 的 credential helper `credential-wincred` ，
 这里装了 gcm 就够用了
 
 ### 安装 gitweb
