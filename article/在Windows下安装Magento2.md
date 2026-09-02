@@ -866,6 +866,18 @@ openssl req -new -x509 -days 365 -nodes -out apache-selfsigned.crt -keyout apach
         DirectoryIndex index.html index.php
     </IfModule>
 
+    # cgi 的配置
+    # 先启用这几个模块 mod_alias.so mod_cgi.so mod_actions.so mod_env.so
+    # # 1. 把虚拟 URL 前缀 /php-cgi/ 映射到 PHP 安装目录，该目录下所有文件会被视为 CGI 程序
+    # ScriptAlias /php-cgi/ "C:/php-8.1.29-Win32-vs16-x64/"
+    # # 2. .php 文件交给名为 php-cgi 的处理器
+    # AddHandler php-cgi .php
+    # # 3. Action 的第二个参数必须是上一步映射出来的 URL，不是磁盘路径
+    # Action php-cgi "/php-cgi/php-cgi.exe"
+    # # 指定 php.ini 所在目录（可选，不设置则按 PHP 默认搜索顺序） 要先启用 mod_env.so 模块
+    # SetEnv PHPRC "C:/php-8.1.29-Win32-vs16-x64"
+    # <Directory "/"> 下的 Options 要加上 ExecCGI
+
     ErrorLog "logs/localhost-magento.com-error.log"
     CustomLog "logs/localhost-magento.com-access.log" common
 </VirtualHost>

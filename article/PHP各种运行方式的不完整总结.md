@@ -128,6 +128,9 @@ mod_proxy_fcgi
             apache 2.4 之后就有的 fcgi 工具
 mod_cgid
 mod_cgi
+
+fastcgi的几种模块，配置要怎么写？
+使用 cgi-script 的 handler 配置要怎么写？
 -->
 
 apache 模块的运行方式也是十分流行的运行方式。

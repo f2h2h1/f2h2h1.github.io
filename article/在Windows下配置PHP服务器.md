@@ -480,6 +480,30 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
 ### 配置 Apache
 1. 把 Apache 添加进环境变量
 2. 配置 php
+    - cig
+        1. 启用必要的模块
+            - mod_alias.so
+            - mod_cgi.so
+            - mod_actions.so
+        2. 修改配置，这段配置可以写在 VirtualHost 里
+            ```
+            # 1. 把虚拟 URL 前缀 /php-cgi/ 映射到 PHP 安装目录，该目录下所有文件会被视为 CGI 程序
+            ScriptAlias /php-cgi/ "C:/php-8.1.29-Win32-vs16-x64/"
+            # 2. .php 文件交给名为 php-cgi 的处理器
+            AddHandler php-cgi .php
+            # 3. Action 的第二个参数必须是上一步映射出来的 URL，不是磁盘路径
+            Action php-cgi "/php-cgi/php-cgi.exe"
+            # 指定 php.ini 所在目录（可选，不设置则按 PHP 默认搜索顺序） 要先启用 mod_env.so 模块
+            SetEnv PHPRC "C:/php-8.1.29-Win32-vs16-x64"
+            ```
+            ```
+            # 站点的根目录需要加上 ExecCGI
+            <Directory />
+                Options Indexes FollowSymLinks ExecCGI
+                AllowOverride none
+                Require all granted
+            </Directory>
+            ```
     - php_module
         1. 把 php 目录下的 php7apache2_4.dll 复制到 Apache 目录下的 modules
         2. 打开 Apache 的配置文件 httpd.conf，往 httpd.conf 里添加 php 的模块，httpd.conf 这个文件在 Apache 安装目录的 conf 文件夹里
@@ -502,6 +526,12 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
                 - 试试 模块的路径填绝对路径
                     - 例如 这样 C:/php/php8apache2_4.dll
                     - 但 这样的路径却不行 C:/apache/modules/php8apache2_4.dll ，虽然不知道为什么
+            - `AddHandler application/x-httpd-php .php` 这句的含义是把 `.php` 后缀的文件交给名为 `application/x-httpd-php` 的 `Handler` 处理
+                - 想支持更多扩展名可以追加 `AddHandler application/x-httpd-php .php .phtml .php8`
+                - `application/x-httpd-php` 这个值是写死在源码里的 `/sapi/apache2handler/sapi_apache2.c`
+                - 看起来像 MIME 类型。只是借用了 MIME 类型的命名习惯，一般情况下不会作为 Content-Type 发送给浏览器
+                - Handler 名称可以写成 `php-script` ，命名风格模仿 Apache 自带的 cgi-script
+            - `PHPIniDir "C:/php"` 声明 php.ini 所在的目录，这是 mod_php 模块自己提供的指令（不是 Apache 核心指令，没加载 PHP 模块时写它会报错）
     - fast cgi
         - 假设使用 mod_proxy_fcgi 模块
             - 除了 mod_proxy_fcgi 之外，还有 mod_fcgid 和 mod_fastcgi
@@ -517,8 +547,9 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
                 ProxyPass fcgi://127.0.0.1:9000/var/www/html/
             </LocationMatch>
             ```
-        - 127.0.0.1:9000 是 fast cig 的地址
+        - 127.0.0.1:9000 是 fast cgi 的地址
         - /var/www/html/ 是站点根目录
+        - fast cgi 进程的启动，可以参考下文里的 启动 php-cgi
 
 3. 打开 httpd.conf，将里面的 #ServerName localhost:80 注释去掉。
 
