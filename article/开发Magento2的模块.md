@@ -6360,5 +6360,61 @@ $emulation->startEnvironmentEmulation($storeId, \Magento\Framework\App\Area::ARE
 sleep(2);
 $emulation->stopEnvironmentEmulation();
 
+
+
+
+基于 php8.1 phpuint9.5 的 写在根目录的 测试用例
+php vendor/bin/phpunit ./LogoUrlTest.php
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
+
+function buildLogoUrl(string $logoUrl, string $storeCode): string
+{
+    return match ($storeCode) {
+        'zh_Hant' => rtrim($logoUrl, '/') . '/zh.html',
+        'en_US'      => rtrim($logoUrl, '/') . '/en.html',
+        default      => $logoUrl,
+    };
+}
+
+final class LogoUrlTest extends TestCase
+{
+    /**
+     * @dataProvider logoUrlProvider
+     */
+    public function testBuildLogoUrl(string $baseUrl, string $storeCode, string $expected): void
+    {
+        $this->assertSame($expected, buildLogoUrl($baseUrl, $storeCode));
+    }
+
+    public static function logoUrlProvider(): array
+    {
+        return [
+            // 命中的 store code
+            '繁体'           => ['https://example.com', 'zh_Hant', 'https://example.com/zh.html'],
+            '美国英文'        => ['https://example.com', 'en_US',       'https://example.com/en.html'],
+
+            // 未命中，走 default 分支，文件名为空
+            '未知store code'  => ['https://example.com', 'fr_FR',       'https://example.com'],
+            '空store code'    => ['https://example.com', '',            'https://example.com'],
+
+            // rtrim 行为：末尾有斜杠 / 多个斜杠时不应产生双斜杠
+            '末尾带一个斜杠'  => ['https://example.com/',  'en_US',     'https://example.com/en.html'],
+            '末尾带多个斜杠'  => ['https://example.com///', 'en_US',    'https://example.com/en.html'],
+
+            // 带路径的 base url
+            '带子路径'        => ['https://example.com/static/media', 'zh_Hant', 'https://example.com/static/media/zh.html'],
+        ];
+    }
+}
+
+
+
 -->
 
