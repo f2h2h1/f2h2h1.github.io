@@ -74,7 +74,7 @@ git gui
     ```
 1. 修改全局的 credential.helper
     ```
-    git config --global credential.helper credential-manager-core
+    git config --global credential.helper manager-core
     ```
 1. 模拟一次凭据查询
     ```
@@ -119,21 +119,26 @@ git fow windows 里还有一个 专用于 windows 的 credential helper `credent
 
 ### 安装 gitweb
 
-安装必要的依赖 perl perl-CPAN gitweb
+安装必要的依赖 make gcc perl perl-CPAN
 ```
+# 这几个命令要在 msys2下运行
 pacman -Su
-pacman -S perl perl-CPAN
-pacman -S "$MINGW_PACKAGE_PREFIX-gitweb"
+pacman -S make gcc perl perl-CPAN
 #  用 cpan 安装 CGI 模块
 cpan CGI
 # 第一次运行 cpan 时，它会提示你进行配置，一路按回车使用默认设置即可
+```
+
+安装 gitweb
+```
+pacman -S "$MINGW_PACKAGE_PREFIX-gitweb"
 # 配置 gitwebdir的路径
 git config  --global instaweb.gitwebdir /ucrt64/share/gitweb
 ```
 
 启动 gitweb ，在项目根目录运行
 ```
-git instaweb --httpd=python
+git instaweb --httpd=python --start
 ```
 
 如果启动 gitweb 失败，可以尝试运行以下命令
@@ -145,8 +150,40 @@ git instaweb --stop
 rm -rf .git/gitweb/
 
 # 重新启动
-git instaweb --httpd=python
+git instaweb --httpd=python --start
 ```
+
+<!--
+
+pacman -S "$MINGW_PACKAGE_PREFIX-toolchain"
+
+pacman -S "$MINGW_PACKAGE_PREFIX-make" "$MINGW_PACKAGE_PREFIX-gcc"
+pacman -S "$MINGW_PACKAGE_PREFIX-gcc"
+
+pacman -S toolchain
+pacman -S make gcc
+
+
+
+perl -MCGI -e 'print "CGI version: $CGI::VERSION\n"'
+
+
+python ".git\gitweb\gitweb.py"
+
+
+C:\msys64\ucrt64\libexec\git-core\git-instaweb
+C:\msys64\ucrt64\share\gitweb\gitweb.cgi
+
+.git\gitweb\gitweb_config.perl
+
+python 不知道在哪个位置退出了
+python 退出后再运行这句是有效的
+python ".git\gitweb\gitweb.py"
+
+127.0.0.1:1234/cgi-bin/gitweb.cgi?p=.git
+127.0.0.1:1234/cgi-bin/gitweb.cgi/.git
+
+-->
 
 ### 其它一些配置
 
@@ -156,8 +193,8 @@ git instaweb --httpd=python
     ```
     "terminal.integrated.profiles.windows": {
         "UCRT64 (MSYS2)": {
-            "path": "C:\\msys64\\usr\\bin\\bash.exe",
-            "args": ["--login", "-i"],
+            "path": "C:\\msys64\\msys2_shell.cmd",
+            "args": ["-defterm", "-here", "-no-start", "-ucrt64"],
             "env": {
                 "MSYSTEM": "UCRT64",
                 "CHERE_INVOKING": "1"
