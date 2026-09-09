@@ -6415,6 +6415,89 @@ final class LogoUrlTest extends TestCase
 }
 
 
+Magento 2 的 URL 到控制器映射规则
+    <frontName>/<controllerPath>/<actionClass>
+其中：
+    frontName：路由前缀，一般在 router.xml 里配置，区分大小写，一般是小写
+    controllerPath：控制器目录路径，URL 中用 _ 表示子目录分隔，全部小写
+    actionClass：动作类名，首字母小写，Magento 会自动转成首字母大写类名
+除此之外，admin后台，还有要给 admin前缀
+    admin前缀/<frontName>/<controllerPath>/<actionClass>
+理论上，也可以自己增加其它前缀，只是需要修改的文件有一点多
+    新建 router类 和 url类
+        router类 用于 把 url 解释到对应的控制器
+        url类 用于 生成 url
+    修改di.xml
+        把路由器挂进 RouterList
+        <type name="Magento\Framework\App\AreaList">
+            <arguments>
+                <argument name="areas" xsi:type="array">
+                    <item name="myarea" xsi:type="array">
+                        <item name="frontName" xsi:type="string">myarea</item>
+                        <item name="router" xsi:type="string">myarea</item>
+                    </item>
+                </argument>
+            </arguments>
+        </type>
+        <type name="Magento\Framework\App\RouterList">
+            <arguments>
+                <argument name="routerList" xsi:type="array">
+                    <item name="myarea" xsi:type="array">
+                        <item name="class" xsi:type="string">Vendor\Module\App\Router\Myarea</item>
+                        <item name="disable" xsi:type="boolean">false</item>
+                        <item name="sortOrder" xsi:type="string">10</item>
+                    </item>
+                </argument>
+            </arguments>
+        </type>
 
+生成 url
+    一般的 url \Magento\Framework\Url::class vendor/magento/framework/Url.php
+        注释里有详细的解释，url的各部分
+    后台的 url \Magento\Backend\Model\Url::class vendor/magento/module-backend/Model/Url.php
+        继承自 \Magento\Framework\Url::class
+        这里会默认 加上 admin前缀
+
+把 url 解释到对应的控制器
+直接"把 URL 解释成控制器"的是路由器类：
+    前台是 Magento\Framework\App\Router\Base（standard 路由器）。
+    后台是 Magento\Backend\App\Router，
+但真正完成"URL 段 → 类名"这步翻译的是它内部调用的 Magento\Framework\App\Router\ActionList::get()
+
+完整调度链
+index.php
+  └─ Bootstrap::run()
+      └─ App\Http::launch()                        ① 入口：取 URL 第一段(frontName)
+          ├─ Request\Http::getFrontName()          ② 切出第一段
+          ├─ AreaList::getCodeByFrontName()        ③ frontName → areaCode（adminhtml / frontend / ...）
+          │     并加载 etc/{areaCode}/di.xml
+          └─ FrontController::dispatch()           ④ 遍历 RouterList
+                └─ Router::match($request)         ⑤ 逐个路由器尝试匹配
+                      ├─ parseRequest()            ⑥ 把路径切成 frontName/controller/action
+                      ├─ Route\Config::getModulesByFrontName()   ⑦ frontName → 模块列表（读 routes.xml）
+                      ├─ ActionList::get()         ⑧ 拼出控制器类名、校验合法性  ← 真正的"翻译"在这
+                      └─ ActionFactory::create()   ⑨ 实例化控制器
+                └─ ActionInterface::dispatch()     ⑩ 调用控制器的 dispatch() → execute()
+
+各类的职责
+| 类                                                                  | 职责                                                                                                       |
+| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `Magento\Framework\App\Http`                                       | 应用入口，启动调度                                                                                                |
+| `Magento\Framework\App\Request\Http`                               | 从 URL 提取 frontName / pathInfo                                                                            |
+| `Magento\Framework\App\AreaList`                                   | frontName → 区域                                                                                           |
+| `Magento\Framework\App\FrontController`                            | 拿着 RouterList 逐个路由器问"你能处理吗"，拿到 action 实例后调它的 `dispatch()`                                                |
+| `Magento\Backend\App\Router` / `Magento\Framework\App\Router\Base` | 按固定段数解析路径，决定 moduleFrontName / controller / action                                                       |
+| `Magento\Framework\App\Route\Config`                               | 查 routes.xml：frontName → 模块名列表                                                                           |
+| `Magento\Framework\App\Router\ActionList`                          | **核心翻译器**：把 模块 + 区域前缀 + controller + action 拼成类名（下划线转命名空间、strtolower 后查扫描缓存），并校验必须是 `ActionInterface` 子类 |
+| `Magento\Framework\App\ActionFactory`                              | 通过 ObjectManager 实例化控制器                                                                                  |
+
+
+两个补充
+    前台不止一个路由器。
+        frontend 区域的 RouterList 按 sortOrder 依次是：urlrewrite（Magento\UrlRewrite\Controller\Router，处理数据库里的 URL 重写，商品页 /xxx.html 就是它先改写成内部路径再放行）、standard（Base）、default（兜底）。
+        所以前台 URL 可能先被改写再进 Base 路由器。后台则只有 admin + default 两个。
+    匹配失败的出口：
+        所有路由器都返回 null 时，FrontController 抛 "No route matched" 异常 → 404 页；
+        后台因为 $applyNoRoute = true，在 admin 路由器内部就直接转到 noroute 控制器了。
 -->
 

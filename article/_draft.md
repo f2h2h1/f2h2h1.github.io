@@ -6527,9 +6527,9 @@ Macromedia
                 Director -> Shockwave
                 Flash -> Flash Player
             三个看上去差不多的产品，是因为这是三个公司的产品，最后通过不断收购合并在 Macromedia
-                Authorware -> Authorware
-                Director -> MacroMind
-                Flash -> FutureWave
+                Authorware -> Authorware (作者器件)
+                MacroMind -> Director (导演)
+                FutureWave -> Flash (闪光)
                 这三个都能做 动画 教学软件 游戏 都能通过插件运行在浏览器里 都能导出 exe
                 在1990年代末，Macromedia为了提升Shockwave的知名度，将其名下的所有多媒体播放器都冠以了“Shockwave”的前缀。
                 Flash 也被官方短暂地称为 “Shockwave Flash”
@@ -6724,9 +6724,17 @@ erp
     在浏览器中的富文本编辑器
         Tinymce
             TinyMCE 7 改用 gpl-2 协议
-            GreatRTE 是从 TinyMCE 6 分叉，并继续使用 mit 协议
+            HugeRTE 是从 TinyMCE 6 分叉，并继续使用 mit 协议
+            TinyMCE
+                Tiny Moxiecode Content Editor
+                微型的 Moxiecode 内容编辑器
+                    Moxiecode 是开发 tinymce 的公司
+            HugeRTE
+                Huge Rich Text Editor
+                巨型的 富 文本 编辑器
         CKEditor
         Quill
+        Tiptap 和 ProseMirror
         ueditor 和 UEditor Plus
         wangEditor 和 wangEditor-next
         summernote
