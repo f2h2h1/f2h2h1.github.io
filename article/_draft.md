@@ -6738,6 +6738,7 @@ erp
         ueditor 和 UEditor Plus
         wangEditor 和 wangEditor-next
         summernote
+        https://github.com/liuzi6612/awesome-web-editor
     富文本编辑器，页面构造器，代码编辑器
         页面构造器（page builder）
         富文本编辑器（rich text editor）
