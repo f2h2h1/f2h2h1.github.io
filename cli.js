@@ -94,9 +94,10 @@ class cli {
     }
 
     async runCommand(command) {
+        let args = command.trim().split(/\s+/).map(a => a.replace(/^["']|["']$/g, ''));
         let result = await (function(){
             return new Promise((resolve, reject) => {
-                child_process.exec(command.trim(), (err, stdout, stderr) => {
+                child_process.execFile(args[0], args.slice(1), (err, stdout, stderr) => {
                     if (err) reject(err);
                     resolve({
                         stdout,
