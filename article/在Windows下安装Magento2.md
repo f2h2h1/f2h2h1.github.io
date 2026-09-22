@@ -876,7 +876,8 @@ openssl req -new -x509 -days 365 -nodes -out apache-selfsigned.crt -keyout apach
     # Action php-cgi "/php-cgi/php-cgi.exe"
     # # 指定 php.ini 所在目录（可选，不设置则按 PHP 默认搜索顺序） 要先启用 mod_env.so 模块
     # SetEnv PHPRC "C:/php-8.1.29-Win32-vs16-x64"
-    # <Directory "/"> 下的 Options 要加上 ExecCGI
+    # # <Directory "/"> 下的 Options 要加上 ExecCGI
+    # # 还要记得关掉 php_mod 的配置
 
     ErrorLog "logs/localhost-magento.com-error.log"
     CustomLog "logs/localhost-magento.com-access.log" common

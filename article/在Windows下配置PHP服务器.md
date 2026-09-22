@@ -967,6 +967,8 @@ windows 的 hosts 文件需要是 ascii 编码或 ansi 编码，用其它编码 
     netstat -anob -p TCP
     查看 TCP 下的 80 端口占用
     netstat -anob -p TCP | findstr "80"
+    查看 TCP 下的 80 端口占用，不列出进程名，列出进程名需要管理员权限
+    netstat -ano -p TCP | findstr "80"
     ```
 
 - tasklist
@@ -1084,6 +1086,7 @@ cmd /c startup.bat
 title apache httpd
 cd C:\Users\a\dev\Apache24\bin
 httpd.exe  -t
+timeout 8
 httpd.exe  || pause
 ```
 
