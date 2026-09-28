@@ -878,6 +878,8 @@ openssl req -new -x509 -days 365 -nodes -out apache-selfsigned.crt -keyout apach
     # SetEnv PHPRC "C:/php-8.1.29-Win32-vs16-x64"
     # # <Directory "/"> 下的 Options 要加上 ExecCGI
     # # 还要记得关掉 php_mod 的配置
+    # # 设置 超时时间，默认是 60
+    # TimeOut 300
 
     ErrorLog "logs/localhost-magento.com-error.log"
     CustomLog "logs/localhost-magento.com-access.log" common

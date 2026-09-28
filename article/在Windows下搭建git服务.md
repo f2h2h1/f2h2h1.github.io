@@ -81,8 +81,13 @@ git gui
     echo -e "protocol=https\nhost=github.com\n" | git credential fill
     # github 如果已经有账号，会输出账号信息，所以可以用 gitee.com 测试
     echo -e "protocol=https\nhost=gitee.com\n" | git credential fill
+    echo -e "protocol=https\nhost=bitbucket.org\n" | git credential fill
     ```
 
+<!--
+git-credential-manager 登录时那个界面是 .NET  实现的，而且是跨平台的
+总之就不是 web ui
+-->
 
  credential.helper 配置的位置
 ```

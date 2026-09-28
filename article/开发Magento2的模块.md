@@ -1853,6 +1853,18 @@ http://aqrun.oicnp.com/2019/11/10/12.magento2-indexing-reindex.html
 </config>
 ```
 
+| 配置 | 值 | 含义 |
+|------|----|------|
+| group id="token_expired" | token_expired | Cron 组 ID，必须和 crontab.xml 里 `<group id="token_expired">` 对应 |
+| schedule_generate_every | 1 | 每 1 分钟生成一次该组的任务调度 |
+| schedule_ahead_for | 4 | 提前 4 分钟生成未来要执行的任务 |
+| schedule_lifetime | 15 | 任务生成后，如果计划执行时间过后 15 分钟内仍未被执行，会被标记为 missed |
+| history_cleanup_every | 1440 | 每 1440 分钟，也就是每 24 小时清理一次 Cron 历史记录 |
+| history_success_lifetime | 60 | 成功的 Cron 执行记录保留 60 分钟，即 1 小时 |
+| history_failure_lifetime | 600 | 失败的 Cron 执行记录保留 600 分钟，即 10 小时 |
+| use_separate_process | 1 | 该 Cron 组使用独立 PHP 进程运行，和默认 default 组隔离 |
+
+
 group 节点的 id 对应 crontab.xml 里 config group 的 id
 
 在后台的这个位置可以查看任务组
@@ -2036,10 +2048,61 @@ $objectManager->configure(
         ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
         ->load($areaCode)
 );
+$objectManager->get(\Magento\Framework\App\AreaList::class)->getArea($areaCode)->load(\Magento\Framework\App\Area::PART_TRANSLATE);
+
 $instance = \Magento\Sales\Cron\CleanExpiredQuotes::class;
 $method = 'execute';
 $cronJob = $objectManager->get($instance);
 call_user_func([$cronJob, $method]);
+} catch (\Throwable $e) {
+    echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+}
+EOF
+
+直接在命令行里运行 cronjob ，要在项目的根目录里运行，正确地填写 groupId 和 jobCode ，数据库里也有运行记录了
+php -a <<- 'EOF'
+try {
+require __DIR__ . '/app/bootstrap.php';
+$bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+$objectManager = $bootstrap->getObjectManager();
+$areaCode = \Magento\Framework\App\Area::AREA_CRONTAB;
+$objectManager->get(\Magento\Framework\App\State::class)->setAreaCode($areaCode);
+$objectManager->configure(
+    $objectManager
+        ->get(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+        ->load($areaCode)
+);
+$objectManager->get(\Magento\Framework\App\AreaList::class)->getArea($areaCode)->load(\Magento\Framework\App\Area::PART_TRANSLATE);
+
+
+$groupId = 'default';
+$jobCode = 'order_complete_fulfillment_end_date_expire';
+$currentTime = time();
+
+$processCronQueueObserver = $objectManager->get(\Magento\Cron\Observer\ProcessCronQueueObserver::class);
+$reflection = new ReflectionClass($processCronQueueObserver);
+
+$property = $reflection->getProperty('_config');
+$cronConfig = $property->getValue($processCronQueueObserver);
+$jobGroupsRoot = $cronConfig->getJobs();
+$jobConfig = $jobGroupsRoot[$groupId][$jobCode];
+
+$schedule = $reflection->getMethod('createSchedule')->invokeArgs($processCronQueueObserver, [
+    $jobCode, '0 2 * * *', $currentTime
+]);
+
+$method = $reflection->getMethod('_runJob');
+$method->invokeArgs($processCronQueueObserver, [
+    $currentTime + 1,
+    $currentTime,
+    $jobConfig,
+    $schedule,
+    $groupId
+]);
+
+$schedule->save();
+
 } catch (\Throwable $e) {
     echo $e->getFile() . ':' . $e->getLine() . PHP_EOL;
     echo $e->getMessage() . PHP_EOL . $e->getTraceAsString();
@@ -3301,6 +3364,9 @@ https://github.com/magento/magento2/issues/38758
 
 ui_component的文档
 https://developer.adobe.com/commerce/frontend-core/ui-components/
+
+ui_component 的加载始于 layout.xml 中的声明，在布局生成阶段由 UiComponent 生成器特殊处理并创建 PHP 对象
+与普通 Block 在服务器端的渲染路径（toHtml -> 模板）不一样
 
 后台配置的文档
 https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/files/config-reference-systemxml.html
@@ -5097,6 +5163,12 @@ n98-magerun2.phar sys:cron:run sales_clean_quotes
 
 curl -O https://files.magerun.net/n98-magerun2.phar && chmod +x ./n98-magerun2.phar;
 su www-data -c "./n98-magerun2.phar sys:cron:run sales_clean_quotes"
+这样运行 数据库里也有记录，从源码看，这是直接插入数据库的
+
+9x 版本支持 8.1
+10x版本不支持 8.1
+curl -L -O https://github.com/netz98/n98-magerun2/releases/download/9.5.1/n98-magerun2.phar
+curl -L -O https://github.com/netz98/n98-magerun2/releases/download/9.5.1/n98-magerun2.phar
 
 
 配置文件修改后，要清除一次缓存
@@ -6499,5 +6571,21 @@ index.php
     匹配失败的出口：
         所有路由器都返回 null 时，FrontController 抛 "No route matched" 异常 → 404 页；
         后台因为 $applyNoRoute = true，在 admin 路由器内部就直接转到 noroute 控制器了。
+
+路由 对应的 layout.xml
+layout/<frontName>_<controllerPath>_<actionClass>.xml
+这里的 controllerPath 可以直接包含 _
+magento 原生的 layout 是全部小写，新建的 layout 也尽量保持小写
+
+
+开启模板提示（Template Hints）
+Stores -> Configuration -> Advanced -> Developer -> Debug
+设置完之后，再 c:c 一次就生效了
+默认情况下，url 里加上这个参数就可以看到效果了
+    ?templatehints=magento
+也可以通过命令行启用
+    php bin/magento dev:template-hints:enable
+
+
 -->
 
