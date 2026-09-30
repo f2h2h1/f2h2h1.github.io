@@ -711,6 +711,21 @@ vscode的使用技巧
         ctrl + p 按文件名搜索
     转跳到行数
         Ctrl + G 然后在弹出的框中输入行数
+    设置代理
+        "http.proxy": "http://127.0.0.1:52898"
+        setting -> Application -> Proxy
+        这里的设置在 插件市场 和 更新 都有效，但对内置浏览器没有效果
+        只能填 http代理
+    打开内置浏览器
+        Ctrl + Shift + P（Windows/Linux）或 Cmd + Shift + P（Mac）打开命令面板
+        在输入框中键入
+            Simple Browser: Show
+            Browser: Open Integrated Browser
+        这个功能不怎么稳定，输入的命令不同版本不一样
+    找到配置文件的位置
+        在输入框中键入
+            Open User Settings
+            Preferences: Open User Settings (JSON)
     task的配置
     调试各种语言
         php
@@ -6042,7 +6057,7 @@ wordpress
         wp 没有composer
         wp 核心没有面向对象
         WordPress是由三大部分组成的，
-            即WordPress核心、主题和插件
+            即WordPress核心(core)、主题(theme)和插件(plguin)
             主题：决定了网站的外观、设计、界面，基本上理解为访客所看到的网站的样子；
             插件：扩展WordPress核心的各种功能，达到自己网站的功能定制。
             WordPress开发，指的是主题和插件的定制开发。
@@ -6776,6 +6791,25 @@ erp
             即时渲染（IR, Immediate Rendering）
         功能是否满足需求 活跃程度 是否可商用 是否免费 是否开源 文档是否完善
 正则表达式
+
+
+字符串搜索算法
+String Searching Algorithm
+https://en.wikipedia.org/wiki/String-searching_algorithm
+https://zh.wikipedia.org/wiki/%E5%AD%97%E4%B8%B2%E6%90%9C%E5%B0%8B%E6%BC%94%E7%AE%97%E6%B3%95
+
+https://oi-wiki.org/string/
+
+常见字符串搜索算法
+    暴力匹配算法 (Brute Force, BF)：
+        最直观的方法，从文本串头部开始逐个字符对比。匹配失败时，模式串向右移动一位，文本串指针回溯。时间复杂度为 \(O(m \times n)\)（其中 n 为文本长度，m 为模式串长度）。
+    KMP 算法 (Knuth-Morris-Pratt)：
+        利用匹配失败后的已知信息，通过构建 Next 数组（最长公共前后缀）跳过已经匹配的字符。避免了指针回溯，匹配时间复杂度优化至 O(m + n)。 
+    Boyer-Moore 算法 (BM)：
+        实际应用中效率极高的高效算法（如文本编辑器查找、Grep 命令多采用此法）。采用从右向左的比较方式，并运用坏字符规则与好后缀规则跳过大量无法匹配的字符。搜索关键字越长，速度越快。 
+    Sunday 算法：
+        另一种从左向右匹配但按右侧对齐优化的算法。发生不匹配时，根据文本串中参与匹配的最右侧字符的下一个字符在模式串中的位置来决定跳跃距离，实现简单且速度极快。
+
 
 
 

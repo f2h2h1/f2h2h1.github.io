@@ -5168,7 +5168,7 @@ su www-data -c "./n98-magerun2.phar sys:cron:run sales_clean_quotes"
 9x 版本支持 8.1
 10x版本不支持 8.1
 curl -L -O https://github.com/netz98/n98-magerun2/releases/download/9.5.1/n98-magerun2.phar
-curl -L -O https://github.com/netz98/n98-magerun2/releases/download/9.5.1/n98-magerun2.phar
+curl -L -O https://github.com/netz98/n98-magerun2/releases/download/10.0.2/n98-magerun2.phar
 
 
 配置文件修改后，要清除一次缓存

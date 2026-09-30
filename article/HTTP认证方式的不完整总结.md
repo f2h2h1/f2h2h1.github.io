@@ -543,4 +543,12 @@ Authorization: Digest username="username", realm="Web Programming Secret Pages",
 curl 命令要怎么写
 浏览器要怎么设置
 
+
+
+可以用于测试 http认证方式的站点
+https://the-internet.herokuapp.com
+https://authenticationtest.com
+https://jigsaw.w3.org
+https://httpbin.org
+
 -->
