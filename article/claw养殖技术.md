@@ -101,6 +101,30 @@ nanobot/
 └── └── └──USER.md
 ```
 
+alias python=/D/python-3.12.3-embed-amd64/python.exe
+export PATH=/D/python-3.12.3-embed-amd64:$PATH
+export PATH=/D/python-3.12.3-embed-amd64/Scripts:$PATH
+
+python --version
+python -m pip --version
+python -m pip install --upgrade pip
+
+python -m pip install nanobot-ai
+python -m nanobot --version
+
+python -m pip show nanobot-ai
+python -m pip install --upgrade nanobot-ai
+python -m pip list | grep nanobot
+
+
+python -m nanobot webui --config ./.nanobot/config.json
+python -m nanobot agent --config ./.nanobot/config.json
+python -m nanobot agent --config ./.nanobot/config.json --classic
+
+python -m nanobot agent --config D:\\code\\nanobot\\.nanobot\\config.json  -m "现在是 几点"
+python -m nanobot agent --config ./.nanobot/config.json -w "workspace/test1" -m "现在是 几点"
+
+
 这种写法可能无法读取skill 会提示 file not found
 python -m nanobot agent --config ./.nanobot/config.json -w "./workspace/test1" -m "hello"
 

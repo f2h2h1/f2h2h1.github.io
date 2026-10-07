@@ -768,7 +768,7 @@ set -euo pipefail
 
 minify_php() {
 f=$1
-echo $f $1
+# echo $f $1
 if [ -z "$1" ]; then
     return ''
 fi
