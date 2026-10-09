@@ -327,7 +327,7 @@ https://dev.mysql.com/
 <!--
 
 https，http2，http长连接
-目录索引，cgi，fcgi，重定向，url重写，反向代理，fpm，负载均衡，虚拟站点
+目录映射（alias），目录索引，cgi，fcgi，重定向，url重写，反向代理，fpm，负载均衡，虚拟站点
 WebSocket，WebSocket Secure
 Basic认证，Digest认证
 http压缩，http缓存，伪静态，mpm（Multi-Processing Modules）
@@ -480,7 +480,7 @@ Apache 官方只提供源码，二进制文件都是第三方编译的，这里�
 ### 配置 Apache
 1. 把 Apache 添加进环境变量
 2. 配置 php
-    - cig
+    - cgi
         1. 启用必要的模块
             - mod_alias.so
             - mod_cgi.so
