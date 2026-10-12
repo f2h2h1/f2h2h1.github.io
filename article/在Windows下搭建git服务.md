@@ -65,6 +65,7 @@ git gui
 1. 从 github 中下载 https://github.com/git-ecosystem/git-credential-manager
 1. 下载 zip 压缩包就可以了
 1. 下载完 zip 后，解压，找到 git-credential-manager.exe
+    - git-credential-manager.exe 和 那些 dll 必须在同一个文件夹内
 1. 先通过 git --exec-path 找到 git-core 文件夹的位置
 1. 再在 git-core 文件夹里新建一个名为 git-credential-manager-core 的文件，写入以下内容
     ```
@@ -124,14 +125,45 @@ git fow windows 里还有一个 专用于 windows 的 credential helper `credent
 
 ### 安装 gitweb
 
-安装必要的依赖 make gcc perl perl-CPAN
+安装必要的依赖 make gcc perl perl-CPAN perl-html-parser perl的cgi模块
 ```
-# 这几个命令要在 msys2下运行
-pacman -Su
-pacman -S make gcc perl perl-CPAN
+pacman -Syyu
+    -S（Sync）：表示同步操作，告诉 pacman 接下来要与远程软件仓库进行交互。
+    -yy（Double y）：强制刷新数据库。普通的 -Sy 只会在本地数据库过期时才下载最新的软件列表；而双写 yy 会强制 pacman 无论本地数据是否是最新的，都从服务器重新下载一份完整的最新软件数据库。
+    -u（Sysupgrade）：表示系统升级，它会对比本地已安装的软件版本与刚刚下载的最新数据库，并自动将所有过期的软件以及整个系统升级到最新版本。
+    在 Arch Linux Wiki 官方维护指南 中，通常更推荐使用 pacman -Syu（单 y）进行日常更新
+pacman -S "$MINGW_PACKAGE_PREFIX-gcc"
+pacman -S "$MINGW_PACKAGE_PREFIX-make"
+pacman -S "$MINGW_PACKAGE_PREFIX-perl"
+
+# 这是安装 perl-CPAN ，通过 pacman -sS cpan 找到包名
+pacman -S "$MINGW_PACKAGE_PREFIX-perl-cpan-requirements-dynamic"
+
+# 必须先安装 perl-html-parser 才能通过 cpan 安装 CGI 模块
+pacman -sS html-parser
+pacman -sS html | grep -C 3 -i html
+
+pacman -sS toolchain
+pacman -S "$MINGW_PACKAGE_PREFIX-toolchain"
+pacman -Syu base-devel
+pacman -sS base-devel
+
+
+# 如果遇到 file already exists 这种错误 可以强制安装 pacman -S --overwrite '*' "$MINGW_PACKAGE_PREFIX-perl-html-parser"
+pacman -S "$MINGW_PACKAGE_PREFIX-perl-html-parser"
+
+# 通过 cpan 安装 HTML::Parser 也可以
+cpan HTML::Parser
+
 #  用 cpan 安装 CGI 模块
-cpan CGI
+cpan install CGI
 # 第一次运行 cpan 时，它会提示你进行配置，一路按回车使用默认设置即可
+
+# 判断有没有顺利安装 cpan
+perl -MCPAN -e 'print "CPAN version: $CPAN::VERSION\n"'
+
+# 判断有没有顺利安装 cgi 模块
+perl -MCGI -e 'print "CGI version: $CGI::VERSION\n"'
 ```
 
 安装 gitweb
@@ -188,6 +220,19 @@ python ".git\gitweb\gitweb.py"
 127.0.0.1:1234/cgi-bin/gitweb.cgi?p=.git
 127.0.0.1:1234/cgi-bin/gitweb.cgi/.git
 
+git instaweb 命令
+1 假设已经安装好 git gitweb perl的cgi模块
+2 在仓库根目录 运行 git instaweb --httpd=python
+    运行 C:\msys64\ucrt64\libexec\git-core\instaweb 脚本
+    在 project/.git 下新建 gitweb 文件夹
+    在 project/.git/gitweb 下新建 gitweb.py gitweb_config.perl
+    把 C:\msys64\ucrt64\share\gitweb 下的文件和文件夹复制到 project/.git/gitweb/python
+    运行 project/.git/gitweb/gitweb.py
+    日志文件
+        project/.git/gitweb/error.log
+        project/.git/gitweb/access.log
+
+
 -->
 
 ### 其它一些配置
@@ -225,7 +270,8 @@ python ".git\gitweb\gitweb.py"
 
 
 ## git 的仓库
-git 有两种仓库，普通仓库和裸仓。普通仓库有工作目录，裸仓没有工作目录。
+git 有两种仓库，普通仓库（Normal Repository，Non-bare Repository） 和裸仓库（Bare Repository）。
+普通仓库有工作目录，裸仓没有工作目录。
 
 一般情况下，裸仓是用于远程仓库的。
 初始化仓库时加上 `--bare` 参数就能新建裸仓了。裸仓的仓库名一般是以 .git 来结尾的。
@@ -635,7 +681,7 @@ class HTTPServerRequestHandler
             }
             if (isset($headerArr['Status'])) {
                 $headerArr['Status'];
-                preg_match('/\d/', $headerArr['Status'], $matches);
+                preg_match('/\d{3}/', $headerArr['Status'], $matches);
                 http_response_code($matches[0]);
             }
             $headerArr['Content-Length'] = ': ' . (strlen($body));

@@ -4144,6 +4144,10 @@ MySQL 和 PostgreSQL
             用事件调度器(Event Scheduler)
         队列
             也是用内存表，其实不用内存表也可以
+        空间数据(gis)
+            从 8.0 开始支持，但和 PostGIS 相比，依然不够专业
+        向量类型
+            9.0 开始，有限地支持
     PostgreSQL 全家桶
         文档型数据
             用这几种类型 json jsonb xml hstore
