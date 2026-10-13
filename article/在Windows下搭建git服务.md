@@ -225,14 +225,46 @@ git instaweb 命令
 2 在仓库根目录 运行 git instaweb --httpd=python
     运行 C:\msys64\ucrt64\libexec\git-core\instaweb 脚本
     在 project/.git 下新建 gitweb 文件夹
-    在 project/.git/gitweb 下新建 gitweb.py gitweb_config.perl
+    在 project/.git/gitweb 下新建 gitweb.py 和 gitweb_config.perl
+        gitweb.py 通过 GITWEB_CONFIG 环境变量向 gitweb.cgi 传递 gitweb_config.perl 的绝对路径
+        gitweb_config.perl 里声明our变量可以覆盖 gitweb.cgi 里的our变量
+            our $projectroot = "C:/Users/a/dev";
+            our $GIT = "C:/Users/a/AppData/Local/Programs/Git/mingw64/bin/git.exe";
     把 C:\msys64\ucrt64\share\gitweb 下的文件和文件夹复制到 project/.git/gitweb/python
     运行 project/.git/gitweb/gitweb.py
     日志文件
         project/.git/gitweb/error.log
         project/.git/gitweb/access.log
 
+gitweb的前置条件
+    git
+    perl
+    perl的cgi模块
+    支持cgi的http服务器
+    gitweb.cgi脚本
+        不管是通过 pacman 获得还是通过 源码 获得
 
+projects_list
+    两种方式
+        1 projectroot目录下多方几个仓库，
+            一个目录一个仓库
+            一般只有裸仓，因为普通仓库需要两级才到达.git目录 仓库名/.git
+        2 修改这个变量 $projects_list
+            一个文本文件的绝对路径
+            仓库相对目录 所有者+邮箱 这样的格式
+            例子
+                r1/.git user1+user1@local.com
+                r2/.git user2+user2@local.com
+                r3/.git user3
+                r4/.git user4
+                r5.git
+            projectroot/r5.git 拼成这样就是绝对路径
+            owner的显示似乎还有问题
+            $projects_list 也是可以写进 gitweb_config.perl
+
+GitWeb 的主要功能是查看仓库历史、浏览文件内容、查看提交日志和 blame 信息等
+最适合显示裸仓库（bare repositories）
+官方文档中明确列出的是“查看”类功能，并未包含任何“创建”、“删除”或“管理”仓库的写操作能力
 -->
 
 ### 其它一些配置
@@ -488,15 +520,13 @@ Listen 83
 修改仓库下 `.git/description` 的内容（没有就新建一个），就能显示 description
 
 
-<!--
-
-如果页面顶部出现 ]> 这种乱码，就是删掉 gitweb.cgi 的这部分，直接在 源码里搜索就好了
+如果页面顶部出现 `]>` 这种乱码，就在 gitweb.cgi 源码里搜索这部分，然后删掉
+```
 <!DOCTYPE html [
 	<!ENTITY nbsp "&#xA0;">
 	<!ENTITY sdot "&#x22C5;">
 ]>
-
--->
+```
 
 gitweb.cgi 需要这几个环境变量
 

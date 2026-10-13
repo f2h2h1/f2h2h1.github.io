@@ -2290,6 +2290,55 @@ git的一般使用指南
         PSR-18	HTTP 客户端 (HTTP Client)	定义发送 HTTP 请求并返回响应的客户端接口，与 PSR-7/PSR-17 搭配，简化 HTTP 调用。
         PSR-19	PHPDoc 标签 (PHPDoc Tags)	正式标准化 PHPDoc 标签的语法和含义（如 @param, @return, @throws 等），弥补 PSR-5 的空白。
         PSR-20	时钟接口 (Clock Interface)	提供获取当前时间的抽象接口，便于在测试中替换时间源，避免硬编码 time() 等函数。
+laravel 中的概念
+    服务容器 Service
+        Service 就是 Service 了，和其它框架中的概念是类似的
+    服务提供者 ServiceProvider
+        ServiceProvider 大概类似于 magento2 的 objectMamager 和 Factory
+    门面 Facade
+        门面是一个类 Illuminate\Support\Facades
+        门面需要继承这个类
+        门面本质上只是 laravel 中一个特别的类
+    契约 Contract
+        类似于 magento2 中的 di.xml
+后台模板
+    页面
+        首页 home page
+        着陆页 landing page
+        索引页 index page
+        登录页 login page
+        错误页面 error page
+            404 403 500
+        维护页 maintenance page
+        侧边栏菜单 Sidebar Menu
+        导航栏 Navigation
+        表格 table
+        表单 form
+        图表 Charts
+        模态框 Modal Dialog
+            alert
+            confirm
+            pormpt
+            page/iframe
+            参考 layer
+    权限管理 rbac
+    菜单管理
+    用户管理
+    文件管理
+    文本编辑器
+        纯文本
+        富文本
+        代码
+    系统管理
+        系统状态
+        配置管理
+        队列
+        缓存
+        计划任务
+    页面构造器
+    低代码
+        工作流
+        带有llm的工作流
 一些未能分类的经验
     如何做一个 composer 包
         申请一个 composer 账号
@@ -7979,6 +8028,11 @@ java
         Version  → “迭代” ：软件、产品、故事的更新，关注技术或功能变化。
         如果强调“内容更新”或“特殊发布形式”，用 edition；
         如果强调“同一事物的不同阶段或变体”，用 version。
+    SemVer 版本控制：
+        x.*.* - 不兼容的更改。
+        *.x.* - 添加功能（向后兼容）
+        *.*.x - bug 修复（向后兼容）
+        第一个稳定版本应该是 1.0.0
 软件测试从不同的角度有着不同的分类方式
     按测试方法分类：
         黑盒测试
