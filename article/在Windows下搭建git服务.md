@@ -125,29 +125,20 @@ git fow windows 里还有一个 专用于 windows 的 credential helper `credent
 
 ### 安装 gitweb
 
-安装必要的依赖 make gcc perl perl-CPAN perl-html-parser perl的cgi模块
+安装必要的依赖 make gcc perl perl-CPAN perl的html-parser模块 perl的cgi模块
 ```
 pacman -Syyu
     -S（Sync）：表示同步操作，告诉 pacman 接下来要与远程软件仓库进行交互。
-    -yy（Double y）：强制刷新数据库。普通的 -Sy 只会在本地数据库过期时才下载最新的软件列表；而双写 yy 会强制 pacman 无论本地数据是否是最新的，都从服务器重新下载一份完整的最新软件数据库。
+    -yy（Double y）：强制刷新数据库。普通的 -Sy 只会在本地数据库过期时才下载最新的软件列表；
+        而双写 yy 会强制 pacman 无论本地数据是否是最新的，都从服务器重新下载一份完整的最新软件数据库。
     -u（Sysupgrade）：表示系统升级，它会对比本地已安装的软件版本与刚刚下载的最新数据库，并自动将所有过期的软件以及整个系统升级到最新版本。
-    在 Arch Linux Wiki 官方维护指南 中，通常更推荐使用 pacman -Syu（单 y）进行日常更新
+        在 Arch Linux Wiki 官方维护指南 中，通常更推荐使用 pacman -Syu（单 y）进行日常更新
 pacman -S "$MINGW_PACKAGE_PREFIX-gcc"
 pacman -S "$MINGW_PACKAGE_PREFIX-make"
 pacman -S "$MINGW_PACKAGE_PREFIX-perl"
 
 # 这是安装 perl-CPAN ，通过 pacman -sS cpan 找到包名
 pacman -S "$MINGW_PACKAGE_PREFIX-perl-cpan-requirements-dynamic"
-
-# 必须先安装 perl-html-parser 才能通过 cpan 安装 CGI 模块
-pacman -sS html-parser
-pacman -sS html | grep -C 3 -i html
-
-pacman -sS toolchain
-pacman -S "$MINGW_PACKAGE_PREFIX-toolchain"
-pacman -Syu base-devel
-pacman -sS base-devel
-
 
 # 如果遇到 file already exists 这种错误 可以强制安装 pacman -S --overwrite '*' "$MINGW_PACKAGE_PREFIX-perl-html-parser"
 pacman -S "$MINGW_PACKAGE_PREFIX-perl-html-parser"
@@ -191,6 +182,16 @@ git instaweb --httpd=python --start
 ```
 
 <!--
+
+# 必须先安装 perl-html-parser 才能通过 cpan 安装 CGI 模块
+pacman -sS html-parser
+pacman -sS html | grep -C 3 -i html
+
+pacman -sS toolchain
+pacman -S "$MINGW_PACKAGE_PREFIX-toolchain"
+pacman -Syu base-devel
+pacman -sS base-devel
+
 
 pacman -S "$MINGW_PACKAGE_PREFIX-toolchain"
 
@@ -265,6 +266,63 @@ projects_list
 GitWeb 的主要功能是查看仓库历史、浏览文件内容、查看提交日志和 blame 信息等
 最适合显示裸仓库（bare repositories）
 官方文档中明确列出的是“查看”类功能，并未包含任何“创建”、“删除”或“管理”仓库的写操作能力
+
+
+git instaweb --httpd=plackup --start
+
+plackup 是 Perl 语言中用于运行 PSGI（Perl Web Server Gateway Interface）Web 应用程序的命令行工具。
+主要功能与特点
+• 自动加载：默认会自动寻找当前目录下的 app.psgi 文件并运行。
+• 多后端支持：支持多种 Web 服务器后端（如 Starman、Twiggy、CGI、FastCGI 等）。
+
+在 apache 中运行 PSGI
+    使用 mod_perl
+    使用 FastCGI 
+    使用 反向代理（mod_proxy） 把请求转发给后台独立运行的 PSGI 服务器（例如 plackup）
+
+pacman -S "$MINGW_PACKAGE_PREFIX-perl-module-build"
+cpan CGI::Emulate::PSGI
+cpan CGI::Compile
+cpan Plack
+
+perl -MPlack -e 'print "Plack version: $Plack::VERSION\n"'
+
+如果要在 msys2 环境下运行
+必须显式设置
+    git config instaweb.gitwebdir "D:/msys64/ucrt64/share/gitweb"
+    git config gitweb.owner "owner"
+还要修改 $GIT 的值
+使用 plack 太多问题了，怎么改也改不完
+    难怪 git fow windows 把 gitweb 删掉了
+
+/ucrt64/libexec/git-core/git-instaweb 里的 PERL 是 /usr/bin/perl 这样会调用 msys2环境下的 perl 而不是 ucrt64 环境下的 perl
+可以尝试把 PERL 改成 /usr/bin/env -S perl
+
+
+export GITWEB_CONFIG="D:/code/tp8/.git/gitweb/gitweb_config.perl";
+
+perl .git/gitweb/gitweb.psgi
+    perl的gitweb.perl 不会自动设置 GITWEB_CONFIG
+python .git/gitweb/gitweb.py
+    python的gitweb.py 会自动设置 GITWEB_CONFIG
+
+
+还是 只有 git 在 ucrt64 环境，其它命令全都在 msys2 环境比较好
+
+git 安装在 ucrt64 ，如何在 msys2 中调用
+    可以将其设置为别名（Alias）
+        alias git='/d/msys64/ucrt64/bin/git.exe'
+
+        alias git='C:/Users/a/AppData/Local/Programs/Git/usr/bin/git.exe'
+
+打开 ~/.bashrc
+cygpath -w ~/.bashrc
+写入这段代码
+if [ "$MSYSTEM" = "MSYS" ]; then
+    alias git='/d/msys64/ucrt64/bin/git.exe'
+fi
+
+
 -->
 
 ### 其它一些配置

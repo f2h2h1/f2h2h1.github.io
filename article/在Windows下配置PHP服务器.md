@@ -339,6 +339,39 @@ servertype 的 standalone模式 和 inetd模式
 ip 白名单/黑名单
 主动返回 403 429
 
+apache 如何设置 响应状态码
+    使用 ErrorDocument 指令
+        # 为 503 错误设置自定义页面
+        ErrorDocument 503 /errors/maintenance.html
+        # 也可以直接返回一段文本
+        ErrorDocument 500 "Sorry, our script crashed."
+    使用 mod_rewrite 的 R 标志
+        # 显式指定状态码为 503 Service Unavailable，常用于维护页面
+        RewriteRule ^healthz$ - [R=503,L]
+    后端脚本动态决定状态码
+        例如 php
+            header("HTTP/1.1 404 Not Found");
+            header("HTTP/1.1 404 Not Found", true, 404);
+            header("Status: 404 Not Found");
+            http_response_code(404);
+
+apache 直接返回字符串
+使用 mod_rewrite 和 mod_headers
+<Location "/test">
+    # 开启重写引擎
+    RewriteEngine On
+    
+    # 强制返回 200 状态码，并直接输出字符串
+    # [R=200,L] 代表返回 200 并停止后续规则
+    RewriteRule ^.*$ - [R=200,L]
+    
+    # 设置返回的自定义字符串内容
+    ErrorDocument 200 "Hello, Apache World!"
+    
+    # 设置响应头（防止乱码或变成下载文件）
+    Header set Content-Type "text/plain; charset=utf-8"
+</Location>
+
 mod_proxy
 mod_proxy_http
 mod_proxy_connect
