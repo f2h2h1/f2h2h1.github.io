@@ -2339,6 +2339,36 @@ laravel 中的概念
     低代码
         工作流
         带有llm的工作流
+php 里能执行外部命令的方法（在不新增拓展的前提下）
+    exec
+        exec(string $command, array &$output = null, int &$result_code = null): string|false
+        command 要执行的命令。
+        output 命令执行的输出
+        result_code 命令执行后的返回状态会被写入到此变量。
+        返回命令执行结果的最后一行内容。命令执行结果的最后一行内容。
+    shell_exec
+        shell_exec(string $command): string|false|null
+        通过 shell 执行命令并将完整的输出以字符串的方式返回
+        string 包含已执行命令的输出，如果无法建立管道，则为 false，如果发生错误或者命令不产生输出则为 null
+    执行运算符``
+        php -r "echo '`ls -al`';"
+        效果和 shell_exec 应该是一样的
+    system
+        system(string $command, int &$result_code = null): string|false
+        执行外部命令并输出结果
+    passthru
+        passthru(string $command, int &$result_code = null): ?false
+        和 system 差不多
+        执行外部命令并输出原始结果
+        这个通常用于输出二级制数据，例如向浏览器输出图片这类的
+    popen 单向管道
+    proc_open 双向管道
+    php要如何模拟一个pty 或 php如何执行交互式的命令
+    https://stackoverflow.com/questions/65460864/best-way-to-open-a-pty-with-php
+    Symfony console 好像是可以支持 pty 的
+php 如何实现并发（在不新增拓展的前提下，各种版本要怎么实现 5.4 5.6 7.0-8.5）
+    fsockopen
+    curl_multi
 一些未能分类的经验
     如何做一个 composer 包
         申请一个 composer 账号
@@ -5559,6 +5589,16 @@ nas
                 ESOL
                     English for Speakers of Other Languages
                     其他语言使用者的英语
+    音标
+        英语
+            DJ KK 自然拼读
+        普通话
+            汉语拼音	注音符号	注音二式	通用拼音	威妥玛拼音	邮政拼音	国语罗马字	耶鲁拼音	简式威妥玛
+        粤语
+        上海话
+        闽南话
+        客家话
+        宽式IPA
     混合语（mixed language）
         皮钦语（pidgin）    
             协和语 军队中国语 洋泾浜英语
@@ -5745,6 +5785,7 @@ nas
         「闪光枪」（Flash-Matic Gun），
             这是因为它能发射光线，照射到位于电视屏幕每个角落的光电管，从而控制电视
             这是最古早的无线遥控器
+            最早的无线遥控器使用的是 超声波（Ultrasonic Waves）是一款纯机械的超声波无线遥控器，完全不需要电池
         红外线（IR，Infrared）
         射频 （RF，Radio Frequency，无线电频率）
             27MHz/240Mhz/315Mhz/433Mhz/868Mhz/915Mhz/2.4Ghz

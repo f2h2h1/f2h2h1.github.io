@@ -860,10 +860,153 @@ $config = [
             $env['SCRIPT_NAME'] = $_SERVER['SCRIPT_NAME'] ?? '';
             $env['SERVER_NAME'] = 'php server';
             $env['GIT_BIN'] = 'C:/Program Files/Git/bin/git';
-            $env['GIT_PROJECT_ROOT'] = '/c/git'; // 这里要用 unix 的格式
+            $env['GIT_PROJECT_ROOT'] = '/c/git'; // 这里要用 unix 的格式 在project list页面里，这种写法 C:/git 总是提示 No such file or directory
+            // $env['GITWEB_CONFIG'] = 'D:/msys64/ucrt64/share/gitweb/gitweb_config.perl';
             $cmd = '"C:\Program Files\Git\usr\bin\perl.exe" "gitweb.cgi"'; // gitweb.cgi 填相对于php脚本的路径或全局路径
             $handler->cgiHandler($cmd, $env);
             $handler->logger("\n\n" . date('Y-m-d H:i:s') . "----------------------------------\n\n");
+        },
+        '/^\/gitlist.cgi/' => function (HTTPServerRequestHandler $handler) {
+            $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'] ?? '';
+            $REQUEST_METHOD = trim(strtoupper($REQUEST_METHOD));
+            $GIT_PROJECT_ROOT = 'D:/code/magento-core';
+            if ($REQUEST_METHOD == 'POST') {
+                // 仓库名 和 是否为裸仓
+                // git init --bare test.git
+                $GIT_BIN = 'C:/Users/a/AppData/Local/Programs/Git/mingw64/bin/git.exe';
+                $repository_name = $_POST['repository_name'] ?? null;
+                $is_bare = $_POST['is_bare'] ?? null;
+                $repository_description = $_POST['repository_description'] ?? null;
+                if (empty($repository_name)) {
+                    header('HTTP/1.0 400 Bad Request');
+                    echo 'Bad Request';
+                    return;
+                }
+                $full_repository_path = $GIT_PROJECT_ROOT . DIRECTORY_SEPARATOR . $repository_name;
+                if ($is_bare == 'on') {
+                    $full_repository_path = $full_repository_path . '.git';
+                    $cmd = $GIT_BIN . ' ' . 'init --bare ' . $full_repository_path;
+                } else {
+                    $cmd = $GIT_BIN . ' ' . 'init ' . $full_repository_path;
+                }
+                try {
+                    if (is_dir($full_repository_path)) {
+                        throw new \Exception($repository_name . ' already exists.');
+                    }
+                    if (exec($cmd, $output, $result_code) === false) {
+                        throw new \Exception('Git command execution failed ' . join(' ', $output));
+                    }
+                    if (!empty($repository_description)) {
+                        file_put_contents($full_repository_path . DIRECTORY_SEPARATOR . 'description', $repository_description);
+                    }
+                } catch (\Throwable $e) {
+                    header('HTTP/1.0 500 Internal Server Error');
+                    echo $e->getMessage();
+                    return;
+                }
+
+                // $_SERVER['SCRIPT_NAME'];
+                echo '<meta http-equiv="refresh" content="5">';
+                echo '<b>crete success</b>';
+
+            } else if ($REQUEST_METHOD == 'GET') {
+                $html = <<<EOF
+                <p><b><a href="/gitweb.cgi">back to gitweb.cgi</a></b></p>
+                <form method="post" autocomplete="off">
+                    <fieldset>
+                        <legend>create new repository</legend>
+                        <p><label>repository name <input type="text" name="repository_name" required></label></p>
+                        <p><label>description <input type="text" name="repository_description"></label></p>
+                        <p><label>is bare <input type="checkbox" name="is_bare" checked></label></p>
+                        <p><input type="submit" value="create"/></p>
+                    </fieldset>
+                </form>
+                EOF;
+                try {
+                    $listDirectories = function (string $path, bool $sortByName = true): array
+                    {
+                        if (!is_dir($path)) {
+                            throw new InvalidArgumentException("目录不存在或不是目录: {$path}");
+                        }
+
+                        $handle = opendir($path);
+                        if ($handle === false) {
+                            throw new RuntimeException("无法打开目录: {$path}");
+                        }
+
+                        $dirs = [];
+                        $base = rtrim($path, DIRECTORY_SEPARATOR);
+
+                        while (($entry = readdir($handle)) !== false) {
+                            // 跳过当前目录和上级目录
+                            if ($entry === '.' || $entry === '..') {
+                                continue;
+                            }
+
+                            $fullPath = $base . DIRECTORY_SEPARATOR . $entry;
+
+                            // 只保留目录（若想排除符号链接指向的目录，可加 && !is_link($fullPath)）
+                            if (is_dir($fullPath)) {
+                                $dirs[] = $entry;
+                            }
+                        }
+
+                        closedir($handle);
+
+                        if ($sortByName) {
+                            sort($dirs, SORT_NATURAL | SORT_FLAG_CASE); // 自然排序，忽略大小写
+                        }
+
+
+                        $isHeadRefsHeads = function (string $headFile): bool
+                        {
+                            $content = @file_get_contents($headFile);
+                            if ($content === false) {
+                                return false;
+                            }
+                            $content = trim($content);
+                            return strpos($content, 'refs/heads/') === 0 || stripos($content, 'ref: refs/heads/') === 0;
+                        };
+
+                        $gitDir = [];
+                        foreach ($dirs as $subDir) {
+                            $headFile = $base . DIRECTORY_SEPARATOR . $subDir . DIRECTORY_SEPARATOR . 'HEAD';
+                            if (is_file($headFile) && $isHeadRefsHeads($headFile)) {
+                                $gitDir[] = $subDir;
+                                continue;
+                            }
+                            $headFile = $base . DIRECTORY_SEPARATOR . $subDir . DIRECTORY_SEPARATOR . '.git' . DIRECTORY_SEPARATOR . 'HEAD';
+                            if (is_file($headFile) && $isHeadRefsHeads($headFile)) {
+                                $gitDir[] = $subDir . '/.git';
+                                continue;
+                            }
+                        }
+
+                        return $gitDir;
+                    };
+                    $directories = $listDirectories($GIT_PROJECT_ROOT);
+                    if (empty($directories)) {
+                        $html = "There are no subdirectories in this directory.\n";
+                    } else {
+                        $html .= "Total of " . count($directories) . " subdirectories：<br>";
+                        $html .= "<ul>";
+                        foreach ($directories as $dir) {
+                            $html .= "<li><a href='/gitweb.cgi?p={$dir}'>{$dir}</li>";
+                        }
+                        $html .= "</ul>";
+                    }
+                } catch (Exception $e) {
+                    $html = "ERROR: " . $e->getMessage() . "\n";
+                }
+
+                header('Content-Type: text/html');
+                // header('Content-Length: ' . strlen($html));
+                // 通过判断有没有 HEAD 文件判断是不是 git目录 参考gitweb.cgi这个函数check_head_link
+                echo $html;
+            } else {
+                header('HTTP/1.0 400 Bad Request');
+                echo 'Bad Request';
+            }
         },
         '/^\/git/' => function (HTTPServerRequestHandler $handler) {
             $GIT_PROJECT_ROOT = 'C:/git'; // 这里要用 windows 的格式
