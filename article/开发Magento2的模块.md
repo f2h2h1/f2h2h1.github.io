@@ -6487,6 +6487,8 @@ final class LogoUrlTest extends TestCase
 }
 
 
+routes.xml 和 <controllerPath> 都是必须的
+
 Magento 2 的 URL 到控制器映射规则
     <frontName>/<controllerPath>/<actionClass>
 其中：
