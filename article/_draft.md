@@ -78,13 +78,21 @@
         计算问题（Computational problem）
             在理论计算机科学中，计算问题是可以通过算法解决的问题。
             分类
-                决策问题
+                决策问题/判定问题
+                    输出“是/否”
                 搜索问题
+                    要求找到一个解
                 计数问题
+                    求数解的个数
                 优化问题
-                功能问题
+                    在可行解中找最优解
+                功能问题/函数计算问题
+                    输出一个值
+                决策问题是功能问题的特例
+                    决策问题输出 {0,1}{0,1}，可看作计算特征函数。
                 承诺问题
                     承诺问题 是 决策问题 的推广
+                    它仍然输出“是/否”，但输入域被限制在承诺集内。
         可计算性（Computability）
             可计算性理论的一个目标是确定在每个计算模型中可以解决哪些问题或问题类别。
                 除了 可计算问题，不可计算问题，还有一种 近似可计算问题
@@ -1581,7 +1589,7 @@ vscode的使用技巧
     对项目发展的预期是怎样的
     大多数情况下，开发效率比运行效率重要
         因为大多数情况下，硬件成本比人力成本低
-linux 应用的一般安装套路
+linux 软件的一般安装套路
     编译源码
         ./configure
             configure是一个脚本，一般由Autoconf工具生成，它会检验当前的系统环境，看是否满足安装软件所必需的条件：
@@ -1599,7 +1607,7 @@ linux 应用的一般安装套路
         brew pkg apt yum/dnf pacman
     通过 docker 安装
     通过 Snappy/Flatpak/AppImage 安装
-linux 应用的一般启动套路
+linux 软件的一般启动套路
     至少一个启动脚本
         检测或启动一些前置依赖
         设置一些环境变量
@@ -6289,7 +6297,7 @@ wordpress
             https://wordpress.org/
             https://wordpressfoundation.org/
         Automattic是一家网页程序设计公司，成立于2005年8月
-            主要的产品有 wordpress.com 和 tumblr
+            主要的产品有 wordpress.com WooCommerce Jetpack tumblr
             Automattic会定期向wordpress贡献代码
             WordPress.com 的免费版不能装插件
         wpengine 类似 WordPress.com 也提供 wordpress 的托管服务

@@ -731,6 +731,109 @@ $eavAttributeValue = $productResource->getAttributeRawValue($productId, 'eav_att
 
 -->
 
+<!--
+
+修改 product 配置页里，某一项的选项框
+
+通过 di.xml 文件修改这个虚拟类的参数
+    Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool
+    类似于这样
+    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="Message" xsi:type="array">
+                    <item name="class" xsi:type="string">Vendor\Extension\Ui\DataProvider\Product\Form\Modifier\Message</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Vendor\Extension\Ui\DataProvider\Product\Form\Modifier\Message">
+        <arguments>
+            <argument name="scopeName" xsi:type="string">product_form.product_form</argument>
+        </arguments>
+    </type>
+在 对象的 modifyMeta 方法引入其它js
+app/code/Vendor/Extension/Ui/DataProvider/Product/Form/Modifier/Message.php
+<?php
+declare(strict_types=1);
+
+namespace Vendor\Extension\Ui\DataProvider\Product\Form\Modifier;
+
+use Magento\Catalog\Model\Locator\LocatorInterface;
+use Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\AbstractModifier;
+use Magento\Framework\Stdlib\ArrayManager;
+use Magento\Ui\Component\Form\Element\Checkbox;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Ui\Component\Form\Field;
+
+class Message extends AbstractModifier
+{
+    const FIELD_DELIVERY = 'message';
+
+    /**
+     * @var ArrayManager
+     */
+    private $arrayManager;
+
+    /**
+     * @param ArrayManager $arrayManager
+     */
+    public function __construct(
+        ArrayManager $arrayManager,
+    ) {
+        $this->arrayManager = $arrayManager;
+    }
+
+    public function modifyData(array $data)
+    {
+        return $data;
+    }
+
+    public function modifyMeta(array $meta)
+    {
+        if (!$this->getGroupCodeByField($meta, self::FIELD_DELIVERY)) {
+            return $meta;
+        }
+
+        $config = [
+            'component' => 'Vendor_Extension/js/components/message', // 这个位置的js文件在 Vendor/Extension/view/**/web/js/components/message.js **表示作用域，例如 adminhtml base frontend
+            'visible' => false,
+            '_cid' => '', // 这里可以向 js 的组件传递参数
+        ];
+
+        $path = $this->arrayManager->findPath(self::FIELD_DELIVERY, $meta);
+        $meta = $this->arrayManager->merge($path . static::META_CONFIG_PATH, $meta, $config);
+
+        return $meta;
+    }
+}
+
+Vendor/Extension/view/**/web/js/components/message.js
+define([
+    'jquery',
+    'Magento_Ui/js/form/element/date', // 这是原本的组件，不同类型的组件这里都不一样
+    'uiRegistry',
+    'Magento_Ui/js/lib/view/utils/async',
+], function($, Abstract, registry, $async) {
+    'use strict';
+    return Abstract.extend({
+        defaults: {
+            _cid: '',
+        },
+        initialize: function() {
+            return this;
+        },
+        onShiftedValueChange: function(shiftedValue) {
+        },
+        onValueChange: function(value) {
+        },
+    });
+});
+
+
+-->
 
 ## 新建命令
 
@@ -2081,7 +2184,7 @@ $jobCode = 'order_complete_fulfillment_end_date_expire';
 $currentTime = time();
 
 $processCronQueueObserver = $objectManager->get(\Magento\Cron\Observer\ProcessCronQueueObserver::class);
-$reflection = new ReflectionClass($processCronQueueObserver);
+$reflection = new \ReflectionClass($processCronQueueObserver);
 
 $property = $reflection->getProperty('_config');
 $cronConfig = $property->getValue($processCronQueueObserver);
@@ -2089,7 +2192,7 @@ $jobGroupsRoot = $cronConfig->getJobs();
 $jobConfig = $jobGroupsRoot[$groupId][$jobCode];
 
 $schedule = $reflection->getMethod('createSchedule')->invokeArgs($processCronQueueObserver, [
-    $jobCode, '0 2 * * *', $currentTime
+    $jobCode, $jobConfig['schedule'], $currentTime
 ]);
 
 $method = $reflection->getMethod('_runJob');
