@@ -2298,6 +2298,71 @@ git的一般使用指南
         PSR-18	HTTP 客户端 (HTTP Client)	定义发送 HTTP 请求并返回响应的客户端接口，与 PSR-7/PSR-17 搭配，简化 HTTP 调用。
         PSR-19	PHPDoc 标签 (PHPDoc Tags)	正式标准化 PHPDoc 标签的语法和含义（如 @param, @return, @throws 等），弥补 PSR-5 的空白。
         PSR-20	时钟接口 (Clock Interface)	提供获取当前时间的抽象接口，便于在测试中替换时间源，避免硬编码 time() 等函数。
+php中的扩展
+    bcmath
+    bz2
+    calendar
+    Core
+    ctype
+    curl
+    date
+    dom
+    exif
+    ffi
+    fileinfo
+    filter
+    ftp
+    gd
+    gettext
+    gmp
+    hash
+    iconv
+    imap
+    intl
+    igbinary
+    ldap
+    json
+    libxml
+    mbstring
+    mysqli
+    mysqlnd
+    openssl
+    pcntl
+    pcre
+    PDO
+    pdo_mysql
+    Phar
+    posix
+    readline
+    redis
+    Reflection
+    session
+    shmop
+    SimpleXML
+    soap
+    sockets
+    sodium
+    SPL
+    standard
+    swoole
+    sysvmsg 信号量
+    sysvsem 共享内存
+    sysvshm 系统的消息队列
+    tidy
+    tokenizer
+    wddx
+    xdebug
+    xml
+    xmlreader
+    xmlwriter
+    xsl
+    Zend OPcache
+    zip
+    zlib
+    编译参数 --enable --with
+        --prefix=/usr/local/php \
+        --with-config-file-path=/usr/local/php \
+        --with-apxs2=/usr/local/apache2/bin/apxs
 laravel 中的概念
     服务容器 Service
         Service 就是 Service 了，和其它框架中的概念是类似的
@@ -5607,7 +5672,9 @@ nas
         上海话
         闽南话
         客家话
-        宽式IPA
+        国际音标（International Phonetic Alphabet）
+            严式IPA [方括号]，即严式标音（narrow transcription）
+            宽式IPA /斜线/，即宽式标音（broad transcription）
     混合语（mixed language）
         皮钦语（pidgin）    
             协和语 军队中国语 洋泾浜英语

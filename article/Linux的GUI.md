@@ -443,5 +443,68 @@ window icon menu pointer
 Windows（视窗）、Icon（图标）、Menu（选单）及Pointer（指标）
 
 
+linux下的rdp
+    服务端
+        xrdp https://github.com/neutrinolabs/xrdp
+    客户端
+        freerdp
+            https://github.com/FreeRDP/Remmina 这个是gui客户端
+            https://github.com/FreeRDP/FreeRDP 这个是命令行工具
+
+还有 Apache Guacamole 这种远程桌面网关，用浏览器当客户端
+
+
+在云服务器的 debian12 装上 桌面环境
+
+1 安装桌面环境
+sudo apt update && sudo apt upgrade -y
+sudo apt install task-gnome-desktop
+sudo apt install xserver-xorg-core xorgxrdp -y
+sudo apt install dbus-x11 -y
+
+2 重启
+
+3 安装 xdrp
+sudo apt install xrdp -y
+
+4 修改配置
+echo "gnome-session" > ~/.xsession
+vim /etc/xrdp/startwm.sh
+
+注释掉末尾的这两行
+test -x /etc/X11/Xsession && exec /etc/X11/Xsession
+exec /bin/sh /etc/X11/Xsession
+
+然后加入以下配置
+# 彻底清除可能导致 GNOME 会话冲突的变量
+unset DBUS_SESSION_BUS_ADDRESS
+unset XDG_RUNTIME_DIR
+
+# 显式指定 GNOME 桌面环境变量
+export XDG_SESSION_TYPE=x11
+export XDG_CURRENT_DESKTOP=GNOME
+export GNOME_SHELL_SESSION_MODE=debian
+
+exec gnome-session
+
+新建用户，据说是因为 不能用 root远程登录桌面环境
+    # 1. 创建新用户（例如叫 debianuser）并设置密码
+    sudo adduser debianuser
+
+    # 2. 将新用户加入 sudo 管理员组和 ssl-cert 安全组
+    sudo usermod -aG sudo debianuser
+    sudo adduser debianuser ssl-cert
+
+    # 3. 重启 xrdp 服务
+    sudo systemctl restart xrdp
+
+重启 xrdp
+sudo systemctl restart xrdp
+sudo systemctl enable xrdp
+
+sudo tail -n 20 /var/log/xrdp-sesman.log
+cat ~/.xsession-errors
+
+登录时用新建的用户名，不要用root
 
 -->

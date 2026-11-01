@@ -75,7 +75,7 @@ pear uninstall packagename
 ```
 运行 pear 或 pecl 命令时，最好在管理员环境下运行
 
-## pear pecl composer 的关系
+## pear pecl composer PIE 的关系
 
 - PEAR 全称为 PHP 扩展与应用库(PHP Extension and Application Repository)。为了创建一个类似于 Perl CPAN 档案的工具，Stig S. Bakken 在 1999 年创立了 PEAR 项目。
 
@@ -105,5 +105,28 @@ pear uninstall packagename
 PIE
 PHP Installer for Extensions
 https://github.com/php/pie
+
+从 github 的 rel 中下载 pie.phar
+
+pie
+    ```
+    #!/usr/bin/env sh
+    dp0=$(dirname "$0")
+    "$dp0"/php.exe "$dp0"/pie.phar $*
+    ```
+pie.ps1
+    ```powershell
+    $dp0 = Split-Path -Parent $MyInvocation.MyCommand.Source
+    $php = (Join-Path -Path $dp0 -ChildPath php.exe)
+    $pie = (Join-Path -Path $dp0 -ChildPath pie.phar)
+    PowerShell -command $php $pie $args
+    ```
+pie.bat
+    ```
+    @"%~dp0php.exe" "%~pie.phar" %*
+    ```
+
+使用 pie 安装 xdebug
+pie install xdebug/xdebug
 
 -->
