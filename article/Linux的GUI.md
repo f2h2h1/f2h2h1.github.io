@@ -506,5 +506,6 @@ sudo tail -n 20 /var/log/xrdp-sesman.log
 cat ~/.xsession-errors
 
 登录时用新建的用户名，不要用root
+登录时如果对应的用户没有注销，则会登录失败
 
 -->

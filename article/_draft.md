@@ -2364,16 +2364,28 @@ php中的扩展
         --with-config-file-path=/usr/local/php \
         --with-apxs2=/usr/local/apache2/bin/apxs
 laravel 中的概念
+    契约 Contract
+        是一种接口
     服务容器 Service
         Service 就是 Service 了，和其它框架中的概念是类似的
     服务提供者 ServiceProvider
-        ServiceProvider 大概类似于 magento2 的 objectMamager 和 Factory
+        用于绑定 契约 和 服务容器
+        类似于 magento2 中的 di.xml
     门面 Facade
         门面是一个类 Illuminate\Support\Facades
         门面需要继承这个类
         门面本质上只是 laravel 中一个特别的类
-    契约 Contract
-        类似于 magento2 中的 di.xml
+        门面是一个静态代理
+            大概类似于 magento2 的 \Magento\Framework\App\ObjectManager::getInstance()->get()
+    以 PaymentGateway 为例
+        1. 新建 app/Contracts/PaymentGateway.php ，作为 契约 ，这是一个接口
+        2. 新建 app/Services/StripePaymentGateway.php ，作为 服务容器 ，这是对契约的实现
+        3. 新建 app/Providers/PaymentServiceProvider.php 绑定 契约 和 接口
+        4. 注册 Provider
+            laravel10及之前，要修改 config/app.php 的 providers 数组
+            laravel11及之后，要修改 bootstrap/providers.php
+        5. 新建 app/Facades/Payment.php 作为 契约 门面，这个类要继承 Illuminate\Support\Facades\Facade
+        6. 在业务代码调用 服务容器 时，可以选择 在 构造函数中注入 或 直接调用对应的门面
 后台模板
     页面
         首页 home page
@@ -2383,6 +2395,7 @@ laravel 中的概念
         错误页面 error page
             404 403 500
         维护页 maintenance page
+    组件
         侧边栏菜单 Sidebar Menu
         导航栏 Navigation
         表格 table
@@ -2394,6 +2407,27 @@ laravel 中的概念
             pormpt
             page/iframe
             参考 layer
+        框架或html提供的
+            基础展示类组件（Data Display）
+                Tree（树形控件）：展示具有层级关系的数据（如组织架构、文件目录）
+                Gallery
+            操作输入类组件（Data Entry）
+                Select（选择器）：下拉单选或多选框
+                DatePicker / TimePicker（日期 / 时间选择器）：选择日历或时间
+                Upload（上传组件）：文件或图片上传
+            反馈类组件（Feedback）
+                Modal / Dialog（对话框 / 模态框）：弹出的交互窗口。
+                Message / Toast（全局提示）：顶部或角落短暂显示的轻量通知。
+                Notification（通知提醒框）：带有标题和内容的系统级通知。
+                Alert（警告提示）：页面内的静态警告或提示条。
+                Progress（进度条）：展示任务完成百分比。
+                Spin / Loading（加载中）：数据请求时的转圈等待动画。
+            导航类组件（Navigation）
+                Menu（导航菜单）：顶部或侧边主导航。
+                Breadcrumb（面包屑）：显示当前页面在系统层级中的路径。
+                Tabs（标签页）：同级内容面板切换。
+                Pagination（分页器）：长列表或表格的分页控制。
+                Drawer（抽屉）：从屏幕边缘滑出的辅助操作面板。
     权限管理 rbac
     菜单管理
     用户管理
@@ -4401,7 +4435,10 @@ php有哪些缺点？
     扩展安装麻烦
     不装扩展的情况下只有同步阻塞io
     安全性问题
-    性能差 数值计算不准确 这两个算是脚本语言都有的通病
+    性能差
+    数值计算不准确
+    标准库功能少
+    生态和web深度绑定（很多库只能运行在web里）
 python有哪些缺点？
     语法和 java c# 差别有一点大，例如 强制使用缩进
     没有强类型
@@ -7833,15 +7870,28 @@ GitHub中文排行榜 https://github.com/GrowingGit/GitHub-Chinese-Top-Charts ht
 计算机教育中缺失的一课 https://github.com/missing-semester-cn/missing-semester-cn.github.io
 各种图书的合集 https://github.com/0voice/expert_readed_books
 版本控制软件比较
-    git
-        github
-        gitlab
-        gitee
-        coding
-    mercurial hg
-        Bitbucket
-    Subversion SVN
-    Perforce
+    Version control software 版本控制软件
+    分布式版本控制 distributed version control systems (DVCS)
+        git
+            github
+            gitlab
+            gitee
+            coding
+        mercurial hg
+            Bitbucket
+        Bazaar (bzr) — 由 Canonical 开发，曾用于 Ubuntu/Linux 内核开发，现已基本停止维护
+        Fossil — SQLite 作者开发，自带 Wiki、工单系统，单文件部署，适合小型项目
+    集中式版本控制 centralized version control systems (CVCS)
+        Subversion SVN
+        Perforce
+        VSS (Visual SourceSafe) — 微软早期的工具，已淘汰
+        TFVC(Team Foundation Version Control) — 微软当前的版本管理工具，但现在也主推git了
+        Piper - Google 自研的工具，一直沿用至今
+        BitKeeper
+            2000 年 5 月 4 日发布
+            2002 年起被 Linux 内核开发团队免费使用
+            2005 年，因 Andrew Tridgell 对其协议进行逆向工程引发了授权纠纷，BitMover 撤销了对 Linux 社区的免费使用授权。Linus Torvalds 因此气愤之余在短短几天内亲自编写了 Git
+            2016 年 5 月 9 日转为开源软件（采用 Apache 2.0 许可证），其最终版本（7.3.3）于 2018 年 12 月 29 日发布，目前已停止开发
 https://download.libsodium.org/libsodium/releases/
 SSL双向认证
 http和cgi和fastcgi，如何编译安装php？

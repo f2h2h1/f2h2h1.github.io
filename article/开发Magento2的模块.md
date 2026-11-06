@@ -832,6 +832,11 @@ define([
     });
 });
 
+abstract
+date
+select
+single-checkbox
+
 
 -->
 
@@ -6681,6 +6686,64 @@ index.php
 layout/<frontName>_<controllerPath>_<actionClass>.xml
 这里的 controllerPath 可以直接包含 _
 magento 原生的 layout 是全部小写，新建的 layout 也尽量保持小写
+
+
+
+magento2 的后台登录流程
+vendor\magento\module-backend\App\AbstractAction.php dispatch
+vendor\magento\module-backend\App\Action\Plugin\Authentication.php
+    aroundDispatch
+    _processNotLoggedInUser 这个位置还有一个 formkey validate vendor/magento/framework/Data/Form/FormKey/Validator.php validate
+    _performLogin 在这个位置完成登录，从源码看只要后台的请求带有 登录的参数就会执行登录的流程 login[username] login[password]
+        $this->_auth->login($username, $password);
+vendor\magento\module-backend\Controller\Adminhtml\Auth\Login.php execute
+    public function execute()
+    {
+        if ($this->http->getMethod() == \Magento\Framework\App\Request\Http::METHOD_POST && !$this->_auth->isLoggedIn()) {
+            $username = 'ricardo';
+            $password = 'Admin@123';
+            $this->_auth->login($username, $password);
+        }
+vendor\magento\module-backend\Model\Auth.php login
+vendor\magento\module-user\Model\User.php
+    login
+    authenticate 验证密码在这个方法里 这个方法不能直接返回true
+    admin_user_authenticate_before
+        vendor\magento\module-security\Observer\AdminUserAuthenticateBefore.php
+        vendor\magento\module-captcha\Observer\CheckUserLoginBackendObserver.php
+        vendor\magento\module-re-captcha-user\Observer\LoginObserver.php
+        vendor\mageplaza\module-google-recaptcha\Observer\Adminhtml\Login.php
+    app\code\HKT\AdminPortal\Plugin\User\Model\UserPlugin.php aroundVerifyIdentity
+    verifyIdentity 这个方法返回真，后台各个需要验证密码的位置都可以绕过了，验证 admin_user.is_active 也是在这个位置
+        vendor\magento\framework\Encryption\Encryptor.php
+            validateHash
+            isValidHash
+    admin_user_authenticate_after
+        app\code\HKT\AdminPortal\Plugin\User\Observer\Backend\AuthObserverPlugin.php
+        vendor\magento\module-user\Observer\Backend\AuthObserver.php execute 这个方法直接在最开始那里返回即可
+
+这是重定向后的控制器
+vendor\magento\module-backend\Controller\Adminhtml\Index\Index.php execute
+/vendor/magento/framework/HTTP/PhpEnvironment/Response.php
+vendor/magento/framework/Session/Validator.php _validate 这个方法也要改为 return true;
+
+authenticate 返回 $result 需要是 true ，即使关了验证，密码也要符合规则
+
+
+
+magento2 的前台登录流程
+vendor\magento\module-customer\Model\Authentication.php authenticate 验证密码在这个方法里
+vendor\magento\framework\Encryption\Encryptor.php validateHashVersion 这个方法也要返回 true 不然很容易就报错了
+vendor\magento\module-customer\Model\Session.php
+    在构造方法最后的位置加上一行，这样无论打开什么页面都已经是登录好的了
+        $this->setCustomerId(608); // 608 是 customer id
+    isLoggedIn
+        或者在这个方法里加上 $this->setCustomerId(608); // 608 是 customer id
+
+
+后台登录
+前台登录
+rest graphql 的 token
 
 
 开启模板提示（Template Hints）

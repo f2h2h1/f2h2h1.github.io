@@ -204,20 +204,53 @@
                 ```
                 git clone https://github.com/magento/magento2-sample-data
                 ```
-            1. 运行安装命令，这命令里的路径必须使用绝对路径，且必须在管理员权限下运行
+            1. 尽量切换到和 magento 版本一样的分支
                 ```
-                php -f /d/magento2-sample-data/dev/tools/build-sample-data.php -- --sample-data-source="/d/magento2-sample-data" --ce-source="/d/magento-ce" --command=link
+                git pull;
+                git checkout -b 2.4.6-p1 origin/2.4.6-p1
                 ```
+            1. 运行安装命令，这命令里的路径必须使用绝对路径，文件分隔符用 / ，必须用盘符开头避免 Git Bash/MSYS 路径转换差异，必须在管理员权限下运行
+                ```
+                php -f D:/magento2-sample-data/dev/tools/build-sample-data.php -- --sample-data-source="D:/magento2-sample-data" --ce-source="D:/magento-ce" --command=link
+                ```
+            1. 运行完后可以这样判断 示例数据 有没有顺利生成
+                ```
+                php bin/magento module:status | grep -i sample
+                ls app/code/Magento/CatalogSampleData/registration.php
+                ```
+            1. 如果没有生成，可以尝试修改源码 magento2-sample-data/dev/tools/build-sample-data.php ，symlink 有两个调用的位置，两个位置都要修改
+                ```
+                // @symlink($filename, $ceSource . $target);
+                if (!symlink($filename, $ceSource . $target)) {
+                    die('创建失败: ' . error_get_last()['message']);
+                }
+                ```
+            1. 如果是权限的问题，可以把 symlink 换成 mklink
+                ```
+                // @symlink(dirname($filename), dirname($ceSource . $target));
+                exec('mklink /J "' . dirname($ceSource . $target) . '" "' . dirname($filename) . '"');
+                ...
+                // @symlink($filename, $ceSource . $target);
+                exec('mklink /J "' . $ceSource . $target . '" "' . $filename . '"');
+                ```
+            1. 还要修改 pub/get.php ，如果不修改这个，会有一些图片无法显示
+                ```
+                $fileAbsolutePath = __DIR__ . '/' . $relativePath;
+                $fileAbsolutePath = str_replace('\\', '/', $fileAbsolutePath);
+                ```
+            1. 为什么即使装了示例数据，首页依然是空白的？
+                - 首页路由未指向示例数据页面，自己去改后台设置就好了
+                - 没有刷新缓存，最好完整地重新构建一次
         <!--
-        示例数据的图片路径好像还有一点问题，但又不是不能用
-        还要修改 pub/get.php
-        命令行要全程有管理员权限
-        为什么即使装了示例数据，首页依然是空白的？
+        在不启用es，使用 swissup/module-search-mysql-legacy， 打开 /catalogsearch/advanced/ 会报错
+            使用页面右上角的搜索框是可行的
+            但打开 /catalogsearch/advanced/ 会报错
         -->
     1. 更新
         ```
         php bin/magento setup:static-content:deploy -f
         php bin/magento setup:upgrade
+        # 还是整个重新构建一次比较保险
         ```
 1. 验证
     - 访问前台地址 `http://localhost-magento.com`
@@ -570,6 +603,16 @@ patch 文件的内容
              $configData = $this->configLoader->load($cacheId);
  
              if ($configData) {
+--- setup/src/Magento/Setup/Module/Di/Code/Reader/ClassesScanner.php	2026-11-06 13:25:54.347505000 +0800
++++ setup/src/Magento/Setup/Module/Di/Code/Reader/ClassesScanner.php	2026-11-06 13:25:31.763970600 +0800
+@@ -68,6 +68,7 @@ class ClassesScanner implements ClassesS
+     {
+         // phpcs:ignore
+         $realPath = realpath($path);
++        $realPath = DIRECTORY_SEPARATOR === '\\' ? str_replace('\\', '/', $realPath) : $realPath;
+         $isGeneration = strpos($realPath, $this->generationDirectory) === 0;
+ 
+         // Generation folders should not have their results cached since they may actually change during compile
 
 ```
 
@@ -596,6 +639,7 @@ $targetArr = [
     'lib/internal/Magento/Framework/App/StaticResource.php',
     'lib/internal/Magento/Framework/Interception/PluginListGenerator.php',
     'lib/internal/Magento/Framework/Interception/PluginList/PluginList.php',
+    'setup/src/Magento/Setup/Module/Di/Code/Reader/ClassesScanner.php',
 ];
 
 echo "
