@@ -207,7 +207,8 @@
             1. 尽量切换到和 magento 版本一样的分支
                 ```
                 git pull;
-                git checkout -b 2.4.6-p1 origin/2.4.6-p1
+                git fetch --tags;
+                git checkout -b 2.4.6-p1 2.4.6-p1;
                 ```
             1. 运行安装命令，这命令里的路径必须使用绝对路径，文件分隔符用 / ，必须用盘符开头避免 Git Bash/MSYS 路径转换差异，必须在管理员权限下运行
                 ```

@@ -176,7 +176,7 @@ sh 下的绝对路径
 
 xdebug 的配置可以参考这篇文章 《在 VSCode 里调试 PHP》
 
-##  MySQL
+## MySQL
 
 ### 下载 MySQL
 0. 目标，下载 MySQL 8 的社区版的 ZIP 版本
@@ -228,6 +228,12 @@ https://dev.mysql.com/
         mysqld --initialize
         ```
     - 注意，执行完之后，会自动生成一个密码，这个密码需要记下来，这个是命令行登录的密码。如果命令行里没有输出密码，那么就去 data 文件夹里，找到 err 后缀的文件，密码再这里面
+        ```
+        (?<=root@localhost: ).*
+        root@localhost: (.*)
+        cat $(find ./data -type f -name "*err") | grep -Po "(?<=root@localhost: ).*"
+        grep -Po "(?<=root@localhost: ).*" $(find ./data -type f -name "*err")
+        ```
     - 初始化后，第一次运行 mysqld ，要用命令行登录，然后修改密码。初始化的密码如果不修改好像不能通过 php 或其它客户端连接
     - 第一次运行时的密码修改
         ```
