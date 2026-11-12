@@ -20,7 +20,9 @@
             专为程序员编写的英语学习指南
                 https://github.com/yujiangshui/A-Programmers-Guide-to-English
                 https://a-programmers-guide-to-english.harryyu.me/
-        抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念
+        抽象是一个重要的概念，封装是一个重要的概念，递归是一个重要的概念，解耦和耦合似乎也是重要的概念
+            封装：强调把实现细节隐藏起来，只暴露稳定接口
+            解耦：强调降低模块之间的依赖；它的直接反义是耦合
         总结起来就是 数学+英语+三个概念（抽象，封装，递归）
     计算机学科的相关概念
         计算理论（Theory of computation）
@@ -93,6 +95,7 @@
                 承诺问题
                     承诺问题 是 决策问题 的推广
                     它仍然输出“是/否”，但输入域被限制在承诺集内。
+            能不能把这些理论应用到简中特色的考试中？
         可计算性（Computability）
             可计算性理论的一个目标是确定在每个计算模型中可以解决哪些问题或问题类别。
                 除了 可计算问题，不可计算问题，还有一种 近似可计算问题
@@ -741,6 +744,8 @@ vscode的使用技巧
         java
         python
         c
+        powershell
+        c#
     远程开发的配置
     安装和使用 vscode 的网页版
         三种版本
@@ -2384,8 +2389,8 @@ laravel 中的概念
         4. 注册 Provider
             laravel10及之前，要修改 config/app.php 的 providers 数组
             laravel11及之后，要修改 bootstrap/providers.php
-        5. 新建 app/Facades/Payment.php 作为 契约 门面，这个类要继承 Illuminate\Support\Facades\Facade
-        6. 在业务代码调用 服务容器 时，可以选择 在 构造函数中注入 或 直接调用对应的门面
+        5. 新建 app/Facades/PaymentFacade.php 作为 契约 门面，这个类要继承 Illuminate\Support\Facades\Facade
+        6. 在业务代码调用 服务容器 时，可以选择 在 构造函数中注入PaymentServiceProvider 或 直接调用对应的门面PaymentFacade
 后台模板
     页面
         首页 home page
@@ -5236,6 +5241,14 @@ windows在没有管理员权限的前提下
         快捷方式 是 explorer.exe 里的概念
             windows 的快捷方式 更接近于 unix 里的启动脚本
                 其实 linux 里的 窗口管理器 也会提供类似的功能，只是 linux 的桌面环境太过碎片化，很少有人留意到
+    Linux 的 7 种核心文件类型
+        -	普通文件: Regular file	文本、程序、图片等
+        d	目录: Directory	用来组织和包含文件
+        c	字符设备: Character device	按字符流读写的设备，如终端
+        b	块设备: Block device	按数据块读写的设备，如磁盘
+        l	符号链接: Symbolic link	指向另一个文件或目录的链接
+        p	管道: Pipe (FIFO)	用于进程间单向通信
+        s	套接字: Socket	用于进程间通信，常见于本地通信
 硬盘
     硬盘 Hard Disk
         HDD Hard Disk Drive
@@ -5340,7 +5353,7 @@ nas
             用于冷备的硬盘
             网盘上再放一份数据？
         可以自建的其它服务？
-            邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，2fa/mfa/totp，rss阅读器） Readeck（网页归档） Gotify（通知推送） code-server office-online
+            邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，2fa/mfa/totp，rss阅读器） Readeck（网页归档） Gotify（通知推送） code-server office-online IFTTT(If This Then That)
             旧的游戏
                 平台 类型
                 前端
@@ -6362,6 +6375,7 @@ wordpress
             平台海外仓（如亚马逊FBA）
             物流商运营海外仓
         直接当普通的个人包裹寄到到外国应该也可以吧
+        1PL 2PL 3PL 4PL
     如何收款
         平台电商都有各自的收款渠道
         独立站如何收款
@@ -7577,6 +7591,7 @@ java
             Gradle Wrapper
         JavaBean
         JDBC（Java Data Base Connectivity,java数据库连接）
+        jar（​Java Archive,Java 归档）
     gui
         AWT（Abstract Window Toolkit）
             Swing
@@ -7593,59 +7608,123 @@ java
                 servlet 和 jsp
                 jsp 也过时了
                 servlet 虽然还活跃，但很少会直接写 servlet 了
+                war（​Web Application Archive ,Web应用归档）
         Applet（Application）
             Applet 是一个新造的单词，大意是小的应用程序
+            Applet 运行在浏览器内部
+        Java Web Start
+            Java Web Start 运行在浏览器外部，更像一个独立的桌面程序
+            首次通过点击网页上的链接启动。这个链接指向一个 JNLP（Java Network Launching Protocol） 文件，
+            浏览器会将其交给 Java Web Start 程序处理。
+            Java Web Start 随后会根据 JNLP 文件的指示，自动下载、缓存应用所需的 JAR 文件并运行
         servlet（Server Applet）
             四个作用域
                 application
                 session
                 request
                 page
+            servlet 单实例多线程模型
+            bio/aio 这些由运行容器决定
+            servlet 不能设置 处理完多少次请求后就销毁重建
+                编写一个 Filter，在其中计数。当请求数达到阈值时，可以执行一些“重置”操作，例如清除 Servlet 中持有的缓存或连接池
+            但tomcat可以设置空闲时销毁
         jsp（Java Server Page）
             jsp 就是 servlet ，jsp 最终都会被编译成 servlet 再执行
             JSP的视图代码可以是任何文本内容
                 包括但不限于 html xml json txt
             jsp 文件里有两种内容
                 模板数据/模板元素 -> 就是指 html 代码，就是指 静态内容
-                jsp 元素 -> jsp 的标签 脚本 动作 指令。。。
-            scriptlet
-                <%  %>
-                <jsp:scriptlet> </jsp:scriptlet>
+                jsp 元素 -> jsp 的标签 脚本 声明 注释 动作 指令。。。
             JSP声明
                 <%!  %>
                 <jsp:declaration> </jsp:declaration>
+                翻译后的位置 Servlet 类成员
+            scriptlet
+                <%  %>
+                <jsp:scriptlet> </jsp:scriptlet>
+                翻译后的位置 _jspService
             JSP表达式
                 一个JSP表达式中包含的脚本语言表达式，先被转化成String，然后插入到表达式出现的地方
                 表达式元素中可以包含任何符合Java语言规范的表达式，但是不能使用分号来结束表达式
                 <%= 表达式 %>
                 <jsp:expression>表达式</jsp:expression>
+                类似于
+                    <% out.print(表达式) %>
+                翻译后的位置 _jspService
             JSP注释(Comment)
                 <%-- %>
                 <% // %>
                 <% /* */ %>
-            EL（Expression Language，表达式语言）
-                ${}
-                隐藏对象
-                el函数
-                el自定义函数
             JSP Directives (jsp 指令)
                 <%@ %>
                 <jsp:directive.page attribute="value" />
                 page 声明页面属性
                 include 包含其它jsp页面
                 taglib 导入标签库
-                    JSTL(JSP Standard Tag Library，JSP标准标签库)
-                    第三方标签库
-                    自定义标签库
-                    不过 jstl 和 el 通常要单独引入对应的 jar
-            JSP Actions
+                    例如引入 JSTL
+                    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+                jsp指令是 编译期指示；静态包含
+            JSP Actions  (jsp 动作)
                 jsp:include 	在页面被请求的时候引入一个文件。
                 jsp:forward 	把请求转到一个新的页面。
                 jsp:param 	设置请求参数
                 jsp:useBean 	寻找或者实例化一个JavaBean。
                 jsp:setProperty 	设置JavaBean的属性。
                 jsp:getProperty 	输出某个JavaBean的属性。
+                翻译后的位置 _jspService
+            JSTL(JSP Standard Tag Library，JSP标准标签库)
+                标准标签库
+                第三方标签库
+                自定义标签库
+                不过 jstl 和 el 通常要单独引入对应的 jar
+                本质上是一组自定义标签（Custom Tags）的标准集合，基于 JSP 的自定义标签机制实现
+                一个独立的、互补的规范（JSR 52），并非 JSP 规范本身的一部分
+                翻译后的位置 _jspService
+                会在 _jspService 翻译出一大段代码
+                    // ...
+                    MyTag tag = pool.get(MyTag.class);
+                    tag.setPageContext(pageContext);
+                    tag.setName(...);
+                    int eval = tag.doStartTag();
+                    // 处理标签体
+                    tag.doEndTag();
+                    pool.reuse(tag);
+                    // ...
+            EL（Expression Language，表达式语言）
+                ${}
+                隐藏对象
+                    pageContext	当前 JSP 的上下文，可访问 request、session、response 等	${pageContext.request.contextPath}
+                    pageScope	当前页面作用域中的属性	${pageScope.user}
+                    requestScope	请求作用域中的属性	${requestScope.user}
+                    sessionScope	会话作用域中的属性	${sessionScope.user}
+                    applicationScope	应用作用域中的属性	${applicationScope.user}
+                    param	请求参数；每个参数取一个值	${param.name}
+                    paramValues	请求参数；可取同名参数的多个值	${paramValues.hobby[0]}
+                    header	请求头；每个请求头取一个值	${header["User-Agent"]}
+                    headerValues	请求头的多个值	${headerValues["Accept"][0]}
+                    cookie	按名称访问 Cookie	${cookie.JSESSIONID.value}
+                    initParam	Web 应用的初始化参数	${initParam.someName}
+                    ${user} 这类不带作用域名的写法，会按 page → request → session → application 的顺序查找属性；想指定作用域时，就用对应的 xxxScope 对象
+                el函数
+                el自定义函数
+                类似于
+                    <% out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl
+                        .proprietaryEvaluate("${sessionScope.username}", 
+                            java.lang.String.class, 
+                            (PageContext)_jspx_page_context, null, false)) %>
+                    这里是 out.write 不是 jsp表达式的 out.print
+                    这是最简单的例子
+                翻译后的位置 _jspService
             九个内置对象
+                request	获取当前请求的信息，如参数、请求头
+                response	设置或发送响应
+                out	向页面输出内容
+                session	保存当前用户的会话数据
+                application	在整个 Web 应用范围内共享数据
+                config	获取当前 JSP 对应 Servlet 的配置
+                pageContext	访问 JSP 页面上下文及各作用域
+                page	当前 JSP 转换成的 Servlet 实例，相当于 this
+                exception	获取错误信息；仅在错误处理页面中可用
         tomcat
             普通的tomcat
                 可以直接把 jsp 文件放进 tomcat 根目录里运行，就像 php 那样
@@ -7658,9 +7737,15 @@ java
                 jsp
                 jstl
                 jackson
+                    处理json
                 Apache Commons
-                mysql-connector-java
+                    Apache 提供的可复用 Java 工具库，用来补充 JDK 常用功能
+                    Commons Lang：字符串、对象等通用工具，例如 StringUtils.isBlank(str)
+                    Commons IO：文件、流和路径操作
+                    Commons Collections：扩展 Java 集合框架
+                    Commons Codec：Base64、URL 编码等编解码工具
                 log4j
+                mysql-connector-java
                 sqlite-jdbc
             servlet 的一般目录结构
                 .setting     一般的eclipse项目都有这个
@@ -7679,6 +7764,8 @@ java
                 .project     一般的eclipse项目都有这个
         ssh
             Struts2
+                 OGNL （Object-Graph Navigation Language 对象导航图语言）
+                    在 JSP 页面顶部引入 Struts2 标签库，就可以在 jsp 中使用 ognl
             Spring
             Hibernate
         ssm

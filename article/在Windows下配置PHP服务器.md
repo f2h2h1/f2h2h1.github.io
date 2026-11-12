@@ -345,6 +345,13 @@ servertype 的 standalone模式 和 inetd模式
 ip 白名单/黑名单
 主动返回 403 429
 
+
+这是一个能用于 apache 的 waf
+https://github.com/owasp-modsecurity/ModSecurity-apache
+同样地这个项目其实也有 nginx 版
+https://github.com/owasp-modsecurity/ModSecurity-nginx
+
+
 apache 如何设置 响应状态码
     使用 ErrorDocument 指令
         # 为 503 错误设置自定义页面

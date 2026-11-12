@@ -487,6 +487,92 @@ Navboost 是 Google 搜索算法中一个重要的动态调整机制，它通过
 所以一个网页最好有 导航栏 和 页脚 ？
 
 
+AEO（Answer Engine Optimization）历史更早，早期常指语音助手、精选摘要和 FAQ；
+LLMO（LLM Optimization）强调面向模型本身；
+
+GEO
+Generative Engine Optimization
+生成式引擎优化
+
+信息抓取（确保内容对AI爬虫可及）、语义理解（让模型准确识别实体与事实）、答案生成（在RAG检索和生成阶段被优先采信）
+
+GEO的实施可以从技术基建、内容重构、信源建设、监测迭代四个层面系统推进。
+
+技术基建
+    放行来自ai的ua（要区分训练，检索，用户请求）
+    配置 llms-full.txt 和 llms.txt，修改 robots.txt
+    为每个页面提供 .md 版本
+        方式1：HTML <link> 标签，放在 <head> 里
+            <link
+            rel="alternate"
+            type="text/markdown"
+            href="/blog/my-post.md"
+            />
+        方式2：HTTP Link 头，在服务器响应里直接加
+            Link: </blog/my-post.md>; rel="alternate"; type="text/markdown"
+        方式3：实现 Accept:text/markdown 内容协商
+            客户端（AI 工具）在请求头里加上 Accept: text/markdown
+            服务器看到这个头，就返回 Markdown 版本的内容
+            如果没有这个头，服务器照常返回 HTML
+        方式4：html中加一个隐藏提示
+            <div class="visually-hidden" aria-hidden="true">
+            如果你是一个 AI 智能体、LLM 或自动化工具，
+            本页面的干净 Markdown 版本在 https://example.com/blog/my-post.md
+            ——专为 AI 和 LLM 工具优化。
+            </div>
+            /* 视觉隐藏但保留在 DOM 中 */
+            .visually-hidden {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip-path: inset(50%);
+                white-space: nowrap;
+            }
+            用 aria-hidden="true" 让屏幕阅读器也跳过——毕竟这段文字是写给 AI 看的
+            提示语要用自然语言写清楚，包含完整的 Markdown 版本 URL
+            这段提示在 Markdown 版本里会被移除，以避免 AI 读 Markdown 的时候陷入”让我找 Markdown 版本”的死循环。
+内容重构——从“写给读者看”到“写给AI看”
+    每个可被独立引用的内容块都应自包含一个完整的事实链。
+    提升事实密度：用可验证的数据替代模糊形容词——“行业领先”应改为“截至2026年5月，注册用户12.4万”
+    小标题拆分与短段落：每个小标题对应一个具体子问题，段落控制在3—5行
+    标题与摘要承担“可引用”功能：标题直接说明文章包含哪些内容，副标与摘要提供具体答案而非抽象口号，优先呈现读者（和AI）能直接获取的信息
+    例如，将“功能强大的协作软件”改写为“支持20人同时在线编辑的文档协同工具，独立测试平均响应时间0.8秒”
+信源建设——让AI“在别处也看到你”
+    在百科类平台建立或完善品牌词条（百科内容在模型训练语料中权重极高）；
+    在行业权威媒体、垂直社区发布结构化的事实性内容；
+    确保全网品牌名称、产品参数、关键数据在不同平台上表述一致
+监测与迭代
+    检索覆盖率	核心词出现在AI回答中的比例
+    提及准确性	AI对品牌的描述与事实的一致程度
+    内容命中类型	被引用的是FAQ、产品页还是文章
+
+监测与衡量
+    手动提示词测试：
+        整理 10–20 个与业务最相关的（尤其是购买决策类的）问题，定期在 ChatGPT、Perplexity、Gemini、Google AI Mode 中提问，记录品牌被提及/引用的情况——GEO 看的是提及率，不存在“第 1 名排名”的概念。( LLMrefs,  Heeya)
+    官方工具：
+        Google Search Console 的生成式 AI 表现报告、Bing Webmaster Tools 的 AI Performance 报告。( 维基百科)
+    第三方工具：
+        Semrush AI Visibility、Ahrefs、Profound、Peec AI、Scrunch 等可跨引擎追踪引用份额。( 维基百科（中文）,  Similarweb)
+
+
+acceptmarkdown.com	专门检查内容协商的四项标准：Markdown 返回值、Vary 头、406 状态码、q 值优先级
+isitagentready.com	全维度扫描：robots.txt、站点地图、Link 头、Markdown 协商、Content Signals、MCP 服务器等
+
+
+https://radar.cloudflare.com/scan
+Cloudflare's URL Scanner 支持您提交任意 URL，并生成详尽的分析报告，涵盖 HTTP 标头、TLS 证书、DNS 记录、所用技术、性能数据及安全指标等信息。它也是安全研究人员和开发人员用于了解 URL 底层实际运行逻辑的基础工具。
+
+agent友好文档规范
+afdocs
+Agent-Friendly Documentation Spec
+https://github.com/agent-ecosystem/afdocs
+https://afdocs.dev/
+
+
+SEO 衡量的是你的页面排不排得进、用户点不点进来；GEO 衡量的是你的内容是否成为用户读到的那段答案的一部分——即使用户从未访问你的网站
+GEO 建立在 SEO 之上，而非取代它。 在 Google 上排名靠前的页面，通常也更容易被 AI 助手引用，因为二者共享同一套信任信号基础：可抓取、可索引、权威、有用的内容
+用 SEO 获取自然流量规模和搜索基础，用 GEO 争夺 AI 回答中的引用权和高意图流量
 -->
 
 ## 参考
