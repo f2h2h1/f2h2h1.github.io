@@ -139,6 +139,11 @@
             超大规模集成电路
     逻辑门的底层
     从与或非逻辑门到指令集和汇编语言的抽象
+    数字逻辑电路设计
+        组合逻辑电路
+            加法器 译码器 多路选择器 数值比较器
+        时序逻辑电路
+            触发器 寄存器 计数器 计时器
     计算机的组成
         抽象的计算机组成
             输入设备
@@ -160,6 +165,15 @@
         计算机组成原理和计算机体系结构的区别
             计算机组成(Computer Organization) 主要研究计算机由哪些部分组成
             计算机体系结构(Computer Architecture) 主要研究怎么设计 CPU
+    CPU
+        指令集（Instruction Set）
+        微架构（micro architecture）
+        指令集架构（Instruction Set Architecture , ISA）
+        微指令 micro instruction
+        微指令 micro code
+        微程序 micro program
+        微操作 micro operation
+        微命令 -> 微指令 -> 微程序 -> 机器指令 -> 汇编 -> 字节码（如果有，例如 JVM CLR 这类） -> 高级语言
     操作系统
         环境变量
         抽象的操作系统
@@ -254,8 +268,9 @@
                     type command
                     which command
                     whereis command
+                    command -v command
             包管理器
-                apt
+                apt yum rpm dnf pacman snap flatpak AppImage
             守护进程
                 systemd
             定时任务
@@ -465,11 +480,12 @@
             分布式 单体
             集群 单机
             三层架构（three-tier architecture）
-            bs架构
-            cs架构
+            bs架构（Browser/Server architecture）
+            cs架构（Client/Server architecture）
     中间件
         各种网络服务（例如 http服务器）
-        定时任务
+        计划任务
+            定时任务
         缓存
         队列
         全文搜索引擎
@@ -4024,6 +4040,15 @@ linux 中的各种 id
         套接字 socket
     多线程讲究的是数据的一致性（多个线程操作同一个变量时不要有冲突）
         通常是通过锁来实现的
+    协程讲究的是协作式调度
+        协作式让出
+            线程由内核进行抢占式调度
+            协程由程序自己决定的协作式调度
+            协程调度器是“用户态的、协作式的任务分发器”。它通过就绪队列、工作线程和让出/恢复机制来管理协程的执行。
+        同步写法表达异步逻辑：避免回调地狱，让代码看起来是顺序的
+        单线程内高并发/避免阻塞：一个协程等待 I/O 时让出执行权，让其他协程跑
+        挂起点的状态管理：局部变量、生命周期、取消、异常传播要正确
+        结构化并发：协程的生命周期、取消和异常要可管理
     多进程 和 多线程 是通过 中断 来实现的
     无论是哪一种，最后都是依赖 多线程 和 信号
     多进程/多线程 和 信号 依赖的是 中断
@@ -5354,6 +5379,7 @@ nas
             网盘上再放一份数据？
         可以自建的其它服务？
             邮局 dns ntp web（博客，笔记，wiki，git，密码管理器，2fa/mfa/totp，rss阅读器） Readeck（网页归档） Gotify（通知推送） code-server office-online IFTTT(If This Then That)
+            homepage 个人导航站 个人自定义的Dashboard
             旧的游戏
                 平台 类型
                 前端
@@ -7329,7 +7355,7 @@ erp
     先国际化再本地化
         本地单一市场 -> 国际化 -> 其它地区的本地化
     需要关注的要点
-        文字 语言 时间/日期格式 星期从哪天开始 单位（货币，质量，体积） 人名顺序 地址格式 排序规则 数字格式 纸张大小 书写顺序 服装尺码 电器（插座，电压） 交通通行方向 法律 历法 宗教 文化
+        文字 语言 时间/日期格式 星期从哪天开始 单位（货币，质量，体积，长度，温度） 人名顺序 地址格式 排序规则 数字格式 纸张大小 书写顺序 服装尺码 电器（插座，电压） 交通通行方向 法律 历法 宗教 文化
     最终目标都是为了满足不同市场的需求，提升用户体验和市场竞争力。
         https://www.w3.org/International/questions/qa-i18n
         https://blog.mozilla.org/l10n/2011/12/14/i18n-vs-l10n-whats-the-diff/
