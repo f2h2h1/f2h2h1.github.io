@@ -4082,18 +4082,30 @@ $cacheManager->clean();
 
 ### 使用模板
 
-1. 在 etc 下新建 email_templages.xml 文件
-    ```xml
-    <?xml version="1.0"?>
-    <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-        <template id="self_check_order_confirmation_email" label="Self Check Order Confirmation Eamil" file="self_check_order_confirmation_email.html" type="html" module="LocalDev_HelloModule" area="adminhtml"/>
-    </config>
-    ```
-1. 在 view/area代码/email 下新建模板文件，文件名和area代码要和 email_templages.xml 里的对应
-    ```html
-    <!--@subject {{var subject}}  @-->
-    <p>{{var mail_content}}</p>
-    ```
+1. 新建模板
+    - 在后台新建模板
+        - 新建模板的位置
+        ```
+        MARKETING > Communications > Email Templates
+        ```
+        - 新建的模板会保存在 email_template 这个表里;
+            ```
+            SELECT * FROM email_template WHERE template_id = 256;
+            ```
+        - 新建后要记下 template_id
+    - 通过代码新建模板
+        1. 在 etc 下新建 email_templages.xml 文件
+            ```xml
+            <?xml version="1.0"?>
+            <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+                <template id="self_check_order_confirmation_email" label="Self Check Order Confirmation Eamil" file="self_check_order_confirmation_email.html" type="html" module="LocalDev_HelloModule" area="adminhtml"/>
+            </config>
+            ```
+        1. 在 view/area代码/email 下新建模板文件，文件名和area代码要和 email_templages.xml 里的对应
+            ```html
+            <!--@subject {{var subject}}  @-->
+            <p>{{var mail_content}}</p>
+            ```
 1. 在 php 的代码里这样调用
     ```php
     try {
@@ -4108,10 +4120,15 @@ $cacheManager->clean();
                 ->load($areaCode)
         );
 
+        // 要有这句才会加载翻译
+        $objectManager->get(\Magento\Framework\App\AreaList::class)->getArea($areaCode)->load(\Magento\Framework\App\Area::PART_TRANSLATE);
+
         $appConfig = $objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
         $transportBuilder = $objectManager->get(\Magento\Framework\Mail\Template\TransportBuilder::class);
 
-        $templateIdentifier = 'self_check_order_confirmation_email'; // 要和 email_templages.xml 里的 id 对应
+        // 如果 templateIdentifier 是数字，会从数据库中的 email_template 表读取模板，值就是 email_template的 template_id
+        // 如果 templateIdentifier 是字符串则会从文件中读取模板，值要和 email_templages.xml 里的 id 对应
+        $templateIdentifier = 'self_check_order_confirmation_email';
         $templateVars = [
             'subject'   => '123',
             'mail_content' => '321'
@@ -4178,20 +4195,47 @@ foreach ($to as $item) {
 /** @var \Magento\Email\Model\Template\Filter */
 $TemplateFilter = $objectManager->get(\Magento\Framework\Filter\Template::class);
 $TemplateFilter->setVariables(['asd' => 123]);
-$html=file_get_contents('b.html');
-$html = $TemplateFilter->filter(file_get_contents('b.html'));
+$template = file_get_contents('template.html');
+$html = $TemplateFilter->filter($template);
 
 邮件的模板使用这个类
 \Magento\Email\Model\Template\Filter
 普通的模板使用这个类
 \Magento\Framework\Filter\Template
 
-普通的模板无法使用 翻译 trans
+
+根据模板id渲染，不发送邮件
+$templateFactory = $objectManager->get(\Magento\Framework\Mail\Template\FactoryInterface::class);
+$template = $templateFactory->get($templateIdentifier)
+                ->setVars($templateVars)
+                ->setOptions($templateOptions);
+$content = $template->processTemplate();
+echo $content;
+
+
 
 magento2 的模板语法 在 2.3 有过一次大的更新
 
 邮件模板的语法
 https://developer.adobe.com/commerce/frontend-core/guide/templates/email
+
+
+模板中，这样的语法会加载 布局的xml文件
+{{layout handle="attach_invoice_grid" order=$order}} 这个指令。
+它的作用是告诉系统：“请去加载一个名为 attach_invoice_grid 的布局句柄，并把当前的 $order 对象传递给它。
+Magento 会寻找一个与句柄同名的 XML 文件来定义布局结构。
+可以尝试用这样的命令找到对应的布局文件
+find ./ -iname "*attach_invoice_grid*" -type f
+
+
+{{css file="Vendor_EmailAttachments::css/email/attach/order-items.css"}}
+即使指令中明确写的是 .css 扩展名，只要同名的 .less 文件存在，Magento 的邮件模板系统能够找到并处理它。
+Magento 静态资源解析的一个内置回退机制。根据开发文档的说明，当系统根据指令路径找不到指定的 .css 文件时，它会自动搜索具有 .less 扩展名的同名文件。
+它的查找逻辑是：
+    第一步：精确查找 Vendor_EmailAttachments::css/email/attach/order-items.css。
+    第二步（回退）：如果 .css 文件不存在，系统会查找同目录下的 Vendor_EmailAttachments::css/email/attach/order-items.less。
+
+
 
 -->
 
