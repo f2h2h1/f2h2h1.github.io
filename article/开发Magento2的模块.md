@@ -6799,5 +6799,16 @@ Stores -> Configuration -> Advanced -> Developer -> Debug
     php bin/magento dev:template-hints:enable
 
 
+
+send_email	发送意图（配置标记）	1（需要发送） 0 或 NULL（不发送）
+email_sent	发送状态（结果标记）	1（已发送）   0 或 NULL（未发送）
+
+
+通过 id 打开 PLP （Product Listing Page产品列表页）
+/catalog/category/view/id/{分类ID}
+
+通过 id 打开 PDP （Product Detail Page产品详情页） 
+/catalog/product/view/id/{产品ID}
+
 -->
 

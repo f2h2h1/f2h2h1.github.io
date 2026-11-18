@@ -7488,7 +7488,7 @@ erp
     ICT Information Communication Technology 信息通信技术
     Electronic Information Engineering 电子信息工程
     Electronic science and technology 电子科学与技术
-    Microelectronics Science and Engineering 微电子 微电子科学与工程
+    Microelectronics Science and Engineering 微电子 微电子科学与工程 这是研究芯片设计与制造的
     通信 通讯 电信 电讯 这几个有什么关系和区别？
         电信 -> 电子通信
         电讯 -> 电子通讯
@@ -7516,8 +7516,30 @@ erp
     强电 和 弱电
         强电 和 电线 电路 供电 相关的
         弱电 和 电相关的，需要供电的设备，例如 电话 网络 监控
-        电气工程 电力工程 算 强电
+        电气工程 电力工程这些 算 强电
         电子工程 信息工程这些 算 弱电
+        在国外的大学电气工程 electrical engineering 涵盖了
+            power engineering（强电）
+            electronic engineering（弱电）
+            information engineering（弱电）
+        但在中国，电气就特指强电了（power engineering）
+    电 电子 电机 电气 电器 电机 机电
+        在日常中文语境中，“电机”有时专指马达（Electric Motor），有时作为电气工程（Electrical Engineering）的简称（例如台湾和香港部分高校仍将 Electrical Engineering 译为“电机工程学系”）
+        机电（Electro-mechanical）解决的是“如何用电路和程序去精准指挥机械干活”
+        机电（Electro-mechanical）在现代工程领域更常被称为 Mechatronics（机电一体化），强调机械（Mechanics）与电子（Electronics）的深度融合
+
+
+        Motor 的本义是“使物体产生运动的动力装置”
+        中文的“马达”正是英文 Motor 的音译
+        在早期英文习惯及部分英语国家（如英国、美国）的固定搭配中，Motor 也泛指“机动车”或“汽车”：
+        • Motor vehicle：机动车（包括汽车、摩托车、卡车等）。
+        • Motorway：高速公路（英式英语用法，对应美式英语的 Highway）。
+        • 品牌名称：许多老牌车企名字里带有 Motor，例如 Ford Motor Company（福特汽车公司）、General Motors（通用汽车，简称 GM）、Toyota Motor（丰田汽车）。这里的 Motor 指的是广义的“动力机械/汽车”。
+
+        • Electric motor：电动机
+        • Servo motor：伺服电机（机器人、自动化设备的核心部件）
+        • Stepper motor：步进电机（3D 打印机、精密仪器常用）
+        • Motor oil：机油（汽车发动机润滑油）
     英文
         electromagnetic adj. 电磁的
         electro
@@ -7529,7 +7551,10 @@ erp
         electrical ：[ɪˈlektrɪkl] adj.电的，电气的
         electricity ：[ɪˌlekˈtrɪsəti] n.电流，电力
         electron n. 电子
-        electronic adj.电子的
+        electronic adj. 电子的
+        electronics n. 电子学
+        microelectronics n. 微电子学
+        microelectronic adj. 微电子的
         electr 是一个词根
             al 是形容词的后缀
             ity 是抽象名词的后缀
