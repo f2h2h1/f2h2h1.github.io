@@ -2224,6 +2224,7 @@ git的一般使用指南
         国际化 symfony/intl
         http客户端 symfony/http-client
         认证和授权 symfony/security-core
+        表达式语言​ symfony/expression-language
         转义 ezyang/htmlpurifier
         验证 respect/validation
         单元测试 phpunit
@@ -5467,7 +5468,7 @@ nas
             铜 铁
             金 银
             铝 锌 镍
-        沙和石
+        岩 石 沙 尘 泥
         水
 和声音相关的笔记
     声音
@@ -5948,6 +5949,7 @@ nas
         虽然由苹果提出，但也是开放协议，基于 BLE
     uwb
     nfc 和 RFID
+    etc 和 微波（DSRC） 
     AirTag
         苹果专属
         安卓中有哪些类似 AirTag 的技术
@@ -6630,12 +6632,13 @@ wordpress
     媒体融合（media convergence）
     单媒体（Monomedia）与多媒体对应
     传统媒体或旧媒体
-        书刊
-        报纸
+        书/刊/报纸
         广播
+        电影
         电视
-        音像制品
+        音像制品（黑胶，磁带，光盘）
     出版物或出版品（英语：Publication）指以传播信息、文化、知识为目的的各种产品包括印刷品、电子产品的总称，属于传播文化知识的媒体。
+        游戏卡带属于集成电路卡，属于电子出版物
     媒介 和 媒体 有什么区别？
     在中文互联网里，解释很混乱
     但让我感到欣慰的是，英文互联网里，解释也很混乱

@@ -2919,13 +2919,8 @@ system -> action logs -> report
 ```sql
 INSERT INTO core_config_data (`scope`,scope_id,`path`,value,updated_at) VALUES ('default',0,'general/file/bunch_size','1000', NOW());
 
-UPDATE core_config_data SET `value` = '500' WHERE `path` = 'pgeneral/file/bunch_size' and `scope` = 'default' and `scope_id` = 0;
+UPDATE core_config_data SET `value` = '500' WHERE `path` = 'general/file/bunch_size' and `scope` = 'default' and `scope_id` = 0;
 ```
-
-UPDATE core_config_data
-SET `value` = '0'
-WHERE path = 'product_custom_attributes/club_protection/enable_mox_card';
-
 
 上面两种写法效果是一样的，
 可以这样获取配置的值
@@ -2973,6 +2968,8 @@ php bin/magento config:show path
 ```
 
 数据库的优先级会更高。
+
+只要数据库里有记录，不管值是 empty 还是 null 都会覆盖 config.xml
 
 修改过配置项的值后，需要清空或刷新缓存才会生效（不论是 config.xml 的配置还是数据库里的配置）。
 
