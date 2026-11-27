@@ -346,7 +346,7 @@
                 编程范式
                 流程控制
             语法设计
-            bnf ebnf abnf
+            形式化文法 bnf ebnf abnf
             编译分为 4个阶段(Stage)
                 1 分词器(tokenizer)，将代码拆解成一个一个的token
                 2 词法解析(parse)，将原始的代码经过词法分析转成抽象树
@@ -6459,6 +6459,7 @@ wordpress
         购物车 shopping cart
         地址 address
         支付 payment
+        报价单 quote
         订单 order
         送货 shipping
         发票 invoice
@@ -6469,6 +6470,10 @@ wordpress
         税 tax
         商家 vendor
         员工 staff
+        SPU（Standard Product Unit，标准产品单元）是产品系列或型号的统一标识
+        SKU（Stock Keeping Unit，库存量单位）是不可再细分的最小库存与可售卖单品
+            一个 SPU 下可包含多个 SKU（父与子的关系）。
+            例如某款手机型号是 1 个 SPU，但“黑色 128GB”“银色 256GB”分别是不同的 SKU
         b2b b2c b2b2c c2c S2B2C中，S即是大供货商（Supply chain），B指渠道商，C为顾客
     php的开源电商
         WordPress + WooCommerce
@@ -7130,6 +7135,7 @@ erp
         一个小时表示为UNIX时间戳格式为：3600秒；一天表示为UNIX时间戳为86400秒，闰秒不计算。
         在大多数的 Unix 系统中 Unix 时间戳存储为 32 位，这样会引发 2038 年问题或 Y2038。
     excel 的时间计算
+    守时和授时
     现代的报时方式
         短波授时
             频率范围：通常在3 MHz到30 MHz之间。

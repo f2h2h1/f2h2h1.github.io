@@ -384,6 +384,10 @@
 - magento2 有三种模式，按性能由低到高，依次为：developer < default < production ；除此之外还有一个维护模式 maintenance ，用户访问会返回 503
 - 通过 composer 安装的 magento 的框架文件在这个目录里 `vendor/magento/framework`
 - 通过 github 源码安装的 magento 的框架文件在这个目录里 `lib/internal/Magento/Framework`
+    - 可以通过这样的方式找到某个类具体的路径
+        ```
+        php -r 'require "app/autoload.php"; echo (new ReflectionClass(\Magento\Framework\App\ProductMetadata::class))->getFileName(), PHP_EOL;'
+        ```
 - github 代码里的 app/magento/ 下那一堆 模块 对应 通过 composer 安装的 vendor/magento/module-* 的模块
 - 如果没有开启url重写，大部分链接前面都会带着 index.php，如果开了url重写则没有 index.php
     - 例如 后台的链接
